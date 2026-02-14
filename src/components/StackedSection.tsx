@@ -24,35 +24,23 @@ const StackedSection = ({
   const isLast = index === total - 1;
 
   return (
-    <motion.div
+    <div
       id={id}
-      className={`relative w-full h-screen flex flex-col items-center justify-center overflow-hidden ${
-        index > 0 ? "sticky top-0" : ""
-      }`}
+      className="sticky top-0 w-full h-screen"
       style={{
-        zIndex: total - index,
+        zIndex: (index + 1) * 10,
       }}
     >
-      {/* Background Gradient */}
-      <div
-        className={`absolute inset-0 ${gradient}`}
-        style={{
-          background: gradient,
-        }}
-      />
-
-      {/* Overlay for consistency */}
-      <div className="absolute inset-0 bg-black/30" />
-
-      {/* Stacked Effect - Scale down previous card */}
-      {index > 0 && (
-        <motion.div
-          className="absolute inset-0 bg-black pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.1 }}
-          transition={{ duration: 0.3 }}
+      <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
+        {/* Background Gradient - fully opaque */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: gradient,
+          }}
         />
-      )}
+        {/* Solid base to prevent bleed-through */}
+        <div className="absolute inset-0 bg-background" style={{ zIndex: -1 }} />
 
       {/* Content */}
       <motion.div
@@ -103,7 +91,8 @@ const StackedSection = ({
           <span>→</span>
         </motion.div>
       </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 

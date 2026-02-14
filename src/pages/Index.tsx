@@ -27,7 +27,7 @@ const Index = () => {
       title: "Painting",
       subtitle: "Esplorazioni della tela cosmica e della visione interiore",
       gradient:
-        "linear-gradient(135deg, rgba(30, 10, 80, 0.8), rgba(100, 50, 150, 0.6))",
+        "linear-gradient(135deg, rgb(30, 10, 80), rgb(60, 20, 100))",
       route: "/painting",
     },
     {
@@ -35,7 +35,7 @@ const Index = () => {
       title: "Photography",
       subtitle: "Cattura della realtà attraverso l'obiettivo",
       gradient:
-        "linear-gradient(135deg, rgba(20, 60, 120, 0.8), rgba(40, 80, 140, 0.6))",
+        "linear-gradient(135deg, rgb(20, 60, 120), rgb(15, 40, 90))",
       route: "/photography",
     },
     {
@@ -43,7 +43,7 @@ const Index = () => {
       title: "Digital Art",
       subtitle: "Arte digitale e composizioni visionarie",
       gradient:
-        "linear-gradient(135deg, rgba(60, 30, 100, 0.8), rgba(100, 60, 150, 0.6))",
+        "linear-gradient(135deg, rgb(60, 30, 100), rgb(40, 15, 70))",
       route: "/digital-art",
     },
     {
@@ -51,7 +51,7 @@ const Index = () => {
       title: "T-Shirt",
       subtitle: "Arte indossabile e design esclusivo",
       gradient:
-        "linear-gradient(135deg, rgba(80, 40, 120, 0.8), rgba(60, 30, 100, 0.6))",
+        "linear-gradient(135deg, rgb(80, 40, 120), rgb(50, 20, 80))",
       route: "/t-shirt",
     },
   ];
