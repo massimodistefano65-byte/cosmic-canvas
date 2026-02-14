@@ -43,7 +43,8 @@ const Navbar = () => {
     if (location.pathname === "/") {
       const element = document.getElementById(item.scroll as string);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        // Use scrollTo with offsetTop for reliable backward navigation on sticky sections
+        window.scrollTo({ top: element.offsetTop, behavior: "smooth" });
       }
     } else {
       navigate("/?scrollTo=" + item.scroll);
