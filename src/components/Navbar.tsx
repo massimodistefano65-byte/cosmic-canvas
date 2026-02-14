@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: "Home", href: "/", scroll: false },
@@ -18,37 +19,41 @@ const Navbar = () => {
     { label: "Contacts", href: "/", scroll: "contacts" },
   ];
 
-  const handleScroll = (id: string) => {
+  const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsOpen(false);
-    setTimeout(() => {
-      const element = document.getElementById(id);
+
+    // "Home" always goes to / top
+    if (item.label === "Home") {
+      if (location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        navigate("/");
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+      }
+      return;
+    }
+
+    // Bio / Criticism → navigate to their page
+    if (!item.scroll) {
+      navigate(item.href);
+      return;
+    }
+
+    // Scroll items: always go through homepage
+    if (location.pathname === "/") {
+      const element = document.getElementById(item.scroll as string);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    }, 100);
+    } else {
+      navigate("/?scrollTo=" + item.scroll);
+    }
   };
 
   const NavLink = ({ item }: { item: (typeof navItems)[0] }) => {
-    if (item.scroll) {
-      return (
-        <button
-          onClick={() => handleScroll(item.scroll as string)}
-          className="relative px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-accent group"
-        >
-          <motion.span
-            className="inline-block"
-            whileHover={{ y: [-2, 2, -2, 0] }}
-            transition={{ duration: 0.4, type: "spring" }}
-          >
-            {item.label}
-          </motion.span>
-        </button>
-      );
-    }
-
     return (
-      <Link
-        to={item.href}
+      <button
+        onClick={() => handleNavClick(item)}
         className="relative px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-accent group"
       >
         <motion.span
@@ -58,7 +63,7 @@ const Navbar = () => {
         >
           {item.label}
         </motion.span>
-      </Link>
+      </button>
     );
   };
 
@@ -92,22 +97,12 @@ const Navbar = () => {
           >
             {navItems.map((item) => (
               <div key={item.label}>
-                {item.scroll ? (
-                  <button
-                    onClick={() => handleScroll(item.scroll as string)}
-                    className="w-full text-left px-4 py-2 text-foreground hover:bg-secondary/50 rounded transition-colors"
-                  >
-                    {item.label}
-                  </button>
-                ) : (
-                  <Link
-                    to={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-2 text-foreground hover:bg-secondary/50 rounded transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                )}
+                <button
+                  onClick={() => handleNavClick(item)}
+                  className="w-full text-left px-4 py-2 text-foreground hover:bg-secondary/50 rounded transition-colors"
+                >
+                  {item.label}
+                </button>
               </div>
             ))}
           </motion.div>
