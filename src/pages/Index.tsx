@@ -13,7 +13,7 @@ const useScrollToAnchor = () => {
     if (scrollTo) {
       setTimeout(() => {
         const el = document.getElementById(scrollTo);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
+        if (el) window.scrollTo({ top: el.offsetTop, behavior: "smooth" });
       }, 200);
       window.history.replaceState({}, "", "/");
     }
