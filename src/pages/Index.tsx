@@ -1,7 +1,24 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import StackedSection from "@/components/StackedSection";
 import ContactSection from "@/components/ContactSection";
+
+const useScrollToAnchor = () => {
+  const location = useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const scrollTo = params.get("scrollTo");
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTo);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 200);
+      window.history.replaceState({}, "", "/");
+    }
+  }, [location]);
+};
 
 const Index = () => {
   const sections = [
@@ -38,6 +55,8 @@ const Index = () => {
       route: "/t-shirt",
     },
   ];
+
+  useScrollToAnchor();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
