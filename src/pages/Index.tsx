@@ -14,9 +14,7 @@ const useScrollToAnchor = () => {
       setTimeout(() => {
         const el = document.getElementById(scrollTo);
         if (el) {
-          const rect = el.getBoundingClientRect();
-          const absoluteTop = rect.top + window.scrollY;
-          window.scrollTo({ top: absoluteTop, behavior: "smooth" });
+          el.scrollIntoView({ behavior: "smooth" });
         }
       }, 200);
       window.history.replaceState({}, "", "/");

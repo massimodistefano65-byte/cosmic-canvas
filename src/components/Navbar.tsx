@@ -43,9 +43,7 @@ const Navbar = () => {
     if (location.pathname === "/") {
       const element = document.getElementById(item.scroll as string);
       if (element) {
-        const rect = element.getBoundingClientRect();
-        const absoluteTop = rect.top + window.scrollY;
-        window.scrollTo({ top: absoluteTop, behavior: "smooth" });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       navigate("/?scrollTo=" + item.scroll);
