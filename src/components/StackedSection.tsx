@@ -18,39 +18,25 @@ const StackedSection = ({
   gradient,
   route,
   index,
-  total,
 }: StackedSectionProps) => {
   const navigate = useNavigate();
-  const isLast = index === total - 1;
 
   return (
-    <div
+    <section
       id={id}
-      className="sticky top-0 w-full h-screen"
-      style={{
-        zIndex: (index + 1) * 10,
-      }}
+      className="relative w-full h-screen flex items-center justify-center overflow-hidden"
     >
-      <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
-        {/* Background Gradient - fully opaque */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: gradient,
-          }}
-        />
-        {/* Solid base to prevent bleed-through */}
-        <div className="absolute inset-0 bg-background" style={{ zIndex: -1 }} />
+      {/* Background Gradient */}
+      <div className="absolute inset-0" style={{ background: gradient }} />
 
       {/* Content */}
       <motion.div
-        className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6"
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: false }}
+        className="relative z-10 flex flex-col items-center justify-center text-center px-6"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.1 }}
+        viewport={{ once: false, amount: 0.3 }}
       >
-        {/* Title - Interactive */}
         <motion.button
           onClick={() => navigate(route)}
           className="group cursor-pointer"
@@ -60,8 +46,6 @@ const StackedSection = ({
           <h2 className="text-6xl md:text-8xl font-bold text-foreground mb-4 transition-colors group-hover:text-accent">
             {title}
           </h2>
-
-          {/* Micro-text reveal on hover - Desktop only */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileHover={{ opacity: 1, y: 0 }}
@@ -72,17 +56,16 @@ const StackedSection = ({
           </motion.div>
         </motion.button>
 
-        {/* Subtitle */}
         <motion.p
           className="text-lg md:text-xl text-muted-foreground mt-6 max-w-md"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: false }}
         >
           {subtitle}
         </motion.p>
 
-        {/* Mobile button indicator */}
         <motion.div
           className="md:hidden mt-8 px-4 py-2 border border-foreground rounded-lg text-foreground text-sm font-medium flex items-center gap-2"
           whileHover={{ borderColor: "var(--accent)", color: "var(--accent)" }}
@@ -91,8 +74,7 @@ const StackedSection = ({
           <span>→</span>
         </motion.div>
       </motion.div>
-      </div>
-    </div>
+    </section>
   );
 };
 
