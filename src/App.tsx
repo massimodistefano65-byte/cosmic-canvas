@@ -10,6 +10,7 @@ import Painting from "./pages/Painting";
 import Photography from "./pages/Photography";
 import DigitalArt from "./pages/DigitalArt";
 import TShirt from "./pages/TShirt";
+import ArtworkDetail from "./pages/ArtworkDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/photography" element={<Photography />} />
           <Route path="/digital-art" element={<DigitalArt />} />
           <Route path="/t-shirt" element={<TShirt />} />
+          <Route path="/:discipline/:artworkId" element={<ArtworkDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
