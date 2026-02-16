@@ -1,0 +1,64 @@
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+export interface ArtworkItem {
+  id: string;
+  title: string;
+  thumbnailUrl: string;
+}
+
+interface GalleryGridProps {
+  items: ArtworkItem[];
+  discipline: string; // e.g. "painting"
+  gradientFrom: string;
+  gradientTo: string;
+}
+
+const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGridProps) => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+      {items.map((item, idx) => (
+        <motion.div
+          key={item.id}
+          className="aspect-square rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
+          whileHover={{ scale: 1.03 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: idx * 0.05 }}
+          viewport={{ once: false }}
+          onClick={() => navigate(`/${discipline}/${item.id}`)}
+        >
+          {/* Thumbnail or placeholder gradient */}
+          {item.thumbnailUrl ? (
+            <img
+              src={item.thumbnailUrl}
+              alt={item.title}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <div
+              className="w-full h-full"
+              style={{
+                background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+              }}
+            />
+          )}
+
+          {/* Hover overlay with title */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-end">
+            <motion.p
+              className="text-white font-medium text-sm p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0"
+            >
+              {item.title}
+            </motion.p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+export default GalleryGrid;
