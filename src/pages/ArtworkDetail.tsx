@@ -70,7 +70,7 @@ const ArtworkDetail = () => {
           transition={{ duration: 0.6 }}
         >
           {/* LEFT — Main artwork, max space */}
-          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4">
+          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4 pr-8">
             <button
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
@@ -102,21 +102,21 @@ const ArtworkDetail = () => {
           >
             {/* Title & Year */}
             <div>
-              <h1 className="text-sm font-light tracking-wide text-foreground leading-tight">
+              <h1 className="text-xl font-light tracking-wide text-foreground leading-tight">
                 {artwork.title}
               </h1>
-              <p className="text-[10px] tracking-widest uppercase mt-0.5" style={{ color: "#D1D1D1" }}>
+              <p className="text-xs tracking-widest uppercase mt-1" style={{ color: "#D1D1D1" }}>
                 {artwork.year}
               </p>
             </div>
 
             {/* Tech details */}
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-[10px]" style={{ color: "#D1D1D1" }}>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs" style={{ color: "#D1D1D1" }}>
                 <span className="uppercase tracking-wider">Misure</span>
                 <span className="font-light">{artwork.dimensions}</span>
               </div>
-              <div className="flex justify-between text-[10px]" style={{ color: "#D1D1D1" }}>
+              <div className="flex justify-between text-xs" style={{ color: "#D1D1D1" }}>
                 <span className="uppercase tracking-wider">Tecnica</span>
                 <span className="font-light">{artwork.technique}</span>
               </div>
@@ -127,10 +127,7 @@ const ArtworkDetail = () => {
               {availableThumbs.map(({ img, idx }) => (
                 <button
                   key={idx}
-                  onClick={() => {
-                    setSelectedImage(idx);
-                    setLightboxOpen(true);
-                  }}
+                  onClick={() => setSelectedImage(idx)}
                   className={`w-full aspect-video rounded overflow-hidden border transition-all ${
                     selectedImage === idx
                       ? "border-accent"
