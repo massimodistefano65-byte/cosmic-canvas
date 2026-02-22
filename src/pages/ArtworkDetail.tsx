@@ -4,22 +4,7 @@ import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, ShoppingBag } from "lucide-react";
-
-const getArtworkData = (discipline: string, artworkId: string) => ({
-  id: artworkId,
-  title: `Opera ${artworkId}`,
-  year: "2024",
-  dimensions: "100 × 80 cm",
-  technique: "Tecnica mista su tela",
-  images: [
-    "", // Main
-    "", // Mockup
-    "", // Detail 1
-    "", // Detail 2
-    "", // Detail 3
-  ],
-  discipline,
-});
+import { getArtwork } from "@/lib/artworkData";
 
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
@@ -27,7 +12,15 @@ const ArtworkDetail = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [liked, setLiked] = useState(false);
 
-  const artwork = getArtworkData(discipline || "", artworkId || "");
+  const artwork = getArtwork(discipline || "", artworkId || "");
+
+  if (!artwork) {
+    return (
+      <div className="h-screen bg-background text-foreground flex items-center justify-center">
+        <p>Opera non trovata.</p>
+      </div>
+    );
+  }
 
   const gradientMap: Record<string, [string, string]> = {
     painting: ["rgba(168,85,247,0.3)", "rgba(59,130,246,0.3)"],
@@ -37,10 +30,14 @@ const ArtworkDetail = () => {
   };
   const [gFrom, gTo] = gradientMap[discipline || "painting"] || gradientMap.painting;
 
-  const labels = ["Opera", "Mockup", "Dettaglio 1", "Dettaglio 2", "Dettaglio 3"];
-  const availableThumbs = artwork.images
-    .map((img, idx) => ({ img, idx }))
-    .filter((_, idx) => idx > 0); // thumbnails = all except main
+  // Build all displayable images: main first, then additional
+  const allImages = [
+    { url: artwork.main, label: "Opera" },
+    ...artwork.images,
+  ].filter((img) => img.url); // only show images that have URLs
+
+  const currentImageUrl = allImages[selectedImage]?.url || "";
+  const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
   return (
     <div className="h-screen overflow-hidden bg-background text-foreground flex flex-col">
@@ -48,13 +45,11 @@ const ArtworkDetail = () => {
       <Lightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        imageUrl={artwork.images[selectedImage] || ""}
-        alt={`${artwork.title} - ${labels[selectedImage]}`}
+        imageUrl={fullResUrl}
+        alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
       />
 
-      {/* Main content — fills viewport below navbar, no scroll */}
       <div className="flex-1 flex items-center pt-16 px-4 md:px-8 min-h-0">
-        {/* Back button — absolute top-left */}
         <Link
           to={`/${discipline}`}
           className="absolute top-20 left-6 z-10 inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-xs"
@@ -69,16 +64,16 @@ const ArtworkDetail = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          {/* LEFT — Main artwork, max space */}
+          {/* LEFT — Main artwork */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4 pr-8">
             <button
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
               style={{ maxWidth: "1200px", maxHeight: "85vh" }}
             >
-              {artwork.images[selectedImage] ? (
+              {currentImageUrl ? (
                 <img
-                  src={artwork.images[selectedImage]}
+                  src={currentImageUrl}
                   alt={artwork.title}
                   className="max-w-full max-h-[85vh] object-contain rounded"
                 />
@@ -100,7 +95,6 @@ const ArtworkDetail = () => {
             className="flex-shrink-0 flex flex-col justify-center gap-6 py-4 pr-2"
             style={{ width: "clamp(140px, 18vw, 220px)" }}
           >
-            {/* Title & Year */}
             <div>
               <h1 className="text-xl font-light tracking-wide text-foreground leading-tight">
                 {artwork.title}
@@ -110,7 +104,6 @@ const ArtworkDetail = () => {
               </p>
             </div>
 
-            {/* Tech details */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs" style={{ color: "#D1D1D1" }}>
                 <span className="uppercase tracking-wider">Misure</span>
@@ -122,35 +115,38 @@ const ArtworkDetail = () => {
               </div>
             </div>
 
-            {/* Thumbnails — vertical stack */}
-            <div className="flex flex-col gap-1.5">
-              {availableThumbs.map(({ img, idx }) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedImage(idx)}
-                  className={`w-full aspect-video rounded overflow-hidden border transition-all ${
-                    selectedImage === idx
-                      ? "border-accent"
-                      : "border-border/30 hover:border-accent/40"
-                  }`}
-                >
-                  {img ? (
-                    <img src={img} alt={labels[idx]} className="w-full h-full object-cover" />
-                  ) : (
-                    <div
-                      className="w-full h-full flex items-center justify-center text-[8px] text-muted-foreground/60"
-                      style={{
-                        background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
-                      }}
+            {/* Thumbnails — vertical stack (only if there are additional images) */}
+            {allImages.length > 1 && (
+              <div className="flex flex-col gap-1.5">
+                {allImages.map((img, idx) => (
+                  idx === 0 ? null : (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
+                      className={`w-full aspect-video rounded overflow-hidden border transition-all ${
+                        selectedImage === idx
+                          ? "border-accent"
+                          : "border-border/30 hover:border-accent/40"
+                      }`}
                     >
-                      {labels[idx]}
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+                      {img.url ? (
+                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center text-[8px] text-muted-foreground/60"
+                          style={{
+                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                          }}
+                        >
+                          {img.label}
+                        </div>
+                      )}
+                    </button>
+                  )
+                ))}
+              </div>
+            )}
 
-            {/* Buttons — minimal */}
             <div className="flex gap-2 mt-auto">
               <button
                 onClick={() => setLiked(!liked)}
