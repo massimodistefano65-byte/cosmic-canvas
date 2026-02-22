@@ -9,7 +9,7 @@ export interface ArtworkItem {
 
 interface GalleryGridProps {
   items: ArtworkItem[];
-  discipline: string; // e.g. "painting"
+  discipline: string;
   gradientFrom: string;
   gradientTo: string;
 }
@@ -18,11 +18,11 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+    <div className="columns-2 md:columns-4 gap-12 space-y-12">
       {items.map((item, idx) => (
         <motion.div
           key={item.id}
-          className="aspect-square rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
+          className="break-inside-avoid rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
           whileHover={{ scale: 1.03 }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -30,17 +30,16 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           viewport={{ once: false }}
           onClick={() => navigate(`/${discipline}/${item.id}`)}
         >
-          {/* Thumbnail or placeholder gradient */}
           {item.thumbnailUrl ? (
             <img
               src={item.thumbnailUrl}
               alt={item.title}
-              className="w-full h-full object-cover"
+              className="w-full h-auto object-cover"
               loading="lazy"
             />
           ) : (
             <div
-              className="w-full h-full"
+              className="w-full aspect-square"
               style={{
                 background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
               }}

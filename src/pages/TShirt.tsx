@@ -3,22 +3,19 @@ import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-
-const designs: ArtworkItem[] = [
-  { id: "1", title: "Nebula Wear", thumbnailUrl: "" },
-  { id: "2", title: "Cosmic Print", thumbnailUrl: "" },
-  { id: "3", title: "Urban Galaxy", thumbnailUrl: "" },
-  { id: "4", title: "Abstract Flow", thumbnailUrl: "" },
-  { id: "5", title: "Stellar Edition", thumbnailUrl: "" },
-  { id: "6", title: "Dark Matter", thumbnailUrl: "" },
-];
+import { getArtworksByDiscipline } from "@/lib/artworkData";
 
 const TShirt = () => {
+  const artworks = getArtworksByDiscipline("t-shirt");
+  const items: ArtworkItem[] = artworks.map((a) => ({
+    id: a.id, title: a.title, thumbnailUrl: a.preview,
+  }));
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <div className="pt-20 pb-12">
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
           <Link
             to="/"
             onClick={() => {
@@ -40,7 +37,7 @@ const TShirt = () => {
             </div>
 
             <GalleryGrid
-              items={designs}
+              items={items}
               discipline="t-shirt"
               gradientFrom="rgba(249,115,22,0.3)"
               gradientTo="rgba(239,68,68,0.3)"
