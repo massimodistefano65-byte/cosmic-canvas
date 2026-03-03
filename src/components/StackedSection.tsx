@@ -35,22 +35,21 @@ const StackedSection = ({
       {/* Fallback Gradient */}
       <div className="absolute inset-0" style={{ background: gradient }} />
 
-      {/* Cover Image with blur + opacity + hover transition */}
+      {/* Cover Image with zoom on hover */}
       {coverImage && (
         <div
-          className="absolute inset-0 transition-all duration-500 ease-in-out"
+          className="absolute inset-0 transition-transform duration-[1.5s] ease-out"
           style={{
             backgroundImage: `url(${coverImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            filter: hovered ? "blur(2px)" : "blur(8px)",
-            opacity: hovered ? 0.7 : 0.4,
+            transform: hovered ? "scale(1.05)" : "scale(1)",
           }}
         />
       )}
 
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/30" />
+      {/* Gradient overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/10" />
 
       {/* Content */}
       <motion.div
@@ -66,7 +65,10 @@ const StackedSection = ({
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
-          <h2 className="text-6xl md:text-8xl font-bold text-foreground mb-4 transition-colors group-hover:text-accent">
+          <h2
+            className="text-6xl md:text-8xl font-bold text-foreground mb-4 transition-colors group-hover:text-accent"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
+          >
             {title}
           </h2>
           <motion.div
