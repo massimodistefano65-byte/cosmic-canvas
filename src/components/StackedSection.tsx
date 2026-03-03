@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ interface StackedSectionProps {
   route: string;
   index: number;
   total: number;
+  coverImage?: string;
 }
 
 const StackedSection = ({
@@ -18,16 +20,37 @@ const StackedSection = ({
   gradient,
   route,
   index,
+  coverImage,
 }: StackedSectionProps) => {
   const navigate = useNavigate();
+  const [hovered, setHovered] = useState(false);
 
   return (
     <section
       id={id}
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Background Gradient */}
+      {/* Fallback Gradient */}
       <div className="absolute inset-0" style={{ background: gradient }} />
+
+      {/* Cover Image with blur + opacity + hover transition */}
+      {coverImage && (
+        <div
+          className="absolute inset-0 transition-all duration-500 ease-in-out"
+          style={{
+            backgroundImage: `url(${coverImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: hovered ? "blur(2px)" : "blur(8px)",
+            opacity: hovered ? 0.7 : 0.4,
+          }}
+        />
+      )}
+
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/30" />
 
       {/* Content */}
       <motion.div
