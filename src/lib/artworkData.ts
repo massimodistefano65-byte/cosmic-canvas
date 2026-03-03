@@ -14,6 +14,16 @@ export interface ArtworkFullData {
   images: { url: string; label: string }[];
 }
 
+/**
+ * NAMING CONVENTION (per tutte le discipline):
+ *   preview:  massimo-di-stefano-{titolo}-{discipline}-preview   → galleria masonry (mai nella pagina opera)
+ *   main (1): massimo-di-stefano-{titolo}-{discipline}-1         → foto principale pagina opera
+ *   detail:   massimo-di-stefano-{titolo}-{discipline}-detail-N  → dettagli
+ *   room:     massimo-di-stefano-{titolo}-{discipline}-room-view-N → ambientazioni
+ *   lifestyle (t-shirt): massimo-di-stefano-{titolo}-t-shirt-lifestyle-N
+ *   full:     stessa immagine di {discipline}-1 usata in alta risoluzione per il lightbox
+ */
+
 type DisciplineData = Record<string, ArtworkFullData[]>;
 
 const data: DisciplineData = {
@@ -24,9 +34,9 @@ const data: DisciplineData = {
       year: "2024",
       dimensions: "100 × 50 cm",
       technique: "Tecnica mista su tela",
-      preview: "/artworks/painting/1/pensieri-in-evoluzione-preview.jpg",
-      main: "/artworks/painting/1/pensieri-in-evoluzione-main.jpg",
-      full: "/artworks/painting/1/pensieri-in-evoluzione-main.jpg",
+      preview: "/artworks/painting/1/pensieri-in-evoluzione-painting-preview.jpg",
+      main: "/artworks/painting/1/pensieri-in-evoluzione-painting-1.jpg",
+      full: "/artworks/painting/1/pensieri-in-evoluzione-painting-1.jpg",
       images: [
         { url: "/artworks/painting/1/pensieri-in-evoluzione-room-view-1.jpg", label: "Room View 1" },
         { url: "/artworks/painting/1/pensieri-in-evoluzione-room-view-2.jpg", label: "Room View 2" },
