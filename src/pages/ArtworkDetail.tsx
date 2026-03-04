@@ -66,44 +66,11 @@ const ArtworkDetail = () => {
         {/* Back link */}
         <Link
           to={`/${discipline}`}
-          className="absolute top-4 left-6 z-10 inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-xs"
+          className="absolute top-20 left-6 z-10 inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-xs"
         >
           <ArrowLeft size={14} />
           <span>Galleria</span>
         </Link>
-
-        {/* Action buttons — top-left, 80px below navbar, 40px from left */}
-        <div
-          className="absolute z-10 flex flex-col gap-3"
-          style={{ top: "80px", left: "40px" }}
-        >
-          <button
-            onClick={() => setLiked(!liked)}
-            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${
-              liked
-                ? "text-red-500 border-red-500/40"
-                : "text-muted-foreground border-border/30 hover:border-accent/40 hover:text-accent"
-            }`}
-          >
-            <Heart size={16} fill={liked ? "currentColor" : "none"} />
-          </button>
-
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={() => setEnquiryOpen(true)}
-                  className="w-9 h-9 rounded-full border border-border/30 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
-                >
-                  <Plus size={16} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="text-xs">
-                Richiedi info / Enquire
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
 
         <motion.div
           className="flex w-full h-full items-center min-h-0"
@@ -111,8 +78,38 @@ const ArtworkDetail = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
+          {/* LEFT — Action buttons aligned with top of artwork */}
+          <div className="flex-shrink-0 flex flex-col gap-3 items-center pl-8 pr-4 pt-[10vh]">
+            <button
+              onClick={() => setLiked(!liked)}
+              className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-colors ${
+                liked
+                  ? "text-red-500 border-red-500/40"
+                  : "text-muted-foreground border-border/50 hover:border-accent/60 hover:text-accent"
+              }`}
+            >
+              <Heart size={20} fill={liked ? "currentColor" : "none"} />
+            </button>
+
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => setEnquiryOpen(true)}
+                    className="w-11 h-11 rounded-full border-2 border-border/50 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
+                  >
+                    <Plus size={20} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="text-xs">
+                  Richiedi info / Enquire
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+
           {/* CENTER — Main artwork */}
-          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4 px-20">
+          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4 px-8">
             <button
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
@@ -168,10 +165,10 @@ const ArtworkDetail = () => {
                 <div className="flex flex-col gap-2">
                   {allImages.map((img, idx) =>
                     idx === 0 ? null : (
-                      <button
+                       <button
                         key={idx}
                         onClick={() => setSelectedImage(idx)}
-                        className={`w-14 h-14 rounded overflow-hidden border transition-all ${
+                        className={`w-24 h-24 rounded overflow-hidden border-2 transition-all ${
                           selectedImage === idx
                             ? "border-accent"
                             : "border-border/30 hover:border-accent/40"
