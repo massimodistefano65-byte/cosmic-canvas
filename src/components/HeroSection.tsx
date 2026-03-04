@@ -52,7 +52,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight">
+            <h1 className="text-4xl md:text-7xl font-bold text-foreground leading-tight whitespace-nowrap">
               Massimo Di Stefano
             </h1>
           </motion.div>
