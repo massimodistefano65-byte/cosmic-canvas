@@ -2,15 +2,23 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
+import EnquiryModal from "@/components/EnquiryModal";
 import { motion } from "framer-motion";
-import { ArrowLeft, Heart, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Heart, Plus } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [enquiryOpen, setEnquiryOpen] = useState(false);
 
   const artwork = getArtwork(discipline || "", artworkId || "");
 
@@ -30,11 +38,10 @@ const ArtworkDetail = () => {
   };
   const [gFrom, gTo] = gradientMap[discipline || "painting"] || gradientMap.painting;
 
-  // Build all displayable images: main first, then additional
   const allImages = [
     { url: artwork.main, label: "Opera" },
     ...artwork.images,
-  ].filter((img) => img.url); // only show images that have URLs
+  ].filter((img) => img.url);
 
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
@@ -47,6 +54,12 @@ const ArtworkDetail = () => {
         onClose={() => setLightboxOpen(false)}
         imageUrl={fullResUrl}
         alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
+      />
+      <EnquiryModal
+        isOpen={enquiryOpen}
+        onClose={() => setEnquiryOpen(false)}
+        artworkTitle={artwork.title}
+        discipline={discipline || ""}
       />
 
       <div className="flex-1 flex items-center pt-16 px-4 md:px-8 min-h-0">
@@ -69,17 +82,17 @@ const ArtworkDetail = () => {
             <button
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
-              style={{ maxWidth: "1200px", maxHeight: "85vh" }}
+              style={{ maxWidth: "1200px", maxHeight: "80vh" }}
             >
               {currentImageUrl ? (
                 <img
                   src={currentImageUrl}
                   alt={artwork.title}
-                  className="max-w-full max-h-[85vh] object-contain rounded"
+                  className="max-w-full max-h-[80vh] object-contain rounded"
                 />
               ) : (
                 <div
-                  className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[85vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
+                  className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[80vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
                   style={{
                     background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
                   }}
@@ -90,64 +103,67 @@ const ArtworkDetail = () => {
             </button>
           </div>
 
-          {/* RIGHT — Narrow info column */}
+          {/* RIGHT — Info column, always fits in viewport */}
           <div
-            className="flex-shrink-0 flex flex-col justify-center gap-6 py-4 pr-2"
+            className="flex-shrink-0 flex flex-col justify-between gap-4 py-4 pr-2 max-h-[calc(100vh-5rem)] overflow-y-auto"
             style={{ width: "clamp(140px, 18vw, 220px)" }}
           >
-            <div>
-              <h1 className="text-xl font-light tracking-wide text-foreground leading-tight">
-                {artwork.title}
-              </h1>
-              <p className="text-xs tracking-widest uppercase mt-1" style={{ color: "#D1D1D1" }}>
-                {artwork.year}
-              </p>
+            <div className="space-y-4">
+              <div>
+                <h1 className="text-xl font-light tracking-wide text-foreground leading-tight">
+                  {artwork.title}
+                </h1>
+                <p className="text-xs tracking-widest uppercase mt-1 text-muted-foreground">
+                  {artwork.year}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span className="uppercase tracking-wider">Misure</span>
+                  <span className="font-light">{artwork.dimensions}</span>
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span className="uppercase tracking-wider">Tecnica</span>
+                  <span className="font-light">{artwork.technique}</span>
+                </div>
+              </div>
+
+              {/* Thumbnails */}
+              {allImages.length > 1 && (
+                <div className="flex flex-col gap-1.5">
+                  {allImages.map((img, idx) =>
+                    idx === 0 ? null : (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedImage(idx)}
+                        className={`w-full aspect-video rounded overflow-hidden border transition-all ${
+                          selectedImage === idx
+                            ? "border-accent"
+                            : "border-border/30 hover:border-accent/40"
+                        }`}
+                      >
+                        {img.url ? (
+                          <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
+                        ) : (
+                          <div
+                            className="w-full h-full flex items-center justify-center text-[8px] text-muted-foreground/60"
+                            style={{
+                              background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                            }}
+                          >
+                            {img.label}
+                          </div>
+                        )}
+                      </button>
+                    )
+                  )}
+                </div>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs" style={{ color: "#D1D1D1" }}>
-                <span className="uppercase tracking-wider">Misure</span>
-                <span className="font-light">{artwork.dimensions}</span>
-              </div>
-              <div className="flex justify-between text-xs" style={{ color: "#D1D1D1" }}>
-                <span className="uppercase tracking-wider">Tecnica</span>
-                <span className="font-light">{artwork.technique}</span>
-              </div>
-            </div>
-
-            {/* Thumbnails — vertical stack (only if there are additional images) */}
-            {allImages.length > 1 && (
-              <div className="flex flex-col gap-1.5">
-                {allImages.map((img, idx) => (
-                  idx === 0 ? null : (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImage(idx)}
-                      className={`w-full aspect-video rounded overflow-hidden border transition-all ${
-                        selectedImage === idx
-                          ? "border-accent"
-                          : "border-border/30 hover:border-accent/40"
-                      }`}
-                    >
-                      {img.url ? (
-                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
-                      ) : (
-                        <div
-                          className="w-full h-full flex items-center justify-center text-[8px] text-muted-foreground/60"
-                          style={{
-                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
-                          }}
-                        >
-                          {img.label}
-                        </div>
-                      )}
-                    </button>
-                  )
-                ))}
-              </div>
-            )}
-
-            <div className="flex gap-2 mt-auto">
+            {/* Action buttons — always visible */}
+            <div className="flex gap-2 pt-2">
               <button
                 onClick={() => setLiked(!liked)}
                 className={`p-1.5 rounded border transition-colors ${
@@ -158,10 +174,22 @@ const ArtworkDetail = () => {
               >
                 <Heart size={14} fill={liked ? "currentColor" : "none"} />
               </button>
-              <button className="flex-1 flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-wider py-1.5 rounded border border-border/30 text-muted-foreground hover:border-accent/40 hover:text-foreground transition-colors">
-                <ShoppingBag size={12} />
-                Shop
-              </button>
+
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setEnquiryOpen(true)}
+                      className="w-8 h-8 rounded-full border border-border/30 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">
+                    Richiedi info / Enquire
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </motion.div>
