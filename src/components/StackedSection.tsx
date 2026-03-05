@@ -38,12 +38,13 @@ const StackedSection = ({
       {/* Cover Image with zoom on hover */}
       {coverImage && (
         <div
-          className="absolute inset-0 transition-transform duration-[1.5s] ease-out"
+          className="absolute inset-0"
           style={{
             backgroundImage: `url(${coverImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            transform: hovered ? "scale(1.05)" : "scale(1)",
+            transform: hovered ? "scale(1.04)" : "scale(1)",
+            transition: "transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
           }}
         />
       )}
