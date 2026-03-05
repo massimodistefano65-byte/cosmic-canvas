@@ -11,67 +11,95 @@ const HeroSection = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-background">
-      {/* Animated Mesh Gradient Background */}
-      <div className="absolute inset-0 mesh-gradient animated-mesh" />
+      {/* Background Image with Ken Burns */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{ scale: [1, 1.07] }}
+        transition={{ duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+      >
+        <img
+          src="/images/hero-background.jpg"
+          alt="Hero background artwork"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
 
-      {/* Animated blobs for nebula effect */}
-      <motion.div
-        className="absolute -top-40 -right-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
-        animate={{
-          x: [0, 50, -50, 0],
-          y: [0, 30, -30, 0],
+      {/* Gradient Overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.85) 100%)",
         }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-1/3 -left-40 w-96 h-96 bg-primary/15 rounded-full blur-3xl"
-        animate={{
-          x: [0, -50, 50, 0],
-          y: [0, -30, 30, 0],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-1/4 w-72 h-72 bg-accent/10 rounded-full blur-3xl"
-        animate={{
-          x: [0, 30, -30, 0],
-          y: [0, 50, -50, 0],
-        }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-12">
-        <div /> {/* Spacer for top alignment */}
-
-        <div className="flex flex-col gap-8 justify-end h-full pb-24">
-          {/* Name - Bottom Left */}
-          <motion.div
-            className="max-w-md"
+      {/* Content - Bottom Left */}
+      <div className="relative z-10 h-full flex flex-col justify-end" style={{ paddingLeft: "4.5rem", paddingBottom: "6rem" }}>
+        <div className="flex flex-col items-start text-left">
+          {/* Massimo */}
+          <motion.h1
+            className="leading-tight"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 300,
+              fontSize: "5rem",
+              color: "#ffffff",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           >
-            <h1 className="text-4xl md:text-7xl font-bold text-foreground leading-tight whitespace-nowrap">
-              Massimo Di Stefano
-            </h1>
-          </motion.div>
+            Massimo
+          </motion.h1>
 
-          {/* Subtitle - Bottom Right */}
-          <motion.div
-            className="max-w-md ml-auto text-right"
+          {/* Di Stefano */}
+          <motion.h1
+            className="leading-tight"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: "5rem",
+              color: "#ffffff",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
           >
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              Artista visivo e pittore cosmico visionario
-            </p>
-          </motion.div>
+            Di Stefano
+          </motion.h1>
+
+          {/* Gold Line */}
+          <motion.div
+            style={{
+              height: "1px",
+              backgroundColor: "#d4af7a",
+              marginTop: "1.2rem",
+              marginBottom: "1.2rem",
+            }}
+            initial={{ width: 0 }}
+            animate={{ width: 110 }}
+            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
+          />
+
+          {/* Subtitle */}
+          <motion.p
+            style={{
+              fontFamily: "'Raleway', sans-serif",
+              fontWeight: 300,
+              textTransform: "uppercase",
+              letterSpacing: "0.24em",
+              color: "rgba(255,255,255,0.4)",
+              fontSize: "0.65rem",
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+          >
+            Artista visivo e pittore cosmico visionario
+          </motion.p>
         </div>
       </div>
 
-      {/* Scroll Indicator - Absolutely positioned at bottom center */}
+      {/* Scroll Indicator */}
       <motion.button
         onClick={scrollToSection}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 p-2 hover:text-accent transition-colors text-muted-foreground"
