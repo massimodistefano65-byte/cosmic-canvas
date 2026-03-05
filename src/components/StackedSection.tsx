@@ -57,18 +57,21 @@ const StackedSection = ({
         className="relative z-10 flex flex-col items-center justify-center text-center px-6"
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: false, amount: 0.3 }}
       >
         <motion.button
           onClick={() => navigate(route)}
           className="group cursor-pointer"
-          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
           <h2
-            className="text-6xl md:text-8xl font-bold text-foreground mb-4 transition-colors group-hover:text-accent"
-            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
+            className="text-6xl md:text-8xl text-foreground mb-4 transition-opacity duration-[400ms] ease-in-out group-hover:opacity-70"
+            style={{
+              textShadow: "0 2px 12px rgba(0,0,0,0.5)",
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 300,
+            }}
           >
             {title}
           </h2>
@@ -84,9 +87,9 @@ const StackedSection = ({
 
         <motion.p
           className="text-lg md:text-xl text-muted-foreground mt-6 max-w-md"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
           viewport={{ once: false }}
         >
           {subtitle}
