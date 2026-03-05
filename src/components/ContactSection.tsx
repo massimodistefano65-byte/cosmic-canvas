@@ -8,7 +8,35 @@ import { Textarea } from "@/components/ui/textarea";
 const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 
 const ContactSection = () => {
-  const socialLinks = [
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ name, email, message, _subject: "Contatto dal sito" }),
+      });
+      if (!res.ok) throw new Error("fail");
+      setSent(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch {
+      setError("Errore nell'invio. Riprova.");
+    } finally {
+      setSending(false);
+    }
+  };
+
     {
       name: "Linktree",
       url: "https://linktr.ee/radmax",
