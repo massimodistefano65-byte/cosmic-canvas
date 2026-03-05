@@ -17,26 +17,52 @@ interface EnquiryModalProps {
   discipline: string;
 }
 
+const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
+
 const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState(`Informazioni su: ${artworkTitle}`);
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, log the enquiry (backend can be added later)
-    console.log({ name, email, subject, message, artworkTitle, discipline });
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setName("");
-      setEmail("");
-      setSubject(`Informazioni su: ${artworkTitle}`);
-      setMessage("");
-      onClose();
-    }, 2500);
+    setSending(true);
+    setError("");
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          _subject: subject,
+          message,
+          "Opera / Artwork": artworkTitle,
+          "Disciplina / Discipline": discipline,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Invio fallito");
+
+      setSent(true);
+      setTimeout(() => {
+        setSent(false);
+        setName("");
+        setEmail("");
+        setSubject(`Informazioni su: ${artworkTitle}`);
+        setMessage("");
+        onClose();
+      }, 2500);
+    } catch {
+      setError("Errore nell'invio. Riprova. / Sending failed. Please retry.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -102,11 +128,13 @@ const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModa
             <Button
               type="submit"
               variant="outline"
-              className="w-full h-9 text-xs uppercase tracking-wider border-border/40 hover:border-accent hover:text-accent transition-colors"
+              disabled={sending}
+              className="w-full h-9 text-xs uppercase tracking-wider border-border/40 hover:border-accent hover:text-accent transition-colors disabled:opacity-50"
             >
               <Send size={12} />
-              Invia / Send
+              {sending ? "Invio... / Sending..." : "Invia / Send"}
             </Button>
+            {error && <p className="text-xs text-red-400 text-center">{error}</p>}
           </form>
         )}
       </DialogContent>
