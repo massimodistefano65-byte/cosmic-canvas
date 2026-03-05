@@ -68,7 +68,7 @@ const Index = () => {
       <HeroSection />
 
       {/* Stacked Sections */}
-      <div className="relative">
+      <div className="relative" style={{ scrollSnapType: "y proximity", scrollBehavior: "smooth" }}>
         {sections.map((section, index) => (
           <StackedSection
             key={section.id}
