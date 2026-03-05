@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
+
 const ContactSection = () => {
   const socialLinks = [
     {
