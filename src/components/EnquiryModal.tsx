@@ -128,11 +128,13 @@ const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModa
             <Button
               type="submit"
               variant="outline"
-              className="w-full h-9 text-xs uppercase tracking-wider border-border/40 hover:border-accent hover:text-accent transition-colors"
+              disabled={sending}
+              className="w-full h-9 text-xs uppercase tracking-wider border-border/40 hover:border-accent hover:text-accent transition-colors disabled:opacity-50"
             >
               <Send size={12} />
-              Invia / Send
+              {sending ? "Invio... / Sending..." : "Invia / Send"}
             </Button>
+            {error && <p className="text-xs text-red-400 text-center">{error}</p>}
           </form>
         )}
       </DialogContent>

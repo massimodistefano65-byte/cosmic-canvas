@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
