@@ -29,7 +29,13 @@ const Photography = () => {
           </Link>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">Photography</h1>
+            <h1
+              className="mb-4"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white" }}
+            >
+              Photography
+            </h1>
+            <div style={{ width: 80, height: 1, backgroundColor: "#d4af7a" }} className="mb-6" />
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 La fotografia di Massimo Di Stefano cattura momenti di bellezza quotidiana e straordinarietà nascoste.
