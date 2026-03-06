@@ -23,9 +23,8 @@ jobs:
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          with:
-          server: ftp.massimodistefano.com
-          username: ${{ secrets.FTP_USERNAME }}
+          server: ftpwin.massimodistefano.com
+          username: 1235499@aruba.it
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /public/
