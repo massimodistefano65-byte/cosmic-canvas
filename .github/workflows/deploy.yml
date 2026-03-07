@@ -29,7 +29,6 @@ jobs:
           host: ftpwin.massimodistefano.com
           user: 1235499@aruba.it
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: ./dist
+          localDir: dist
           remoteDir: public
-          force: true
-          tls: false
+          forceSsl: false
