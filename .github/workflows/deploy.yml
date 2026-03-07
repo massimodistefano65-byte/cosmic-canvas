@@ -26,9 +26,8 @@ jobs:
       - name: 🚀 Deploy to FTP (Sebastian Popp Engine)
         uses: sebastianpopp/ftp-action@v2.0.0
         with:
-          host: ftp://ftpwin.massimodistefano.com
+          host: ftp.massimodistefano.com
           user: 1235499@aruba.it
           password: ${{ secrets.FTP_PASSWORD }}
           localDir: dist
           remoteDir: public
-          forceSsl: false
