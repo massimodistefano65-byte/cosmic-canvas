@@ -30,6 +30,6 @@ jobs:
           user: 1235499@aruba.it
           password: ${{ secrets.FTP_PASSWORD }}
           localDir: ./dist
-          remoteDir: /public
+          remoteDir: public
           force: true
           tls: false
