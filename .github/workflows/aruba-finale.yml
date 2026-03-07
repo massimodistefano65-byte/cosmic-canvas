@@ -29,6 +29,6 @@ jobs:
           host: 62.149.141.20
           user: 1235499@aruba.it
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: dist
+          localDir: public
           remoteDir: public
           forceSsl: false
