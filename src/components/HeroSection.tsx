@@ -32,13 +32,15 @@ const HeroSection = () => {
       {/* Background Image with Ken Burns */}
       <motion.div
         className="absolute inset-0"
-        animate={{ scale: [1, 1.07] }}
-        transition={{ duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: imageLoaded ? 1 : 0, scale: [1, 1.07] }}
+        transition={{ opacity: { duration: isRevisit ? 0.3 : 0.6 }, scale: { duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } }}
       >
         <img
           src="/images/hero-background.jpg"
           alt="Hero background artwork"
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
       </motion.div>
 
