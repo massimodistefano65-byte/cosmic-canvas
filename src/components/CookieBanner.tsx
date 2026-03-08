@@ -25,10 +25,10 @@ const CookieBanner = () => {
   useEffect(() => {
     const stored = localStorage.getItem(COOKIE_CONSENT_KEY) as ConsentValue;
 
+    const gtag = (window as any).gtag;
+
     // Set default consent to denied
-    window.gtag?.("consent", "default", {
-      analytics_storage: "denied",
-    });
+    gtag?.("consent", "default", { analytics_storage: "denied" });
 
     if (stored) {
       updateGAConsent(stored);
