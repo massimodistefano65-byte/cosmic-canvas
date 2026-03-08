@@ -24,11 +24,7 @@ const Navbar = () => {
 
     // "Home" always goes to / top
     if (item.label === "Home") {
-      if (location.pathname !== "/") {
-        window.location.href = "/";
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      window.location.href = "/";
       return;
     }
 
