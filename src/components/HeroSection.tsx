@@ -48,7 +48,7 @@ const HeroSection = () => {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.85) 100%)",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 25%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.88) 75%, rgba(0,0,0,0.92) 100%)",
         }}
       />
 
@@ -89,7 +89,7 @@ const HeroSection = () => {
               fontWeight: 300,
               textTransform: "uppercase",
               letterSpacing: "0.24em",
-              color: "rgba(255,255,255,0.4)",
+              color: "rgba(255,255,255,0.6)",
               fontSize: "0.65rem",
             }}
             initial={{ opacity: 0, y: 20 }}
