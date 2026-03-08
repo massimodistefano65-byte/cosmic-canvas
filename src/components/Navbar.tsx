@@ -7,7 +7,6 @@ import { useI18n } from "@/lib/i18n";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useI18n();
