@@ -103,14 +103,13 @@ const ArtworkDetail = () => {
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
-        {/* Back link */}
+        {/* Back link — discrete arrow */}
         <Link
           to={`/${discipline}`}
-          className="absolute top-20 left-6 z-10 inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-xs"
-          aria-label={`Torna alla galleria ${discLabel}`}
+          className="absolute top-[5.5rem] left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+          aria-label={`Back to ${discLabel}`}
         >
-          <ArrowLeft size={14} aria-hidden="true" />
-          <span>{t("artwork.back")}</span>
+          <ArrowLeft size={15} aria-hidden="true" />
         </Link>
 
         <motion.div
@@ -120,17 +119,17 @@ const ArtworkDetail = () => {
           transition={{ duration: 0.6 }}
         >
           {/* LEFT — Action buttons */}
-          <div className="flex-shrink-0 flex flex-col gap-3 items-center pl-8 pr-4 pt-[10vh]">
+          <div className="flex-shrink-0 flex flex-col gap-3 items-center pl-8 pr-4 pt-[12vh]">
             <button
               onClick={() => setLiked(!liked)}
               aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-              className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-colors ${
+              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${
                 liked
                   ? "text-red-500 border-red-500/40"
-                  : "text-muted-foreground border-border/50 hover:border-accent/60 hover:text-accent"
+                  : "text-muted-foreground/60 border-border/40 hover:border-foreground/30 hover:text-foreground"
               }`}
             >
-              <Heart size={20} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+              <Heart size={18} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
             </button>
 
             <TooltipProvider delayDuration={200}>
@@ -139,9 +138,9 @@ const ArtworkDetail = () => {
                   <button
                     onClick={() => setEnquiryOpen(true)}
                     aria-label="Richiedi informazioni sull'opera"
-                    className="w-11 h-11 rounded-full border-2 border-border/50 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
+                    className="w-10 h-10 rounded-full border border-border/40 text-muted-foreground/60 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                   >
-                    <Plus size={20} aria-hidden="true" />
+                    <Plus size={18} aria-hidden="true" />
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="text-xs">
@@ -151,26 +150,26 @@ const ArtworkDetail = () => {
             </TooltipProvider>
           </div>
 
-          {/* CENTER — Main artwork */}
-          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-4 px-8">
+          {/* CENTER — Main artwork (maximized) */}
+          <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <button
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
-              style={{ maxWidth: "1200px", maxHeight: "80vh" }}
+              style={{ maxWidth: "1200px", maxHeight: "82vh" }}
               aria-label={`Apri ${artwork.title} in lightbox`}
             >
               {currentImageUrl ? (
                 <img
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="max-w-full max-h-[80vh] object-contain rounded"
+                  className="max-w-full max-h-[82vh] object-contain rounded"
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"
                 />
               ) : (
                 <div
-                  className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[80vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
+                  className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
                   style={{
                     background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
                   }}
@@ -181,65 +180,72 @@ const ArtworkDetail = () => {
             </button>
           </div>
 
-          {/* RIGHT — Info column */}
+          {/* RIGHT — Info column (refined) */}
           <div
-            className="flex-shrink-0 flex flex-col gap-4 py-4 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
-            style={{ width: "clamp(140px, 18vw, 220px)" }}
+            className="flex-shrink-0 flex flex-col justify-center gap-6 py-6 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
+            style={{ width: "clamp(150px, 18vw, 230px)" }}
           >
-            <div className="space-y-4">
-              <div>
-                <h1 className="text-xl font-light tracking-wide text-foreground leading-tight">
-                  {artwork.title}
-                </h1>
-                <p className="text-xs tracking-widest uppercase mt-1 text-muted-foreground">
-                  {artwork.year}
-                </p>
-              </div>
-
-              <dl className="space-y-2">
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <dt className="uppercase tracking-wider">{t("artwork.dimensions")}</dt>
-                  <dd className="font-light">{artwork.dimensions}</dd>
-                </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <dt className="uppercase tracking-wider">{t("artwork.technique")}</dt>
-                  <dd className="font-light">{artwork.technique}</dd>
-                </div>
-              </dl>
-
-              {/* Square thumbnails */}
-              {allImages.length > 1 && (
-                <div className="flex flex-col gap-2" role="group" aria-label="Immagini dell'opera">
-                  {allImages.map((img, idx) =>
-                    idx === 0 ? null : (
-                       <button
-                        key={idx}
-                        onClick={() => setSelectedImage(idx)}
-                        aria-label={`Visualizza ${img.label}`}
-                        className={`w-24 h-24 rounded overflow-hidden border-2 transition-all ${
-                          selectedImage === idx
-                            ? "border-accent"
-                            : "border-border/30 hover:border-accent/40"
-                        }`}
-                      >
-                        {img.url ? (
-                          <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
-                        ) : (
-                          <div
-                            className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
-                            style={{
-                              background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
-                            }}
-                          >
-                            {img.label}
-                          </div>
-                        )}
-                      </button>
-                    )
-                  )}
-                </div>
-              )}
+            {/* Title + year — elegant */}
+            <div>
+              <h1
+                className="text-lg font-light tracking-wide text-foreground leading-snug"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {artwork.title}
+              </h1>
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/70">
+                {artwork.year}
+              </p>
             </div>
+
+            {/* Metadata — refined subtle lines */}
+            <div className="space-y-3">
+              <div className="border-t border-border/20 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+                  {t("artwork.dimensions")}
+                </p>
+                <p className="text-xs text-muted-foreground/80 font-light">{artwork.dimensions}</p>
+              </div>
+              <div className="border-t border-border/20 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+                  {t("artwork.technique")}
+                </p>
+                <p className="text-xs text-muted-foreground/80 font-light">{artwork.technique}</p>
+              </div>
+            </div>
+
+            {/* Thumbnails — larger */}
+            {allImages.length > 1 && (
+              <div className="flex flex-col gap-2.5 pt-2" role="group" aria-label="Immagini dell'opera">
+                {allImages.map((img, idx) =>
+                  idx === 0 ? null : (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
+                      aria-label={`Visualizza ${img.label}`}
+                      className={`w-28 h-28 rounded overflow-hidden border transition-all duration-300 ${
+                        selectedImage === idx
+                          ? "border-accent"
+                          : "border-border/20 hover:border-accent/40"
+                      }`}
+                    >
+                      {img.url ? (
+                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
+                          style={{
+                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                          }}
+                        >
+                          {img.label}
+                        </div>
+                      )}
+                    </button>
+                  )
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>
