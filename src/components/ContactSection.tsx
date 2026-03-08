@@ -45,7 +45,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contacts" className="relative w-full bg-black/60 py-20 border-t border-border/50">
+    <section id="contacts" className="relative w-full bg-black/60 py-20 border-t border-border/50" aria-label="Sezione contatti">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         <motion.div
           className="mb-16"
@@ -55,7 +55,11 @@ const ContactSection = () => {
           viewport={{ once: false }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Contatti</h2>
-          <p className="text-muted-foreground">arte@massimodistefano.com</p>
+          <p className="text-muted-foreground">
+            <a href="mailto:arte@massimodistefano.com" className="hover:text-accent transition-colors">
+              arte@massimodistefano.com
+            </a>
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -66,15 +70,16 @@ const ContactSection = () => {
             viewport={{ once: false }}
           >
             {sent ? (
-              <div className="py-8 text-center">
+              <div className="py-8 text-center" role="status">
                 <p className="text-accent text-sm">Messaggio inviato ✓</p>
                 <p className="text-muted-foreground text-xs mt-1">Riceverai una risposta al più presto.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" aria-label="Modulo di contatto">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Nome</label>
+                  <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">Nome</label>
                   <Input
+                    id="contact-name"
                     type="text"
                     placeholder="Il tuo nome"
                     value={name}
@@ -85,8 +90,9 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Email</label>
+                  <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">Email</label>
                   <Input
+                    id="contact-email"
                     type="email"
                     placeholder="la-tua-email@example.com"
                     value={email}
@@ -97,8 +103,9 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Messaggio</label>
+                  <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">Messaggio</label>
                   <Textarea
+                    id="contact-message"
                     placeholder="Il tuo messaggio..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -115,7 +122,7 @@ const ContactSection = () => {
                 >
                   {sending ? "Invio..." : "Invia messaggio"}
                 </Button>
-                {error && <p className="text-xs text-destructive text-center">{error}</p>}
+                {error && <p className="text-xs text-destructive text-center" role="alert">{error}</p>}
               </form>
             )}
           </motion.div>
@@ -135,6 +142,7 @@ const ContactSection = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Visita il profilo ${social.name} di Massimo Di Stefano`}
                   className="flex items-center gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50 text-foreground hover:border-accent hover:bg-secondary/50 transition-all group"
                   whileHover={{ x: 4 }}
                   initial={{ opacity: 0, y: 10 }}
@@ -142,18 +150,18 @@ const ContactSection = () => {
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: false }}
                 >
-                  <span className="text-xl">
+                  <span className="text-xl" aria-hidden="true">
                     {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
                   </span>
                   <span className="font-medium">{social.name}</span>
-                  <span className="ml-auto text-muted-foreground group-hover:text-accent">→</span>
+                  <span className="ml-auto text-muted-foreground group-hover:text-accent" aria-hidden="true">→</span>
                 </motion.a>
               ))}
             </div>
           </motion.div>
         </div>
 
-        <motion.div
+        <motion.footer
           className="mt-16 pt-8 border-t border-border/50 text-center text-muted-foreground text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -161,7 +169,7 @@ const ContactSection = () => {
           viewport={{ once: false }}
         >
           <p>© 2026 Massimo Di Stefano. Tutti i diritti riservati.</p>
-        </motion.div>
+        </motion.footer>
       </div>
     </section>
   );

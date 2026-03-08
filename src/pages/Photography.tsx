@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
+import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -12,7 +13,12 @@ const Photography = () => {
   }));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Photography"
+        description="Fotografia d'arte di Massimo Di Stefano: momenti di bellezza quotidiana e straordinarietà nascoste, stampe fine art."
+        canonicalPath="/photography"
+      />
       <Navbar />
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -23,8 +29,9 @@ const Photography = () => {
               if (element) setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
             }}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-12"
+            aria-label="Torna alla homepage, sezione Photography"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} aria-hidden="true" />
             <span>Torna alle discipline</span>
           </Link>
 
@@ -51,7 +58,7 @@ const Photography = () => {
           </motion.div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

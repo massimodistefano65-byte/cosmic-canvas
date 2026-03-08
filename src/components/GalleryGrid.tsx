@@ -18,10 +18,11 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
   const navigate = useNavigate();
 
   return (
-    <div className="columns-2 md:columns-4 gap-12 space-y-12">
+    <div className="columns-2 md:columns-4 gap-12 space-y-12" role="list" aria-label={`Galleria ${discipline}`}>
       {items.map((item, idx) => (
         <motion.div
           key={item.id}
+          role="listitem"
           className="break-inside-avoid rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
           whileHover={{ scale: 1.03 }}
           initial={{ opacity: 0 }}
@@ -33,7 +34,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           {item.thumbnailUrl ? (
             <img
               src={item.thumbnailUrl}
-              alt={item.title}
+              alt={`${item.title} di Massimo Di Stefano`}
               className="w-full h-auto object-cover"
               loading="lazy"
             />
@@ -43,6 +44,8 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
               style={{
                 background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
               }}
+              role="img"
+              aria-label={item.title}
             />
           )}
 

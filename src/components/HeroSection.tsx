@@ -33,10 +33,10 @@ const HeroSection = () => {
       />
 
       {/* Content - Bottom Left */}
-      <div className="relative z-10 h-full flex flex-col justify-end" style={{ paddingLeft: "4.5rem", paddingBottom: "6rem" }}>
-        <div className="flex flex-col items-start text-left">
+      <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-0" style={{ paddingBottom: "6rem", maxWidth: "100vw" }}>
+        <div className="flex flex-col items-start text-left" style={{ paddingLeft: "clamp(1rem, 5vw, 4.5rem)" }}>
           <motion.h1
-            className="leading-tight whitespace-nowrap"
+            className="leading-tight"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               color: "#ffffff",
@@ -45,8 +45,8 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           >
-            <span style={{ fontWeight: 300, fontSize: "5rem" }}>Massimo </span>
-            <span style={{ fontWeight: 600, fontSize: "5rem" }}>Di Stefano</span>
+            <span className="block md:inline" style={{ fontWeight: 300, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Massimo </span>
+            <span className="block md:inline" style={{ fontWeight: 600, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Di Stefano</span>
           </motion.h1>
 
           {/* Gold Line */}

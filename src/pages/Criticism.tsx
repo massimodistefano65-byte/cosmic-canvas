@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 
 const Criticism = () => {
@@ -24,10 +25,15 @@ const Criticism = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Testi Critici"
+        description="Testi critici e riflessioni sull'opera di Massimo Di Stefano da riviste e critici d'arte contemporanea."
+        canonicalPath="/criticism"
+      />
       <Navbar />
 
-      <div className="pt-20 pb-12">
+      <section className="pt-20 pb-12">
         <div className="max-w-4xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -41,10 +47,11 @@ const Criticism = () => {
               Writings and reflections on the work of Massimo Di Stefano
             </p>
 
-            <div className="space-y-8">
+            <div className="space-y-8" role="list">
               {critiques.map((critique, index) => (
                 <motion.article
                   key={index}
+                  role="listitem"
                   className="p-8 bg-secondary/20 border border-border/50 rounded-lg hover:border-accent/50 transition-all cursor-pointer group"
                   whileHover={{ x: 4 }}
                   initial={{ opacity: 0, y: 20 }}
@@ -69,8 +76,8 @@ const Criticism = () => {
             </div>
           </motion.div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

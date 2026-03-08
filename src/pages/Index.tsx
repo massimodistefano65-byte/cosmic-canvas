@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import StackedSection from "@/components/StackedSection";
 import ContactSection from "@/components/ContactSection";
+import SEOHead from "@/components/SEOHead";
 
 const useScrollToAnchor = () => {
   const location = useLocation();
@@ -58,11 +59,30 @@ const sections = [
   },
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Massimo Di Stefano",
+  description: "Portfolio ufficiale di Massimo Di Stefano: pittura, fotografia, arte digitale e design.",
+  url: "https://massimodistefano.art",
+  author: {
+    "@type": "Person",
+    name: "Massimo Di Stefano",
+    jobTitle: "Artista Visivo",
+  },
+};
+
 const Index = () => {
   useScrollToAnchor();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Home"
+        description="Portfolio ufficiale di Massimo Di Stefano: pittura, fotografia, arte digitale e design. Artista visivo e pittore cosmico visionario."
+        canonicalPath="/"
+        jsonLd={jsonLd}
+      />
       <Navbar />
       <ReactFullpage
         scrollingSpeed={2000}

@@ -22,19 +22,16 @@ const Navbar = () => {
   const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsOpen(false);
 
-    // "Home" always goes to / top
     if (item.label === "Home") {
       window.location.href = "/";
       return;
     }
 
-    // Bio / Criticism → navigate to their page
     if (!item.scroll) {
       navigate(item.href);
       return;
     }
 
-    // Scroll items: always go through homepage
     if (location.pathname === "/") {
       const element = document.getElementById(item.scroll as string);
       if (element) {
@@ -63,7 +60,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-black/40 backdrop-blur-md border-b border-border/50">
+    <nav
+      className="fixed top-0 z-50 w-full bg-black/40 backdrop-blur-md border-b border-border/50"
+      role="navigation"
+      aria-label="Menu principale"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Desktop Nav */}
@@ -77,8 +78,10 @@ const Navbar = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-foreground hover:text-accent transition-colors"
+            aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
           </button>
         </div>
 
@@ -89,11 +92,13 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className="md:hidden pb-4 space-y-2"
+            role="menu"
           >
             {navItems.map((item) => (
-              <div key={item.label}>
+              <div key={item.label} role="none">
                 <button
                   onClick={() => handleNavClick(item)}
+                  role="menuitem"
                   className="w-full text-left px-4 py-2 text-foreground hover:bg-secondary/50 rounded transition-colors"
                 >
                   {item.label}
