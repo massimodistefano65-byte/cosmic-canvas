@@ -12,8 +12,6 @@ const Navbar = () => {
   const { t } = useI18n();
   const isHome = location.pathname === "/";
 
-  const isHome = location.pathname === "/";
-
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
     { label: t("nav.bio"), href: "/bio", scroll: false },
