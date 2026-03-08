@@ -103,10 +103,10 @@ const ArtworkDetail = () => {
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
-        {/* Back link — discrete arrow */}
+        {/* Back link — vertically centered on left */}
         <Link
           to={`/${discipline}`}
-          className="absolute top-[5.5rem] left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+          className="absolute top-1/2 -translate-y-1/2 left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
           aria-label={`Back to ${discLabel}`}
         >
           <ArrowLeft size={15} aria-hidden="true" />

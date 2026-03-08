@@ -49,7 +49,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           <motion.div
             key={item.id}
             role="listitem"
-            className="rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
+            className="rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative shadow-[4px_6px_20px_-4px_rgba(0,0,0,0.5),0_2px_8px_-2px_rgba(0,0,0,0.3)]"
             style={{
               gridColumn: `span ${size.col}`,
               gridRow: `span ${size.row}`,
