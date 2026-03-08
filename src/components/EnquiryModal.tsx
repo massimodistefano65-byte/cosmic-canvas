@@ -28,6 +28,11 @@ const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModa
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
 
+  // Sync subject when artwork changes
+  useEffect(() => {
+    setSubject(`Informazioni su: ${artworkTitle}`);
+  }, [artworkTitle]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
