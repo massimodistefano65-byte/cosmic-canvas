@@ -7,6 +7,7 @@ import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Plus } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
+import { useI18n } from "@/lib/i18n";
 import {
   Tooltip,
   TooltipContent,
