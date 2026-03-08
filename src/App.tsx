@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,7 +22,19 @@ import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  // Block right-click on images globally
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if ((e.target as HTMLElement)?.tagName === "IMG") {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("contextmenu", handler);
+    return () => document.removeEventListener("contextmenu", handler);
+  }, []);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
       <TooltipProvider>
@@ -50,5 +63,6 @@ const App = () => (
     </I18nProvider>
   </QueryClientProvider>
 );
+};
 
 export default App;

@@ -132,3 +132,19 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* ===== Image Protection ===== */
+img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Re-enable pointer-events on interactive wrappers (buttons, links) so clicks still work */
+button img,
+a img,
+[role="listitem"] img {
+  pointer-events: none;
+}

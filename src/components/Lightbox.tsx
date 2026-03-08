@@ -27,16 +27,21 @@ const Lightbox = ({ isOpen, onClose, imageUrl, alt }: LightboxProps) => {
             <X size={32} />
           </button>
 
-          <motion.img
-            src={imageUrl}
-            alt={alt}
-            className="max-w-[90vw] max-h-[90vh] object-contain"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <motion.img
+              src={imageUrl}
+              alt={alt}
+              className="max-w-[90vw] max-h-[90vh] object-contain"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onContextMenu={(e) => e.preventDefault()}
+              draggable={false}
+            />
+            {/* Transparent overlay to block direct image interaction */}
+            <div className="absolute inset-0" />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
