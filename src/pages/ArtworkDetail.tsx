@@ -265,36 +265,15 @@ const ArtworkDetail = () => {
 
       {/* ===== MOBILE LAYOUT (<md) ===== */}
       <div className="md:hidden flex-1 pt-16 overflow-y-auto">
-        {/* Back link + actions row */}
-        <div className="flex items-center justify-between px-4 py-3">
+        {/* Back link */}
+        <div className="flex items-center px-4 py-3">
           <Link
             to={`/${discipline}`}
-            className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+            className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
             aria-label={`Back to ${discLabel}`}
           >
             <ArrowLeft size={14} aria-hidden="true" />
           </Link>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setLiked(!liked)}
-              aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                liked
-                  ? "text-red-500 border-red-500/40"
-                  : "text-muted-foreground/60 border-border/40 hover:border-foreground/30 hover:text-foreground"
-              }`}
-            >
-              <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
-            </button>
-            <button
-              onClick={() => setEnquiryOpen(true)}
-              aria-label="Richiedi informazioni sull'opera"
-              className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/60 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
-            >
-              <Plus size={16} aria-hidden="true" />
-            </button>
-          </div>
         </div>
 
         <motion.div
@@ -328,37 +307,59 @@ const ArtworkDetail = () => {
             )}
           </button>
 
-          {/* Info — refined */}
+          {/* Info */}
           <div className="space-y-4 mb-6">
             <div>
               <h1
-                className="text-2xl font-light tracking-wide text-foreground leading-tight"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                className="text-2xl tracking-wide text-foreground leading-tight"
+                style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/70">
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/80">
                 {artwork.year}
               </p>
             </div>
 
             <div className="space-y-3">
-              <div className="border-t border-border/20 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-xs text-muted-foreground/80 font-light">{artwork.dimensions}</p>
+                <p className="text-xs text-muted-foreground font-light">{artwork.dimensions}</p>
               </div>
-              <div className="border-t border-border/20 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-muted-foreground/80 font-light">{artwork.technique}</p>
+                <p className="text-xs text-muted-foreground font-light">{artwork.technique}</p>
               </div>
+            </div>
+
+            {/* Action buttons — below metadata */}
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                onClick={() => setLiked(!liked)}
+                aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  liked
+                    ? "text-red-500 border-red-500/40"
+                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                }`}
+              >
+                <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+              </button>
+              <button
+                onClick={() => setEnquiryOpen(true)}
+                aria-label="Richiedi informazioni sull'opera"
+                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+              >
+                <Plus size={16} aria-hidden="true" />
+              </button>
             </div>
           </div>
 
-          {/* Thumbnails — horizontal scroll, larger */}
+          {/* Thumbnails */}
           {allImages.length > 1 && (
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) =>
