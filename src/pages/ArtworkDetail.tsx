@@ -373,34 +373,37 @@ const ArtworkDetail = () => {
 
           {/* Thumbnails */}
           {allImages.length > 1 && (
-            <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
+            <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) =>
                 idx === 0 ? null : (
-                  <div key={idx} className="relative group/thumb flex-shrink-0 w-24 h-24" style={{ zIndex: allImages.length - idx }}>
-                    <div className="absolute -inset-[3px] rounded opacity-50 group-hover/thumb:opacity-80 transition-opacity duration-500 blur-[5px] pointer-events-none bg-white/50" />
-                    <button
-                      onClick={() => setSelectedImage(idx)}
-                      aria-label={`Visualizza ${img.label}`}
-                      className={`relative w-24 h-24 rounded overflow-hidden border transition-all duration-300 ${
-                        selectedImage === idx
-                          ? "border-accent"
-                          : "border-border/20 hover:border-accent/40"
-                      }`}
-                    >
-                      {img.url ? (
-                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
-                      ) : (
-                        <div
-                          className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
-                          style={{
-                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
-                          }}
-                        >
-                          {img.label}
-                        </div>
-                      )}
-                    </button>
-                  </div>
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    aria-label={`Visualizza ${img.label}`}
+                    className={`flex-shrink-0 w-28 h-28 rounded overflow-hidden border transition-all duration-500 ${
+                      selectedImage === idx
+                        ? "border-accent"
+                        : "border-border/20 hover:border-accent/40"
+                    }`}
+                    style={{
+                      boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
+                    onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
+                  >
+                    {img.url ? (
+                      <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
+                        style={{
+                          background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                        }}
+                      >
+                        {img.label}
+                      </div>
+                    )}
+                  </button>
                 )
               )}
             </div>
