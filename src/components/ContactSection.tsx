@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -169,6 +170,15 @@ const ContactSection = () => {
           viewport={{ once: false }}
         >
           <p>© 2026 Massimo Di Stefano. Tutti i diritti riservati.</p>
+          <div className="mt-3 flex items-center justify-center gap-4 text-xs">
+            <Link to="/privacy-policy" className="hover:text-accent transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-border">·</span>
+            <Link to="/cookie-policy" className="hover:text-accent transition-colors">
+              Cookie Policy
+            </Link>
+          </div>
         </motion.footer>
       </div>
     </section>
