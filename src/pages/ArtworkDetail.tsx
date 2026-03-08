@@ -69,7 +69,7 @@ const ArtworkDetail = () => {
   };
 
   return (
-    <main className="h-screen overflow-hidden bg-background text-foreground flex flex-col">
+    <main className="min-h-screen md:h-screen md:overflow-hidden bg-background text-foreground flex flex-col">
       <SEOHead
         title={`${artwork.title} — ${discLabel}`}
         description={`${artwork.title} (${artwork.year}) di Massimo Di Stefano. ${artwork.technique}, ${artwork.dimensions}. ${discLabel}.`}
@@ -90,7 +90,8 @@ const ArtworkDetail = () => {
         discipline={discipline || ""}
       />
 
-      <div className="flex-1 flex pt-16 min-h-0 relative">
+      {/* ===== DESKTOP LAYOUT (md+) ===== */}
+      <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
         {/* Back link */}
         <Link
           to={`/${discipline}`}
@@ -227,6 +228,130 @@ const ArtworkDetail = () => {
               )}
             </div>
           </div>
+        </motion.div>
+      </div>
+
+      {/* ===== MOBILE LAYOUT (<md) ===== */}
+      <div className="md:hidden flex-1 pt-16 overflow-y-auto">
+        {/* Back link + actions row */}
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link
+            to={`/${discipline}`}
+            className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-sm"
+            aria-label={`Torna alla galleria ${discLabel}`}
+          >
+            <ArrowLeft size={16} aria-hidden="true" />
+            <span>Galleria</span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLiked(!liked)}
+              aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors ${
+                liked
+                  ? "text-red-500 border-red-500/40"
+                  : "text-muted-foreground border-border/50 hover:border-accent/60 hover:text-accent"
+              }`}
+            >
+              <Heart size={18} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+            </button>
+            <button
+              onClick={() => setEnquiryOpen(true)}
+              aria-label="Richiedi informazioni sull'opera"
+              className="w-10 h-10 rounded-full border-2 border-border/50 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
+            >
+              <Plus size={18} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="px-4 pb-8"
+        >
+          {/* Main image */}
+          <button
+            onClick={() => setLightboxOpen(true)}
+            className="w-full cursor-zoom-in mb-6"
+            aria-label={`Apri ${artwork.title} in lightbox`}
+          >
+            {currentImageUrl ? (
+              <img
+                src={currentImageUrl}
+                alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                className="w-full h-auto object-contain rounded"
+                loading="lazy"
+              />
+            ) : (
+              <div
+                className="w-full aspect-[4/5] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
+                style={{
+                  background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                }}
+              >
+                Tocca per full-view
+              </div>
+            )}
+          </button>
+
+          {/* Info */}
+          <div className="space-y-4 mb-6">
+            <div>
+              <h1 className="text-2xl font-light tracking-wide text-foreground leading-tight">
+                {artwork.title}
+              </h1>
+              <p className="text-xs tracking-widest uppercase mt-1 text-muted-foreground">
+                {artwork.year}
+              </p>
+            </div>
+
+            <dl className="space-y-2">
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <dt className="uppercase tracking-wider text-xs">Misure</dt>
+                <dd className="font-light">{artwork.dimensions}</dd>
+              </div>
+              <div className="flex justify-between text-sm text-muted-foreground">
+                <dt className="uppercase tracking-wider text-xs">Tecnica</dt>
+                <dd className="font-light">{artwork.technique}</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Thumbnails — horizontal scroll */}
+          {allImages.length > 1 && (
+            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
+              {allImages.map((img, idx) =>
+                idx === 0 ? null : (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    aria-label={`Visualizza ${img.label}`}
+                    className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+                      selectedImage === idx
+                        ? "border-accent"
+                        : "border-border/30 hover:border-accent/40"
+                    }`}
+                  >
+                    {img.url ? (
+                      <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                    ) : (
+                      <div
+                        className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
+                        style={{
+                          background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                        }}
+                      >
+                        {img.label}
+                      </div>
+                    )}
+                  </button>
+                )
+              )}
+            </div>
+          )}
         </motion.div>
       </div>
     </main>
