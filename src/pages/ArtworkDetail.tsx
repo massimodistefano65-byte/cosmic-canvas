@@ -323,7 +323,7 @@ const ArtworkDetail = () => {
 
             <dl className="space-y-2">
               <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">Misure</dt>
+                <dt className="uppercase tracking-wider text-xs">{t("artwork.dimensions")}</dt>
                 <dd className="font-light">{artwork.dimensions}</dd>
               </div>
               <div className="flex justify-between text-sm text-muted-foreground">
