@@ -48,7 +48,7 @@ const HeroSection = () => {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.15) 25%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.88) 75%, rgba(0,0,0,0.92) 100%)",
+          background: "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.08) 30%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.82) 80%, rgba(0,0,0,0.9) 100%)",
         }}
       />
 
