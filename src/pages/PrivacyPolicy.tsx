@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
         title="Privacy Policy"
-        description="Informativa sulla privacy del sito massimodistefano.art"
+        description="Informativa sulla privacy del sito massimodistefano.com"
         canonicalPath="/privacy-policy"
       />
       <Navbar />

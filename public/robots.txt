@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://massimodistefano.art/sitemap.xml
+Sitemap: https://massimodistefano.com/sitemap.xml
