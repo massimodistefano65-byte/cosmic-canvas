@@ -138,7 +138,7 @@ const ContactSection = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: false }}
           >
-            <h3 className="text-2xl font-semibold text-foreground mb-8">{t("contact.connect")}</h3>
+            <h3 className="text-2xl text-foreground mb-8" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.connect")}</h3>
             <div className="space-y-4">
               {socialLinks.map((social, index) => (
                 <motion.a
