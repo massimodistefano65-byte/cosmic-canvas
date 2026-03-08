@@ -12,6 +12,9 @@ import DigitalArt from "./pages/DigitalArt";
 import TShirt from "./pages/TShirt";
 import ArtworkDetail from "./pages/ArtworkDetail";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <CookieBanner />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/bio" element={<Bio />} />
@@ -29,6 +33,8 @@ const App = () => (
           <Route path="/photography" element={<Photography />} />
           <Route path="/digital-art" element={<DigitalArt />} />
           <Route path="/t-shirt" element={<TShirt />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/:discipline/:artworkId" element={<ArtworkDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
