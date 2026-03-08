@@ -325,7 +325,7 @@ const ArtworkDetail = () => {
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/80">
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-foreground">
                 {artwork.year}
               </p>
             </div>
