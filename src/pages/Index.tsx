@@ -96,6 +96,9 @@ const Index = () => {
         animateAnchor={false}
         css3={true}
         credits={{ enabled: false }}
+        onLeave={(_origin, destination) => {
+          window.dispatchEvent(new CustomEvent("fullpage-section", { detail: destination.index }));
+        }}
         render={() => (
           <ReactFullpage.Wrapper>
             {/* Hero Section */}
