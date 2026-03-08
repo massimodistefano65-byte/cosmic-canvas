@@ -125,7 +125,7 @@ const ArtworkDetail = () => {
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <div className="relative inline-block group">
               {/* LED glow behind artwork */}
-              <div className="absolute -inset-[2px] rounded opacity-35 group-hover:opacity-60 transition-opacity duration-700 blur-[3px] pointer-events-none bg-white/30" />
+              <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
             <button
               onClick={() => setLightboxOpen(true)}
               className="relative block cursor-zoom-in"
