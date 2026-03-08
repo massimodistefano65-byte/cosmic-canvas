@@ -1,6 +1,10 @@
 /// <reference types="vite/client" />
 
-interface Window {
-  gtag?: (...args: any[]) => void;
-  dataLayer?: any[];
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+    dataLayer?: any[];
+  }
 }
+
+export {};
