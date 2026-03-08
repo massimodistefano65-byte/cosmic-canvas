@@ -90,7 +90,21 @@ const painting: ArtworkFullData[] = [
   },
   // ── Aggiungi qui nuove opere di Painting ──
   // Copia il blocco sopra, cambia id, title, year, ecc.
-  { id: "2", title: "Nebulosa Urbana",       year: "2024", dimensions: "80 × 60 cm",  technique: "Olio su tela",     preview: "", main: "", full: "", images: [] },
+  {
+    id: "2",
+    title: "Nebulosa Urbana",
+    year: "2024",
+    dimensions: "80 × 60 cm",
+    technique: "Olio su tela",
+    preview: "/artworks/painting/1/pensieri-in-evoluzione-painting-preview.jpg",
+    main:    "/artworks/painting/1/pensieri-in-evoluzione-painting-1.jpg",
+    full:    "/artworks/painting/1/pensieri-in-evoluzione-painting-1.jpg",
+    images: [
+      { url: "/artworks/painting/1/pensieri-in-evoluzione-room-view-1.jpg", label: "Room View 1" },
+      { url: "/artworks/painting/1/pensieri-in-evoluzione-detail-1.jpg",    label: "Dettaglio 1" },
+      { url: "/artworks/painting/1/pensieri-in-evoluzione-detail-2.jpg",    label: "Dettaglio 2" },
+    ],
+  },
   { id: "3", title: "Frammenti di Luce",     year: "2024", dimensions: "90 × 70 cm",  technique: "Acrilico su tela", preview: "", main: "", full: "", images: [] },
   { id: "4", title: "Orizzonte Liquido",     year: "2024", dimensions: "120 × 80 cm", technique: "Tecnica mista",    preview: "", main: "", full: "", images: [] },
   { id: "5", title: "Materia Oscura",        year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela",    preview: "", main: "", full: "", images: [] },
