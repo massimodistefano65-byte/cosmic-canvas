@@ -19,20 +19,66 @@ interface GalleryGridProps {
  * Ogni item ha una dimensione nella griglia (colSpan x rowSpan).
  * Il pattern si ripete ciclicamente.
  */
-const sizePattern = [
-  { col: 2, row: 2 }, // grande quadrato
-  { col: 1, row: 1 }, // piccolo
-  { col: 1, row: 2 }, // verticale
-  { col: 1, row: 1 }, // piccolo
-  { col: 1, row: 1 }, // piccolo
-  { col: 2, row: 1 }, // orizzontale largo
-  { col: 1, row: 1 }, // piccolo
-  { col: 1, row: 2 }, // verticale
-  { col: 1, row: 1 }, // piccolo
-  { col: 2, row: 2 }, // grande quadrato
-  { col: 1, row: 1 }, // piccolo
-  { col: 1, row: 1 }, // piccolo
+/**
+ * 4 pattern diversi per evitare ripetitività.
+ * I blocchi grandi (2×2, 2×1) cadono in posizioni diverse
+ * così il layout sembra randomizzato ma resta controllato.
+ */
+const patternA = [
+  // 2×2 a SINISTRA
+  { col: 2, row: 2 },
+  { col: 1, row: 1 },
+  { col: 1, row: 2 },
+  { col: 1, row: 1 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
 ];
+
+const patternB = [
+  // 2×2 a DESTRA (piccole prima, poi il grande)
+  { col: 1, row: 1 },
+  { col: 1, row: 2 },
+  { col: 2, row: 2 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
+  { col: 1, row: 1 },
+];
+
+const patternC = [
+  // 2×2 al CENTRO (piccola, grande, piccola)
+  { col: 1, row: 1 },
+  { col: 2, row: 2 },
+  { col: 1, row: 1 },
+  { col: 1, row: 2 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
+];
+
+const patternD = [
+  // orizzontale largo prima, poi 2×2 a destra
+  { col: 2, row: 1 },
+  { col: 1, row: 1 },
+  { col: 1, row: 1 },
+  { col: 1, row: 1 },
+  { col: 1, row: 2 },
+  { col: 2, row: 2 },
+];
+
+const allPatterns = [patternA, patternB, patternC, patternD];
+
+/** Dato un indice globale, restituisce la dimensione dal pattern corretto */
+const getSizeForIndex = (idx: number) => {
+  let cumulative = 0;
+  let patternIdx = 0;
+  while (true) {
+    const pattern = allPatterns[patternIdx % allPatterns.length];
+    if (idx < cumulative + pattern.length) {
+      return pattern[idx - cumulative];
+    }
+    cumulative += pattern.length;
+    patternIdx++;
+  }
+};
 
 const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGridProps) => {
   const navigate = useNavigate();
@@ -44,7 +90,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
       aria-label={`Galleria ${discipline}`}
     >
       {items.map((item, idx) => {
-        const size = sizePattern[idx % sizePattern.length];
+        const size = getSizeForIndex(idx);
         return (
           <motion.div
             key={item.id}
