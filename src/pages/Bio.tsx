@@ -33,7 +33,8 @@ type BioBlock =
   | { type: "photo-sm"; src: string; alt: string }
   | { type: "photo-lg"; src: string; alt: string; caption?: string }
   | { type: "heading"; key: string }
-  | { type: "list"; keys: string[] };
+  | { type: "list"; keys: string[] }
+  | { type: "video"; youtubeId: string; caption?: string };
 
 const bioSections: BioBlock[] = [
   // --- Prima parte biografia ---
