@@ -94,6 +94,10 @@ const translations: Record<string, Record<Lang, string>> = {
   "bio.practice2": { it: "Fotografia fine art", en: "Fine art photography" },
   "bio.practice3": { it: "Composizione e manipolazione digitale", en: "Digital composition and manipulation" },
   "bio.practice4": { it: "Design di abbigliamento in edizione limitata", en: "Limited edition apparel design" },
+  "bio.photos": { it: "L'artista al lavoro", en: "The artist at work" },
+  "bio.downloads": { it: "Materiali", en: "Materials" },
+  "bio.downloadCatalogHD": { it: "Catalogo HD", en: "Catalog HD" },
+  "bio.downloadCatalogLight": { it: "Catalogo Light", en: "Catalog Light" },
 
   // Criticism page
   "criticism.title": { it: "Testi Critici", en: "Critical Texts" },
