@@ -51,11 +51,12 @@ const bioSections: BioBlock[] = [
   { type: "heading", key: "bio.practice" },
   { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
 
+  // --- Video ---
+  { type: "video", youtubeId: "x9ZMeR7e4MU" },
+
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // Esempi:
+  // { type: "video", youtubeId: "ID_VIDEO", caption: "Didascalia opzionale" },
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
-  // { type: "text", key: "bio.mostre" },
-  // { type: "photo-sm", src: "/images/bio/mostra-2024.jpg", alt: "Mostra 2024" },
 ];
 
 const downloads = [
