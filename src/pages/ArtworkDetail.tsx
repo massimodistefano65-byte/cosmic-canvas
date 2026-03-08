@@ -7,6 +7,7 @@ import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Plus } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
+import { useI18n } from "@/lib/i18n";
 import {
   Tooltip,
   TooltipContent,
@@ -27,6 +28,7 @@ const ArtworkDetail = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const { t } = useI18n();
 
   const artwork = getArtwork(discipline || "", artworkId || "");
 
@@ -108,7 +110,7 @@ const ArtworkDetail = () => {
           aria-label={`Torna alla galleria ${discLabel}`}
         >
           <ArrowLeft size={14} aria-hidden="true" />
-          <span>Galleria</span>
+          <span>{t("artwork.back")}</span>
         </Link>
 
         <motion.div
@@ -196,11 +198,11 @@ const ArtworkDetail = () => {
 
               <dl className="space-y-2">
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <dt className="uppercase tracking-wider">Misure</dt>
+                  <dt className="uppercase tracking-wider">{t("artwork.dimensions")}</dt>
                   <dd className="font-light">{artwork.dimensions}</dd>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <dt className="uppercase tracking-wider">Tecnica</dt>
+                  <dt className="uppercase tracking-wider">{t("artwork.technique")}</dt>
                   <dd className="font-light">{artwork.technique}</dd>
                 </div>
               </dl>
@@ -252,7 +254,7 @@ const ArtworkDetail = () => {
             aria-label={`Torna alla galleria ${discLabel}`}
           >
             <ArrowLeft size={16} aria-hidden="true" />
-            <span>Galleria</span>
+            <span>{t("artwork.back")}</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -321,11 +323,11 @@ const ArtworkDetail = () => {
 
             <dl className="space-y-2">
               <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">Misure</dt>
+                <dt className="uppercase tracking-wider text-xs">{t("artwork.dimensions")}</dt>
                 <dd className="font-light">{artwork.dimensions}</dd>
               </div>
               <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">Tecnica</dt>
+                <dt className="uppercase tracking-wider text-xs">{t("artwork.technique")}</dt>
                 <dd className="font-light">{artwork.technique}</dd>
               </div>
             </dl>

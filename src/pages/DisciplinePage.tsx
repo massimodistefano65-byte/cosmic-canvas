@@ -5,12 +5,13 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { getArtworksByDiscipline } from "@/lib/artworkData";
+import { useI18n } from "@/lib/i18n";
 
 interface DisciplineConfig {
   key: string;
   title: string;
   seoDescription: string;
-  introText: string;
+  introKey: string;
   gradientFrom: string;
   gradientTo: string;
 }
@@ -20,7 +21,7 @@ const disciplines: Record<string, DisciplineConfig> = {
     key: "painting",
     title: "Painting",
     seoDescription: "Opere pittoriche di Massimo Di Stefano: esplorazioni del cosmo interiore e dell'universo attraverso olio, acrilico e tecnica mista su tela.",
-    introText: "Le opere pittoriche di Massimo Di Stefano esplorano il confine tra il cosmo interno e l'universo esterno.",
+    introKey: "painting.intro",
     gradientFrom: "rgba(168,85,247,0.3)",
     gradientTo: "rgba(59,130,246,0.3)",
   },
@@ -28,7 +29,7 @@ const disciplines: Record<string, DisciplineConfig> = {
     key: "photography",
     title: "Photography",
     seoDescription: "Fotografia d'arte di Massimo Di Stefano: momenti di bellezza quotidiana e straordinarietà nascoste, stampe fine art.",
-    introText: "La fotografia di Massimo Di Stefano cattura momenti di bellezza quotidiana e straordinarietà nascoste.",
+    introKey: "photography.intro",
     gradientFrom: "rgba(59,130,246,0.3)",
     gradientTo: "rgba(20,184,166,0.3)",
   },
@@ -36,7 +37,7 @@ const disciplines: Record<string, DisciplineConfig> = {
     key: "digital-art",
     title: "Digital Art",
     seoDescription: "Arte digitale di Massimo Di Stefano: composizioni visionarie che fondono creatività e tecnologia contemporanea.",
-    introText: "L'arte digitale di Massimo Di Stefano rappresenta la convergenza tra la visione creativa e le tecnologie contemporanee.",
+    introKey: "digital-art.intro",
     gradientFrom: "rgba(236,72,153,0.3)",
     gradientTo: "rgba(168,85,247,0.3)",
   },
@@ -44,7 +45,7 @@ const disciplines: Record<string, DisciplineConfig> = {
     key: "t-shirt",
     title: "T-Shirt",
     seoDescription: "T-Shirt d'artista di Massimo Di Stefano: arte indossabile, edizioni limitate in serigrafia e stampa digitale.",
-    introText: "Le magliette di Massimo Di Stefano trasformano l'arte in forma indossabile.",
+    introKey: "t-shirt.intro",
     gradientFrom: "rgba(249,115,22,0.3)",
     gradientTo: "rgba(239,68,68,0.3)",
   },
@@ -55,6 +56,7 @@ interface Props {
 }
 
 const DisciplinePage = ({ disciplineKey }: Props) => {
+  const { t } = useI18n();
   const config = disciplines[disciplineKey];
   if (!config) return null;
 
@@ -109,7 +111,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
             aria-label={`Torna alla homepage, sezione ${config.title}`}
           >
             <ArrowLeft size={20} aria-hidden="true" />
-            <span>Torna alle discipline</span>
+            <span>{t("discipline.back")}</span>
           </Link>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -122,7 +124,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
 
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                {config.introText}
+                {t(config.introKey)}
               </p>
             </div>
 

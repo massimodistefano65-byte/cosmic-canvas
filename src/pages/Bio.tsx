@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -12,10 +13,12 @@ const jsonLd = {
 };
 
 const Bio = () => {
+  const { t } = useI18n();
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Biografia"
+        title={t("bio.title")}
         description="Biografia di Massimo Di Stefano: artista visivo contemporaneo che esplora pittura, fotografia, arte digitale e design indossabile."
         canonicalPath="/bio"
         jsonLd={jsonLd}
@@ -30,50 +33,25 @@ const Bio = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-8 text-foreground">
-              Biography
+              {t("bio.title")}
             </h1>
 
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-              <p>
-                Massimo Di Stefano is a visionary contemporary artist working
-                across multiple disciplines including painting, photography,
-                digital art, and wearable design.
-              </p>
-
-              <p>
-                Born from a deep fascination with cosmic themes and inner vision,
-                his work explores the intersection between the tangible and
-                ethereal, creating immersive visual experiences that challenge
-                perception.
-              </p>
-
-              <p>
-                His artistic practice is rooted in minimalist aesthetics and
-                maximalist emotion—each piece carefully crafted to evoke a sense
-                of cosmic wonder and philosophical depth.
-              </p>
+              <p>{t("bio.p1")}</p>
+              <p>{t("bio.p2")}</p>
+              <p>{t("bio.p3")}</p>
 
               <div className="pt-8 border-t border-border/50">
                 <h2 className="text-2xl font-semibold text-foreground mb-4">
-                  Practice
+                  {t("bio.practice")}
                 </h2>
                 <ul className="space-y-3">
-                  <li className="flex gap-3">
-                    <span className="text-accent" aria-hidden="true">→</span>
-                    <span>Oil and acrylic on canvas</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-accent" aria-hidden="true">→</span>
-                    <span>Fine art photography</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-accent" aria-hidden="true">→</span>
-                    <span>Digital composition and manipulation</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-accent" aria-hidden="true">→</span>
-                    <span>Limited edition apparel design</span>
-                  </li>
+                  {["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"].map((key) => (
+                    <li key={key} className="flex gap-3">
+                      <span className="text-accent" aria-hidden="true">→</span>
+                      <span>{t(key)}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
