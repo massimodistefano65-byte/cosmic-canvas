@@ -162,7 +162,9 @@ const ArtworkDetail = () => {
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                   className="max-w-full max-h-[80vh] object-contain rounded"
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                 />
               ) : (
                 <div

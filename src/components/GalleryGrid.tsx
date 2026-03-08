@@ -37,6 +37,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
               alt={`${item.title} di Massimo Di Stefano`}
               className="w-full h-auto object-cover"
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div
