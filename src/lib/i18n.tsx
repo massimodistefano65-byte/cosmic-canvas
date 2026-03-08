@@ -105,7 +105,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "artwork.year": { it: "Anno", en: "Year" },
   "artwork.dimensions": { it: "Dimensioni", en: "Dimensions" },
   "artwork.technique": { it: "Tecnica", en: "Technique" },
-  "artwork.back": { it: "Torna alla galleria", en: "Back to gallery" },
+  "artwork.back": { it: "Back", en: "Back" },
 
   // EnquiryModal
   "enquiry.title": { it: "Informazioni su:", en: "Enquiry about:" },
