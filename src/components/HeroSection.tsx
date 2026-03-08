@@ -1,9 +1,24 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 const HeroSection = () => {
   const { t } = useI18n();
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Preload hero image
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = "/images/hero-background.jpg";
+  }, []);
+
+  // Faster animations on revisit (sessionStorage flag)
+  const isRevisit = sessionStorage.getItem("heroSeen") === "1";
+  useEffect(() => { sessionStorage.setItem("heroSeen", "1"); }, []);
+  const d = isRevisit ? 0.15 : 0.8; // base duration
+  const baseDelay = isRevisit ? 0.1 : 0.8;
 
   const scrollToSection = () => {
     const element = document.getElementById("painting");
@@ -13,17 +28,19 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-background">
+    <div className="relative w-full h-screen overflow-hidden bg-[#0a0a0a]">
       {/* Background Image with Ken Burns */}
       <motion.div
         className="absolute inset-0"
-        animate={{ scale: [1, 1.07] }}
-        transition={{ duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: imageLoaded ? 1 : 0, scale: [1, 1.07] }}
+        transition={{ opacity: { duration: isRevisit ? 0.3 : 0.6 }, scale: { duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } }}
       >
         <img
           src="/images/hero-background.jpg"
           alt="Hero background artwork"
           className="w-full h-full object-cover"
+          fetchPriority="high"
         />
       </motion.div>
 
@@ -46,7 +63,7 @@ const HeroSection = () => {
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+            transition={{ duration: d, delay: baseDelay, ease: "easeOut" }}
           >
             <span className="block md:inline" style={{ fontWeight: 300, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Massimo </span>
             <span className="block md:inline" style={{ fontWeight: 600, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Di Stefano</span>
@@ -62,7 +79,7 @@ const HeroSection = () => {
             }}
             initial={{ width: 0 }}
             animate={{ width: 110 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
+            transition={{ duration: d, delay: baseDelay + 0.4 * (isRevisit ? 0.3 : 1), ease: "easeOut" }}
           />
 
           {/* Subtitle */}
@@ -77,7 +94,7 @@ const HeroSection = () => {
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
+            transition={{ duration: d, delay: baseDelay + 0.6 * (isRevisit ? 0.3 : 1), ease: "easeOut" }}
           >
             {t("hero.subtitle")}
           </motion.p>
