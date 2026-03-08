@@ -50,7 +50,8 @@ const Navbar = () => {
     return (
       <button
         onClick={() => handleNavClick(item)}
-        className="relative px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-accent group"
+        className="relative px-3 py-2 text-sm tracking-wider uppercase text-foreground/80 transition-colors hover:text-foreground group"
+        style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.7rem" }}
       >
         <motion.span
           className="inline-block"
@@ -109,7 +110,8 @@ const Navbar = () => {
                 <button
                   onClick={() => handleNavClick(item)}
                   role="menuitem"
-                  className="w-full text-left px-4 py-2 text-foreground hover:bg-secondary/50 rounded transition-colors"
+                  className="w-full text-left px-4 py-2 text-foreground/80 hover:text-foreground hover:bg-secondary/50 rounded transition-colors"
+                  style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.75rem", textTransform: "uppercase" }}
                 >
                   {item.label}
                 </button>
