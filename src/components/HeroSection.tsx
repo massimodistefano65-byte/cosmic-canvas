@@ -79,7 +79,7 @@ const HeroSection = () => {
             }}
             initial={{ width: 0 }}
             animate={{ width: 110 }}
-            transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
+            transition={{ duration: d, delay: baseDelay + 0.4 * (isRevisit ? 0.3 : 1), ease: "easeOut" }}
           />
 
           {/* Subtitle */}
