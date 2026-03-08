@@ -193,7 +193,7 @@ const ArtworkDetail = () => {
                 >
                   {t("artwork.technique")}
                 </p>
-                <p className="text-[13px] text-muted-foreground font-light"
+                <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.technique}</p>
               </div>
