@@ -24,7 +24,6 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           key={item.id}
           role="listitem"
           className="break-inside-avoid rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative"
-          whileHover={{ scale: 1.03 }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: idx * 0.05 }}
@@ -35,13 +34,13 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
             <img
               src={item.thumbnailUrl}
               alt={`${item.title} di Massimo Di Stefano`}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               loading="lazy"
               decoding="async"
             />
           ) : (
             <div
-              className="w-full aspect-square"
+              className="w-full aspect-square transition-transform duration-700 ease-out group-hover:scale-110"
               style={{
                 background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
               }}
@@ -50,13 +49,13 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
             />
           )}
 
-          {/* Hover overlay with title */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 flex items-end">
-            <motion.p
-              className="text-white font-medium text-sm p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0"
+          {/* Hover overlay with title slide-up */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end">
+            <p
+              className="text-white font-medium text-sm p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out"
             >
               {item.title}
-            </motion.p>
+            </p>
           </div>
         </motion.div>
       ))}
