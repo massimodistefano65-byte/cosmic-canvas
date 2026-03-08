@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
@@ -7,9 +7,18 @@ import { useI18n } from "@/lib/i18n";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useI18n();
+  const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
@@ -66,7 +75,11 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 z-50 w-full bg-black/40 backdrop-blur-md border-b border-border/50"
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
+        !isHome || scrolled || isOpen
+          ? "bg-black/40 backdrop-blur-md border-b border-border/50"
+          : "bg-transparent border-b border-transparent"
+      }`}
       role="navigation"
       aria-label="Menu principale"
     >
