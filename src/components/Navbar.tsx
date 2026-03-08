@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useI18n } from "@/lib/i18n";
 
-const HIDE_DELAY = 2500; // ms di inattività mouse prima di nascondere
+const HIDE_DELAY = 1500; // ms di inattività mouse prima di nascondere
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
