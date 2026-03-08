@@ -90,7 +90,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
       aria-label={`Galleria ${discipline}`}
     >
       {items.map((item, idx) => {
-        const size = sizePattern[idx % sizePattern.length];
+        const size = getSizeForIndex(idx);
         return (
           <motion.div
             key={item.id}
