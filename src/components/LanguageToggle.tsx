@@ -6,7 +6,8 @@ const LanguageToggle = () => {
   return (
     <button
       onClick={() => setLang(lang === "it" ? "en" : "it")}
-      className="px-2 py-1 text-xs font-medium tracking-wider uppercase text-muted-foreground hover:text-accent transition-colors border border-border/40 rounded"
+      className="px-2 py-1 text-foreground/80 hover:text-foreground transition-colors border border-border/40 rounded"
+      style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.7rem", textTransform: "uppercase" }}
       aria-label={lang === "it" ? "Switch to English" : "Passa all'italiano"}
     >
       {lang === "it" ? "EN" : "IT"}
