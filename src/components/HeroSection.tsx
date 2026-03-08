@@ -74,7 +74,7 @@ const HeroSection = () => {
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
           >
             Artista visivo e pittore cosmico visionario
           </motion.p>
