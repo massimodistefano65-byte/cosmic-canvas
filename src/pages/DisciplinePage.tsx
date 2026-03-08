@@ -127,14 +127,17 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
                 {t(config.introKey)}
               </p>
             </div>
-
-            <GalleryGrid
-              items={items}
-              discipline={config.key}
-              gradientFrom={config.gradientFrom}
-              gradientTo={config.gradientTo}
-            />
           </motion.div>
+        </div>
+
+        {/* Gallery full-width con padding minimo */}
+        <div className="px-3 md:px-6">
+          <GalleryGrid
+            items={items}
+            discipline={config.key}
+            gradientFrom={config.gradientFrom}
+            gradientTo={config.gradientTo}
+          />
         </div>
       </div>
     </main>
