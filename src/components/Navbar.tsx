@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
@@ -7,30 +7,10 @@ import { useI18n } from "@/lib/i18n";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useI18n();
   const isHome = location.pathname === "/";
-
-  useEffect(() => {
-    // Normal scroll detection (for non-fullpage pages)
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-
-    // FullPage.js section change detection
-    const handleSection = (e: Event) => {
-      const index = (e as CustomEvent).detail;
-      setScrolled(index > 0);
-    };
-    window.addEventListener("fullpage-section", handleSection);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("fullpage-section", handleSection);
-    };
-  }, []);
 
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
@@ -72,7 +52,7 @@ const Navbar = () => {
       <button
         onClick={() => handleNavClick(item)}
         className="relative px-3 py-2 text-sm tracking-wider uppercase text-white transition-all duration-300 hover:text-white/50 group"
-        style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.7rem" }}
+        style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 400, letterSpacing: "0.12em", fontSize: "0.8rem" }}
       >
         <motion.span
           className="inline-block"
@@ -87,11 +67,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        !isHome || scrolled || isOpen
-          ? "bg-black/40 backdrop-blur-md border-b border-border/50"
-          : "bg-transparent border-b border-transparent"
-      }`}
+      className="fixed top-0 z-50 w-full bg-transparent border-b border-transparent"
       role="navigation"
       aria-label="Menu principale"
     >
