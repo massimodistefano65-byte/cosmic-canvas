@@ -16,9 +16,9 @@ const translations: Record<string, Record<Lang, string>> = {
   "nav.photography": { it: "Photography", en: "Photography" },
   "nav.digitalArt": { it: "Digital Art", en: "Digital Art" },
   "nav.tshirt": { it: "T-Shirt", en: "T-Shirt" },
-  "nav.criticism": { it: "Testi Critici", en: "Criticism" },
-  "nav.contacts": { it: "Contatti", en: "Contacts" },
-  "nav.blog": { it: "Diario", en: "Diary" },
+  "nav.criticism": { it: "Criticism", en: "Criticism" },
+  "nav.contacts": { it: "Contacts", en: "Contacts" },
+  "nav.blog": { it: "Journal", en: "Journal" },
 
   // Hero
   "hero.subtitle": { it: "Artista visivo e pittore cosmico visionario", en: "Visual artist and visionary cosmic painter" },
