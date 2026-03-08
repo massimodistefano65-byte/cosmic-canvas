@@ -21,12 +21,13 @@ jobs:
         run: bun run build
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /
-          dangerous-clean-slate: false
-          timeout: 600000
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" <<EOF
+          set ftp:ssl-allow no
+          set net:timeout 60
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          mirror --reverse --verbose --delete ./dist/ /
+          bye
+          EOF
