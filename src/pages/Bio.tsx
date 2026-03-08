@@ -257,6 +257,8 @@ const Bio = () => {
                 return <HeadingBlock key={i} tKey={block.key} t={t} />;
               case "list":
                 return <ListBlock key={i} keys={block.keys} t={t} />;
+              case "video":
+                return <VideoBlock key={i} youtubeId={block.youtubeId} caption={block.caption} />;
               default:
                 return null;
             }
