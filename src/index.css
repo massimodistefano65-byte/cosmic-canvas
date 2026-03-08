@@ -8,8 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark/Cosmic Palette */
-    --background: 220 13% 13%;
+    /* Dark/Cosmic Palette — near black */
+    --background: 220 15% 6%;
     --foreground: 210 40% 98%;
 
     --card: 220 13% 18%;
