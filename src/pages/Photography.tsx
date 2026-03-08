@@ -35,7 +35,7 @@ const Photography = () => {
             >
               Photography
             </h1>
-            <div style={{ width: 80, height: 1, backgroundColor: "#d4af7a" }} className="mb-6" />
+            
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 La fotografia di Massimo Di Stefano cattura momenti di bellezza quotidiana e straordinarietà nascoste.
