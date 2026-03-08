@@ -236,7 +236,7 @@ const ArtworkDetail = () => {
               <div className="flex flex-col gap-2.5 pt-2" role="group" aria-label="Immagini dell'opera">
                 {allImages.map((img, idx) =>
                   idx === 0 ? null : (
-                    <div key={idx} className="relative group/thumb">
+                    <div key={idx} className="relative group/thumb inline-block">
                       <div className="absolute -inset-[2px] rounded opacity-40 group-hover/thumb:opacity-70 transition-opacity duration-500 blur-[4px] pointer-events-none bg-white/40" />
                       <button
                         onClick={() => setSelectedImage(idx)}
@@ -373,7 +373,7 @@ const ArtworkDetail = () => {
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) =>
                 idx === 0 ? null : (
-                  <div key={idx} className="relative group/thumb flex-shrink-0">
+                  <div key={idx} className="relative group/thumb flex-shrink-0 inline-block">
                     <div className="absolute -inset-[2px] rounded opacity-40 group-hover/thumb:opacity-70 transition-opacity duration-500 blur-[4px] pointer-events-none bg-white/40" />
                     <button
                       onClick={() => setSelectedImage(idx)}
