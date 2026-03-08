@@ -254,7 +254,7 @@ const ArtworkDetail = () => {
             aria-label={`Torna alla galleria ${discLabel}`}
           >
             <ArrowLeft size={16} aria-hidden="true" />
-            <span>Galleria</span>
+            <span>{t("artwork.back")}</span>
           </Link>
 
           <div className="flex items-center gap-2">
