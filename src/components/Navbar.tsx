@@ -1,16 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import LanguageToggle from "@/components/LanguageToggle";
 import { useI18n } from "@/lib/i18n";
 
+const HIDE_DELAY = 2500; // ms di inattività mouse prima di nascondere
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useI18n();
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const resetTimer = () => {
+      setVisible(true);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+      hideTimer.current = setTimeout(() => setVisible(false), HIDE_DELAY);
+    };
+
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("mousedown", resetTimer);
+    // Avvia il timer iniziale
+    hideTimer.current = setTimeout(() => setVisible(false), HIDE_DELAY);
+
+    return () => {
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("mousedown", resetTimer);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+    };
+  }, []);
 
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
