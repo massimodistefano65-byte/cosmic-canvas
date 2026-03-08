@@ -28,7 +28,7 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-background">
+    <div className="relative w-full h-screen overflow-hidden bg-[#0a0a0a]">
       {/* Background Image with Ken Burns */}
       <motion.div
         className="absolute inset-0"
