@@ -58,7 +58,7 @@ const ContactSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">{t("contact.title")}</h2>
+          <h2 className="text-4xl md:text-5xl text-foreground mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.title")}</h2>
           <p className="text-muted-foreground">
             <a href="mailto:arte@massimodistefano.com" className="hover:text-accent transition-colors">
               arte@massimodistefano.com
