@@ -183,7 +183,7 @@ const ArtworkDetail = () => {
                 >
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-[13px] text-muted-foreground font-light"
+                <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.dimensions}</p>
               </div>
