@@ -233,11 +233,11 @@ const ArtworkDetail = () => {
 
             {/* Thumbnails — larger */}
             {allImages.length > 1 && (
-              <div className="flex flex-col gap-2.5 pt-2" role="group" aria-label="Immagini dell'opera">
+              <div className="flex flex-col gap-4 pt-2" role="group" aria-label="Immagini dell'opera">
                 {allImages.map((img, idx) =>
                   idx === 0 ? null : (
-                    <div key={idx} className="relative group/thumb w-28 h-28">
-                      <div className="absolute -inset-[2px] rounded opacity-40 group-hover/thumb:opacity-70 transition-opacity duration-500 blur-[4px] pointer-events-none bg-white/40" />
+                    <div key={idx} className="relative group/thumb w-28 h-28" style={{ zIndex: allImages.length - idx }}>
+                      <div className="absolute -inset-[3px] rounded opacity-50 group-hover/thumb:opacity-80 transition-opacity duration-500 blur-[5px] pointer-events-none bg-white/50" />
                       <button
                         onClick={() => setSelectedImage(idx)}
                         aria-label={`Visualizza ${img.label}`}
