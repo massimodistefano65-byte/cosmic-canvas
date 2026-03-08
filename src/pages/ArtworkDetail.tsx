@@ -118,37 +118,8 @@ const ArtworkDetail = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          {/* LEFT — Action buttons */}
-          <div className="flex-shrink-0 flex flex-col gap-3 items-center pl-8 pr-4 pt-[12vh]">
-            <button
-              onClick={() => setLiked(!liked)}
-              aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-              className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                liked
-                  ? "text-red-500 border-red-500/40"
-                  : "text-muted-foreground/60 border-border/40 hover:border-foreground/30 hover:text-foreground"
-              }`}
-            >
-              <Heart size={18} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
-            </button>
-
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button
-                    onClick={() => setEnquiryOpen(true)}
-                    aria-label="Richiedi informazioni sull'opera"
-                    className="w-10 h-10 rounded-full border border-border/40 text-muted-foreground/60 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
-                  >
-                    <Plus size={18} aria-hidden="true" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="text-xs">
-                  Richiedi info / Enquire
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+        {/* LEFT — spacer for symmetry */}
+          <div className="flex-shrink-0 w-16" />
 
           {/* CENTER — Main artwork (maximized) */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
