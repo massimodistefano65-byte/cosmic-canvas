@@ -152,6 +152,7 @@ const ArtworkDetail = () => {
                 </div>
               )}
             </button>
+            </div>
           </div>
 
           {/* RIGHT — Info column (refined) */}
