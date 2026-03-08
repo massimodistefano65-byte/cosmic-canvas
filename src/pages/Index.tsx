@@ -64,7 +64,7 @@ const jsonLd = {
   "@type": "WebSite",
   name: "Massimo Di Stefano",
   description: "Portfolio ufficiale di Massimo Di Stefano: pittura, fotografia, arte digitale e design.",
-  url: "https://massimodistefano.art",
+  url: "https://massimodistefano.com",
   author: {
     "@type": "Person",
     name: "Massimo Di Stefano",

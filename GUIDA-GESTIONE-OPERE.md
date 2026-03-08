@@ -155,7 +155,7 @@ La sitemap (`public/sitemap.xml`) dice a Google quali pagine indicizzare. Va agg
 1. Apri `public/sitemap.xml` su GitHub
 2. Per ogni nuova opera pubblicata, aggiungi una riga:
    ```xml
-   <url><loc>https://massimodistefano.art/painting/7</loc><priority>0.6</priority></url>
+   <url><loc>https://massimodistefano.com/painting/7</loc><priority>0.6</priority></url>
    ```
 3. Per opere rimosse, cancella la riga corrispondente
 4. Commit e push
