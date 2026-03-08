@@ -33,7 +33,8 @@ type BioBlock =
   | { type: "photo-sm"; src: string; alt: string }
   | { type: "photo-lg"; src: string; alt: string; caption?: string }
   | { type: "heading"; key: string }
-  | { type: "list"; keys: string[] };
+  | { type: "list"; keys: string[] }
+  | { type: "video"; youtubeId: string; caption?: string };
 
 const bioSections: BioBlock[] = [
   // --- Prima parte biografia ---
@@ -50,11 +51,12 @@ const bioSections: BioBlock[] = [
   { type: "heading", key: "bio.practice" },
   { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
 
+  // --- Video ---
+  { type: "video", youtubeId: "x9ZMeR7e4MU" },
+
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // Esempi:
+  // { type: "video", youtubeId: "ID_VIDEO", caption: "Didascalia opzionale" },
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
-  // { type: "text", key: "bio.mostre" },
-  // { type: "photo-sm", src: "/images/bio/mostra-2024.jpg", alt: "Mostra 2024" },
 ];
 
 const downloads = [
@@ -158,6 +160,30 @@ const ListBlock = ({ keys, t }: { keys: string[]; t: (k: string) => string }) =>
   </motion.div>
 );
 
+const VideoBlock = ({ youtubeId, caption }: { youtubeId: string; caption?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.98 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.7 }}
+    className="max-w-4xl mx-auto"
+  >
+    <div className="aspect-video w-full rounded-sm overflow-hidden border border-border/20 shadow-xl">
+      <iframe
+        src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+        title="Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="w-full h-full"
+        loading="lazy"
+      />
+    </div>
+    {caption && (
+      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
+    )}
+  </motion.div>
+);
+
 /* ── Pagina principale ── */
 
 const Bio = () => {
@@ -231,6 +257,8 @@ const Bio = () => {
                 return <HeadingBlock key={i} tKey={block.key} t={t} />;
               case "list":
                 return <ListBlock key={i} keys={block.keys} t={t} />;
+              case "video":
+                return <VideoBlock key={i} youtubeId={block.youtubeId} caption={block.caption} />;
               default:
                 return null;
             }
