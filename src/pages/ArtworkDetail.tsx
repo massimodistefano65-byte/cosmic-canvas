@@ -106,7 +106,7 @@ const ArtworkDetail = () => {
         {/* Back link — discrete arrow */}
         <Link
           to={`/${discipline}`}
-          className="absolute top-[5.5rem] left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+          className="absolute top-[5.5rem] left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
           aria-label={`Back to ${discLabel}`}
         >
           <ArrowLeft size={15} aria-hidden="true" />
