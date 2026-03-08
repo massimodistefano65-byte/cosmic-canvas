@@ -182,7 +182,7 @@ const ArtworkDetail = () => {
 
           {/* RIGHT — Info column (refined) */}
           <div
-            className="flex-shrink-0 flex flex-col justify-center gap-8 py-6 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
+            className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto"
             style={{ width: "clamp(200px, 22vw, 280px)" }}
           >
             {/* Title + year — elegant */}
