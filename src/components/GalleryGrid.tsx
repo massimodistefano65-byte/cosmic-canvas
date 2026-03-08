@@ -93,6 +93,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
                 {item.title}
               </p>
             </div>
+            </div>
           </motion.div>
         );
       })}
