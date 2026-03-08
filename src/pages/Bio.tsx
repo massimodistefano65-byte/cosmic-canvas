@@ -26,8 +26,8 @@ const bioPhotos = [
   Downloadable files — place PDFs in public/downloads/
 */
 const downloads = [
-  // { file: "/downloads/catalogo-massimo-di-stefano-hd.pdf", labelKey: "bio.downloadCatalogHD", size: "11 MB" },
-  // { file: "/downloads/catalogo-massimo-di-stefano-light.pdf", labelKey: "bio.downloadCatalogLight", size: "2 MB" },
+  { file: "/downloads/catalogo-massimo-di-stefano-hd.pdf", labelKey: "bio.downloadCatalogHD", size: "11 MB" },
+  { file: "/downloads/catalogo-massimo-di-stefano-light.pdf", labelKey: "bio.downloadCatalogLight", size: "2 MB" },
 ];
 
 const Bio = () => {
