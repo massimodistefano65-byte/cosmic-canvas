@@ -110,7 +110,7 @@ const ArtworkDetail = () => {
           aria-label={`Torna alla galleria ${discLabel}`}
         >
           <ArrowLeft size={14} aria-hidden="true" />
-          <span>Galleria</span>
+          <span>{t("artwork.back")}</span>
         </Link>
 
         <motion.div
