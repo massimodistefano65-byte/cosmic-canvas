@@ -341,7 +341,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-muted-foreground font-light">{artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
             </div>
 
