@@ -4,16 +4,39 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const COOKIE_CONSENT_KEY = "cookie_consent";
+const GA_ID = "G-01V76NQB3Y";
 
 type ConsentValue = "accepted" | "rejected" | null;
+
+/** Load or block Google Analytics based on consent */
+const updateGAConsent = (consent: ConsentValue) => {
+  if (consent === "accepted") {
+    // Enable GA tracking
+    window.gtag?.("consent", "update", {
+      analytics_storage: "granted",
+    });
+  } else {
+    // Deny GA tracking
+    window.gtag?.("consent", "update", {
+      analytics_storage: "denied",
+    });
+  }
+};
 
 const CookieBanner = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem(COOKIE_CONSENT_KEY) as ConsentValue;
-    if (!stored) {
-      // Small delay so it doesn't flash on load
+
+    // Set default consent to denied
+    window.gtag?.("consent", "default", {
+      analytics_storage: "denied",
+    });
+
+    if (stored) {
+      updateGAConsent(stored);
+    } else {
       const timer = setTimeout(() => setVisible(true), 1200);
       return () => clearTimeout(timer);
     }
@@ -21,6 +44,7 @@ const CookieBanner = () => {
 
   const handleConsent = (value: "accepted" | "rejected") => {
     localStorage.setItem(COOKIE_CONSENT_KEY, value);
+    updateGAConsent(value);
     setVisible(false);
   };
 
@@ -40,9 +64,9 @@ const CookieBanner = () => {
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <div className="flex-1 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  Questo sito utilizza cookie tecnici per garantire il corretto funzionamento.
-                  Non utilizziamo cookie di profilazione o di terze parti per pubblicità.
-                  Continuando la navigazione, accetti l'uso dei cookie tecnici.{" "}
+                  Questo sito utilizza cookie tecnici e Google Analytics per
+                  analizzare il traffico in forma anonima. Puoi accettare o
+                  rifiutare i cookie analitici.{" "}
                   <Link
                     to="/cookie-policy"
                     className="text-accent hover:underline"
