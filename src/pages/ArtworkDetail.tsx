@@ -327,7 +327,7 @@ const ArtworkDetail = () => {
                 <dd className="font-light">{artwork.dimensions}</dd>
               </div>
               <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">Tecnica</dt>
+                <dt className="uppercase tracking-wider text-xs">{t("artwork.technique")}</dt>
                 <dd className="font-light">{artwork.technique}</dd>
               </div>
             </dl>
