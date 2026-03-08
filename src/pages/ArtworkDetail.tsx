@@ -335,7 +335,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-xs text-muted-foreground font-light">{artwork.dimensions}</p>
+                <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
               </div>
               <div className="border-t border-border/30 pt-3">
                 <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
