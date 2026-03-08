@@ -5,6 +5,20 @@ import { useI18n } from "@/lib/i18n";
 
 const HeroSection = () => {
   const { t } = useI18n();
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Preload hero image
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = "/images/hero-background.jpg";
+  }, []);
+
+  // Faster animations on revisit (sessionStorage flag)
+  const isRevisit = sessionStorage.getItem("heroSeen") === "1";
+  useEffect(() => { sessionStorage.setItem("heroSeen", "1"); }, []);
+  const d = isRevisit ? 0.15 : 0.8; // base duration
+  const baseDelay = isRevisit ? 0.1 : 0.8;
 
   const scrollToSection = () => {
     const element = document.getElementById("painting");
