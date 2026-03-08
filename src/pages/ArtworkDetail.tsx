@@ -288,7 +288,7 @@ const ArtworkDetail = () => {
         >
           {/* Main image */}
           <div className="relative w-full mb-6 group">
-            <div className="absolute -inset-[4px] rounded opacity-25 group-hover:opacity-50 transition-opacity duration-700 blur-lg pointer-events-none bg-white/50" />
+            <div className="absolute -inset-[2px] rounded opacity-35 group-hover:opacity-60 transition-opacity duration-700 blur-[3px] pointer-events-none bg-white/30" />
             <button
               onClick={() => setLightboxOpen(true)}
               className="relative w-full cursor-zoom-in"

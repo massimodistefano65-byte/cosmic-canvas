@@ -61,7 +61,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
             onClick={() => navigate(`/${discipline}/${item.id}`)}
           >
             {/* LED glow behind the artwork */}
-            <div className="absolute -inset-[3px] rounded-lg opacity-30 group-hover:opacity-60 transition-opacity duration-700 blur-md pointer-events-none bg-white/40"
+            <div className="absolute -inset-[2px] rounded-lg opacity-40 group-hover:opacity-70 transition-opacity duration-700 blur-[3px] pointer-events-none bg-white/30"
             />
             <div className="relative rounded-lg overflow-hidden w-full h-full border border-white/5">
             {item.thumbnailUrl ? (
