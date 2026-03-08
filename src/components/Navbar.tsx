@@ -67,11 +67,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        !isHome || scrolled || isOpen
-          ? "bg-black/40 backdrop-blur-md border-b border-border/50"
-          : "bg-transparent border-b border-transparent"
-      }`}
+      className="fixed top-0 z-50 w-full bg-transparent border-b border-transparent"
       role="navigation"
       aria-label="Menu principale"
     >
