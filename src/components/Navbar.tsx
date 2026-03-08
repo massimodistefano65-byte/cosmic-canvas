@@ -14,10 +14,22 @@ const Navbar = () => {
   const isHome = location.pathname === "/";
 
   useEffect(() => {
+    // Normal scroll detection (for non-fullpage pages)
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // FullPage.js section change detection
+    const handleSection = (e: Event) => {
+      const index = (e as CustomEvent).detail;
+      setScrolled(index > 0);
+    };
+    window.addEventListener("fullpage-section", handleSection);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("fullpage-section", handleSection);
+    };
   }, []);
 
   const navItems = [
