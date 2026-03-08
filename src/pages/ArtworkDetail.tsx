@@ -373,8 +373,7 @@ const ArtworkDetail = () => {
           {/* Thumbnails */}
           {allImages.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
-              {allImages.map((img, idx) =>
-                idx === 0 ? null : (
+              {allImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
