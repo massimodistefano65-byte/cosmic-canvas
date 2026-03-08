@@ -50,7 +50,7 @@ const Navbar = () => {
     return (
       <button
         onClick={() => handleNavClick(item)}
-        className="relative px-3 py-2 text-sm tracking-wider uppercase text-foreground/90 transition-colors hover:text-white group"
+        className="relative px-3 py-2 text-sm tracking-wider uppercase text-foreground/70 transition-all duration-300 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] group"
         style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.7rem" }}
       >
         <motion.span
