@@ -73,6 +73,14 @@ const PrivacyPolicy = () => {
                 Privacy Policy di Formspree
               </a>.
             </p>
+            <p>
+              Il sito utilizza inoltre il servizio <strong className="text-foreground">ShinyStat</strong> (ShinyStat™, Italia)
+              per il conteggio anonimo delle visite in modalità invisibile. ShinyStat non raccoglie dati personali
+              identificabili. Per ulteriori informazioni, consultare la{" "}
+              <a href="https://www.shinystat.com/it/informativa-privacy.html" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                Privacy Policy di ShinyStat
+              </a>.
+            </p>
           </section>
 
           <section>

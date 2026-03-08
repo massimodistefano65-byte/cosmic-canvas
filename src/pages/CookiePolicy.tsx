@@ -71,6 +71,13 @@ const CookiePolicy = () => {
                   Privacy Policy di Formspree
                 </a>.
               </li>
+              <li>
+                <strong className="text-foreground">ShinyStat</strong> — Per il conteggio anonimo delle visite.
+                Il contatore è configurato in modalità invisibile e non raccoglie dati personali identificabili.{" "}
+                <a href="https://www.shinystat.com/it/informativa-privacy.html" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                  Privacy Policy di ShinyStat
+                </a>.
+              </li>
             </ul>
           </section>
 
