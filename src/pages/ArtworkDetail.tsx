@@ -182,35 +182,45 @@ const ArtworkDetail = () => {
 
           {/* RIGHT — Info column (refined) */}
           <div
-            className="flex-shrink-0 flex flex-col justify-center gap-6 py-6 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
-            style={{ width: "clamp(150px, 18vw, 230px)" }}
+            className="flex-shrink-0 flex flex-col justify-center gap-8 py-6 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
+            style={{ width: "clamp(200px, 22vw, 280px)" }}
           >
             {/* Title + year — elegant */}
             <div>
               <h1
-                className="text-lg font-light tracking-wide text-foreground leading-snug"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                className="text-2xl font-light tracking-wide text-foreground leading-snug"
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/70">
+              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-muted-foreground/60 font-light"
+                 style={{ fontFamily: "'Raleway', sans-serif" }}
+              >
                 {artwork.year}
               </p>
             </div>
 
             {/* Metadata — refined subtle lines */}
-            <div className="space-y-3">
-              <div className="border-t border-border/20 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+            <div className="space-y-4">
+              <div className="border-t border-border/15 pt-3">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/40 mb-1.5"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-xs text-muted-foreground/80 font-light">{artwork.dimensions}</p>
+                <p className="text-[13px] text-muted-foreground/70 font-light"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >{artwork.dimensions}</p>
               </div>
-              <div className="border-t border-border/20 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+              <div className="border-t border-border/15 pt-3">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/40 mb-1.5"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-muted-foreground/80 font-light">{artwork.technique}</p>
+                <p className="text-[13px] text-muted-foreground/70 font-light"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >{artwork.technique}</p>
               </div>
             </div>
 
