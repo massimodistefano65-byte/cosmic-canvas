@@ -287,11 +287,13 @@ const ArtworkDetail = () => {
           className="px-4 pb-8"
         >
           {/* Main image */}
-          <button
-            onClick={() => setLightboxOpen(true)}
-            className="w-full cursor-zoom-in mb-6"
-            aria-label={`Apri ${artwork.title} in lightbox`}
-          >
+          <div className="relative w-full mb-6 group">
+            <div className="absolute -inset-[4px] rounded opacity-25 group-hover:opacity-50 transition-opacity duration-700 blur-lg pointer-events-none bg-white/50" />
+            <button
+              onClick={() => setLightboxOpen(true)}
+              className="relative w-full cursor-zoom-in"
+              aria-label={`Apri ${artwork.title} in lightbox`}
+            >
             {currentImageUrl ? (
               <img
                 src={currentImageUrl}
