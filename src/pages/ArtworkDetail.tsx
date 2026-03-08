@@ -168,7 +168,7 @@ const ArtworkDetail = () => {
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-muted-foreground/80 font-light"
+              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-foreground font-light"
                  style={{ fontFamily: "'Raleway', sans-serif" }}
               >
                 {artwork.year}
