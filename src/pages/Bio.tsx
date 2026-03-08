@@ -160,6 +160,30 @@ const ListBlock = ({ keys, t }: { keys: string[]; t: (k: string) => string }) =>
   </motion.div>
 );
 
+const VideoBlock = ({ youtubeId, caption }: { youtubeId: string; caption?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.98 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.7 }}
+    className="max-w-4xl mx-auto"
+  >
+    <div className="aspect-video w-full rounded-sm overflow-hidden border border-border/20 shadow-xl">
+      <iframe
+        src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
+        title="Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="w-full h-full"
+        loading="lazy"
+      />
+    </div>
+    {caption && (
+      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
+    )}
+  </motion.div>
+);
+
 /* ── Pagina principale ── */
 
 const Bio = () => {
