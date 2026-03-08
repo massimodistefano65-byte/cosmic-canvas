@@ -59,23 +59,6 @@ const Bio = () => {
                   />
                 </div>
 
-                {/* Foto secondaria sovrapposta — al lavoro */}
-                {bioPhotos.length > 1 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="absolute -bottom-8 -right-4 md:-right-12 w-40 h-40 md:w-52 md:h-52 rounded-sm overflow-hidden border-4 border-background shadow-2xl"
-                  >
-                    <img
-                      src={bioPhotos[1].src}
-                      alt={bioPhotos[1].alt}
-                      className="w-full h-full object-cover"
-                      loading="eager"
-                    />
-                  </motion.div>
-                )}
-
                 {/* Elemento decorativo — linea accent */}
                 <div className="absolute -left-4 top-8 w-px h-24 bg-gradient-to-b from-accent/60 to-transparent" />
               </div>
@@ -102,6 +85,26 @@ const Bio = () => {
               </div>
             </motion.div>
           </div>
+
+          {/* Foto secondaria — al lavoro, centrata-destra, staccata */}
+          {bioPhotos.length > 1 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center md:justify-end md:mr-[10%] mt-16"
+            >
+              <div className="w-52 h-52 md:w-64 md:h-64 rounded-sm overflow-hidden border border-border/20 shadow-xl">
+                <img
+                  src={bioPhotos[1].src}
+                  alt={bioPhotos[1].alt}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* === SEZIONE CENTRALE — testo restante + pratica artistica === */}
