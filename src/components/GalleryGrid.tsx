@@ -67,7 +67,6 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
               }}
             />
             <div className="relative rounded-lg overflow-hidden w-full h-full border border-white/5">
-          >
             {item.thumbnailUrl ? (
               <img
                 src={item.thumbnailUrl}
