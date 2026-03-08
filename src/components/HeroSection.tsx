@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const HeroSection = () => {
+  const { t } = useI18n();
+
   const scrollToSection = () => {
     const element = document.getElementById("painting");
     if (element) {
@@ -76,7 +79,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
           >
-            Artista visivo e pittore cosmico visionario
+            {t("hero.subtitle")}
           </motion.p>
         </div>
       </div>

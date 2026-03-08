@@ -2,27 +2,31 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useI18n } from "@/lib/i18n";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const navItems = [
-    { label: "Home", href: "/", scroll: false },
-    { label: "Bio", href: "/bio", scroll: false },
-    { label: "Painting", href: "/", scroll: "painting" },
-    { label: "Photography", href: "/", scroll: "photography" },
-    { label: "Digital Art", href: "/", scroll: "digital-art" },
-    { label: "T-Shirt", href: "/", scroll: "t-shirt" },
-    { label: "Criticism", href: "/criticism", scroll: false },
-    { label: "Contacts", href: "/", scroll: "contacts" },
+    { label: t("nav.home"), href: "/", scroll: false },
+    { label: t("nav.bio"), href: "/bio", scroll: false },
+    { label: t("nav.painting"), href: "/", scroll: "painting" },
+    { label: t("nav.photography"), href: "/", scroll: "photography" },
+    { label: t("nav.digitalArt"), href: "/", scroll: "digital-art" },
+    { label: t("nav.tshirt"), href: "/", scroll: "t-shirt" },
+    { label: t("nav.criticism"), href: "/criticism", scroll: false },
+    { label: t("nav.blog"), href: "/blog", scroll: false },
+    { label: t("nav.contacts"), href: "/", scroll: "contacts" },
   ];
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsOpen(false);
 
-    if (item.label === "Home") {
+    if (item.label === t("nav.home")) {
       window.location.href = "/";
       return;
     }
@@ -72,17 +76,23 @@ const Navbar = () => {
             {navItems.map((item) => (
               <NavLink key={item.label} item={item} />
             ))}
+            <div className="ml-2">
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-foreground hover:text-accent transition-colors"
-            aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-          </button>
+          <div className="md:hidden flex items-center gap-3">
+            <LanguageToggle />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-foreground hover:text-accent transition-colors"
+              aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
+              aria-expanded={isOpen}
+            >
+              {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}

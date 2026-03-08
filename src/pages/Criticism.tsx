@@ -1,8 +1,11 @@
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
+import { useI18n } from "@/lib/i18n";
 
 const Criticism = () => {
+  const { t } = useI18n();
+
   const critiques = [
     {
       title: "The Cosmic Painter: Vision Beyond Reality",
@@ -27,7 +30,7 @@ const Criticism = () => {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Testi Critici"
+        title={t("criticism.title")}
         description="Testi critici e riflessioni sull'opera di Massimo Di Stefano da riviste e critici d'arte contemporanea."
         canonicalPath="/criticism"
       />
@@ -41,10 +44,10 @@ const Criticism = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
-              Critical Texts
+              {t("criticism.title")}
             </h1>
             <p className="text-muted-foreground text-lg mb-12">
-              Writings and reflections on the work of Massimo Di Stefano
+              {t("criticism.subtitle")}
             </p>
 
             <div className="space-y-8" role="list">
@@ -69,7 +72,7 @@ const Criticism = () => {
                     {critique.excerpt}
                   </p>
                   <button className="text-accent text-sm font-medium hover:underline">
-                    Leggi l'articolo completo →
+                    {t("criticism.readMore")}
                   </button>
                 </motion.article>
               ))}
