@@ -52,8 +52,8 @@ const bioSections: BioBlock[] = [
   { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
 
   // --- Video ---
-  { type: "video", youtubeId: "x9ZMeR7e4MU" },
-  { type: "video", youtubeId: "_T-mymcG4sw" },
+  { type: "video", youtubeId: "x9ZMeR7e4MU", title: "Massimo Di Stefano, Viaggio nell'inconscio 1" },
+  { type: "video", youtubeId: "_T-mymcG4sw", title: "Massimo Di Stefano, Viaggio nell'inconscio 2" },
 
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
