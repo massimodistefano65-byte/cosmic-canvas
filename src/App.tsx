@@ -21,7 +21,19 @@ import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  // Block right-click on images globally
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if ((e.target as HTMLElement)?.tagName === "IMG") {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("contextmenu", handler);
+    return () => document.removeEventListener("contextmenu", handler);
+  }, []);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
       <TooltipProvider>
