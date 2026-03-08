@@ -1,12 +1,28 @@
 import Navbar from "@/components/Navbar";
+import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Massimo Di Stefano",
+  jobTitle: "Artista Visivo",
+  description: "Artista contemporaneo che lavora tra pittura, fotografia, arte digitale e design indossabile.",
+  url: "https://massimodistefano.art/bio",
+};
 
 const Bio = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Biografia"
+        description="Biografia di Massimo Di Stefano: artista visivo contemporaneo che esplora pittura, fotografia, arte digitale e design indossabile."
+        canonicalPath="/bio"
+        jsonLd={jsonLd}
+      />
       <Navbar />
 
-      <div className="pt-20 pb-12">
+      <article className="pt-20 pb-12">
         <div className="max-w-3xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,19 +59,19 @@ const Bio = () => {
                 </h2>
                 <ul className="space-y-3">
                   <li className="flex gap-3">
-                    <span className="text-accent">→</span>
+                    <span className="text-accent" aria-hidden="true">→</span>
                     <span>Oil and acrylic on canvas</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-accent">→</span>
+                    <span className="text-accent" aria-hidden="true">→</span>
                     <span>Fine art photography</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-accent">→</span>
+                    <span className="text-accent" aria-hidden="true">→</span>
                     <span>Digital composition and manipulation</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-accent">→</span>
+                    <span className="text-accent" aria-hidden="true">→</span>
                     <span>Limited edition apparel design</span>
                   </li>
                 </ul>
@@ -63,8 +79,8 @@ const Bio = () => {
             </div>
           </motion.div>
         </div>
-      </div>
-    </div>
+      </article>
+    </main>
   );
 };
 

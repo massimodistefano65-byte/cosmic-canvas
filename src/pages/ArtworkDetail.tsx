@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import EnquiryModal from "@/components/EnquiryModal";
+import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Plus } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
@@ -12,6 +13,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+const disciplineLabels: Record<string, string> = {
+  painting: "Painting",
+  photography: "Photography",
+  "digital-art": "Digital Art",
+  "t-shirt": "T-Shirt",
+};
 
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
@@ -30,6 +38,8 @@ const ArtworkDetail = () => {
     );
   }
 
+  const discLabel = disciplineLabels[discipline || ""] || discipline;
+
   const gradientMap: Record<string, [string, string]> = {
     painting: ["rgba(168,85,247,0.3)", "rgba(59,130,246,0.3)"],
     photography: ["rgba(59,130,246,0.3)", "rgba(20,184,166,0.3)"],
@@ -46,8 +56,26 @@ const ArtworkDetail = () => {
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    name: artwork.title,
+    artist: { "@type": "Person", name: "Massimo Di Stefano" },
+    dateCreated: artwork.year,
+    artMedium: artwork.technique,
+    width: artwork.dimensions,
+    artform: discLabel,
+    image: artwork.main || undefined,
+  };
+
   return (
-    <div className="h-screen overflow-hidden bg-background text-foreground flex flex-col">
+    <main className="h-screen overflow-hidden bg-background text-foreground flex flex-col">
+      <SEOHead
+        title={`${artwork.title} — ${discLabel}`}
+        description={`${artwork.title} (${artwork.year}) di Massimo Di Stefano. ${artwork.technique}, ${artwork.dimensions}. ${discLabel}.`}
+        canonicalPath={`/${discipline}/${artworkId}`}
+        jsonLd={jsonLd}
+      />
       <Navbar />
       <Lightbox
         isOpen={lightboxOpen}
@@ -67,8 +95,9 @@ const ArtworkDetail = () => {
         <Link
           to={`/${discipline}`}
           className="absolute top-20 left-6 z-10 inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-xs"
+          aria-label={`Torna alla galleria ${discLabel}`}
         >
-          <ArrowLeft size={14} />
+          <ArrowLeft size={14} aria-hidden="true" />
           <span>Galleria</span>
         </Link>
 
@@ -78,17 +107,18 @@ const ArtworkDetail = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          {/* LEFT — Action buttons aligned with top of artwork */}
+          {/* LEFT — Action buttons */}
           <div className="flex-shrink-0 flex flex-col gap-3 items-center pl-8 pr-4 pt-[10vh]">
             <button
               onClick={() => setLiked(!liked)}
+              aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
               className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-colors ${
                 liked
                   ? "text-red-500 border-red-500/40"
                   : "text-muted-foreground border-border/50 hover:border-accent/60 hover:text-accent"
               }`}
             >
-              <Heart size={20} fill={liked ? "currentColor" : "none"} />
+              <Heart size={20} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
             </button>
 
             <TooltipProvider delayDuration={200}>
@@ -96,9 +126,10 @@ const ArtworkDetail = () => {
                 <TooltipTrigger asChild>
                   <button
                     onClick={() => setEnquiryOpen(true)}
+                    aria-label="Richiedi informazioni sull'opera"
                     className="w-11 h-11 rounded-full border-2 border-border/50 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
                   >
-                    <Plus size={20} />
+                    <Plus size={20} aria-hidden="true" />
                   </button>
                 </TooltipTrigger>
                 <TooltipContent side="right" className="text-xs">
@@ -114,12 +145,14 @@ const ArtworkDetail = () => {
               onClick={() => setLightboxOpen(true)}
               className="block cursor-zoom-in"
               style={{ maxWidth: "1200px", maxHeight: "80vh" }}
+              aria-label={`Apri ${artwork.title} in lightbox`}
             >
               {currentImageUrl ? (
                 <img
                   src={currentImageUrl}
-                  alt={artwork.title}
+                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                   className="max-w-full max-h-[80vh] object-contain rounded"
+                  loading="lazy"
                 />
               ) : (
                 <div
@@ -134,7 +167,7 @@ const ArtworkDetail = () => {
             </button>
           </div>
 
-          {/* RIGHT — Info column with more right padding */}
+          {/* RIGHT — Info column */}
           <div
             className="flex-shrink-0 flex flex-col gap-4 py-4 pr-10 max-h-[calc(100vh-5rem)] overflow-y-auto"
             style={{ width: "clamp(140px, 18vw, 220px)" }}
@@ -149,25 +182,26 @@ const ArtworkDetail = () => {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <dl className="space-y-2">
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span className="uppercase tracking-wider">Misure</span>
-                  <span className="font-light">{artwork.dimensions}</span>
+                  <dt className="uppercase tracking-wider">Misure</dt>
+                  <dd className="font-light">{artwork.dimensions}</dd>
                 </div>
                 <div className="flex justify-between text-xs text-muted-foreground">
-                  <span className="uppercase tracking-wider">Tecnica</span>
-                  <span className="font-light">{artwork.technique}</span>
+                  <dt className="uppercase tracking-wider">Tecnica</dt>
+                  <dd className="font-light">{artwork.technique}</dd>
                 </div>
-              </div>
+              </dl>
 
-              {/* Square thumbnails — smaller, with spacing */}
+              {/* Square thumbnails */}
               {allImages.length > 1 && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2" role="group" aria-label="Immagini dell'opera">
                   {allImages.map((img, idx) =>
                     idx === 0 ? null : (
                        <button
                         key={idx}
                         onClick={() => setSelectedImage(idx)}
+                        aria-label={`Visualizza ${img.label}`}
                         className={`w-24 h-24 rounded overflow-hidden border-2 transition-all ${
                           selectedImage === idx
                             ? "border-accent"
@@ -175,7 +209,7 @@ const ArtworkDetail = () => {
                         }`}
                       >
                         {img.url ? (
-                          <img src={img.url} alt={img.label} className="w-full h-full object-cover" />
+                          <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <div
                             className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
@@ -195,7 +229,7 @@ const ArtworkDetail = () => {
           </div>
         </motion.div>
       </div>
-    </div>
+    </main>
   );
 };
 
