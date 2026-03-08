@@ -94,7 +94,7 @@ const HeroSection = () => {
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
+            transition={{ duration: d, delay: baseDelay + 0.6 * (isRevisit ? 0.3 : 1), ease: "easeOut" }}
           >
             {t("hero.subtitle")}
           </motion.p>
