@@ -35,7 +35,7 @@ const SEOHead = ({ title, description, canonicalPath, jsonLd }: SEOHeadProps) =>
         canonical.rel = "canonical";
         document.head.appendChild(canonical);
       }
-      canonical.href = `https://massimodistefano.art${canonicalPath}`;
+      canonical.href = `https://massimodistefano.com${canonicalPath}`;
     }
 
     // JSON-LD

@@ -8,7 +8,7 @@ const jsonLd = {
   name: "Massimo Di Stefano",
   jobTitle: "Artista Visivo",
   description: "Artista contemporaneo che lavora tra pittura, fotografia, arte digitale e design indossabile.",
-  url: "https://massimodistefano.art/bio",
+  url: "https://massimodistefano.com/bio",
 };
 
 const Bio = () => {

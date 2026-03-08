@@ -8,7 +8,7 @@ import { getArtworksByDiscipline } from "../src/lib/artworkData";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-const BASE = "https://massimodistefano.art";
+const BASE = "https://massimodistefano.com";
 
 const staticPages = [
   { path: "/", priority: "1.0" },

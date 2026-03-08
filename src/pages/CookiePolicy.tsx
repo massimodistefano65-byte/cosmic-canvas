@@ -7,7 +7,7 @@ const CookiePolicy = () => {
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
         title="Cookie Policy"
-        description="Informativa sui cookie del sito massimodistefano.art"
+        description="Informativa sui cookie del sito massimodistefano.com"
         canonicalPath="/cookie-policy"
       />
       <Navbar />
