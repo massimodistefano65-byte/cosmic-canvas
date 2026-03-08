@@ -49,7 +49,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           <motion.div
             key={item.id}
             role="listitem"
-            className="rounded-lg border border-white/10 overflow-hidden cursor-pointer group relative shadow-[0_8px_30px_rgba(0,0,0,0.7),0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.1)] hover:border-white/20 transition-all duration-500"
+            className="rounded-lg overflow-visible cursor-pointer group relative"
             style={{
               gridColumn: `span ${size.col}`,
               gridRow: `span ${size.row}`,
@@ -59,6 +59,14 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
             transition={{ duration: 0.5, delay: idx * 0.06 }}
             viewport={{ once: false }}
             onClick={() => navigate(`/${discipline}/${item.id}`)}
+          >
+            {/* LED glow behind the artwork */}
+            <div className="absolute -inset-[3px] rounded-lg opacity-40 group-hover:opacity-70 transition-opacity duration-700 blur-md pointer-events-none"
+              style={{
+                background: `linear-gradient(135deg, ${gradientFrom.replace('0.3', '0.6')}, ${gradientTo.replace('0.3', '0.6')})`,
+              }}
+            />
+            <div className="relative rounded-lg overflow-hidden w-full h-full border border-white/5">
           >
             {item.thumbnailUrl ? (
               <img
