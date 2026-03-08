@@ -156,43 +156,75 @@ const ArtworkDetail = () => {
             className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto"
             style={{ width: "clamp(200px, 22vw, 280px)" }}
           >
-            {/* Title + year — elegant */}
+            {/* Title + year */}
             <div>
               <h1
-                className="text-2xl font-light tracking-wide text-foreground leading-snug"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
+                className="text-2xl tracking-wide text-foreground leading-snug"
+                style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-muted-foreground/60 font-light"
+              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-muted-foreground/80 font-light"
                  style={{ fontFamily: "'Raleway', sans-serif" }}
               >
                 {artwork.year}
               </p>
             </div>
 
-            {/* Metadata — refined subtle lines */}
+            {/* Metadata */}
             <div className="space-y-4">
-              <div className="border-t border-border/15 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/40 mb-1.5"
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-[13px] text-muted-foreground/70 font-light"
+                <p className="text-[13px] text-muted-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.dimensions}</p>
               </div>
-              <div className="border-t border-border/15 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/40 mb-1.5"
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >
                   {t("artwork.technique")}
                 </p>
-                <p className="text-[13px] text-muted-foreground/70 font-light"
+                <p className="text-[13px] text-muted-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.technique}</p>
               </div>
+            </div>
+
+            {/* Action buttons — below metadata */}
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                onClick={() => setLiked(!liked)}
+                aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  liked
+                    ? "text-red-500 border-red-500/40"
+                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                }`}
+              >
+                <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+              </button>
+
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setEnquiryOpen(true)}
+                      aria-label="Richiedi informazioni sull'opera"
+                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                    >
+                      <Plus size={16} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="text-xs">
+                    Richiedi info / Enquire
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             {/* Thumbnails — larger */}
