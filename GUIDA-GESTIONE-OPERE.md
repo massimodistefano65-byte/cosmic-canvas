@@ -44,6 +44,18 @@ Per ogni opera, prepara i file con questi nomi (sostituisci `{titolo}` con il ti
 | **Room View** | `{titolo}-{disciplina}-room-view-1.jpg`, ecc. | Miniature nella pagina dettaglio |
 | **Lifestyle** (t-shirt) | `{titolo}-t-shirt-lifestyle-1.jpg`, ecc. | Miniature nella pagina dettaglio |
 
+### 💡 Approccio semplificato (consigliato)
+
+**Puoi caricare UNA SOLA foto per opera** (consigliato: 2000px sul lato lungo) e usarla sia come `preview` che come `main` e `full`. Il browser la ridimensiona automaticamente per la galleria. Esempio:
+
+```typescript
+preview: "/artworks/painting/7/nome-opera-painting-1.jpg",
+main:    "/artworks/painting/7/nome-opera-painting-1.jpg",
+full:    "/artworks/painting/7/nome-opera-painting-1.jpg",
+```
+
+Se in futuro vuoi ottimizzare la velocità, puoi creare una versione più piccola (~800px) da usare come `preview`.
+
 ### Esempio per "Nebulosa Urbana" (painting, id 2):
 ```
 public/artworks/painting/2/
@@ -85,7 +97,7 @@ Apri `src/lib/artworkData.ts` e aggiungi un blocco come questo nell'array della 
   year: "2025",
   dimensions: "100 × 80 cm",
   technique: "Olio su tela",
-  preview: "/artworks/painting/7/nome-opera-painting-preview.jpg",
+  preview: "/artworks/painting/7/nome-opera-painting-1.jpg",
   main:    "/artworks/painting/7/nome-opera-painting-1.jpg",
   full:    "/artworks/painting/7/nome-opera-painting-1.jpg",
   images: [
@@ -135,6 +147,37 @@ Per spostare un'opera:
 
 ---
 
+## 🗺️ Sitemap (per Google)
+
+La sitemap (`public/sitemap.xml`) dice a Google quali pagine indicizzare. Va aggiornata quando aggiungi o rimuovi opere **con immagini** (cioè con `preview` o `main` compilati).
+
+### Come aggiornare la sitemap manualmente:
+1. Apri `public/sitemap.xml` su GitHub
+2. Per ogni nuova opera pubblicata, aggiungi una riga:
+   ```xml
+   <url><loc>https://massimodistefano.art/painting/7</loc><priority>0.6</priority></url>
+   ```
+3. Per opere rimosse, cancella la riga corrispondente
+4. Commit e push
+
+### Script automatico (opzionale):
+Se hai Node.js installato, puoi rigenerare la sitemap automaticamente:
+```bash
+npx tsx scripts/generate-sitemap.ts
+```
+Questo legge tutte le opere da `artworkData.ts` e rigenera `public/sitemap.xml` con tutte le pagine.
+
+---
+
+## 🏗️ Architettura del sito (per riferimento)
+
+Le quattro pagine galleria (Painting, Photography, Digital Art, T-Shirt) usano tutte un **unico componente riusabile** chiamato `DisciplinePage.tsx`. Questo significa che:
+- Se vuoi cambiare lo stile della galleria, basta modificare **un solo file** (`src/pages/DisciplinePage.tsx`)
+- Le singole pagine (`Painting.tsx`, `Photography.tsx`, ecc.) sono solo 3 righe di codice ciascuna
+- Testi, descrizioni SEO e colori di ogni disciplina sono configurati dentro `DisciplinePage.tsx`
+
+---
+
 ## 🔗 Come aggiornare il sito tramite GitHub
 
 ### Modificare il file delle opere:
@@ -162,12 +205,14 @@ Per spostare un'opera:
 - Se `main` è vuoto, la pagina dettaglio mostra un gradiente placeholder
 - I percorsi iniziano sempre con `/artworks/...` (con lo slash iniziale)
 - Le immagini devono essere in formato `.jpg` o `.png`
-- Dimensioni consigliate: preview ~800px lato lungo, main/detail/room-view ~1500-2000px
+- Dimensione consigliata: **2000px sul lato lungo** (una sola foto va benissimo per tutto)
+- Quando aggiungi/rimuovi opere con immagini, ricorda di aggiornare anche `public/sitemap.xml`
 
 ---
 
 ## 💡 Suggerimenti
 
+- **Una foto basta**: carica un'unica immagine da 2000px e usala per preview, main e full
 - **Lavora con calma**: modifica un'opera alla volta e controlla il risultato
 - **Backup**: GitHub mantiene la cronologia di ogni modifica, puoi sempre tornare indietro
 - **Dubbi?** Chiedi in chat su Lovable, sono sempre qui per aiutarti!
