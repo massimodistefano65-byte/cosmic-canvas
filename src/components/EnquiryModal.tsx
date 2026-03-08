@@ -22,7 +22,7 @@ const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModalProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState(`Informazioni su: ${artworkTitle}`);
+  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
