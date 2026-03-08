@@ -49,7 +49,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "newsletter.error": { it: "Errore. Riprova.", en: "Error. Please retry." },
 
   // DisciplinePage
-  "discipline.back": { it: "Torna alle discipline", en: "Back to disciplines" },
+  "discipline.back": { it: "Back", en: "Back" },
 
   // Painting
   "painting.intro": {
