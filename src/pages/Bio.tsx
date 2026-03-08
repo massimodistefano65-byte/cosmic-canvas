@@ -53,9 +53,9 @@ const bioSections: BioBlock[] = [
 
   // --- Video ---
   { type: "video", youtubeId: "x9ZMeR7e4MU" },
+  { type: "video", youtubeId: "_T-mymcG4sw" },
 
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // { type: "video", youtubeId: "ID_VIDEO", caption: "Didascalia opzionale" },
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
 ];
 
