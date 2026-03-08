@@ -168,7 +168,7 @@ const ArtworkDetail = () => {
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-muted-foreground/80 font-light"
+              <p className="text-[11px] tracking-[0.3em] uppercase mt-3 text-foreground font-light"
                  style={{ fontFamily: "'Raleway', sans-serif" }}
               >
                 {artwork.year}
@@ -183,7 +183,7 @@ const ArtworkDetail = () => {
                 >
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-[13px] text-muted-foreground font-light"
+                <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.dimensions}</p>
               </div>
@@ -193,7 +193,7 @@ const ArtworkDetail = () => {
                 >
                   {t("artwork.technique")}
                 </p>
-                <p className="text-[13px] text-muted-foreground font-light"
+                <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.technique}</p>
               </div>
@@ -325,7 +325,7 @@ const ArtworkDetail = () => {
               >
                 {artwork.title}
               </h1>
-              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/80">
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-foreground">
                 {artwork.year}
               </p>
             </div>
@@ -335,13 +335,13 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.dimensions")}
                 </p>
-                <p className="text-xs text-muted-foreground font-light">{artwork.dimensions}</p>
+                <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
               </div>
               <div className="border-t border-border/30 pt-3">
                 <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-muted-foreground font-light">{artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
             </div>
 
