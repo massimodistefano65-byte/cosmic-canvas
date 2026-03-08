@@ -28,6 +28,7 @@ const ArtworkDetail = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const { t } = useI18n();
 
   const artwork = getArtwork(discipline || "", artworkId || "");
 
