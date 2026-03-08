@@ -311,7 +311,8 @@ const ArtworkDetail = () => {
                 Tocca per full-view
               </div>
             )}
-          </button>
+            </button>
+          </div>
 
           {/* Info */}
           <div className="space-y-4 mb-6">
