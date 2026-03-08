@@ -157,8 +157,8 @@ const ArtworkDetail = () => {
 
           {/* RIGHT — Info column (refined) */}
           <div
-            className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto"
-            style={{ width: "clamp(200px, 22vw, 280px)" }}
+            className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pl-4 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-visible"
+            style={{ width: "clamp(220px, 24vw, 310px)" }}
           >
             {/* Title + year */}
             <div>
