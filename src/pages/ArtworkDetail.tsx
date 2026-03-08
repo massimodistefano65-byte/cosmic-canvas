@@ -236,29 +236,31 @@ const ArtworkDetail = () => {
               <div className="flex flex-col gap-2.5 pt-2" role="group" aria-label="Immagini dell'opera">
                 {allImages.map((img, idx) =>
                   idx === 0 ? null : (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImage(idx)}
-                      aria-label={`Visualizza ${img.label}`}
-                      className={`w-28 h-28 rounded overflow-hidden border transition-all duration-300 ${
-                        selectedImage === idx
-                          ? "border-accent"
-                          : "border-border/20 hover:border-accent/40"
-                      }`}
-                    >
-                      {img.url ? (
-                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
-                      ) : (
-                        <div
-                          className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
-                          style={{
-                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
-                          }}
-                        >
-                          {img.label}
-                        </div>
-                      )}
-                    </button>
+                    <div key={idx} className="relative group/thumb">
+                      <div className="absolute -inset-[2px] rounded opacity-40 group-hover/thumb:opacity-70 transition-opacity duration-500 blur-[4px] pointer-events-none bg-white/40" />
+                      <button
+                        onClick={() => setSelectedImage(idx)}
+                        aria-label={`Visualizza ${img.label}`}
+                        className={`relative w-28 h-28 rounded overflow-hidden border transition-all duration-300 ${
+                          selectedImage === idx
+                            ? "border-accent"
+                            : "border-border/20 hover:border-accent/40"
+                        }`}
+                      >
+                        {img.url ? (
+                          <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <div
+                            className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
+                            style={{
+                              background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                            }}
+                          >
+                            {img.label}
+                          </div>
+                        )}
+                      </button>
+                    </div>
                   )
                 )}
               </div>
