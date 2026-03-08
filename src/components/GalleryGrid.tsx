@@ -18,7 +18,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
   const navigate = useNavigate();
 
   return (
-    <div className="columns-2 md:columns-4 gap-12 space-y-12" role="list" aria-label={`Galleria ${discipline}`}>
+    <div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 gap-3 space-y-3" role="list" aria-label={`Galleria ${discipline}`}>
       {items.map((item, idx) => (
         <motion.div
           key={item.id}
