@@ -370,11 +370,11 @@ const ArtworkDetail = () => {
 
           {/* Thumbnails */}
           {allImages.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
+            <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) =>
                 idx === 0 ? null : (
-                  <div key={idx} className="relative group/thumb flex-shrink-0 w-24 h-24">
-                    <div className="absolute -inset-[2px] rounded opacity-40 group-hover/thumb:opacity-70 transition-opacity duration-500 blur-[4px] pointer-events-none bg-white/40" />
+                  <div key={idx} className="relative group/thumb flex-shrink-0 w-24 h-24" style={{ zIndex: allImages.length - idx }}>
+                    <div className="absolute -inset-[3px] rounded opacity-50 group-hover/thumb:opacity-80 transition-opacity duration-500 blur-[5px] pointer-events-none bg-white/50" />
                     <button
                       onClick={() => setSelectedImage(idx)}
                       aria-label={`Visualizza ${img.label}`}
