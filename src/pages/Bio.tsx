@@ -34,7 +34,7 @@ type BioBlock =
   | { type: "photo-lg"; src: string; alt: string; caption?: string }
   | { type: "heading"; key: string }
   | { type: "list"; keys: string[] }
-  | { type: "video"; youtubeId: string; caption?: string };
+  | { type: "video"; youtubeId: string; title?: string; caption?: string };
 
 const bioSections: BioBlock[] = [
   // --- Prima parte biografia ---
@@ -52,8 +52,8 @@ const bioSections: BioBlock[] = [
   { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
 
   // --- Video ---
-  { type: "video", youtubeId: "x9ZMeR7e4MU" },
-  { type: "video", youtubeId: "_T-mymcG4sw" },
+  { type: "video", youtubeId: "x9ZMeR7e4MU", title: "Massimo Di Stefano, Viaggio nell'inconscio 1" },
+  { type: "video", youtubeId: "_T-mymcG4sw", title: "Massimo Di Stefano, Viaggio nell'inconscio 2" },
 
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
@@ -160,7 +160,7 @@ const ListBlock = ({ keys, t }: { keys: string[]; t: (k: string) => string }) =>
   </motion.div>
 );
 
-const VideoBlock = ({ youtubeId, caption }: { youtubeId: string; caption?: string }) => (
+const VideoBlock = ({ youtubeId, title, caption }: { youtubeId: string; title?: string; caption?: string }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.98 }}
     whileInView={{ opacity: 1, scale: 1 }}
@@ -168,6 +168,11 @@ const VideoBlock = ({ youtubeId, caption }: { youtubeId: string; caption?: strin
     transition={{ duration: 0.7 }}
     className="max-w-4xl mx-auto"
   >
+    {title && (
+      <h3 className="text-xl md:text-2xl font-light text-foreground mb-4 text-center" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+        {title}
+      </h3>
+    )}
     <div className="aspect-video w-full rounded-sm overflow-hidden border border-border/20 shadow-xl">
       <iframe
         src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
@@ -258,7 +263,7 @@ const Bio = () => {
               case "list":
                 return <ListBlock key={i} keys={block.keys} t={t} />;
               case "video":
-                return <VideoBlock key={i} youtubeId={block.youtubeId} caption={block.caption} />;
+                return <VideoBlock key={i} youtubeId={block.youtubeId} title={block.title} caption={block.caption} />;
               default:
                 return null;
             }
