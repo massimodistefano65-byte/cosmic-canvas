@@ -25,9 +25,11 @@ jobs:
           sudo apt-get install -y lftp
           lftp -u "${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }}" "${{ secrets.FTP_SERVER }}" <<EOF
           set ftp:ssl-allow no
+          set ftp:passive-mode yes
           set net:timeout 60
           set net:max-retries 3
           set net:reconnect-interval-base 5
-          mirror --reverse --verbose --delete ./dist/ /
+          set mirror:no-chmod yes
+          mirror --reverse --verbose --no-perms ./dist/ /massimodistefano.com/
           bye
           EOF
