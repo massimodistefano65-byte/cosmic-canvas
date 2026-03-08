@@ -256,31 +256,30 @@ const ArtworkDetail = () => {
         <div className="flex items-center justify-between px-4 py-3">
           <Link
             to={`/${discipline}`}
-            className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors text-sm"
-            aria-label={`Torna alla galleria ${discLabel}`}
+            className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/60 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+            aria-label={`Back to ${discLabel}`}
           >
-            <ArrowLeft size={16} aria-hidden="true" />
-            <span>{t("artwork.back")}</span>
+            <ArrowLeft size={14} aria-hidden="true" />
           </Link>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setLiked(!liked)}
               aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-colors ${
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
                 liked
                   ? "text-red-500 border-red-500/40"
-                  : "text-muted-foreground border-border/50 hover:border-accent/60 hover:text-accent"
+                  : "text-muted-foreground/60 border-border/40 hover:border-foreground/30 hover:text-foreground"
               }`}
             >
-              <Heart size={18} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+              <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
             </button>
             <button
               onClick={() => setEnquiryOpen(true)}
               aria-label="Richiedi informazioni sull'opera"
-              className="w-10 h-10 rounded-full border-2 border-border/50 text-muted-foreground hover:border-accent hover:text-accent transition-colors flex items-center justify-center"
+              className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/60 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
             >
-              <Plus size={18} aria-hidden="true" />
+              <Plus size={16} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -316,30 +315,37 @@ const ArtworkDetail = () => {
             )}
           </button>
 
-          {/* Info */}
+          {/* Info — refined */}
           <div className="space-y-4 mb-6">
             <div>
-              <h1 className="text-2xl font-light tracking-wide text-foreground leading-tight">
+              <h1
+                className="text-2xl font-light tracking-wide text-foreground leading-tight"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
                 {artwork.title}
               </h1>
-              <p className="text-xs tracking-widest uppercase mt-1 text-muted-foreground">
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-muted-foreground/70">
                 {artwork.year}
               </p>
             </div>
 
-            <dl className="space-y-2">
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">{t("artwork.dimensions")}</dt>
-                <dd className="font-light">{artwork.dimensions}</dd>
+            <div className="space-y-3">
+              <div className="border-t border-border/20 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+                  {t("artwork.dimensions")}
+                </p>
+                <p className="text-xs text-muted-foreground/80 font-light">{artwork.dimensions}</p>
               </div>
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <dt className="uppercase tracking-wider text-xs">{t("artwork.technique")}</dt>
-                <dd className="font-light">{artwork.technique}</dd>
+              <div className="border-t border-border/20 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/50 mb-1">
+                  {t("artwork.technique")}
+                </p>
+                <p className="text-xs text-muted-foreground/80 font-light">{artwork.technique}</p>
               </div>
-            </dl>
+            </div>
           </div>
 
-          {/* Thumbnails — horizontal scroll */}
+          {/* Thumbnails — horizontal scroll, larger */}
           {allImages.length > 1 && (
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) =>
@@ -348,10 +354,10 @@ const ArtworkDetail = () => {
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
                     aria-label={`Visualizza ${img.label}`}
-                    className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+                    className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-300 ${
                       selectedImage === idx
                         ? "border-accent"
-                        : "border-border/30 hover:border-accent/40"
+                        : "border-border/20 hover:border-accent/40"
                     }`}
                   >
                     {img.url ? (
