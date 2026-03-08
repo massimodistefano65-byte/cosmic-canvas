@@ -10,16 +10,12 @@ type ConsentValue = "accepted" | "rejected" | null;
 
 /** Load or block Google Analytics based on consent */
 const updateGAConsent = (consent: ConsentValue) => {
+  const gtag = (window as any).gtag;
+  if (!gtag) return;
   if (consent === "accepted") {
-    // Enable GA tracking
-    window.gtag?.("consent", "update", {
-      analytics_storage: "granted",
-    });
+    gtag("consent", "update", { analytics_storage: "granted" });
   } else {
-    // Deny GA tracking
-    window.gtag?.("consent", "update", {
-      analytics_storage: "denied",
-    });
+    gtag("consent", "update", { analytics_storage: "denied" });
   }
 };
 
