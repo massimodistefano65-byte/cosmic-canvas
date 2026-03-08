@@ -37,7 +37,7 @@ const Painting = () => {
             >
               Painting
             </h1>
-            <div style={{ width: 80, height: 1, backgroundColor: "#d4af7a" }} className="mb-6" />
+            
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Le opere pittoriche di Massimo Di Stefano esplorano il confine tra il cosmo interno e l'universo esterno.

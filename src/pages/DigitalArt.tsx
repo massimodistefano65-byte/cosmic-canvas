@@ -35,7 +35,7 @@ const DigitalArt = () => {
             >
               Digital Art
             </h1>
-            <div style={{ width: 80, height: 1, backgroundColor: "#d4af7a" }} className="mb-6" />
+            
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 L'arte digitale di Massimo Di Stefano rappresenta la convergenza tra la visione creativa e le tecnologie contemporanee.

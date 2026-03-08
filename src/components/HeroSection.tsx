@@ -35,36 +35,18 @@ const HeroSection = () => {
       {/* Content - Bottom Left */}
       <div className="relative z-10 h-full flex flex-col justify-end" style={{ paddingLeft: "4.5rem", paddingBottom: "6rem" }}>
         <div className="flex flex-col items-start text-left">
-          {/* Massimo */}
           <motion.h1
-            className="leading-tight"
+            className="leading-tight whitespace-nowrap"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 300,
-              fontSize: "5rem",
               color: "#ffffff",
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           >
-            Massimo
-          </motion.h1>
-
-          {/* Di Stefano */}
-          <motion.h1
-            className="leading-tight"
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontWeight: 600,
-              fontSize: "5rem",
-              color: "#ffffff",
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
-          >
-            Di Stefano
+            <span style={{ fontWeight: 300, fontSize: "5rem" }}>Massimo </span>
+            <span style={{ fontWeight: 600, fontSize: "5rem" }}>Di Stefano</span>
           </motion.h1>
 
           {/* Gold Line */}
@@ -77,7 +59,7 @@ const HeroSection = () => {
             }}
             initial={{ width: 0 }}
             animate={{ width: 110 }}
-            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
           />
 
           {/* Subtitle */}
@@ -92,7 +74,7 @@ const HeroSection = () => {
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
           >
             Artista visivo e pittore cosmico visionario
           </motion.p>
