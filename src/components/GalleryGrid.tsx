@@ -49,7 +49,7 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
           <motion.div
             key={item.id}
             role="listitem"
-            className="rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative shadow-[4px_6px_20px_-4px_rgba(0,0,0,0.5),0_2px_8px_-2px_rgba(0,0,0,0.3)]"
+            className="rounded-lg border border-border/50 overflow-hidden cursor-pointer group relative shadow-[0_4px_24px_-4px_rgba(255,255,255,0.08),0_8px_32px_-8px_rgba(0,0,0,0.6)] hover:shadow-[0_6px_30px_-4px_rgba(255,255,255,0.12),0_12px_40px_-8px_rgba(0,0,0,0.7)] transition-shadow duration-500"
             style={{
               gridColumn: `span ${size.col}`,
               gridRow: `span ${size.row}`,
