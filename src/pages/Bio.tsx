@@ -18,8 +18,8 @@ const jsonLd = {
   Then list them here. Leave empty array to hide the section.
 */
 const bioPhotos = [
-  // { src: "/images/bio/massimo-di-stefano-portrait-1.jpg", alt: "Massimo Di Stefano al lavoro" },
-  // { src: "/images/bio/massimo-di-stefano-portrait-2.jpg", alt: "Massimo Di Stefano in studio" },
+  { src: "/images/bio/massimo-di-stefano-portrait-1.jpg", alt: "Massimo Di Stefano" },
+  { src: "/images/bio/massimo-di-stefano-at-work-1.webp", alt: "Massimo Di Stefano al lavoro" },
 ];
 
 /*
