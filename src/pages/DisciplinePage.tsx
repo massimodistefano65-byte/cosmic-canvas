@@ -65,12 +65,36 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
     thumbnailUrl: a.preview,
   }));
 
+  // Schema.org ItemList per la galleria
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${config.title} — Massimo Di Stefano`,
+    description: config.seoDescription,
+    url: `https://massimodistefano.com/${config.key}`,
+    numberOfItems: artworks.length,
+    itemListElement: artworks.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "VisualArtwork",
+        name: a.title,
+        url: `https://massimodistefano.com/${config.key}/${a.id}`,
+        image: a.preview ? `https://massimodistefano.com${a.preview}` : undefined,
+        artist: { "@type": "Person", name: "Massimo Di Stefano" },
+        dateCreated: a.year,
+        artMedium: a.technique,
+      },
+    })),
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
         title={config.title}
         description={config.seoDescription}
         canonicalPath={`/${config.key}`}
+        jsonLd={jsonLd}
       />
       <Navbar />
       <div className="pt-20 pb-12">

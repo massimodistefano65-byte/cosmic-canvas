@@ -60,12 +60,21 @@ const ArtworkDetail = () => {
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
     name: artwork.title,
-    artist: { "@type": "Person", name: "Massimo Di Stefano" },
+    artist: {
+      "@type": "Person",
+      name: "Massimo Di Stefano",
+      url: "https://massimodistefano.com",
+      sameAs: "https://massimodistefano.com/bio",
+    },
     dateCreated: artwork.year,
     artMedium: artwork.technique,
-    width: artwork.dimensions,
     artform: discLabel,
-    image: artwork.main || undefined,
+    width: artwork.dimensions,
+    image: artwork.main
+      ? `https://massimodistefano.com${artwork.main}`
+      : undefined,
+    url: `https://massimodistefano.com/${discipline}/${artworkId}`,
+    description: `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano.`,
   };
 
   return (
