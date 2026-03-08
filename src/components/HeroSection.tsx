@@ -89,7 +89,7 @@ const HeroSection = () => {
               fontWeight: 300,
               textTransform: "uppercase",
               letterSpacing: "0.24em",
-              color: "rgba(255,255,255,0.4)",
+              color: "rgba(255,255,255,0.6)",
               fontSize: "0.65rem",
             }}
             initial={{ opacity: 0, y: 20 }}
