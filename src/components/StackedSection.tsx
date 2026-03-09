@@ -93,7 +93,7 @@ const StackedSection = ({
               className="text-sm text-white/70 hover:text-white transition-all duration-300 relative inline-block
                 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-white after:transition-all after:duration-300 hover:after:w-full"
             >
-              Entra nella galleria →
+              Enter →
             </p>
           </div>
         </motion.button>
@@ -112,7 +112,7 @@ const StackedSection = ({
         <motion.div
           className="md:hidden mt-8 px-4 py-2 border border-white/70 rounded-lg text-white/70 text-sm font-medium flex items-center gap-2"
         >
-          Entra nella galleria
+          Enter
           <span>→</span>
         </motion.div>
       </motion.div>
