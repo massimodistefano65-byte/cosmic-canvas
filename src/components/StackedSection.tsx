@@ -44,6 +44,7 @@ const StackedSection = ({
 
   return (
     <div
+      ref={sectionRef}
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
