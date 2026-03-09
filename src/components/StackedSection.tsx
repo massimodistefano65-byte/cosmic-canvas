@@ -53,7 +53,7 @@ const StackedSection = ({
       <div className="absolute inset-0" style={{ background: gradient }} />
 
       {/* Cover Image with parallax (oversized for parallax effect) + hover zoom */}
-      {coverImage && (
+      {coverImage && imageVisible && (
         <div className="absolute inset-0 overflow-hidden">
           <div
             style={{
