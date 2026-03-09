@@ -56,10 +56,7 @@ const bioSections: BioBlock[] = [
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
 ];
 
-const downloads = [
-  { file: "/downloads/catalogo-massimo-di-stefano-hd.pdf", labelKey: "bio.downloadCatalogHD", size: "11 MB" },
-  { file: "/downloads/catalogo-massimo-di-stefano-light.pdf", labelKey: "bio.downloadCatalogLight", size: "2 MB" },
-];
+const downloads: never[] = [];
 
 /* ── Sotto-componenti per ogni tipo di blocco ── */
 

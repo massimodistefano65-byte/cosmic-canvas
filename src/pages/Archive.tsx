@@ -163,26 +163,25 @@ const Archive = () => {
 
             {/* Videos */}
             <TabsContent value="videos" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {videos.map((video) => (
                   <Card key={video.id} className="group hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-32 object-cover rounded mb-4"
-                      />
-                      <CardTitle className="text-xl">{video.title}</CardTitle>
-                      <CardDescription>{video.category}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
+                    <CardContent className="p-6">
+                      <div className="aspect-video w-full rounded mb-4 overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0&modestbranding=1`}
+                          title={video.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full"
+                          loading="lazy"
+                        />
+                      </div>
+                      <CardTitle className="text-xl mb-2">{video.title}</CardTitle>
+                      <CardDescription className="mb-3">{video.category}</CardDescription>
+                      <p className="text-sm text-muted-foreground">
                         {video.description}
                       </p>
-                      <Button variant="outline" className="w-full">
-                        <ExternalLink size={16} className="mr-2" />
-                        Guarda Video
-                      </Button>
                     </CardContent>
                   </Card>
                 ))}
