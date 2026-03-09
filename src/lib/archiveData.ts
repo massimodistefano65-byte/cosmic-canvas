@@ -191,54 +191,19 @@ export const otherProjects: OtherProject[] = [
   },
   {
     id: "2", 
-    title: "UFO e Fenomeni Inspiegabili",
-    category: "Ricerca",
-    description: "Raccolta di materiali, video e riflessioni sui fenomeni UFO",
-    tags: ["ufo", "mistero", "video", "ricerca"],
+    title: "Misti",
+    category: "Varie",
+    description: "Raccolta di materiali, video, immagini e riflessioni su argomenti diversi",
+    tags: ["misti", "video", "immagini", "testi"],
     layout: "masonry",
-    longDescription: "Una collezione di materiali che documentano avvistamenti, testimonianze e riflessioni personali sui fenomeni aerei non identificati.",
+    longDescription: "Una collezione libera di contenuti su temi vari: avvistamenti, letture, scoperte e curiosità.",
     media: [
-      {
-        type: "youtube",
-        youtubeId: "x9ZMeR7e4MU", 
-        title: "Avvistamento documentato",
-        description: "Video interessante di un fenomeno inspiegabile"
-      },
-      {
-        type: "pdf",
-        src: "/archive/projects/2/report-ufo.pdf",
-        title: "Report UFO 2024",
-        description: "Documentazione dettagliata",
-        fileSize: "5 MB",
-        thumbnail: "/archive/projects/2/report-thumbnail.jpg"
-      },
-      {
-        type: "image",
-        src: "/archive/projects/2/screenshot-1.jpg",
-        title: "Screenshot dal video",
-        description: "Particolare interessante catturato"
-      }
-    ]
-  },
-  {
-    id: "3",
-    title: "Recensioni Libri",
-    category: "Letteratura",
-    description: "Libri che mi hanno colpito e influenzato",
-    tags: ["libri", "recensioni", "cultura"],
-    layout: "list", 
-    media: [
-      {
-        type: "link",
-        src: "https://www.amazon.it/libro-esempio",
-        title: "Il Cosmo Interiore",
-        description: "Link per acquisto"
-      },
-      {
-        type: "text",
-        title: "La mia recensione",
-        content: "Questo libro ha completamente cambiato la mia visione artistica perché..."
-      }
+      // Aggiungi qui i tuoi contenuti misti:
+      // { type: "image", src: "/archive/projects/2/nome-file.jpg", title: "Titolo", description: "Descrizione" },
+      // { type: "youtube", youtubeId: "ID_VIDEO", title: "Titolo video", description: "Descrizione" },
+      // { type: "text", title: "Titolo testo", content: "Il tuo testo lungo qui..." },
+      // { type: "pdf", src: "/archive/projects/2/documento.pdf", title: "Titolo PDF", fileSize: "2 MB" },
+      // { type: "link", src: "https://esempio.com", title: "Link esterno", description: "Descrizione link" },
     ]
   }
 ];
