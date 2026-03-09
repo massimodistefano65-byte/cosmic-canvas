@@ -16,9 +16,8 @@ const translations: Record<string, Record<Lang, string>> = {
   "nav.photography": { it: "Photography", en: "Photography" },
   "nav.digitalArt": { it: "Digital Art", en: "Digital Art" },
   "nav.tshirt": { it: "T-Shirt", en: "T-Shirt" },
-  "nav.criticism": { it: "Criticism", en: "Criticism" },
+  "nav.archive": { it: "Archive", en: "Archive" },
   "nav.contacts": { it: "Contacts", en: "Contacts" },
-  "nav.blog": { it: "Notes", en: "Notes" },
 
   // Hero
   "hero.subtitle": { it: "Artista visivo e pittore cosmico visionario", en: "Visual artist and visionary cosmic painter" },
@@ -123,12 +122,8 @@ const translations: Record<string, Record<Lang, string>> = {
   "enquiry.sentSub": { it: "Messaggio inviato con successo", en: "Message sent successfully" },
   "enquiry.error": { it: "Errore nell'invio. Riprova.", en: "Sending failed. Please retry." },
 
-  // Blog
-  "blog.title": { it: "Diario dell'Artista", en: "Artist's Diary" },
-  "blog.subtitle": { it: "Riflessioni, processi creativi e aggiornamenti dal mio studio", en: "Reflections, creative processes and updates from my studio" },
-  "blog.readMore": { it: "Leggi tutto →", en: "Read more →" },
-  "blog.empty": { it: "Nuovi articoli in arrivo...", en: "New articles coming soon..." },
-  "blog.back": { it: "Torna al diario", en: "Back to diary" },
+  // Archive
+  "archive.description": { it: "Esplora la collezione completa di opere, video, materiali e progetti creativi.", en: "Explore the complete collection of works, videos, materials and creative projects." },
 };
 
 const I18nContext = createContext<I18nContextType>({
