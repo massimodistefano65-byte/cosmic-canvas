@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
@@ -6,83 +5,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink, Image, Video, FileText, Palette } from "lucide-react";
+import { 
+  getExhibitions, 
+  getVideos, 
+  getDownloads, 
+  getCriticisms, 
+  getOtherProjects 
+} from "@/lib/archiveData";
 
 const Archive = () => {
   const { t } = useI18n();
 
-  const exhibitions = [
-    {
-      id: 1,
-      title: "Pensieri in Evoluzione",
-      year: "2024",
-      location: "Galleria Moderna, Roma",
-      description: "Mostra personale dedicata alla ricerca cosmica attraverso la pittura.",
-      images: ["/images/placeholder.svg", "/images/placeholder.svg"],
-    },
-  ];
-
-  const videos = [
-    {
-      id: 1,
-      title: "Massimo Di Stefano, Viaggio nell'inconscio 1",
-      category: "Arte",
-      description: "Esplorazione artistica del subconscio attraverso la pittura",
-      youtubeId: "x9ZMeR7e4MU",
-    },
-    {
-      id: 2,
-      title: "Massimo Di Stefano, Viaggio nell'inconscio 2",
-      category: "Arte", 
-      description: "Seconda parte del viaggio nell'arte interiore",
-      youtubeId: "_T-mymcG4sw",
-    },
-  ];
-
-  const downloads = [
-    {
-      id: 1,
-      title: "Catalogo Opere HD",
-      description: "Catalogo completo in alta risoluzione",
-      file: "/downloads/catalogo-massimo-di-stefano-hd.pdf",
-      size: "11 MB",
-      type: "PDF",
-    },
-    {
-      id: 2,
-      title: "Catalogo Opere Light",
-      description: "Versione leggera per navigazione veloce",
-      file: "/downloads/catalogo-massimo-di-stefano-light.pdf",
-      size: "2 MB",
-      type: "PDF",
-    },
-  ];
-
-  const criticisms = [
-    {
-      id: 1,
-      title: "La Dimensione Cosmica nell'Arte Contemporanea",
-      author: "Dr. Maria Rossi",
-      excerpt: "Un'analisi approfondita della ricerca artistica di Massimo Di Stefano...",
-      year: "2024",
-    },
-  ];
-
-  const otherProjects = [
-    {
-      id: 1,
-      title: "Micro-Ecosistemi in Bottiglia",
-      category: "Installazioni",
-      description: "Creazione di ecosistemi autosufficienti in contenitori di vetro",
-      images: ["/images/placeholder.svg"],
-    },
-    {
-      id: 2,
-      title: "Sculture in Legno",
-      category: "Scultura",
-      description: "Lavori artigianali che esplorano forme organiche e geometrie naturali",
-      images: ["/images/placeholder.svg"],
-    },
-  ];
+  // Importa dati dinamici da archiveData.ts
+  const exhibitions = getExhibitions();
+  const videos = getVideos();
+  const downloads = getDownloads();
+  const criticisms = getCriticisms();
+  const otherProjects = getOtherProjects();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -145,16 +84,22 @@ const Archive = () => {
                       <p className="text-sm text-muted-foreground mb-4">
                         {exhibition.description}
                       </p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {exhibition.images.map((image, index) => (
-                          <img
-                            key={index}
-                            src={image}
-                            alt={`${exhibition.title} - ${index + 1}`}
-                            className="w-full h-24 object-cover rounded"
-                          />
-                        ))}
-                      </div>
+                      {exhibition.images.length > 0 ? (
+                        <div className="grid grid-cols-2 gap-2">
+                          {exhibition.images.map((image, index) => (
+                            <img
+                              key={index}
+                              src={image}
+                              alt={`${exhibition.title} - ${index + 1}`}
+                              className="w-full h-24 object-cover rounded"
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="w-full h-24 rounded bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-muted-foreground text-sm">
+                          Immagini in arrivo
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
@@ -246,11 +191,17 @@ const Archive = () => {
                 {otherProjects.map((project) => (
                   <Card key={project.id} className="group hover:shadow-lg transition-shadow">
                     <CardHeader>
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="w-full h-32 object-cover rounded mb-4"
-                      />
+                      {project.images.length > 0 ? (
+                        <img
+                          src={project.images[0]}
+                          alt={project.title}
+                          className="w-full h-32 object-cover rounded mb-4"
+                        />
+                      ) : (
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center text-muted-foreground text-sm mb-4">
+                          Immagini in arrivo
+                        </div>
+                      )}
                       <CardTitle className="text-xl">{project.title}</CardTitle>
                       <CardDescription>{project.category}</CardDescription>
                     </CardHeader>

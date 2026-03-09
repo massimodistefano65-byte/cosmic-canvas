@@ -216,3 +216,146 @@ Le quattro pagine galleria (Painting, Photography, Digital Art, T-Shirt) usano t
 - **Lavora con calma**: modifica un'opera alla volta e controlla il risultato
 - **Backup**: GitHub mantiene la cronologia di ogni modifica, puoi sempre tornare indietro
 - **Dubbi?** Chiedi in chat su Lovable, sono sempre qui per aiutarti!
+
+---
+
+# 📚 GESTIONE ARCHIVIO
+
+L'archivio del sito gestisce cinque sezioni: **Mostre**, **Video**, **Materiali**, **Critiche** e **Altri Progetti**.
+
+## 📁 File da modificare per l'archivio
+
+L'**unico file** da modificare è:
+
+```
+src/lib/archiveData.ts
+```
+
+Contiene cinque array: `exhibitions`, `videos`, `downloads`, `criticisms`, `otherProjects`.
+
+## 📂 Struttura cartelle per l'archivio
+
+```
+public/archive/
+├── exhibitions/
+│   ├── 1/              ← prima mostra
+│   │   ├── foto-allestimento-1.jpg
+│   │   ├── invito.jpg
+│   │   └── catalogo.pdf
+│   └── 2/              ← seconda mostra
+├── materials/          ← PDF scaricabili
+│   ├── catalogo-hd.pdf
+│   └── documento.doc
+├── texts/              ← testi critici
+│   └── critica-1.pdf
+└── projects/           ← altri progetti
+    ├── 1/
+    │   └── ecosistema-1.jpg
+    └── 2/
+```
+
+## ➕ Come aggiungere contenuti all'archivio
+
+### 🎨 Aggiungere una MOSTRA
+
+1. Crea cartella: `public/archive/exhibitions/{id}/`
+2. Carica immagini (foto allestimento, inviti, ecc.)
+3. In `archiveData.ts`, aggiungi nell'array `exhibitions`:
+
+```typescript
+{
+  id: "3",
+  title: "Nome Mostra",
+  year: "2025",
+  location: "Galleria XYZ, Milano",
+  description: "Descrizione della mostra...",
+  images: [
+    "/archive/exhibitions/3/foto-allestimento-1.jpg",
+    "/archive/exhibitions/3/invito.jpg",
+  ],
+  catalogPdf: "/archive/exhibitions/3/catalogo.pdf", // opzionale
+},
+```
+
+### 🎬 Aggiungere un VIDEO
+
+Nell'array `videos` in `archiveData.ts`:
+
+```typescript
+{
+  id: "3",
+  title: "Titolo Video",
+  category: "Intervista",
+  description: "Descrizione...",
+  youtubeId: "ABC123DEF45",  // ← solo l'ID di YouTube
+},
+```
+
+### 📄 Aggiungere MATERIALI scaricabili
+
+1. Carica file in `public/archive/materials/` o `public/downloads/`
+2. In `archiveData.ts`, aggiungi nell'array `downloads`:
+
+```typescript
+{
+  id: "3",
+  title: "Dossier Stampa",
+  description: "Materiale per giornalisti",
+  file: "/archive/materials/dossier-stampa.pdf",
+  size: "5 MB",
+  type: "PDF",
+},
+```
+
+### 📝 Aggiungere CRITICA/TESTO
+
+Nell'array `criticisms` in `archiveData.ts`:
+
+```typescript
+{
+  id: "2",
+  title: "L'Arte Visionaria di Di Stefano",
+  author: "Prof. Giuseppe Verdi",
+  year: "2025",
+  excerpt: "Un estratto del testo critico...",
+  fullTextUrl: "/archive/texts/critica-verdi.pdf", // opzionale
+},
+```
+
+### 🛠️ Aggiungere ALTRI PROGETTI
+
+1. Crea cartella: `public/archive/projects/{id}/`
+2. Carica immagini del progetto
+3. In `archiveData.ts`, aggiungi nell'array `otherProjects`:
+
+```typescript
+{
+  id: "3",
+  title: "Installazione Luminosa",
+  category: "Installazioni",
+  description: "Opera interattiva con luci LED...",
+  images: [
+    "/archive/projects/3/installazione-1.jpg",
+    "/archive/projects/3/installazione-2.jpg",
+  ],
+},
+```
+
+## ❌ Come rimuovere contenuti dall'archivio
+
+1. Apri `src/lib/archiveData.ts`
+2. Trova il contenuto nell'array corrispondente
+3. Cancella tutto il blocco `{ ... },`
+4. (Facoltativo) Cancella anche i file da `public/archive/`
+5. Salva e fai commit
+
+## 🔄 Placeholder automatici
+
+Se un contenuto ha l'array `images` vuoto (`images: []`), il sito mostra automaticamente un gradiente colorato con la scritta "Immagini in arrivo".
+
+## ⚠️ Note importanti per l'archivio
+
+- I **video** richiedono solo l'**ID di YouTube** (la parte dopo `v=` nell'URL)
+- I **percorsi file** iniziano sempre con `/` (es. `/archive/materials/file.pdf`)
+- Le **dimensioni** dei file vanno indicate manualmente (es. "5 MB", "2.3 GB")
+- I **testi critici** possono avere sia `excerpt` (estratto) che `fullTextUrl` (testo completo)
