@@ -24,17 +24,17 @@ const Archive = () => {
   const videos = [
     {
       id: 1,
-      title: "UFO Sightings Documentation",
-      category: "Research",
-      description: "Video documentation of unexplained phenomena",
-      thumbnail: "/images/placeholder.svg",
+      title: "Massimo Di Stefano, Viaggio nell'inconscio 1",
+      category: "Arte",
+      description: "Esplorazione artistica del subconscio attraverso la pittura",
+      youtubeId: "x9ZMeR7e4MU",
     },
     {
       id: 2,
-      title: "Nature Micro-Ecosystems",
-      category: "Creative Projects",
-      description: "Building ecosystems in bottles - time lapse creation",
-      thumbnail: "/images/placeholder.svg",
+      title: "Massimo Di Stefano, Viaggio nell'inconscio 2",
+      category: "Arte", 
+      description: "Seconda parte del viaggio nell'arte interiore",
+      youtubeId: "_T-mymcG4sw",
     },
   ];
 
