@@ -13,7 +13,7 @@ const BASE = "https://massimodistefano.com";
 const staticPages = [
   { path: "/", priority: "1.0" },
   { path: "/bio", priority: "0.8" },
-  { path: "/criticism", priority: "0.7" },
+  { path: "/archive", priority: "0.7" },
   { path: "/painting", priority: "0.9" },
   { path: "/photography", priority: "0.9" },
   { path: "/digital-art", priority: "0.9" },

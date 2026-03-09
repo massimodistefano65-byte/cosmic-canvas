@@ -99,9 +99,6 @@ const translations: Record<string, Record<Lang, string>> = {
   "bio.downloadCatalogLight": { it: "Catalogo Light", en: "Catalog Light" },
 
   // Criticism page
-  "criticism.title": { it: "Testi Critici", en: "Critical Texts" },
-  "criticism.subtitle": { it: "Scritti e riflessioni sull'opera di Massimo Di Stefano", en: "Writings and reflections on the work of Massimo Di Stefano" },
-  "criticism.readMore": { it: "Leggi l'articolo completo →", en: "Read full article →" },
 
   // ArtworkDetail
   "artwork.enquiry": { it: "Richiedi informazioni", en: "Enquire about this work" },
