@@ -191,24 +191,66 @@ const Archive = () => {
                 {otherProjects.map((project) => (
                   <Card key={project.id} className="group hover:shadow-lg transition-shadow">
                     <CardHeader>
-                      {project.images.length > 0 ? (
+                      {/* Trova la prima immagine nei media per preview */}
+                      {project.media.find(item => item.type === "image") ? (
                         <img
-                          src={project.images[0]}
+                          src={project.media.find(item => item.type === "image")?.src}
                           alt={project.title}
                           className="w-full h-32 object-cover rounded mb-4"
                         />
+                      ) : project.media.find(item => item.type === "youtube") ? (
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center text-white text-sm mb-4">
+                          📹 Video disponibile
+                        </div>
+                      ) : project.media.find(item => item.type === "pdf") ? (
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center text-white text-sm mb-4">
+                          📄 Documenti disponibili
+                        </div>
                       ) : (
                         <div className="w-full h-32 rounded bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center text-muted-foreground text-sm mb-4">
-                          Immagini in arrivo
+                          Contenuti in arrivo
                         </div>
                       )}
                       <CardTitle className="text-xl">{project.title}</CardTitle>
-                      <CardDescription>{project.category}</CardDescription>
+                      <CardDescription className="flex items-center gap-2">
+                        <span>{project.category}</span>
+                        {project.tags.length > 0 && (
+                          <div className="flex gap-1 flex-wrap">
+                            {project.tags.slice(0, 2).map((tag, index) => (
+                              <span key={index} className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                                {tag}
+                              </span>
+                            ))}
+                            {project.tags.length > 2 && (
+                              <span className="text-xs text-muted-foreground">+{project.tags.length - 2}</span>
+                            )}
+                          </div>
+                        )}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground mb-3">
                         {project.description}
                       </p>
+                      {/* Mostra conteggio contenuti */}
+                      <div className="flex flex-wrap gap-2 text-xs text-muted-foreground mb-3">
+                        {project.media.filter(m => m.type === "image").length > 0 && (
+                          <span>📸 {project.media.filter(m => m.type === "image").length} foto</span>
+                        )}
+                        {project.media.filter(m => m.type === "youtube").length > 0 && (
+                          <span>🎥 {project.media.filter(m => m.type === "youtube").length} video</span>
+                        )}
+                        {project.media.filter(m => m.type === "pdf").length > 0 && (
+                          <span>📄 {project.media.filter(m => m.type === "pdf").length} PDF</span>
+                        )}
+                        {project.media.filter(m => m.type === "link").length > 0 && (
+                          <span>🔗 {project.media.filter(m => m.type === "link").length} link</span>
+                        )}
+                      </div>
+                      <Button variant="outline" className="w-full">
+                        <ExternalLink size={16} className="mr-2" />
+                        Esplora contenuti
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
