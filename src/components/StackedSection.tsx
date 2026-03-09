@@ -109,12 +109,14 @@ const StackedSection = ({
           {subtitle}
         </motion.p>
 
-        <motion.div
+        <motion.button
+          onClick={() => navigate(route)}
           className="md:hidden mt-8 px-4 py-2 border border-white/70 rounded-lg text-white/70 text-sm font-medium flex items-center gap-2"
+          whileTap={{ scale: 0.95 }}
         >
           Enter
           <span>→</span>
-        </motion.div>
+        </motion.button>
       </motion.div>
     </div>
   );
