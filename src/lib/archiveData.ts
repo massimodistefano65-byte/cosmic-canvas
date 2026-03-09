@@ -173,15 +173,74 @@ export const otherProjects: OtherProject[] = [
     title: "Micro-Ecosistemi in Bottiglia",
     category: "Installazioni",
     description: "Creazione di ecosistemi autosufficienti in contenitori di vetro",
-    images: [],
+    tags: ["natura", "sostenibilità", "arte ambientale"],
+    layout: "grid",
+    media: [
+      {
+        type: "image",
+        src: "/archive/projects/1/ecosistemi-1.jpg",
+        title: "Ecosistema in evoluzione",
+        description: "Primo prototipo funzionante"
+      },
+      {
+        type: "text", 
+        title: "Processo creativo",
+        content: "L'idea è nata osservando come la natura si auto-organizzi in spazi ristretti..."
+      }
+    ]
   },
   {
-    id: "2",
-    title: "Sculture in Legno",
-    category: "Scultura",
-    description: "Lavori artigianali che esplorano forme organiche e geometrie naturali",
-    images: [],
+    id: "2", 
+    title: "UFO e Fenomeni Inspiegabili",
+    category: "Ricerca",
+    description: "Raccolta di materiali, video e riflessioni sui fenomeni UFO",
+    tags: ["ufo", "mistero", "video", "ricerca"],
+    layout: "masonry",
+    longDescription: "Una collezione di materiali che documentano avvistamenti, testimonianze e riflessioni personali sui fenomeni aerei non identificati.",
+    media: [
+      {
+        type: "youtube",
+        youtubeId: "x9ZMeR7e4MU", 
+        title: "Avvistamento documentato",
+        description: "Video interessante di un fenomeno inspiegabile"
+      },
+      {
+        type: "pdf",
+        src: "/archive/projects/2/report-ufo.pdf",
+        title: "Report UFO 2024",
+        description: "Documentazione dettagliata",
+        fileSize: "5 MB",
+        thumbnail: "/archive/projects/2/report-thumbnail.jpg"
+      },
+      {
+        type: "image",
+        src: "/archive/projects/2/screenshot-1.jpg",
+        title: "Screenshot dal video",
+        description: "Particolare interessante catturato"
+      }
+    ]
   },
+  {
+    id: "3",
+    title: "Recensioni Libri",
+    category: "Letteratura",
+    description: "Libri che mi hanno colpito e influenzato",
+    tags: ["libri", "recensioni", "cultura"],
+    layout: "list", 
+    media: [
+      {
+        type: "link",
+        src: "https://www.amazon.it/libro-esempio",
+        title: "Il Cosmo Interiore",
+        description: "Link per acquisto"
+      },
+      {
+        type: "text",
+        title: "La mia recensione",
+        content: "Questo libro ha completamente cambiato la mia visione artistica perché..."
+      }
+    ]
+  }
 ];
 
 // ─── Helper ──────────────────────────────────────────────────
