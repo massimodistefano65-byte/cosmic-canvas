@@ -16,79 +16,12 @@ import {
 const Archive = () => {
   const { t } = useI18n();
 
-  const exhibitions = [
-    {
-      id: 1,
-      title: "Pensieri in Evoluzione",
-      year: "2024",
-      location: "Galleria Moderna, Roma",
-      description: "Mostra personale dedicata alla ricerca cosmica attraverso la pittura.",
-      images: ["/images/placeholder.svg", "/images/placeholder.svg"],
-    },
-  ];
-
-  const videos = [
-    {
-      id: 1,
-      title: "Massimo Di Stefano, Viaggio nell'inconscio 1",
-      category: "Arte",
-      description: "Esplorazione artistica del subconscio attraverso la pittura",
-      youtubeId: "x9ZMeR7e4MU",
-    },
-    {
-      id: 2,
-      title: "Massimo Di Stefano, Viaggio nell'inconscio 2",
-      category: "Arte", 
-      description: "Seconda parte del viaggio nell'arte interiore",
-      youtubeId: "_T-mymcG4sw",
-    },
-  ];
-
-  const downloads = [
-    {
-      id: 1,
-      title: "Catalogo Opere HD",
-      description: "Catalogo completo in alta risoluzione",
-      file: "/downloads/catalogo-massimo-di-stefano-hd.pdf",
-      size: "11 MB",
-      type: "PDF",
-    },
-    {
-      id: 2,
-      title: "Catalogo Opere Light",
-      description: "Versione leggera per navigazione veloce",
-      file: "/downloads/catalogo-massimo-di-stefano-light.pdf",
-      size: "2 MB",
-      type: "PDF",
-    },
-  ];
-
-  const criticisms = [
-    {
-      id: 1,
-      title: "La Dimensione Cosmica nell'Arte Contemporanea",
-      author: "Dr. Maria Rossi",
-      excerpt: "Un'analisi approfondita della ricerca artistica di Massimo Di Stefano...",
-      year: "2024",
-    },
-  ];
-
-  const otherProjects = [
-    {
-      id: 1,
-      title: "Micro-Ecosistemi in Bottiglia",
-      category: "Installazioni",
-      description: "Creazione di ecosistemi autosufficienti in contenitori di vetro",
-      images: ["/images/placeholder.svg"],
-    },
-    {
-      id: 2,
-      title: "Sculture in Legno",
-      category: "Scultura",
-      description: "Lavori artigianali che esplorano forme organiche e geometrie naturali",
-      images: ["/images/placeholder.svg"],
-    },
-  ];
+  // Importa dati dinamici da archiveData.ts
+  const exhibitions = getExhibitions();
+  const videos = getVideos();
+  const downloads = getDownloads();
+  const criticisms = getCriticisms();
+  const otherProjects = getOtherProjects();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
