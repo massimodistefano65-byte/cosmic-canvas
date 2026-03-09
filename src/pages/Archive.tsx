@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
@@ -6,6 +5,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink, Image, Video, FileText, Palette } from "lucide-react";
+import { 
+  getExhibitions, 
+  getVideos, 
+  getDownloads, 
+  getCriticisms, 
+  getOtherProjects 
+} from "@/lib/archiveData";
 
 const Archive = () => {
   const { t } = useI18n();
