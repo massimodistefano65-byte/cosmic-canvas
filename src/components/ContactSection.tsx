@@ -150,7 +150,7 @@ const ContactSection = () => {
           </motion.div>
 
           <motion.div
-            className="flex flex-col justify-center"
+            className="hidden md:flex flex-col justify-center"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
