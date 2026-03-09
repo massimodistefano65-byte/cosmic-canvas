@@ -23,6 +23,24 @@ const StackedSection = ({
 }: StackedSectionProps) => {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Lazy load cover image when section is near viewport
+  useEffect(() => {
+    if (!coverImage || !sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setImageVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [coverImage]);
 
   return (
     <div
