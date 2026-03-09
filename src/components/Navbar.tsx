@@ -16,7 +16,15 @@ const Navbar = () => {
   const { t } = useI18n();
   const isHome = location.pathname === "/";
 
+  // Detect touch device — disable auto-hide on mobile
+  const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
   useEffect(() => {
+    if (isTouchDevice) {
+      setVisible(true);
+      return;
+    }
+
     const resetTimer = () => {
       setVisible(true);
       if (hideTimer.current) clearTimeout(hideTimer.current);
@@ -33,7 +41,7 @@ const Navbar = () => {
       window.removeEventListener("mousedown", resetTimer);
       if (hideTimer.current) clearTimeout(hideTimer.current);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
