@@ -199,11 +199,11 @@ const Archive = () => {
                           className="w-full h-32 object-cover rounded mb-4"
                         />
                       ) : project.media.find(item => item.type === "youtube") ? (
-                        <div className="w-full h-32 rounded bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center text-white text-sm mb-4">
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-destructive/20 to-destructive/30 flex items-center justify-center text-foreground text-sm mb-4">
                           📹 Video disponibile
                         </div>
                       ) : project.media.find(item => item.type === "pdf") ? (
-                        <div className="w-full h-32 rounded bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center text-white text-sm mb-4">
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-primary/20 to-primary/30 flex items-center justify-center text-foreground text-sm mb-4">
                           📄 Documenti disponibili
                         </div>
                       ) : (
