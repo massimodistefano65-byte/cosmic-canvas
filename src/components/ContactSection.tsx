@@ -49,24 +49,42 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contacts" className="relative w-full bg-black/60 py-20 border-t border-border/50" aria-label="Sezione contatti">
+    <section id="contacts" className="relative w-full bg-black/60 py-10 md:py-20 border-t border-border/50" aria-label="Sezione contatti">
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         <motion.div
-          className="mb-16"
+          className="mb-6 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: false }}
         >
-          <h2 className="text-4xl md:text-5xl text-foreground mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.title")}</h2>
+          <h2 className="text-3xl md:text-5xl text-foreground mb-3 md:mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.title")}</h2>
           <p className="text-muted-foreground">
             <a href="mailto:arte@massimodistefano.com" className="hover:text-accent transition-colors">
               arte@massimodistefano.com
             </a>
           </p>
+
+          {/* Compact social icons - mobile only */}
+          <div className="flex items-center gap-4 mt-4 md:hidden">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visita il profilo ${social.name}`}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary/40 border border-border/50 text-foreground hover:border-accent hover:bg-secondary/60 transition-all"
+              >
+                <span className="text-sm">
+                  {typeof social.icon === "string" ? social.icon : <social.icon size={16} />}
+                </span>
+              </a>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -132,7 +150,7 @@ const ContactSection = () => {
           </motion.div>
 
           <motion.div
-            className="flex flex-col justify-center"
+            className="hidden md:flex flex-col justify-center"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
