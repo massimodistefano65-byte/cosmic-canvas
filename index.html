@@ -35,8 +35,14 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- ShinyStat (invisibile) -->
-    <script src="//codice.shinystat.com/cgi-bin/getcod.cgi?USER=xilemaxilema"></script>
+    <!-- ShinyStat (caricamento differito per non bloccare il rendering) -->
+    <script>
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.src = '//codice.shinystat.com/cgi-bin/getcod.cgi?USER=xilemaxilema';
+        document.body.appendChild(s);
+      });
+    </script>
     <noscript>
       <a href="https://www.shinystat.com/it/" target="_top">
         <img src="//www.shinystat.com/cgi-bin/shinystat.cgi?USER=xilemaxilema" alt="Statistiche web" style="border:0px;width:0px;height:0px" /></a>

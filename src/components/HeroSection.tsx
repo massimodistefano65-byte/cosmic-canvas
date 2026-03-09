@@ -7,11 +7,12 @@ const HeroSection = () => {
   const { t } = useI18n();
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  // Preload hero image
+  // Check if hero image is already cached, otherwise wait for load
   useEffect(() => {
     const img = new Image();
     img.onload = () => setImageLoaded(true);
     img.src = "/images/hero-background.jpg";
+    if (img.complete) setImageLoaded(true);
   }, []);
 
   // Faster animations on revisit (sessionStorage flag)
