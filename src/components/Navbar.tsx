@@ -82,7 +82,7 @@ const Navbar = () => {
       <button
         onClick={() => handleNavClick(item)}
         className="relative px-3 py-2 text-sm tracking-wider uppercase text-white brightness-125 transition-all duration-300 hover:text-white/50 group"
-        style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 400, letterSpacing: "0.14em", fontSize: "0.95rem" }}
+        style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 400, letterSpacing: "0.14em", fontSize: "1.1rem" }}
       >
         <motion.span
           className="inline-block"
