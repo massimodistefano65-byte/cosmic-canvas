@@ -61,12 +61,31 @@ export interface Criticism {
   fullTextUrl?: string;
 }
 
+// Tipi di contenuto multimediale per "Altri Progetti"
+export interface MediaItem {
+  type: "image" | "video" | "youtube" | "pdf" | "doc" | "link" | "text";
+  src?: string;          // URL/path del file o link
+  youtubeId?: string;    // Per video YouTube
+  title?: string;        // Titolo del contenuto
+  description?: string;  // Descrizione breve
+  content?: string;      // Testo lungo (per tipo "text")
+  thumbnail?: string;    // Miniatura per PDF/DOC
+  fileSize?: string;     // "2 MB" per file
+}
+
 export interface OtherProject {
   id: string;
   title: string;
   category: string;
   description: string;
-  images: string[];
+  /** Array flessibile di contenuti misti */
+  media: MediaItem[];
+  /** Testo lungo per approfondimenti, recensioni, ecc. */
+  longDescription?: string;
+  /** Tag per organizzazione */
+  tags: string[];
+  /** Layout preferito: "grid", "masonry", "list" */
+  layout?: "grid" | "masonry" | "list";
 }
 
 // ─── Dati ────────────────────────────────────────────────────
