@@ -42,8 +42,7 @@ const Navbar = () => {
     { label: t("nav.photography"), href: "/", scroll: "photography" },
     { label: t("nav.digitalArt"), href: "/", scroll: "digital-art" },
     { label: t("nav.tshirt"), href: "/", scroll: "t-shirt" },
-    { label: t("nav.criticism"), href: "/criticism", scroll: false },
-    { label: t("nav.blog"), href: "/blog", scroll: false },
+    { label: t("nav.archive"), href: "/archive", scroll: false },
     { label: t("nav.contacts"), href: "/", scroll: "contacts" },
   ];
 

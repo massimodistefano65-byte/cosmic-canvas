@@ -43,13 +43,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
-            <Route path="/criticism" element={<Criticism />} />
+            <Route path="/archive" element={<Archive />} />
             <Route path="/painting" element={<Painting />} />
             <Route path="/photography" element={<Photography />} />
             <Route path="/digital-art" element={<DigitalArt />} />
             <Route path="/t-shirt" element={<TShirt />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/:discipline/:artworkId" element={<ArtworkDetail />} />
