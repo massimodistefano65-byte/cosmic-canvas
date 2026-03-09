@@ -16,7 +16,15 @@ const Navbar = () => {
   const { t } = useI18n();
   const isHome = location.pathname === "/";
 
+  // Detect touch device — disable auto-hide on mobile
+  const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
   useEffect(() => {
+    if (isTouchDevice) {
+      setVisible(true);
+      return;
+    }
+
     const resetTimer = () => {
       setVisible(true);
       if (hideTimer.current) clearTimeout(hideTimer.current);
@@ -33,7 +41,7 @@ const Navbar = () => {
       window.removeEventListener("mousedown", resetTimer);
       if (hideTimer.current) clearTimeout(hideTimer.current);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   const navItems = [
     { label: t("nav.home"), href: "/", scroll: false },
@@ -89,7 +97,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 z-50 w-full bg-transparent border-b border-transparent transition-opacity duration-500"
+      className={`fixed top-0 z-50 w-full border-b border-transparent transition-opacity duration-500 ${isOpen ? "bg-background/95 backdrop-blur-md" : "bg-transparent"}`}
       style={{ opacity: visible || isOpen ? 1 : 0, pointerEvents: visible || isOpen ? "auto" : "none" }}
       role="navigation"
       aria-label="Menu principale"
