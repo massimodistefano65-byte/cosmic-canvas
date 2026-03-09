@@ -44,16 +44,16 @@ const Archive = () => {
       title: "Catalogo Opere HD",
       description: "Catalogo completo in alta risoluzione",
       file: "/downloads/catalogo-massimo-di-stefano-hd.pdf",
-      size: "25 MB",
+      size: "11 MB",
       type: "PDF",
     },
     {
       id: 2,
-      title: "Press Kit",
-      description: "Materiali per la stampa e comunicazione",
-      file: "#",
-      size: "12 MB",
-      type: "ZIP",
+      title: "Catalogo Opere Light",
+      description: "Versione leggera per navigazione veloce",
+      file: "/downloads/catalogo-massimo-di-stefano-light.pdf",
+      size: "2 MB",
+      type: "PDF",
     },
   ];
 
