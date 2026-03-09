@@ -142,7 +142,7 @@ const Navbar = () => {
                 <button
                   onClick={() => handleNavClick(item)}
                   role="menuitem"
-                  className="w-full text-left px-4 py-2 text-foreground/90 hover:text-white hover:bg-secondary/50 rounded transition-colors"
+                  className="w-full text-left px-4 py-2 text-white hover:text-white/70 hover:bg-secondary/50 rounded transition-colors"
                   style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300, letterSpacing: "0.12em", fontSize: "0.75rem", textTransform: "uppercase" }}
                 >
                   {item.label}
