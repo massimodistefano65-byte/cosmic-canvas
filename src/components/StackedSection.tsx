@@ -112,7 +112,7 @@ const StackedSection = ({
         <motion.div
           className="md:hidden mt-8 px-4 py-2 border border-white/70 rounded-lg text-white/70 text-sm font-medium flex items-center gap-2"
         >
-          Entra nella galleria
+          Enter
           <span>→</span>
         </motion.div>
       </motion.div>
