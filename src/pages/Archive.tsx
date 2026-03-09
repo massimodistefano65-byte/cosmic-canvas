@@ -24,17 +24,17 @@ const Archive = () => {
   const videos = [
     {
       id: 1,
-      title: "UFO Sightings Documentation",
-      category: "Research",
-      description: "Video documentation of unexplained phenomena",
-      thumbnail: "/images/placeholder.svg",
+      title: "Massimo Di Stefano, Viaggio nell'inconscio 1",
+      category: "Arte",
+      description: "Esplorazione artistica del subconscio attraverso la pittura",
+      youtubeId: "x9ZMeR7e4MU",
     },
     {
       id: 2,
-      title: "Nature Micro-Ecosystems",
-      category: "Creative Projects",
-      description: "Building ecosystems in bottles - time lapse creation",
-      thumbnail: "/images/placeholder.svg",
+      title: "Massimo Di Stefano, Viaggio nell'inconscio 2",
+      category: "Arte", 
+      description: "Seconda parte del viaggio nell'arte interiore",
+      youtubeId: "_T-mymcG4sw",
     },
   ];
 
@@ -44,16 +44,16 @@ const Archive = () => {
       title: "Catalogo Opere HD",
       description: "Catalogo completo in alta risoluzione",
       file: "/downloads/catalogo-massimo-di-stefano-hd.pdf",
-      size: "25 MB",
+      size: "11 MB",
       type: "PDF",
     },
     {
       id: 2,
-      title: "Press Kit",
-      description: "Materiali per la stampa e comunicazione",
-      file: "#",
-      size: "12 MB",
-      type: "ZIP",
+      title: "Catalogo Opere Light",
+      description: "Versione leggera per navigazione veloce",
+      file: "/downloads/catalogo-massimo-di-stefano-light.pdf",
+      size: "2 MB",
+      type: "PDF",
     },
   ];
 
@@ -163,26 +163,25 @@ const Archive = () => {
 
             {/* Videos */}
             <TabsContent value="videos" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {videos.map((video) => (
                   <Card key={video.id} className="group hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        className="w-full h-32 object-cover rounded mb-4"
-                      />
-                      <CardTitle className="text-xl">{video.title}</CardTitle>
-                      <CardDescription>{video.category}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4">
+                    <CardContent className="p-6">
+                      <div className="aspect-video w-full rounded mb-4 overflow-hidden">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.youtubeId}?rel=0&modestbranding=1`}
+                          title={video.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full"
+                          loading="lazy"
+                        />
+                      </div>
+                      <CardTitle className="text-xl mb-2">{video.title}</CardTitle>
+                      <CardDescription className="mb-3">{video.category}</CardDescription>
+                      <p className="text-sm text-muted-foreground">
                         {video.description}
                       </p>
-                      <Button variant="outline" className="w-full">
-                        <ExternalLink size={16} className="mr-2" />
-                        Guarda Video
-                      </Button>
                     </CardContent>
                   </Card>
                 ))}

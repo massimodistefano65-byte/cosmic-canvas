@@ -51,18 +51,12 @@ const bioSections: BioBlock[] = [
   { type: "heading", key: "bio.practice" },
   { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
 
-  // --- Video ---
-  { type: "video", youtubeId: "x9ZMeR7e4MU", title: "Massimo Di Stefano, Viaggio nell'inconscio 1" },
-  { type: "video", youtubeId: "_T-mymcG4sw", title: "Massimo Di Stefano, Viaggio nell'inconscio 2" },
 
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
   // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
 ];
 
-const downloads = [
-  { file: "/downloads/catalogo-massimo-di-stefano-hd.pdf", labelKey: "bio.downloadCatalogHD", size: "11 MB" },
-  { file: "/downloads/catalogo-massimo-di-stefano-light.pdf", labelKey: "bio.downloadCatalogLight", size: "2 MB" },
-];
+const downloads: never[] = [];
 
 /* ── Sotto-componenti per ogni tipo di blocco ── */
 
@@ -270,40 +264,6 @@ const Bio = () => {
           })}
         </div>
 
-        {/* ═══ DOWNLOADS ═══ */}
-        {downloads.length > 0 && (
-          <div className="max-w-6xl mx-auto px-6 md:px-12 mt-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="md:ml-[16.666%]"
-            >
-              <div className="w-16 h-px bg-accent/40 mb-8" />
-              <h2
-                className="text-2xl md:text-3xl font-light text-foreground mb-6"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                {t("bio.downloads")}
-              </h2>
-              <div className="flex flex-wrap gap-4">
-                {downloads.map((dl, i) => (
-                  <a
-                    key={i}
-                    href={dl.file}
-                    download
-                    className="group inline-flex items-center gap-3 px-6 py-4 rounded-sm border border-border/30 bg-card/50 text-foreground hover:border-accent/50 hover:bg-card transition-all duration-300 text-sm tracking-wide"
-                  >
-                    <Download size={16} className="text-accent group-hover:scale-110 transition-transform" />
-                    <span>{t(dl.labelKey)}</span>
-                    <span className="text-muted-foreground text-xs ml-1">({dl.size})</span>
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        )}
       </article>
     </main>
   );
