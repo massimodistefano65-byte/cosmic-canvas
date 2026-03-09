@@ -191,11 +191,17 @@ const Archive = () => {
                 {otherProjects.map((project) => (
                   <Card key={project.id} className="group hover:shadow-lg transition-shadow">
                     <CardHeader>
-                      <img
-                        src={project.images[0]}
-                        alt={project.title}
-                        className="w-full h-32 object-cover rounded mb-4"
-                      />
+                      {project.images.length > 0 ? (
+                        <img
+                          src={project.images[0]}
+                          alt={project.title}
+                          className="w-full h-32 object-cover rounded mb-4"
+                        />
+                      ) : (
+                        <div className="w-full h-32 rounded bg-gradient-to-br from-accent/20 to-secondary/20 flex items-center justify-center text-muted-foreground text-sm mb-4">
+                          Immagini in arrivo
+                        </div>
+                      )}
                       <CardTitle className="text-xl">{project.title}</CardTitle>
                       <CardDescription>{project.category}</CardDescription>
                     </CardHeader>
