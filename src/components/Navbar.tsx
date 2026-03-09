@@ -97,7 +97,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 z-50 w-full bg-transparent border-b border-transparent transition-opacity duration-500"
+      className={`fixed top-0 z-50 w-full border-b border-transparent transition-opacity duration-500 ${isOpen ? "bg-background/95 backdrop-blur-md" : "bg-transparent"}`}
       style={{ opacity: visible || isOpen ? 1 : 0, pointerEvents: visible || isOpen ? "auto" : "none" }}
       role="navigation"
       aria-label="Menu principale"
