@@ -84,16 +84,22 @@ const Archive = () => {
                       <p className="text-sm text-muted-foreground mb-4">
                         {exhibition.description}
                       </p>
-                      <div className="grid grid-cols-2 gap-2">
-                        {exhibition.images.map((image, index) => (
-                          <img
-                            key={index}
-                            src={image}
-                            alt={`${exhibition.title} - ${index + 1}`}
-                            className="w-full h-24 object-cover rounded"
-                          />
-                        ))}
-                      </div>
+                      {exhibition.images.length > 0 ? (
+                        <div className="grid grid-cols-2 gap-2">
+                          {exhibition.images.map((image, index) => (
+                            <img
+                              key={index}
+                              src={image}
+                              alt={`${exhibition.title} - ${index + 1}`}
+                              className="w-full h-24 object-cover rounded"
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="w-full h-24 rounded bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-muted-foreground text-sm">
+                          Immagini in arrivo
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
