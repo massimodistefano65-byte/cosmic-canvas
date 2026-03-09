@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -23,9 +23,28 @@ const StackedSection = ({
 }: StackedSectionProps) => {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Lazy load cover image when section is near viewport
+  useEffect(() => {
+    if (!coverImage || !sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setImageVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [coverImage]);
 
   return (
     <div
+      ref={sectionRef}
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -34,7 +53,7 @@ const StackedSection = ({
       <div className="absolute inset-0" style={{ background: gradient }} />
 
       {/* Cover Image with parallax (oversized for parallax effect) + hover zoom */}
-      {coverImage && (
+      {coverImage && imageVisible && (
         <div className="absolute inset-0 overflow-hidden">
           <div
             style={{
