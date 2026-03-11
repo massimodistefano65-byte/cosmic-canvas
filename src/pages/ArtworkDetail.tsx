@@ -357,6 +357,14 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
+              {artwork.price && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
+                    {t("artwork.price")}
+                  </p>
+                  <p className="text-xs text-foreground font-light">{artwork.price}</p>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}
