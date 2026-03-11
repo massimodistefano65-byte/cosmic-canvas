@@ -54,6 +54,8 @@ export interface ArtworkFullData {
   dimensions: string;
   /** Tecnica (es. "Olio su tela", "Stampa Fine Art") */
   technique: string;
+  /** Prezzo (es. "€ 1.500", "Su richiesta") — lascia "" o ometti se non vuoi mostrarlo */
+  price?: string;
   /** Thumbnail per la galleria masonry — lascia "" se non pronto */
   preview: string;
   /** Immagine principale nella pagina dettaglio — lascia "" se non pronto */

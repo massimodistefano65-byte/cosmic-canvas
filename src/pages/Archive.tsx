@@ -49,7 +49,7 @@ const Archive = () => {
 
           {/* Tabs Navigation */}
           <Tabs defaultValue="exhibitions" className="w-full">
-            <TabsList className="mb-8 grid w-full grid-cols-1 gap-2 border border-border/40 bg-card/45 p-2 md:grid-cols-5">
+            <TabsList className="mb-8 flex w-full flex-wrap gap-2 border border-border/40 bg-card/45 p-2 md:grid md:grid-cols-5">
               <TabsTrigger value="exhibitions" className="flex items-center gap-2">
                 <Image size={16} />
                 Mostre

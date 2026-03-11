@@ -197,6 +197,18 @@ const ArtworkDetail = () => {
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.technique}</p>
               </div>
+              {artwork.price && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    {t("artwork.price")}
+                  </p>
+                  <p className="text-[13px] text-foreground font-light"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >{artwork.price}</p>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}
@@ -345,6 +357,14 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
+              {artwork.price && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/60 mb-1">
+                    {t("artwork.price")}
+                  </p>
+                  <p className="text-xs text-foreground font-light">{artwork.price}</p>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}
