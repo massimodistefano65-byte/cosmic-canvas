@@ -178,7 +178,7 @@ const ArtworkDetail = () => {
             {/* Metadata */}
             <div className="space-y-4">
               <div className="border-t border-border/30 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
+                <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >
                   {t("artwork.dimensions")}
@@ -188,7 +188,7 @@ const ArtworkDetail = () => {
                 >{artwork.dimensions}</p>
               </div>
               <div className="border-t border-border/30 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
+                <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >
                   {t("artwork.technique")}
@@ -197,18 +197,16 @@ const ArtworkDetail = () => {
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.technique}</p>
               </div>
-              {artwork.price && (
-                <div className="border-t border-border/30 pt-3">
-                  <p className="text-[9px] tracking-[0.25em] uppercase text-muted-foreground/60 mb-1.5"
-                     style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    {t("artwork.price")}
-                  </p>
-                  <p className="text-[13px] text-foreground font-light"
-                     style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >{artwork.price}</p>
-                </div>
-              )}
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >
+                  {t("artwork.price")}
+                </p>
+                <p className="text-[13px] text-foreground font-light"
+                   style={{ fontFamily: "'Raleway', sans-serif" }}
+                >{artwork.price || "€ —"}</p>
+              </div>
             </div>
 
             {/* Action buttons — below metadata */}
