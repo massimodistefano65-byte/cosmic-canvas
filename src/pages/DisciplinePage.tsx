@@ -98,7 +98,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title={config.title}
+        title={config.seoTitle}
         description={config.seoDescription}
         canonicalPath={`/${config.key}`}
         jsonLd={jsonLd}
