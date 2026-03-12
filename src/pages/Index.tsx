@@ -80,8 +80,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Home"
-        description="Portfolio ufficiale di Massimo Di Stefano: pittura, fotografia, arte digitale e design. Artista visivo e pittore cosmico visionario."
+        title="Massimo Di Stefano | Art & Creative Portfolio"
+        description="Benvenuti nel mio mondo creativo. Explore my latest artworks and creative projects."
         canonicalPath="/"
         jsonLd={jsonLd}
       />

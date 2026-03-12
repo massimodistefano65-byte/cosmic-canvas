@@ -235,7 +235,7 @@ const Bio = () => {
               >
                 Massimo Di Stefano
               </h1>
-              <p className="text-sm uppercase tracking-[0.3em] text-accent mb-10">
+              <p className="text-sm uppercase tracking-[0.3em] text-foreground/80 mb-10">
                 {t("bio.title")}
               </p>
             </motion.div>
