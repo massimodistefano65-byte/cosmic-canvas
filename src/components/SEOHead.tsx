@@ -13,7 +13,7 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-image.jpg`;
 
 const SEOHead = ({ title, description, canonicalPath, jsonLd, ogImage }: SEOHeadProps) => {
   useEffect(() => {
-    const fullTitle = `${title} | Massimo Di Stefano`;
+    const fullTitle = title.includes("|") ? title : `${title} | Massimo Di Stefano`;
     document.title = fullTitle;
 
     const setMeta = (name: string, content: string, attr = "name") => {

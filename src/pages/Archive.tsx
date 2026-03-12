@@ -33,8 +33,8 @@ const Archive = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Archive"
-        description="Archivio completo delle attività creative di Massimo Di Stefano: mostre, video, materiali scaricabili, critiche e progetti speciali."
+        title="Archive & Curriculum | Massimo Di Stefano"
+        description="Video, mostre e critiche d'arte. Discover my professional journey, exhibitions, and critical reviews."
         canonicalPath="/archive"
       />
       <Navbar />

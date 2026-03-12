@@ -10,6 +10,7 @@ import { useI18n } from "@/lib/i18n";
 interface DisciplineConfig {
   key: string;
   title: string;
+  seoTitle: string;
   seoDescription: string;
   introKey: string;
   gradientFrom: string;
@@ -19,32 +20,36 @@ interface DisciplineConfig {
 const disciplines: Record<string, DisciplineConfig> = {
   painting: {
     key: "painting",
-    title: "Painting",
-    seoDescription: "Opere pittoriche di Massimo Di Stefano: esplorazioni del cosmo interiore e dell'universo attraverso olio, acrilico e tecnica mista su tela.",
+    title: "Painting & Pittura | Massimo Di Stefano",
+    seoTitle: "Painting & Pittura | Massimo Di Stefano",
+    seoDescription: "Galleria di opere originali. Explore my collection of original paintings and artworks.",
     introKey: "painting.intro",
     gradientFrom: "rgba(168,85,247,0.3)",
     gradientTo: "rgba(59,130,246,0.3)",
   },
   photography: {
     key: "photography",
-    title: "Photography",
-    seoDescription: "Fotografia d'arte di Massimo Di Stefano: momenti di bellezza quotidiana e straordinarietà nascoste, stampe fine art.",
+    title: "Photography | Fotografia Artistica",
+    seoTitle: "Photography | Fotografia Artistica",
+    seoDescription: "Uno sguardo attraverso l'obiettivo. A collection of my photographic works and perspectives.",
     introKey: "photography.intro",
     gradientFrom: "rgba(59,130,246,0.3)",
     gradientTo: "rgba(20,184,166,0.3)",
   },
   "digital-art": {
     key: "digital-art",
-    title: "Digital Art",
-    seoDescription: "Arte digitale di Massimo Di Stefano: composizioni visionarie che fondono creatività e tecnologia contemporanea.",
+    title: "Digital Art | Arte Digitale",
+    seoTitle: "Digital Art | Arte Digitale",
+    seoDescription: "Esplorazioni visive digitali. Discover my digital art creations and experimental designs.",
     introKey: "digital-art.intro",
     gradientFrom: "rgba(236,72,153,0.3)",
     gradientTo: "rgba(168,85,247,0.3)",
   },
   "t-shirt": {
     key: "t-shirt",
-    title: "T-Shirt",
-    seoDescription: "T-Shirt d'artista di Massimo Di Stefano: arte indossabile, edizioni limitate in serigrafia e stampa digitale.",
+    title: "T-shirt Art | Indossa l'Arte",
+    seoTitle: "T-shirt Art | Indossa l'Arte",
+    seoDescription: "La mia arte stampata su t-shirt. Wear my unique designs and artistic t-shirts.",
     introKey: "t-shirt.intro",
     gradientFrom: "rgba(249,115,22,0.3)",
     gradientTo: "rgba(239,68,68,0.3)",
@@ -93,7 +98,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title={config.title}
+        title={config.seoTitle}
         description={config.seoDescription}
         canonicalPath={`/${config.key}`}
         jsonLd={jsonLd}
