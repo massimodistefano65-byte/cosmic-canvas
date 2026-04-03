@@ -51,6 +51,7 @@ const App = () => {
             <Route path="/t-shirt" element={<TShirt />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/:discipline/:artworkId" element={<ArtworkDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

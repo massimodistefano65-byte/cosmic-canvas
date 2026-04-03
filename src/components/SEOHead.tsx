@@ -8,12 +8,15 @@ interface SEOHeadProps {
   ogImage?: string;
 }
 
-const SITE_URL = "https://massimodistefano.com";
+const SITE_URL = "https://www.massimodistefano.com";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-image.jpg`;
 
 const SEOHead = ({ title, description, canonicalPath, jsonLd, ogImage }: SEOHeadProps) => {
   useEffect(() => {
-    const fullTitle = title.includes("|") ? title : `${title} | Massimo Di Stefano`;
+    // Non aggiungere suffix se il titolo contiene già "Massimo Di Stefano"
+    const fullTitle = title.toLowerCase().includes("massimo di stefano")
+      ? title
+      : `${title} - Massimo Di Stefano`;
     document.title = fullTitle;
 
     const setMeta = (name: string, content: string, attr = "name") => {
@@ -47,16 +50,14 @@ const SEOHead = ({ title, description, canonicalPath, jsonLd, ogImage }: SEOHead
     setMeta("twitter:description", description);
     setMeta("twitter:image", resolvedOgImage);
 
-    // Canonical
+    // Canonical — sempre iniettato
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
-    if (canonicalPath) {
-      if (!canonical) {
-        canonical = document.createElement("link");
-        canonical.rel = "canonical";
-        document.head.appendChild(canonical);
-      }
-      canonical.href = resolvedUrl;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
     }
+    canonical.href = resolvedUrl;
 
     // JSON-LD
     const existingLd = document.querySelector("script[data-seo-ld]");

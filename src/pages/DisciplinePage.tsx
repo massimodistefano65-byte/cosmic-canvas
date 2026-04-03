@@ -76,7 +76,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `${config.title} — Massimo Di Stefano`,
+    name: `${config.seoTitle}`,
     description: config.seoDescription,
     url: `https://massimodistefano.com/${config.key}`,
     numberOfItems: artworks.length,
