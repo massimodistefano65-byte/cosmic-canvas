@@ -16,6 +16,7 @@ import ArtworkDetail from "./pages/ArtworkDetail";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
+import Contact from "./pages/Contact";
 import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
