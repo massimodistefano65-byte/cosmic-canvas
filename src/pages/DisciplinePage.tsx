@@ -113,7 +113,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               if (element) setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
             }}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-12"
-            aria-label={`Torna alla homepage, sezione ${config.title}`}
+            aria-label={`Torna alla homepage, sezione ${config.h1}`}
           >
             <ArrowLeft size={20} aria-hidden="true" />
             <span>{t("discipline.back")}</span>
