@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/i18n";
 
 interface DisciplineConfig {
   key: string;
-  title: string;
+  h1: string;
   seoTitle: string;
   seoDescription: string;
   introKey: string;
