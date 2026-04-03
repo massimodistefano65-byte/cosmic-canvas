@@ -124,7 +124,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               className="mb-4"
               style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white" }}
             >
-              {config.title}
+              {config.h1}
             </h1>
 
             <div className="prose prose-invert max-w-none mb-12">
