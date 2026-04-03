@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://massimodistefano.com/</loc><lastmod>2026-03-09</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://massimodistefano.com/bio</loc><lastmod>2026-03-09</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://massimodistefano.com/painting</loc><lastmod>2026-03-09</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://massimodistefano.com/photography</loc><lastmod>2026-03-09</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://massimodistefano.com/digital-art</loc><lastmod>2026-03-09</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://massimodistefano.com/t-shirt</loc><lastmod>2026-03-09</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://massimodistefano.com/archive</loc><lastmod>2026-03-09</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://massimodistefano.com/painting/1</loc><lastmod>2026-03-09</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://massimodistefano.com/painting/2</loc><lastmod>2026-03-09</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://massimodistefano.com/privacy-policy</loc><lastmod>2026-03-09</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://massimodistefano.com/cookie-policy</loc><lastmod>2026-03-09</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.massimodistefano.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.massimodistefano.com/bio</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.massimodistefano.com/photography</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.massimodistefano.com/t-shirt</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.massimodistefano.com/archive</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.massimodistefano.com/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.massimodistefano.com/cookie-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

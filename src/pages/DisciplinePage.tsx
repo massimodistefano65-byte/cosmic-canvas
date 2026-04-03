@@ -9,7 +9,7 @@ import { useI18n } from "@/lib/i18n";
 
 interface DisciplineConfig {
   key: string;
-  title: string;
+  h1: string;
   seoTitle: string;
   seoDescription: string;
   introKey: string;
@@ -20,7 +20,7 @@ interface DisciplineConfig {
 const disciplines: Record<string, DisciplineConfig> = {
   painting: {
     key: "painting",
-    title: "Painting & Pittura | Massimo Di Stefano",
+    h1: "Painting",
     seoTitle: "Painting & Pittura | Massimo Di Stefano",
     seoDescription: "Galleria di opere originali. Explore my collection of original paintings and artworks.",
     introKey: "painting.intro",
@@ -29,8 +29,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   },
   photography: {
     key: "photography",
-    title: "Photography | Fotografia Artistica",
-    seoTitle: "Photography | Fotografia Artistica",
+    h1: "Photography",
+    seoTitle: "Photography | Fotografia Artistica - Massimo Di Stefano",
     seoDescription: "Uno sguardo attraverso l'obiettivo. A collection of my photographic works and perspectives.",
     introKey: "photography.intro",
     gradientFrom: "rgba(59,130,246,0.3)",
@@ -38,8 +38,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   },
   "digital-art": {
     key: "digital-art",
-    title: "Digital Art | Arte Digitale",
-    seoTitle: "Digital Art | Arte Digitale",
+    h1: "Digital Art",
+    seoTitle: "Digital Art | Arte Digitale - Massimo Di Stefano",
     seoDescription: "Esplorazioni visive digitali. Discover my digital art creations and experimental designs.",
     introKey: "digital-art.intro",
     gradientFrom: "rgba(236,72,153,0.3)",
@@ -47,8 +47,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   },
   "t-shirt": {
     key: "t-shirt",
-    title: "T-shirt Art | Indossa l'Arte",
-    seoTitle: "T-shirt Art | Indossa l'Arte",
+    h1: "T-Shirt",
+    seoTitle: "T-shirt Art | Indossa l'Arte - Massimo Di Stefano",
     seoDescription: "La mia arte stampata su t-shirt. Wear my unique designs and artistic t-shirts.",
     introKey: "t-shirt.intro",
     gradientFrom: "rgba(249,115,22,0.3)",
@@ -76,7 +76,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `${config.title} — Massimo Di Stefano`,
+    name: `${config.seoTitle}`,
     description: config.seoDescription,
     url: `https://massimodistefano.com/${config.key}`,
     numberOfItems: artworks.length,
@@ -113,7 +113,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               if (element) setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
             }}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-12"
-            aria-label={`Torna alla homepage, sezione ${config.title}`}
+            aria-label={`Torna alla homepage, sezione ${config.h1}`}
           >
             <ArrowLeft size={20} aria-hidden="true" />
             <span>{t("discipline.back")}</span>
@@ -124,7 +124,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               className="mb-4"
               style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white" }}
             >
-              {config.title}
+              {config.h1}
             </h1>
 
             <div className="prose prose-invert max-w-none mb-12">
