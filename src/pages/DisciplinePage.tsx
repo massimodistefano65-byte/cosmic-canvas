@@ -48,7 +48,7 @@ const disciplines: Record<string, DisciplineConfig> = {
   "t-shirt": {
     key: "t-shirt",
     h1: "T-Shirt",
-    seoTitle: "T-shirt Art | Indossa l'Arte - Massimo Di Stefano",
+    seoTitle: "T-Shirt | Wearable Art - Massimo Di Stefano",
     seoDescription: "La mia arte stampata su t-shirt. Wear my unique designs and artistic t-shirts.",
     introKey: "t-shirt.intro",
     gradientFrom: "rgba(249,115,22,0.3)",
