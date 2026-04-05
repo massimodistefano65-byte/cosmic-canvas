@@ -175,7 +175,7 @@ const ContactSection = () => {
                   <span className="text-xl" aria-hidden="true">
                     {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
                   </span>
-                  <span className="font-medium">{social.name}</span>
+                  {('displayName' in social ? social.displayName : social.name) && <span className="font-medium">{'displayName' in social ? social.displayName : social.name}</span>}
                   <span className="ml-auto text-muted-foreground group-hover:text-accent" aria-hidden="true">→</span>
                 </motion.a>
               ))}
