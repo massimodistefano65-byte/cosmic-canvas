@@ -193,7 +193,7 @@ const Bio = () => {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Bio | Massimo Di Stefano"
+        title="Bio | Biografia - Massimo Di Stefano"
         description="Scopri il mio percorso artistico. Learn about my background and artistic vision."
         canonicalPath="/bio"
         jsonLd={jsonLd}

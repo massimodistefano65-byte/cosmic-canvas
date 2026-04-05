@@ -51,7 +51,7 @@ const Navbar = () => {
     { label: t("nav.digitalArt"), href: "/", scroll: "digital-art" },
     { label: t("nav.tshirt"), href: "/", scroll: "t-shirt" },
     { label: t("nav.archive"), href: "/archive", scroll: false },
-    { label: t("nav.contacts"), href: "/", scroll: "contacts" },
+    { label: t("nav.contacts"), href: "/contact", scroll: false },
   ];
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
