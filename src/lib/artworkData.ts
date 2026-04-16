@@ -103,7 +103,7 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  * ═══════════════════════════════════════════════════════════════ */
 const painting: ArtworkFullData[] = [
   createArtwork({
-    id: "1",
+    id: "pensieri-in-evoluzione",
     slug: "pensieri-in-evoluzione",
     category: "painting",
     title: "Pensieri in Evoluzione",
@@ -114,7 +114,7 @@ const painting: ArtworkFullData[] = [
     roomViews: 3,
   }),
   createArtwork({
-    id: "2",
+    id: "nebulosa-urbana",
     slug: "nebulosa-urbana",
     category: "painting",
     title: "Nebulosa Urbana",
@@ -124,46 +124,46 @@ const painting: ArtworkFullData[] = [
     details: 2,
     roomViews: 1,
   }),
-  createArtwork({ id: "3", slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",     year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
-  createArtwork({ id: "4", slug: "orizzonte-liquido",     category: "painting", title: "Orizzonte Liquido",     year: "2024", dimensions: "120 × 80 cm",  technique: "Tecnica mista" }),
-  createArtwork({ id: "5", slug: "materia-oscura",        category: "painting", title: "Materia Oscura",        year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela" }),
-  createArtwork({ id: "6", slug: "risonanza-cromatica",   category: "painting", title: "Risonanza Cromatica",   year: "2023", dimensions: "80 × 60 cm",   technique: "Acrilico su tela" }),
+  createArtwork({ id: "frammenti-di-luce",     slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",     year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
+  createArtwork({ id: "orizzonte-liquido",     slug: "orizzonte-liquido",     category: "painting", title: "Orizzonte Liquido",     year: "2024", dimensions: "120 × 80 cm",  technique: "Tecnica mista" }),
+  createArtwork({ id: "materia-oscura",        slug: "materia-oscura",        category: "painting", title: "Materia Oscura",        year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela" }),
+  createArtwork({ id: "risonanza-cromatica",   slug: "risonanza-cromatica",   category: "painting", title: "Risonanza Cromatica",   year: "2023", dimensions: "80 × 60 cm",   technique: "Acrilico su tela" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  PHOTOGRAPHY
  * ═══════════════════════════════════════════════════════════════ */
 const photography: ArtworkFullData[] = [
-  createArtwork({ id: "1", slug: "silenzio-metropolitano", category: "photography", title: "Silenzio Metropolitano", year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art", details: 2, roomViews: 1 }),
-  createArtwork({ id: "2", slug: "riflessi-dacqua",       category: "photography", title: "Riflessi d'Acqua",      year: "2024", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "3", slug: "geometrie-naturali",    category: "photography", title: "Geometrie Naturali",     year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "4", slug: "luce-radente",          category: "photography", title: "Luce Radente",           year: "2023", dimensions: "70 × 50 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "5", slug: "ombre-lunghe",          category: "photography", title: "Ombre Lunghe",           year: "2023", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "6", slug: "istante-sospeso",       category: "photography", title: "Istante Sospeso",        year: "2023", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ id: "silenzio-metropolitano", slug: "silenzio-metropolitano", category: "photography", title: "Silenzio Metropolitano", year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art", details: 2, roomViews: 1 }),
+  createArtwork({ id: "riflessi-dacqua",       slug: "riflessi-dacqua",       category: "photography", title: "Riflessi d'Acqua",      year: "2024", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ id: "geometrie-naturali",    slug: "geometrie-naturali",    category: "photography", title: "Geometrie Naturali",     year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ id: "luce-radente",          slug: "luce-radente",          category: "photography", title: "Luce Radente",           year: "2023", dimensions: "70 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ id: "ombre-lunghe",          slug: "ombre-lunghe",          category: "photography", title: "Ombre Lunghe",           year: "2023", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ id: "istante-sospeso",       slug: "istante-sospeso",       category: "photography", title: "Istante Sospeso",        year: "2023", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  DIGITAL ART
  * ═══════════════════════════════════════════════════════════════ */
 const digitalArt: ArtworkFullData[] = [
-  createArtwork({ id: "1", slug: "pixel-cosmico",        category: "digital-art", title: "Pixel Cosmico",        year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "2", slug: "glitch-armonico",      category: "digital-art", title: "Glitch Armonico",      year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "3", slug: "dimensione-parallela", category: "digital-art", title: "Dimensione Parallela", year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "4", slug: "codice-visivo",        category: "digital-art", title: "Codice Visivo",        year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "5", slug: "sintesi-digitale",     category: "digital-art", title: "Sintesi Digitale",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "6", slug: "realta-aumentata",     category: "digital-art", title: "Realtà Aumentata",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "pixel-cosmico",        slug: "pixel-cosmico",        category: "digital-art", title: "Pixel Cosmico",        year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "glitch-armonico",      slug: "glitch-armonico",      category: "digital-art", title: "Glitch Armonico",      year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "dimensione-parallela", slug: "dimensione-parallela", category: "digital-art", title: "Dimensione Parallela", year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "codice-visivo",        slug: "codice-visivo",        category: "digital-art", title: "Codice Visivo",        year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "sintesi-digitale",     slug: "sintesi-digitale",     category: "digital-art", title: "Sintesi Digitale",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ id: "realta-aumentata",     slug: "realta-aumentata",     category: "digital-art", title: "Realtà Aumentata",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  T-SHIRT
  * ═══════════════════════════════════════════════════════════════ */
 const tShirt: ArtworkFullData[] = [
-  createArtwork({ id: "1", slug: "nebula-wear",     category: "t-shirt", title: "Nebula Wear",     year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "2", slug: "cosmic-print",    category: "t-shirt", title: "Cosmic Print",    year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
-  createArtwork({ id: "3", slug: "urban-galaxy",    category: "t-shirt", title: "Urban Galaxy",    year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "4", slug: "abstract-flow",   category: "t-shirt", title: "Abstract Flow",   year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
-  createArtwork({ id: "5", slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "6", slug: "dark-matter",     category: "t-shirt", title: "Dark Matter",     year: "2023", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ id: "nebula-wear",     slug: "nebula-wear",     category: "t-shirt", title: "Nebula Wear",     year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ id: "cosmic-print",    slug: "cosmic-print",    category: "t-shirt", title: "Cosmic Print",    year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ id: "urban-galaxy",    slug: "urban-galaxy",    category: "t-shirt", title: "Urban Galaxy",    year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ id: "abstract-flow",   slug: "abstract-flow",   category: "t-shirt", title: "Abstract Flow",   year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ id: "stellar-edition", slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ id: "dark-matter",     slug: "dark-matter",     category: "t-shirt", title: "Dark Matter",     year: "2023", dimensions: "Varie taglie", technique: "Stampa digitale" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════ */
