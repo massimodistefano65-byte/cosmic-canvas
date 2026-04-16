@@ -71,15 +71,17 @@ interface CreateArtworkInput {
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
   const { id, slug, category, title, year, dimensions, technique, price, details = 0, roomViews = 0 } = input;
-  const base = `/artworks/${category}/${slug}/massimo-di-stefano-${slug}-${category}`;
+  const dir = `/artworks/${category}/${slug}`;
+  const prefix = `${dir}/massimo-di-stefano-${slug}`;
+  const catPrefix = `${prefix}-${category}`;
 
   const images: { url: string; label: string }[] = [];
 
   for (let i = 1; i <= roomViews; i++) {
-    images.push({ url: `${base}-room-view-${i}.jpg`, label: `Room View ${i}` });
+    images.push({ url: `${prefix}-room-view-${i}.jpg`, label: `Room View ${i}` });
   }
   for (let i = 1; i <= details; i++) {
-    images.push({ url: `${base}-detail-${i}.jpg`, label: `Dettaglio ${i}` });
+    images.push({ url: `${prefix}-detail-${i}.jpg`, label: `Dettaglio ${i}` });
   }
 
   return {
