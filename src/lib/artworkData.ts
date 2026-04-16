@@ -91,9 +91,9 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     dimensions,
     technique,
     price,
-    preview: `${base}-preview.jpg`,
-    main: `${base}-1.jpg`,
-    full: `${base}-1.jpg`,
+    preview: `${catPrefix}-preview.jpg`,
+    main: `${catPrefix}-1.jpg`,
+    full: `${catPrefix}-1.jpg`,
     images,
   };
 }
