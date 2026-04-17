@@ -134,22 +134,39 @@ const ArtworkDetail = () => {
               aria-label={`Apri ${artwork.title} in lightbox`}
             >
               {currentImageUrl ? (
-                <img
-                  src={currentImageUrl}
-                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="max-w-full max-h-[82vh] object-contain rounded"
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority="high"
-                />
+                <>
+                  <img
+                    src={currentImageUrl}
+                    alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                    className="max-w-full max-h-[82vh] object-contain rounded"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    onError={(e) => {
+                      const t = e.currentTarget;
+                      t.style.display = "none";
+                      const fb = t.nextElementSibling as HTMLElement | null;
+                      if (fb) fb.style.display = "flex";
+                    }}
+                  />
+                  <div
+                    className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded items-center justify-center text-muted-foreground/50 text-xs"
+                    style={{
+                      background: getSlugGradient(artwork.id),
+                      display: "none",
+                    }}
+                  >
+                    {artwork.title}
+                  </div>
+                </>
               ) : (
                 <div
                   className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
                   style={{
-                    background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                    background: getSlugGradient(artwork.id),
                   }}
                 >
-                  Clicca per full-view
+                  {artwork.title}
                 </div>
               )}
             </button>
@@ -262,12 +279,34 @@ const ArtworkDetail = () => {
                       onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
                     >
                       {img.url ? (
-                        <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                        <>
+                          <img
+                            src={img.url}
+                            alt={img.label}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                              const t = e.currentTarget;
+                              t.style.display = "none";
+                              const fb = t.nextElementSibling as HTMLElement | null;
+                              if (fb) fb.style.display = "flex";
+                            }}
+                          />
+                          <div
+                            className="w-full h-full items-center justify-center text-[7px] text-muted-foreground/60"
+                            style={{
+                              background: getSlugGradient(artwork.id),
+                              display: "none",
+                            }}
+                          >
+                            {img.label}
+                          </div>
+                        </>
                       ) : (
                         <div
                           className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
                           style={{
-                            background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                            background: getSlugGradient(artwork.id),
                           }}
                         >
                           {img.label}
@@ -310,20 +349,37 @@ const ArtworkDetail = () => {
               aria-label={`Apri ${artwork.title} in lightbox`}
             >
             {currentImageUrl ? (
-              <img
-                src={currentImageUrl}
-                alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                className="w-full h-auto object-contain rounded"
-                loading="lazy"
-              />
+              <>
+                <img
+                  src={currentImageUrl}
+                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                  className="w-full h-auto object-contain rounded"
+                  loading="lazy"
+                  onError={(e) => {
+                    const t = e.currentTarget;
+                    t.style.display = "none";
+                    const fb = t.nextElementSibling as HTMLElement | null;
+                    if (fb) fb.style.display = "flex";
+                  }}
+                />
+                <div
+                  className="w-full aspect-[4/5] rounded items-center justify-center text-muted-foreground/50 text-xs"
+                  style={{
+                    background: getSlugGradient(artwork.id),
+                    display: "none",
+                  }}
+                >
+                  {artwork.title}
+                </div>
+              </>
             ) : (
               <div
                 className="w-full aspect-[4/5] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
                 style={{
-                  background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                  background: getSlugGradient(artwork.id),
                 }}
               >
-                Tocca per full-view
+                {artwork.title}
               </div>
             )}
             </button>
@@ -407,12 +463,34 @@ const ArtworkDetail = () => {
                     onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
                   >
                     {img.url ? (
-                      <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" />
+                      <>
+                        <img
+                          src={img.url}
+                          alt={img.label}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            const t = e.currentTarget;
+                            t.style.display = "none";
+                            const fb = t.nextElementSibling as HTMLElement | null;
+                            if (fb) fb.style.display = "flex";
+                          }}
+                        />
+                        <div
+                          className="w-full h-full items-center justify-center text-[7px] text-muted-foreground/60"
+                          style={{
+                            background: getSlugGradient(artwork.id),
+                            display: "none",
+                          }}
+                        >
+                          {img.label}
+                        </div>
+                      </>
                     ) : (
                       <div
                         className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
                         style={{
-                          background: `linear-gradient(135deg, ${gFrom}, ${gTo})`,
+                          background: getSlugGradient(artwork.id),
                         }}
                       >
                         {img.label}
