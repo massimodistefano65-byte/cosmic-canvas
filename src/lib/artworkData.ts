@@ -1,42 +1,57 @@
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  GESTIONE OPERE — GUIDA RAPIDA
+ *  GESTIONE OPERE — GUIDA DEFINITIVA
  * ═══════════════════════════════════════════════════════════════════
+ *
+ *  ── CONVENZIONE NOMI FILE (regola unica e rigorosa) ──────────
+ *  Ogni file dell'opera DEVE seguire questo schema:
+ *
+ *    massimo-di-stefano-{slug}-{category}-{tipo}.{format}
+ *
+ *  Tipi:
+ *    • preview            → thumbnail per la galleria
+ *    • 1                  → immagine principale (main / full)
+ *    • detail-1, detail-2 → dettagli ravvicinati
+ *    • room-view-1, ...   → opera ambientata
+ *
+ *  Esempio:
+ *    massimo-di-stefano-pensieri-in-evoluzione-painting-preview.jpg
+ *    massimo-di-stefano-pensieri-in-evoluzione-painting-1.jpg
+ *    massimo-di-stefano-pensieri-in-evoluzione-painting-detail-1.jpg
+ *    massimo-di-stefano-pensieri-in-evoluzione-painting-room-view-1.jpg
  *
  *  ── COME AGGIUNGERE UN'OPERA ──────────────────────────────────
  *  1. Crea la cartella:  public/artworks/{categoria}/{slug}/
  *     Esempio:           public/artworks/painting/nebulosa-urbana/
  *
- *  2. Carica i file immagine con questa convenzione:
- *     • PREVIEW:   massimo-di-stefano-{slug}-{categoria}-preview.jpg
- *     • MAIN:      massimo-di-stefano-{slug}-{categoria}-1.jpg
- *     • DETTAGLI:  massimo-di-stefano-{slug}-{categoria}-detail-1.jpg, -detail-2.jpg …
- *     • ROOM VIEW: massimo-di-stefano-{slug}-{categoria}-room-view-1.jpg …
+ *  2. Carica i file rispettando la convenzione qui sopra.
+ *     Formato: .jpg (default) o .webp (specifica `format: "webp"`).
  *
  *  3. Aggiungi un blocco createArtwork({...}) nell'array della categoria.
- *     I percorsi vengono calcolati automaticamente!
  *
  *  ── TEMPLATE DA COPIARE ─────────────────────────────────────
  *
  *     createArtwork({
- *       id: "NUMERO",
- *       slug: "titolo-in-minuscolo",
+ *       slug: "titolo-in-minuscolo",   // identifica cartella, file e URL
  *       category: "painting",          // painting | photography | digital-art | t-shirt
  *       title: "Titolo Opera",
  *       year: "2024",
  *       dimensions: "100 × 50 cm",
  *       technique: "Tecnica mista su tela",
- *       price: "€ 1.500",              // opzionale, ometti se non vuoi mostrarlo
+ *       price: "€ 1.500",              // opzionale
  *       details: 3,                     // numero di foto detail (0 se nessuna)
  *       roomViews: 2,                   // numero di foto room-view (0 se nessuna)
+ *       format: "jpg",                  // opzionale: "jpg" (default) | "webp"
  *     }),
  *
  *  ── REGOLE ──────────────────────────────────────────────────
- *  • L'ID deve essere unico dentro ogni disciplina.
+ *  • L'ID dell'opera coincide SEMPRE con lo slug (URL SEO-friendly).
  *  • Lo slug deve corrispondere al nome della cartella e dei file.
- *  • Se details o roomViews sono 0, non vengono generati percorsi extra.
- *  • Le categorie valide sono: painting, photography, digital-art, t-shirt
- *  • Per l'Archive usa il file separato: src/lib/archiveData.ts
+ *  • La categoria appare SEMPRE nel nome di OGNI file.
+ *  • Categorie valide: painting, photography, digital-art, t-shirt.
+ *  • Le opere senza file reali appaiono come placeholder colorati
+ *    (gradiente generato dallo slug) — vedi src/lib/slugGradient.ts.
+ *  • Per l'Archive usa il file separato: src/lib/archiveData.ts.
  *
  * ═══════════════════════════════════════════════════════════════════
  */
@@ -57,7 +72,6 @@ export interface ArtworkFullData {
 /* ─── Helper: genera automaticamente i percorsi immagine ─── */
 
 interface CreateArtworkInput {
-  id: string;
   slug: string;
   category: string;
   title: string;
@@ -67,33 +81,47 @@ interface CreateArtworkInput {
   price?: string;
   details?: number;
   roomViews?: number;
+  format?: "jpg" | "webp";
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
-  const { id, slug, category, title, year, dimensions, technique, price, details = 0, roomViews = 0 } = input;
-  const dir = `/artworks/${category}/${slug}`;
-  const prefix = `${dir}/massimo-di-stefano-${slug}`;
-  const catPrefix = `${prefix}-${category}`;
-
-  const images: { url: string; label: string }[] = [];
-
-  for (let i = 1; i <= roomViews; i++) {
-    images.push({ url: `${prefix}-room-view-${i}.jpg`, label: `Room View ${i}` });
-  }
-  for (let i = 1; i <= details; i++) {
-    images.push({ url: `${prefix}-detail-${i}.jpg`, label: `Dettaglio ${i}` });
-  }
-
-  return {
-    id,
+  const {
+    slug,
+    category,
     title,
     year,
     dimensions,
     technique,
     price,
-    preview: `${catPrefix}-preview.jpg`,
-    main: `${catPrefix}-1.jpg`,
-    full: `${catPrefix}-1.jpg`,
+    details = 0,
+    roomViews = 0,
+    format = "jpg",
+  } = input;
+
+  const dir = `/artworks/${category}/${slug}`;
+  // Prefisso unico: include SEMPRE la categoria. Vale per ogni tipo di file.
+  const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
+  const ext = format;
+
+  const images: { url: string; label: string }[] = [];
+
+  for (let i = 1; i <= roomViews; i++) {
+    images.push({ url: `${base}-room-view-${i}.${ext}`, label: `Room View ${i}` });
+  }
+  for (let i = 1; i <= details; i++) {
+    images.push({ url: `${base}-detail-${i}.${ext}`, label: `Dettaglio ${i}` });
+  }
+
+  return {
+    id: slug, // ID === slug (URL SEO-friendly)
+    title,
+    year,
+    dimensions,
+    technique,
+    price,
+    preview: `${base}-preview.${ext}`,
+    main: `${base}-1.${ext}`,
+    full: `${base}-1.${ext}`,
     images,
   };
 }
@@ -105,7 +133,6 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  * ═══════════════════════════════════════════════════════════════ */
 const painting: ArtworkFullData[] = [
   createArtwork({
-    id: "pensieri-in-evoluzione",
     slug: "pensieri-in-evoluzione",
     category: "painting",
     title: "Pensieri in Evoluzione",
@@ -115,57 +142,47 @@ const painting: ArtworkFullData[] = [
     details: 3,
     roomViews: 3,
   }),
-  createArtwork({
-    id: "nebulosa-urbana",
-    slug: "nebulosa-urbana",
-    category: "painting",
-    title: "Nebulosa Urbana",
-    year: "2024",
-    dimensions: "80 × 60 cm",
-    technique: "Olio su tela",
-    details: 2,
-    roomViews: 1,
-  }),
-  createArtwork({ id: "frammenti-di-luce",     slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",     year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
-  createArtwork({ id: "orizzonte-liquido",     slug: "orizzonte-liquido",     category: "painting", title: "Orizzonte Liquido",     year: "2024", dimensions: "120 × 80 cm",  technique: "Tecnica mista" }),
-  createArtwork({ id: "materia-oscura",        slug: "materia-oscura",        category: "painting", title: "Materia Oscura",        year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela" }),
-  createArtwork({ id: "risonanza-cromatica",   slug: "risonanza-cromatica",   category: "painting", title: "Risonanza Cromatica",   year: "2023", dimensions: "80 × 60 cm",   technique: "Acrilico su tela" }),
+  createArtwork({ slug: "nebulosa-urbana",       category: "painting", title: "Nebulosa Urbana",     year: "2024", dimensions: "80 × 60 cm",   technique: "Olio su tela" }),
+  createArtwork({ slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",   year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
+  createArtwork({ slug: "orizzonte-liquido",     category: "painting", title: "Orizzonte Liquido",   year: "2024", dimensions: "120 × 80 cm",  technique: "Tecnica mista" }),
+  createArtwork({ slug: "materia-oscura",        category: "painting", title: "Materia Oscura",      year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela" }),
+  createArtwork({ slug: "risonanza-cromatica",   category: "painting", title: "Risonanza Cromatica", year: "2023", dimensions: "80 × 60 cm",   technique: "Acrilico su tela" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  PHOTOGRAPHY
  * ═══════════════════════════════════════════════════════════════ */
 const photography: ArtworkFullData[] = [
-  createArtwork({ id: "silenzio-metropolitano", slug: "silenzio-metropolitano", category: "photography", title: "Silenzio Metropolitano", year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art", details: 2, roomViews: 1 }),
-  createArtwork({ id: "riflessi-dacqua",       slug: "riflessi-dacqua",       category: "photography", title: "Riflessi d'Acqua",      year: "2024", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "geometrie-naturali",    slug: "geometrie-naturali",    category: "photography", title: "Geometrie Naturali",     year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "luce-radente",          slug: "luce-radente",          category: "photography", title: "Luce Radente",           year: "2023", dimensions: "70 × 50 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "ombre-lunghe",          slug: "ombre-lunghe",          category: "photography", title: "Ombre Lunghe",           year: "2023", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
-  createArtwork({ id: "istante-sospeso",       slug: "istante-sospeso",       category: "photography", title: "Istante Sospeso",        year: "2023", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "silenzio-metropolitano", category: "photography", title: "Silenzio Metropolitano", year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "riflessi-dacqua",        category: "photography", title: "Riflessi d'Acqua",       year: "2024", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "geometrie-naturali",     category: "photography", title: "Geometrie Naturali",     year: "2024", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "luce-radente",           category: "photography", title: "Luce Radente",           year: "2023", dimensions: "70 × 50 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "ombre-lunghe",           category: "photography", title: "Ombre Lunghe",           year: "2023", dimensions: "60 × 40 cm", technique: "Stampa Fine Art" }),
+  createArtwork({ slug: "istante-sospeso",        category: "photography", title: "Istante Sospeso",        year: "2023", dimensions: "50 × 50 cm", technique: "Stampa Fine Art" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  DIGITAL ART
  * ═══════════════════════════════════════════════════════════════ */
 const digitalArt: ArtworkFullData[] = [
-  createArtwork({ id: "pixel-cosmico",        slug: "pixel-cosmico",        category: "digital-art", title: "Pixel Cosmico",        year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "glitch-armonico",      slug: "glitch-armonico",      category: "digital-art", title: "Glitch Armonico",      year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "dimensione-parallela", slug: "dimensione-parallela", category: "digital-art", title: "Dimensione Parallela", year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "codice-visivo",        slug: "codice-visivo",        category: "digital-art", title: "Codice Visivo",        year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "sintesi-digitale",     slug: "sintesi-digitale",     category: "digital-art", title: "Sintesi Digitale",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
-  createArtwork({ id: "realta-aumentata",     slug: "realta-aumentata",     category: "digital-art", title: "Realtà Aumentata",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "pixel-cosmico",        category: "digital-art", title: "Pixel Cosmico",        year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "glitch-armonico",      category: "digital-art", title: "Glitch Armonico",      year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "dimensione-parallela", category: "digital-art", title: "Dimensione Parallela", year: "2024", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "codice-visivo",        category: "digital-art", title: "Codice Visivo",        year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "sintesi-digitale",     category: "digital-art", title: "Sintesi Digitale",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
+  createArtwork({ slug: "realta-aumentata",     category: "digital-art", title: "Realtà Aumentata",     year: "2023", dimensions: "Digitale", technique: "Digital Art" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
  *  T-SHIRT
  * ═══════════════════════════════════════════════════════════════ */
 const tShirt: ArtworkFullData[] = [
-  createArtwork({ id: "nebula-wear",     slug: "nebula-wear",     category: "t-shirt", title: "Nebula Wear",     year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "cosmic-print",    slug: "cosmic-print",    category: "t-shirt", title: "Cosmic Print",    year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
-  createArtwork({ id: "urban-galaxy",    slug: "urban-galaxy",    category: "t-shirt", title: "Urban Galaxy",    year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "abstract-flow",   slug: "abstract-flow",   category: "t-shirt", title: "Abstract Flow",   year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
-  createArtwork({ id: "stellar-edition", slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Varie taglie", technique: "Serigrafia" }),
-  createArtwork({ id: "dark-matter",     slug: "dark-matter",     category: "t-shirt", title: "Dark Matter",     year: "2023", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ slug: "nebula-wear",     category: "t-shirt", title: "Nebula Wear",     year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ slug: "cosmic-print",    category: "t-shirt", title: "Cosmic Print",    year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ slug: "urban-galaxy",    category: "t-shirt", title: "Urban Galaxy",    year: "2024", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ slug: "abstract-flow",   category: "t-shirt", title: "Abstract Flow",   year: "2024", dimensions: "Varie taglie", technique: "Stampa digitale" }),
+  createArtwork({ slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Varie taglie", technique: "Serigrafia" }),
+  createArtwork({ slug: "dark-matter",     category: "t-shirt", title: "Dark Matter",     year: "2023", dimensions: "Varie taglie", technique: "Stampa digitale" }),
 ];
 
 /* ═══════════════════════════════════════════════════════════════ */

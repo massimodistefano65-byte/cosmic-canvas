@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { getSlugGradient } from "@/lib/slugGradient";
 
 export interface ArtworkItem {
   id: string;
@@ -117,17 +118,24 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
                 decoding="async"
-              />
-            ) : (
-              <div
-                className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
-                style={{
-                  background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+                onError={(e) => {
+                  // Fallback: se il file non esiste, mostra placeholder colorato derivato dallo slug
+                  const target = e.currentTarget;
+                  target.style.display = "none";
+                  const fallback = target.nextElementSibling as HTMLElement | null;
+                  if (fallback) fallback.style.display = "block";
                 }}
-                role="img"
-                aria-label={item.title}
               />
-            )}
+            ) : null}
+            <div
+              className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
+              style={{
+                background: getSlugGradient(item.id),
+                display: item.thumbnailUrl ? "none" : "block",
+              }}
+              role="img"
+              aria-label={item.title}
+            />
 
             {/* Hover overlay with title slide-up */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end">
