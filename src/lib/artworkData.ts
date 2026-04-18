@@ -67,6 +67,8 @@ export interface ArtworkFullData {
   main: string;
   full: string;
   images: { url: string; label: string }[];
+  /** True quando i file fisici esistono — entra in sitemap.xml */
+  published: boolean;
 }
 
 /* ─── Helper: genera automaticamente i percorsi immagine ─── */
@@ -82,6 +84,8 @@ interface CreateArtworkInput {
   details?: number;
   roomViews?: number;
   format?: "jpg" | "webp";
+  /** Imposta a true SOLO se i file immagine esistono fisicamente. Default: false. */
+  published?: boolean;
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
@@ -96,6 +100,7 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     details = 0,
     roomViews = 0,
     format = "jpg",
+    published = false,
   } = input;
 
   const dir = `/artworks/${category}/${slug}`;
@@ -123,6 +128,7 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     main: `${base}-1.${ext}`,
     full: `${base}-1.${ext}`,
     images,
+    published,
   };
 }
 
@@ -141,6 +147,7 @@ const painting: ArtworkFullData[] = [
     technique: "Tecnica mista su tela",
     details: 3,
     roomViews: 3,
+    published: true,
   }),
   createArtwork({ slug: "nebulosa-urbana",       category: "painting", title: "Nebulosa Urbana",     year: "2024", dimensions: "80 × 60 cm",   technique: "Olio su tela" }),
   createArtwork({ slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",   year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
