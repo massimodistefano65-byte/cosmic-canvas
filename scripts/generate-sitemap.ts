@@ -24,7 +24,7 @@ const disciplines = ["painting", "photography", "digital-art", "t-shirt"];
 
 const artworkUrls = disciplines.flatMap((d) =>
   getArtworksByDiscipline(d)
-    .filter((a) => a.preview || a.main) // only published works
+    .filter((a) => a.published) // solo opere con file fisici
     .map((a) => ({ path: `/${d}/${a.id}`, priority: "0.6" }))
 );
 
