@@ -27,6 +27,8 @@ export interface Exhibition {
   images: string[];
   /** Eventuale catalogo PDF */
   catalogPdf?: string;
+  /** Imposta a true per includere in sitemap.xml. Default: false. */
+  published?: boolean;
 }
 
 export interface ArchiveVideo {
@@ -36,6 +38,8 @@ export interface ArchiveVideo {
   description: string;
   /** Solo l'ID di YouTube, es. "x9ZMeR7e4MU" */
   youtubeId: string;
+  /** Imposta a true per includere in sitemap.xml. Default: false. */
+  published?: boolean;
 }
 
 export interface DownloadMaterial {
@@ -86,6 +90,8 @@ export interface OtherProject {
   tags: string[];
   /** Layout preferito: "grid", "masonry", "list" */
   layout?: "grid" | "masonry" | "list";
+  /** Imposta a true per includere in sitemap.xml. Default: false. */
+  published?: boolean;
 }
 
 // ─── Dati ────────────────────────────────────────────────────
