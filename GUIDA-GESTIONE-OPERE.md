@@ -1,6 +1,7 @@
 # 📚 Guida Definitiva alla Gestione del Sito
 
-> **Riferimento unico** per inserire, modificare o rimuovere contenuti.
+> **📌 DOCUMENTO AUTORITATIVO** — questa guida è l'unica fonte di verità per la manutenzione del sito.
+> Ogni altra istruzione precedente è obsoleta.
 > Aggiornata al sistema **ID = Slug** con convenzione file unificata.
 
 ---
@@ -19,6 +20,38 @@ massimo-di-stefano-{slug}-{category}-{tipo}.{format}
 - **format** = `jpg` (default) o `webp`
 
 L'**ID dell'opera coincide sempre con lo slug** → URL: `/painting/pensieri-in-evoluzione`
+
+---
+
+## 🛡️ Metodo di Lavoro Consigliato (Branch + StackBlitz)
+
+Per non rischiare mai di rompere il sito principale, lavora **sempre su un branch separato** e testa prima del merge su `main`.
+
+### Flusso in 4 step
+
+1. **Crea branch su GitHub** partendo da `main`
+   - Es. `aggiunta-opere-aprile-2026`
+2. **Carica immagini e modifica `artworkData.ts`** SOLO su quel branch
+   - Usa GitHub web UI o `git` da locale
+3. **Testa su StackBlitz** aprendo il branch:
+   ```
+   https://stackblitz.com/github/{user}/{repo}/tree/{nome-branch}
+   ```
+   - Apri il sito in preview
+   - Apri `/admin/artworks-status` → tutte le opere modificate devono essere 🟢 verdi
+   - Apri la disciplina (es. `/painting`) → verifica che le miniature si vedano
+4. **Pull Request → Merge in `main`** SOLO dopo test positivo
+   - A questo punto Lovable sincronizza automaticamente
+
+### ⚠️ Regola anti-conflitto
+
+**Mentre lavori sul branch esterno, NON modificare nulla dentro Lovable.** Lavori in Lovable **OPPURE** sul branch — **mai entrambi insieme**, altrimenti rischi conflitti su `artworkData.ts` al merge.
+
+### Compatibilità Lovable ↔ GitHub
+
+- La sync Lovable↔GitHub opera **solo** sul branch principale (`main`).
+- Branch separati sono **invisibili** a Lovable finché non vengono mergiati.
+- StackBlitz crea una sandbox isolata: nessun rischio per il sito di produzione.
 
 ---
 
@@ -61,7 +94,7 @@ createArtwork({
 }),
 ```
 
-> ⚠️ **`published: true`** — imposta a `true` SOLO quando hai caricato i file. Le opere `published` entrano nella sitemap.xml.
+> ⚠️ **`published: true`** — imposta a `true` SOLO quando hai caricato i file. Le opere `published` entrano nella sitemap.xml e vengono indicizzate da Google.
 
 ### Modificare prezzo
 
@@ -81,6 +114,8 @@ Sposta i blocchi `createArtwork` nell'ordine desiderato dentro l'array.
 
 File unico: **`src/lib/archiveData.ts`**
 
+> Aggiungi `published: true` a mostre, video e progetti che vuoi indicizzare nella sitemap.
+
 ### 📋 Schema MOSTRA
 
 ```ts
@@ -95,6 +130,7 @@ File unico: **`src/lib/archiveData.ts`**
     "/archive/exhibitions/1/invito.jpg",
   ],
   catalogPdf: "/archive/exhibitions/1/catalogo.pdf", // opzionale
+  published: true,                                    // opzionale, per sitemap
 }
 ```
 
@@ -107,6 +143,7 @@ File unico: **`src/lib/archiveData.ts`**
   category: "Arte",
   description: "Esplorazione artistica del subconscio",
   youtubeId: "x9ZMeR7e4MU",  // SOLO l'ID, non l'URL completo
+  published: true,            // opzionale, per sitemap
 }
 ```
 
@@ -147,6 +184,7 @@ File unico: **`src/lib/archiveData.ts`**
   tags: ["natura", "sostenibilità"],
   layout: "grid",  // "grid" | "masonry" | "list"
   longDescription: "Testo lungo opzionale...",
+  published: true, // opzionale, per sitemap
   media: [
     { type: "image", src: "/archive/projects/1/foto.jpg", title: "Titolo", description: "..." },
     { type: "youtube", youtubeId: "ABC123", title: "Video" },
@@ -217,7 +255,14 @@ Le immagini di copertina vanno in `public/images/blog/`.
 npx tsx scripts/generate-sitemap.ts
 ```
 
-Genera `public/sitemap.xml` includendo automaticamente tutte le opere con `published: true`.
+Genera `public/sitemap.xml` includendo automaticamente:
+- Tutte le pagine statiche
+- Le opere con `published: true`
+- Le mostre, video e progetti dell'archivio con `published: true`
+
+### OpenGraph (condivisione social)
+
+Le pagine opera generano automaticamente i meta tag OpenGraph dinamici (`og:image`, `og:title`, `og:description`) puntando all'immagine principale dell'opera. Non serve configurazione extra.
 
 ### Modificare titoli/descrizioni SEO
 
@@ -249,7 +294,13 @@ Apri nel browser:
 /admin/artworks-status
 ```
 
-Mostra in tempo reale lo stato di caricamento (🟢 OK / 🟡 loading / 🔴 broken) di ogni preview/main per tutte le opere, con filtri e ricerca.
+Logica dei pallini di stato:
+
+| Pallino | Significato |
+|---------|-------------|
+| 🟢 verde | Immagine caricata correttamente |
+| 🟡 giallo | Immagine manca **e** `published: false` → bozza in attesa di foto (OK) |
+| 🔴 rosso | Immagine manca **e** `published: true` → **errore critico**: link rotto sul sito pubblico |
 
 ---
 
@@ -264,6 +315,14 @@ Checklist rapida:
 5. **Numero detail/roomViews?** → deve corrispondere ai file caricati
 6. Apri `/admin/artworks-status` per vedere quale file fallisce
 7. Esegui `npx tsx scripts/validate-artworks.ts` per un report completo
+
+---
+
+## ⚡ 8. Performance
+
+- **Lazy loading**: tutte le miniature delle gallerie e le immagini secondarie usano `loading="lazy"` automaticamente.
+- **Eager loading**: solo l'immagine principale dell'opera (above-the-fold) carica subito per ottimizzare LCP.
+- Il sito può gestire centinaia di immagini senza rallentamenti.
 
 ---
 
@@ -282,4 +341,4 @@ Checklist rapida:
 
 ---
 
-✨ **Tutto qui.** Con questa guida puoi gestire ogni aspetto del sito in autonomia.
+✨ **Tutto qui.** Con questa guida puoi gestire ogni aspetto del sito in autonomia e in totale sicurezza.

@@ -86,6 +86,7 @@ const ArtworkDetail = () => {
         title={`${artwork.title} — ${discLabel}`}
         description={`${artwork.title} (${artwork.year}) di Massimo Di Stefano. ${artwork.technique}, ${artwork.dimensions}. ${discLabel}.`}
         canonicalPath={`/${discipline}/${artworkId}`}
+        ogImage={artwork.main}
         jsonLd={jsonLd}
       />
       <Navbar />
@@ -139,9 +140,9 @@ const ArtworkDetail = () => {
                     src={currentImageUrl}
                     alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                     className="max-w-full max-h-[82vh] object-contain rounded"
-                    loading="eager"
+                    loading={selectedImage === 0 ? "eager" : "lazy"}
                     decoding="async"
-                    fetchPriority="high"
+                    fetchPriority={selectedImage === 0 ? "high" : "auto"}
                     onError={(e) => {
                       const t = e.currentTarget;
                       t.style.display = "none";
@@ -285,6 +286,7 @@ const ArtworkDetail = () => {
                             alt={img.label}
                             className="w-full h-full object-cover"
                             loading="lazy"
+                            decoding="async"
                             onError={(e) => {
                               const t = e.currentTarget;
                               t.style.display = "none";
@@ -354,7 +356,9 @@ const ArtworkDetail = () => {
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                   className="w-full h-auto object-contain rounded"
-                  loading="lazy"
+                  loading={selectedImage === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={selectedImage === 0 ? "high" : "auto"}
                   onError={(e) => {
                     const t = e.currentTarget;
                     t.style.display = "none";
@@ -469,6 +473,7 @@ const ArtworkDetail = () => {
                           alt={img.label}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          decoding="async"
                           onError={(e) => {
                             const t = e.currentTarget;
                             t.style.display = "none";
