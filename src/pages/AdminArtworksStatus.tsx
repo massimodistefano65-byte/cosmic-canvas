@@ -20,10 +20,19 @@ import {
 
 const DISCIPLINES = ["painting", "photography", "digital-art", "t-shirt"];
 
-type Status = "loading" | "ok" | "broken";
+type Status = "loading" | "ok" | "missing";
 
-const StatusDot = ({ url }: { url: string }) => {
+/**
+ * Logica:
+ *  🟢 verde   = immagine carica
+ *  🟡 giallo  = immagine manca MA published === false → bozza in attesa
+ *  🔴 rosso   = immagine manca E published === true   → errore critico
+ */
+const StatusDot = ({ url, published }: { url: string; published: boolean }) => {
   const [status, setStatus] = useState<Status>("loading");
+  const isError = status === "missing" && published;
+  const isDraft = status === "missing" && !published;
+  const label = status === "ok" ? "ok" : isError ? "broken" : isDraft ? "draft" : "loading";
   return (
     <span className="inline-flex items-center gap-2">
       <img
@@ -31,19 +40,21 @@ const StatusDot = ({ url }: { url: string }) => {
         alt=""
         className="hidden"
         onLoad={() => setStatus("ok")}
-        onError={() => setStatus("broken")}
+        onError={() => setStatus("missing")}
       />
       <span
         className={`inline-block w-2.5 h-2.5 rounded-full ${
           status === "ok"
             ? "bg-emerald-500"
-            : status === "broken"
+            : isError
               ? "bg-red-500"
-              : "bg-yellow-500"
+              : isDraft
+                ? "bg-yellow-500"
+                : "bg-muted"
         }`}
-        title={status}
+        title={label}
       />
-      <span className="text-xs text-muted-foreground">{status}</span>
+      <span className="text-xs text-muted-foreground">{label}</span>
     </span>
   );
 };
@@ -69,7 +80,7 @@ const AdminArtworksStatus = () => {
     return {
       total: all.length,
       published: all.filter((a) => a.published).length,
-      placeholder: all.filter((a) => !a.published).length,
+      drafts: all.filter((a) => !a.published).length,
     };
   }, []);
 
@@ -87,23 +98,38 @@ const AdminArtworksStatus = () => {
           Pannello tecnico — verifica caricamento immagini in tempo reale.
         </p>
 
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="border border-border/30 rounded p-4">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Totale</p>
             <p className="text-2xl font-light">{totals.total}</p>
           </div>
           <div className="border border-border/30 rounded p-4">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Pubblicate
+              Pubblicate (published: true)
             </p>
             <p className="text-2xl font-light text-emerald-500">{totals.published}</p>
           </div>
           <div className="border border-border/30 rounded p-4">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-              Placeholder
+              Bozze (published: false)
             </p>
-            <p className="text-2xl font-light text-yellow-500">{totals.placeholder}</p>
+            <p className="text-2xl font-light text-yellow-500">{totals.drafts}</p>
           </div>
+        </div>
+
+        <div className="text-xs text-muted-foreground mb-8 flex flex-wrap gap-4">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" /> OK — immagine
+            caricata
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block w-2 h-2 rounded-full bg-yellow-500" /> Bozza — published:
+            false, in attesa di foto
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block w-2 h-2 rounded-full bg-red-500" /> Errore critico —
+            published: true ma file mancante
+          </span>
         </div>
 
         <div className="flex gap-3 mb-6">
@@ -152,10 +178,10 @@ const AdminArtworksStatus = () => {
                   <TableCell>{r.title}</TableCell>
                   <TableCell className="text-xs">{r.year}</TableCell>
                   <TableCell>
-                    <StatusDot url={r.preview} />
+                    <StatusDot url={r.preview} published={r.published} />
                   </TableCell>
                   <TableCell>
-                    <StatusDot url={r.main} />
+                    <StatusDot url={r.main} published={r.published} />
                   </TableCell>
                   <TableCell className="text-xs text-muted-foreground">
                     {r.images.length}

@@ -29,7 +29,12 @@ const SEOHead = ({ title, description, canonicalPath, jsonLd, ogImage }: SEOHead
       el.setAttribute("content", content);
     };
 
-    const resolvedOgImage = ogImage || DEFAULT_OG_IMAGE;
+    // Se ogImage è un path relativo, lo trasformo in URL assoluto (richiesto da OpenGraph)
+    const resolvedOgImage = ogImage
+      ? ogImage.startsWith("http")
+        ? ogImage
+        : `${SITE_URL}${ogImage}`
+      : DEFAULT_OG_IMAGE;
     const resolvedUrl = canonicalPath ? `${SITE_URL}${canonicalPath}` : SITE_URL;
 
     // Basic meta
