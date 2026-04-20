@@ -141,7 +141,7 @@ const painting: ArtworkFullData[] = [
   createArtwork({
     slug: "pensieri-in-evoluzione",
     category: "painting",
-    title: "Pensieri in Evoluzione - ok,
+    title: "Pensieri in Evoluzione - ok",
     year: "2024",
     dimensions: "100 × 50 cm",
     technique: "Tecnica mista su tela",
