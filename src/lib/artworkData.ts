@@ -142,6 +142,7 @@ const painting: ArtworkFullData[] = [
     slug: "pensieri-in-evoluzione",
     category: "painting",
     title: "Pensieri in Evoluzione",
+    description: "Test inaugurazione workflow",
     year: "2024",
     dimensions: "100 × 50 cm",
     technique: "Tecnica mista su tela",
