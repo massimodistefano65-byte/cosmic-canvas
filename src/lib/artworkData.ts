@@ -138,22 +138,32 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  *  PAINTING
  * ═══════════════════════════════════════════════════════════════ */
 const painting: ArtworkFullData[] = [
-  createArtwork({
-    slug: "pensieri-in-evoluzione",
-    category: "painting",
-    title: "Pensieri in Evoluzione",
-    year: "2024",
-    dimensions: "100 × 50 cm",
-    technique: "Tecnica mista su tela",
-    details: 3,
-    roomViews: 3,
-    published: true,
-  }),
-  createArtwork({ slug: "nebulosa-urbana",       category: "painting", title: "Nebulosa Urbana",     year: "2024", dimensions: "80 × 60 cm",   technique: "Olio su tela" }),
-  createArtwork({ slug: "frammenti-di-luce",     category: "painting", title: "Frammenti di Luce",   year: "2024", dimensions: "90 × 70 cm",   technique: "Acrilico su tela" }),
-  createArtwork({ slug: "orizzonte-liquido",     category: "painting", title: "Orizzonte Liquido",   year: "2024", dimensions: "120 × 80 cm",  technique: "Tecnica mista" }),
-  createArtwork({ slug: "materia-oscura",        category: "painting", title: "Materia Oscura",      year: "2023", dimensions: "100 × 100 cm", technique: "Olio su tela" }),
-  createArtwork({ slug: "risonanza-cromatica",   category: "painting", title: "Risonanza Cromatica", year: "2023", dimensions: "80 × 60 cm",   technique: "Acrilico su tela" }),
+createArtwork({
+  slug: "pensieri-in-evoluzione",
+  category: "painting",
+  title: "Pensieri in evoluzione",
+  year: "2014",
+  dimensions: "60 x 120 x 2 cm",
+  technique: "Mixed on polistyrene board",
+  price: "€ 500",
+  details: 3,
+  roomViews: 3,
+  format: "webp",
+  published: true,
+}),
+createArtwork({
+  slug: "exotic-trip",
+  category: "painting",
+  title: "Exotic trip",
+  year: "2014",
+  dimensions: "120 x 60 x 3 cm",
+  technique: "Mista su polistirene",
+  price: "€ 400",
+  details: 8,
+  roomViews: 3,
+  format: "webp",
+  published: true,
+}),
 ];
 
 /* ═══════════════════════════════════════════════════════════════
