@@ -240,7 +240,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "estasi",
@@ -253,7 +253,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "something-is-happening",
@@ -266,7 +266,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "lindiano",
@@ -279,7 +279,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "trappola-ingannevole",
@@ -292,7 +292,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "embrione-alieno",
@@ -305,7 +305,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "lacerazione-sublime",
@@ -318,7 +318,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "inside-the-heart",
@@ -331,7 +331,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "blossom-time",
@@ -344,7 +344,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "duplice-sguardo",
@@ -357,7 +357,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "stato-confusionale",
@@ -370,7 +370,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "coscienza",
@@ -383,7 +383,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "ghosts",
@@ -396,7 +396,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "emozione-autunnale",
@@ -409,7 +409,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "nucleo-energetico",
@@ -422,7 +422,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "golden-dream",
@@ -435,7 +435,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "respiro-profondo",
@@ -448,7 +448,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "uscendo-dalle-tenebre",
@@ -461,7 +461,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "sleep-before-death",
@@ -474,7 +474,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "evoluzione",
@@ -487,7 +487,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "genesi",
@@ -500,7 +500,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "una-nuova-alba",
@@ -513,7 +513,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "rotten-brain",
@@ -526,7 +526,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "dentro-i-confini",
@@ -539,7 +539,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "esperienza",
@@ -552,7 +552,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "immersione-nel-nulla",
@@ -565,7 +565,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "notte-di-attesa",
@@ -578,7 +578,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "locchio-della-mente",
@@ -591,7 +591,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "evolvenza-1",
@@ -604,7 +604,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "connessioni-neuronali",
@@ -617,7 +617,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "cosmic-vortix",
@@ -630,7 +630,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "turn-off-your-mind",
@@ -643,7 +643,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "silver-energy",
@@ -656,7 +656,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "bianco",
@@ -669,7 +669,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "serie-energie-il-consolatore",
@@ -682,7 +682,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "dentro-il-tempo",
@@ -695,7 +695,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "serie-riflessioni-5-dic-2019",
@@ -708,7 +708,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "searching-for-balance-4-am",
@@ -721,7 +721,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "unforgettable-dream",
@@ -734,7 +734,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "milky-way",
@@ -747,7 +747,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "frammenti",
@@ -760,7 +760,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "what-remains-is-only-a-flower",
@@ -773,7 +773,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "inside-me",
@@ -786,7 +786,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "i-sentimenti-fuggono-il-pensiero",
@@ -799,7 +799,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "la-lama-del-desiderio",
@@ -812,7 +812,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "catarsi",
@@ -825,7 +825,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "ricordi-che-bruciano",
@@ -838,7 +838,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "initium-vitae",
@@ -851,7 +851,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "orbs",
@@ -864,7 +864,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "etereo",
@@ -877,7 +877,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "amore-e-tormento",
@@ -890,7 +890,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "your-mask-is-mine",
@@ -903,7 +903,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "balance",
@@ -916,7 +916,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "tumulto-energetico",
@@ -929,7 +929,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "when-memories-make-you-sick",
@@ -942,7 +942,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "emersione",
@@ -955,7 +955,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "devils",
@@ -968,7 +968,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "energia-rossa",
@@ -981,7 +981,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "tracce-di-unanima",
@@ -994,7 +994,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "the-night-of-summer-solstice",
@@ -1007,7 +1007,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "spazio-lunare",
@@ -1020,7 +1020,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "embrione",
@@ -1033,7 +1033,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "metropolis",
@@ -1046,7 +1046,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "oltre-il-confine-della-vita",
@@ -1059,7 +1059,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "principium",
@@ -1072,7 +1072,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "in-the-depths-of-the-soul",
@@ -1085,7 +1085,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "la-collina-delle-rivelazioni",
@@ -1098,7 +1098,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "il-risveglio-dopo-la-stasi",
@@ -1111,7 +1111,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "energia-in-movimento",
@@ -1124,7 +1124,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "lo-sgretolamento-dellego",
@@ -1137,7 +1137,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "emozione-invernale",
@@ -1150,7 +1150,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "sentimenti-autunnali",
@@ -1163,7 +1163,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "confusion-is-order",
@@ -1176,7 +1176,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "the-storm",
@@ -1189,7 +1189,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "everything-can-change",
@@ -1202,7 +1202,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "serie-energie-in-movimento",
@@ -1215,7 +1215,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "lacqua-e-il-fuoco",
@@ -1228,7 +1228,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "fluid-mind",
@@ -1241,7 +1241,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "astral-connection",
@@ -1254,7 +1254,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "anima-ferita",
@@ -1267,7 +1267,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "blessing-time",
@@ -1280,7 +1280,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "serie-impronte-anima-10-dic",
@@ -1293,7 +1293,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "confusional-state",
@@ -1306,7 +1306,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "before-the-creation",
@@ -1319,7 +1319,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "invisible-energy",
@@ -1332,7 +1332,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "connection-for-ever",
@@ -1345,7 +1345,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "funny-soul",
@@ -1358,7 +1358,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "disgelo",
@@ -1371,7 +1371,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "energie-danzanti",
@@ -1384,7 +1384,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "sotto-la-pelle",
@@ -1397,7 +1397,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "limbic-world",
@@ -1410,7 +1410,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "estremo",
@@ -1423,7 +1423,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "fecondazione-cosmica",
@@ -1436,7 +1436,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "geolica",
@@ -1449,7 +1449,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "il-dramma-dellamore",
@@ -1462,7 +1462,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "plasma-flux",
@@ -1475,7 +1475,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "emersione-2",
@@ -1488,7 +1488,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "il-tormento-del-vivere",
@@ -1501,7 +1501,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "riflessione-fluida-18-12-2019",
@@ -1514,7 +1514,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "neuronic-dance",
@@ -1527,7 +1527,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "il-settimo-chakra",
@@ -1540,7 +1540,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "serie-impronte-foglia-rossa",
@@ -1553,7 +1553,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "affioramenti",
@@ -1566,7 +1566,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "energia-buona",
@@ -1579,7 +1579,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "before-the-astral-trip",
@@ -1592,7 +1592,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "rain",
@@ -1605,7 +1605,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "falling-down",
@@ -1618,7 +1618,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 createArtwork({
   slug: "sharp-blades",
@@ -1631,7 +1631,7 @@ createArtwork({
   details: 0,
   roomViews: 0,
   format: "webp",
-  published: true,
+  published: false,
 }),
 ];
 
