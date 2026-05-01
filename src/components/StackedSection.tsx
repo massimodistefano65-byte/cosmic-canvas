@@ -156,5 +156,3 @@ const StackedSection = ({
 };
 
 export default StackedSection;
-
-export default StackedSection;
