@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 
 interface StackedSectionProps {
   id: string;
