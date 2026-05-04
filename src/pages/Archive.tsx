@@ -15,6 +15,7 @@ import {
   type OtherProject,
 } from "@/lib/archiveData";
 import ProjectContentModal from "@/components/archive/ProjectContentModal";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 const cardClass =
   "group border-border/50 bg-card/55 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10";

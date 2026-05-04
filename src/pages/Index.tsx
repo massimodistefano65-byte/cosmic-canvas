@@ -41,6 +41,7 @@ const jsonLd = {
 
 const Index = () => {
   useScrollToAnchor();
+  useSectionAudio("home");
   const { t } = useI18n();
 
   const sections = [
