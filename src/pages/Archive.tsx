@@ -22,6 +22,7 @@ const cardClass =
 
 const Archive = () => {
   const { t } = useI18n();
+  useSectionAudio("archive");
   const [selectedProject, setSelectedProject] = useState<OtherProject | null>(null);
 
   // Importa dati dinamici da archiveData.ts

@@ -3,6 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 import { Download } from "lucide-react";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -187,6 +188,7 @@ const VideoBlock = ({ youtubeId, title, caption }: { youtubeId: string; title?: 
 
 const Bio = () => {
   const { t } = useI18n();
+  useSectionAudio("bio");
   // Reset counter on each render
   _photoSmCounter = 0;
 
