@@ -1,58 +1,77 @@
-# Piano: Frecce scroll Home + Favicon Google
 
-## 1. Frecce animate in fondo alle sezioni Home
+# Piano: UX, atmosfera sonora e contenuti opere
 
-In `src/components/StackedSection.tsx` aggiungo, in fondo al contenitore, la stessa freccetta `ChevronDown` animata della Hero (rimbalzo verticale infinito, posizionata in basso al centro).
+## 1. Scroll Restoration (galleria → opera → galleria)
 
-- Riuso `lucide-react` `ChevronDown` + `motion.button` con `animate={{ y: [0, 12, 0] }}` e `transition={{ duration: 2, repeat: Infinity }}`.
-- Click → scrolla alla sezione successiva tramite l'API di fullPage.js: `window.fullpage_api?.moveSectionDown()`.
-- Nuova prop opzionale `isLast?: boolean` su `StackedSection`. In `src/pages/Index.tsx` passo `isLast={index === sections.length - 1}` solo per non duplicare la freccia se necessario — comunque la mostro su tutte e 4 le sezioni discipline (anche l'ultima porta alla Contact section, quindi ha senso).
-- Stile coerente con Hero: `text-muted-foreground hover:text-accent`, `bottom-8 left-1/2 -translate-x-1/2 z-20`.
+In `DisciplinePage.tsx` salvo `scrollY` in `sessionStorage` (chiave `scroll:{discipline}`) prima di navigare a un'opera. Al mount della galleria ripristino la posizione dopo il primo render delle miniature. Stessa logica per `/archive`.
 
-## 2. Favicon corretta su Google
+## 2. Virtualizzazione galleria
 
-Problema: `public/favicon.ico` esiste ancora ed è probabilmente l'icona Lovable di default. Google preferisce `favicon.ico` o icone dichiarate in `manifest.json` con dimensioni 48×48+. Mancano inoltre tag espliciti per dimensioni multiple.
+Mantengo `GalleryGrid` con i pattern asimmetrici e aggiungo lazy mount per blocchi: gruppi di ~12 item vengono montati solo quando entrano nel viewport (`IntersectionObserver`, rootMargin 600px). Gli item fuori viewport restano placeholder con altezza riservata → niente layout shift, niente decoding di centinaia di JPG insieme. Implementazione custom (no librerie esterne — react-window non gestisce griglie asimmetriche).
 
-Interventi:
+## 3. Fix frecce mobile (Home + Hero)
 
-**a)** Sostituisco `public/favicon.ico` copiando `favicon-occhio.png` come nuovo `favicon.ico` (Google e i browser leggono comunque il PNG anche con estensione .ico nei contesti moderni; in ogni caso l'attuale `.ico` Lovable va rimosso). In alternativa elimino il file e mi affido ai tag `<link rel="icon">`.
+In `StackedSection.tsx` e `HeroSection.tsx`:
+- `bottom-8` → `bottom-20 md:bottom-8` (alza su mobile)
+- Wrapper flex per centratura perfetta indipendente da transform
+- Tap target 48×48px
 
-**b)** Creo `public/site.webmanifest` con:
-```json
-{
-  "name": "Massimo Di Stefano",
-  "short_name": "MDS",
-  "icons": [
-    { "src": "/favicon-occhio.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/favicon-occhio.png", "sizes": "512x512", "type": "image/png" }
-  ],
-  "theme_color": "#0a0a0a",
-  "background_color": "#0a0a0a",
-  "display": "standalone"
-}
-```
+## 4. "Significato dell'opera" — pop-up elegante
 
-**c)** Aggiorno `index.html` con icone con sizes esplicite (richieste da Google per i risultati di ricerca):
-```html
-<link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-occhio.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-occhio.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon-occhio.png" />
-<link rel="manifest" href="/site.webmanifest" />
-```
+**Posizione**: sotto il titolo, accanto a tecnica/anno/dimensioni in `ArtworkDetail.tsx`.
 
-Nota: Google ricalcola la favicon nei risultati a ogni nuovo crawl (può richiedere giorni/settimane dopo il deploy). Posso opzionalmente segnalarti come forzare il re-crawl da Search Console.
+**Stile** (correzione richiesta): **identico** alle altre etichette (PREZZO, TECNICA, DIMENSIONI) — stesso font, stessa dimensione, stesso colore. Nessun oro. Per indicare la cliccabilità: solo `cursor-pointer` + `hover:opacity-70 transition-opacity`. Integrazione cromatica totale.
+
+**Comportamento**: click apre un `Dialog` (shadcn) con sfondo coerente al tema (night blue translucido + backdrop blur), titolo in Cormorant Garamond, testo in Raleway, chiusura con X o click fuori.
+
+**Fonte testo**: `public/artworks/{categoria}/{slug}/meaning.md`. Caricato a runtime via `fetch()` solo all'apertura. Se il file non esiste (404), l'etichetta non appare. Render con `react-markdown`.
+
+## 5. Atmosfera sonora dinamica
+
+**Architettura**: `AudioProvider` globale in `App.tsx` che gestisce due elementi `<audio>` per il crossfade.
+
+**File MP3**: `public/audio/home.mp3`, `painting.mp3`, `photography.mp3`, `digital-art.mp3`, `t-shirt.mp3`, `archive.mp3`, `bio.mp3`.
+
+**Logica**:
+- Hook `useSectionAudio(section)` chiamato da ogni pagina
+- Crossfade morbido (1.5s in / 1.5s out) tra due `<audio>` alternati
+- `loop = true`, volume target 35%
+- Stato salvato in `localStorage` (`audio-enabled`)
+- Default **spento** (rispetta autoplay policy)
+
+**Tasto controllo**: icona `lucide-react` (Volume2/VolumeX) fissa `bottom-6 right-6`, opacità 60% → 100% on hover, sotto al CookieBanner.
+
+**404 silenziosi**: se manca un MP3, nessun errore visibile.
+
+## 6. Aggiornamento `GUIDA-GESTIONE-OPERE.md`
+
+### 9. Significato dell'opera
+- File: `public/artworks/{categoria}/{slug}/meaning.md`
+- Markdown semplice (titoli, paragrafi, corsivo)
+- Se manca, l'etichetta non appare → nessun errore
+- Workflow GitHub: aggiungi/modifica il file sul branch e committa
+
+### 10. Musica ambient
+- Cartella: `public/audio/`
+- Nomi esatti: `home.mp3`, `painting.mp3`, `photography.mp3`, `digital-art.mp3`, `t-shirt.mp3`, `archive.mp3`
+- Formato: MP3, 128 kbps, durata 2-5 minuti, < 3 MB consigliati, loop seamless
+- Sostituisci il file per cambiare la traccia di una sezione
+- Rimuovi il file per disabilitare la musica in quella sezione
 
 ## File modificati / creati
 
-| File | Modifica |
+| File | Cosa |
 |---|---|
-| `src/components/StackedSection.tsx` | Aggiunta freccia `ChevronDown` animata in fondo |
-| `src/pages/Index.tsx` | (eventuale) prop `isLast` |
-| `index.html` | Tag favicon completi con `sizes` + link al manifest |
-| `public/favicon.ico` | Sostituito (copia di `favicon-occhio.png`) |
-| `public/site.webmanifest` | Nuovo file |
-
-## Risultato
-
-Tutte le sezioni Home avranno la stessa freccia rimbalzante della Hero che invita a scorrere. Google avrà icone dichiarate correttamente in tutte le dimensioni richieste e un manifest valido, eliminando il fallback all'icona Lovable nei risultati di ricerca dopo il prossimo crawl.
+| `src/pages/DisciplinePage.tsx` | Scroll restoration |
+| `src/components/GalleryGrid.tsx` | Lazy mount per blocchi |
+| `src/components/StackedSection.tsx` | Fix frecce mobile |
+| `src/components/HeroSection.tsx` | Fix freccia mobile |
+| `src/pages/ArtworkDetail.tsx` | Etichetta "Significato dell'opera" + Dialog (stile uniforme) |
+| `src/components/MeaningDialog.tsx` | **NUOVO** |
+| `src/components/AudioProvider.tsx` | **NUOVO** |
+| `src/components/AudioToggle.tsx` | **NUOVO** |
+| `src/hooks/useSectionAudio.ts` | **NUOVO** |
+| `src/App.tsx` | Wrap `AudioProvider` + monta `AudioToggle` |
+| Pagine sezioni | Chiamano `useSectionAudio('...')` |
+| `package.json` | Aggiungo `react-markdown` |
+| `GUIDA-GESTIONE-OPERE.md` | Sezioni 9 e 10 |
