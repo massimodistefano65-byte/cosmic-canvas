@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { getSlugGradient } from "@/lib/slugGradient";
@@ -15,59 +16,24 @@ interface GalleryGridProps {
   gradientTo: string;
 }
 
-/**
- * Pattern di dimensioni per creare asimmetria tipo "muro antico".
- * Ogni item ha una dimensione nella griglia (colSpan x rowSpan).
- * Il pattern si ripete ciclicamente.
- */
-/**
- * 4 pattern diversi per evitare ripetitività.
- * I blocchi grandi (2×2, 2×1) cadono in posizioni diverse
- * così il layout sembra randomizzato ma resta controllato.
- */
 const patternA = [
-  // 2×2 a SINISTRA
-  { col: 2, row: 2 },
-  { col: 1, row: 1 },
-  { col: 1, row: 2 },
-  { col: 1, row: 1 },
-  { col: 1, row: 1 },
-  { col: 2, row: 1 },
+  { col: 2, row: 2 }, { col: 1, row: 1 }, { col: 1, row: 2 },
+  { col: 1, row: 1 }, { col: 1, row: 1 }, { col: 2, row: 1 },
 ];
-
 const patternB = [
-  // 2×2 a DESTRA (piccole prima, poi il grande)
-  { col: 1, row: 1 },
-  { col: 1, row: 2 },
-  { col: 2, row: 2 },
-  { col: 1, row: 1 },
-  { col: 2, row: 1 },
-  { col: 1, row: 1 },
+  { col: 1, row: 1 }, { col: 1, row: 2 }, { col: 2, row: 2 },
+  { col: 1, row: 1 }, { col: 2, row: 1 }, { col: 1, row: 1 },
 ];
-
 const patternC = [
-  // 2×2 al CENTRO (piccola, grande, piccola)
-  { col: 1, row: 1 },
-  { col: 2, row: 2 },
-  { col: 1, row: 1 },
-  { col: 1, row: 2 },
-  { col: 1, row: 1 },
-  { col: 2, row: 1 },
+  { col: 1, row: 1 }, { col: 2, row: 2 }, { col: 1, row: 1 },
+  { col: 1, row: 2 }, { col: 1, row: 1 }, { col: 2, row: 1 },
 ];
-
 const patternD = [
-  // orizzontale largo prima, poi 2×2 a destra
-  { col: 2, row: 1 },
-  { col: 1, row: 1 },
-  { col: 1, row: 1 },
-  { col: 1, row: 1 },
-  { col: 1, row: 2 },
-  { col: 2, row: 2 },
+  { col: 2, row: 1 }, { col: 1, row: 1 }, { col: 1, row: 1 },
+  { col: 1, row: 1 }, { col: 1, row: 2 }, { col: 2, row: 2 },
 ];
-
 const allPatterns = [patternA, patternB, patternC, patternD];
 
-/** Dato un indice globale, restituisce la dimensione dal pattern corretto */
 const getSizeForIndex = (idx: number) => {
   let cumulative = 0;
   let patternIdx = 0;
@@ -81,17 +47,54 @@ const getSizeForIndex = (idx: number) => {
   }
 };
 
-const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGridProps) => {
-  const navigate = useNavigate();
+const CHUNK_SIZE = 12;
 
+interface ChunkProps {
+  items: ArtworkItem[];
+  baseIndex: number;
+  discipline: string;
+  onSelect: (id: string) => void;
+}
+
+const Chunk = ({ items, baseIndex, discipline, onSelect }: ChunkProps) => {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "600px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Reserve grid space even when not visible
   return (
-    <div
-      className="grid grid-cols-3 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-7"
-      role="list"
-      aria-label={`Galleria ${discipline}`}
-    >
-      {items.map((item, idx) => {
+    <div ref={ref} className="contents">
+      {items.map((item, i) => {
+        const idx = baseIndex + i;
         const size = getSizeForIndex(idx);
+        if (!visible) {
+          return (
+            <div
+              key={item.id}
+              style={{
+                gridColumn: `span ${size.col}`,
+                gridRow: `span ${size.row}`,
+              }}
+              className="rounded-lg bg-muted/5"
+              aria-hidden="true"
+            />
+          );
+        }
         return (
           <motion.div
             key={item.id}
@@ -103,50 +106,79 @@ const GalleryGrid = ({ items, discipline, gradientFrom, gradientTo }: GalleryGri
             }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: idx * 0.06 }}
-            viewport={{ once: false }}
-            onClick={() => navigate(`/${discipline}/${item.id}`)}
+            transition={{ duration: 0.5, delay: (i % CHUNK_SIZE) * 0.04 }}
+            viewport={{ once: true }}
+            onClick={() => onSelect(item.id)}
           >
-            {/* LED glow behind the artwork */}
-            <div className="absolute -inset-[3px] rounded-lg opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50"
-            />
+            <div className="absolute -inset-[3px] rounded-lg opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
             <div className="relative rounded-lg overflow-hidden w-full h-full border border-white/5">
-            {item.thumbnailUrl ? (
-              <img
-                src={item.thumbnailUrl}
-                alt={`${item.title} di Massimo Di Stefano`}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                loading="lazy"
-                decoding="async"
-                onError={(e) => {
-                  // Fallback: se il file non esiste, mostra placeholder colorato derivato dallo slug
-                  const target = e.currentTarget;
-                  target.style.display = "none";
-                  const fallback = target.nextElementSibling as HTMLElement | null;
-                  if (fallback) fallback.style.display = "block";
+              {item.thumbnailUrl ? (
+                <img
+                  src={item.thumbnailUrl}
+                  alt={`${item.title} di Massimo Di Stefano`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = "none";
+                    const fallback = target.nextElementSibling as HTMLElement | null;
+                    if (fallback) fallback.style.display = "block";
+                  }}
+                />
+              ) : null}
+              <div
+                className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
+                style={{
+                  background: getSlugGradient(item.id),
+                  display: item.thumbnailUrl ? "none" : "block",
                 }}
+                role="img"
+                aria-label={item.title}
               />
-            ) : null}
-            <div
-              className="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
-              style={{
-                background: getSlugGradient(item.id),
-                display: item.thumbnailUrl ? "none" : "block",
-              }}
-              role="img"
-              aria-label={item.title}
-            />
-
-            {/* Hover overlay with title slide-up */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end">
-              <p className="text-white font-medium text-sm p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">
-                {item.title}
-              </p>
-            </div>
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end">
+                <p className="text-white font-medium text-sm p-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out">
+                  {item.title}
+                </p>
+              </div>
             </div>
           </motion.div>
         );
       })}
+    </div>
+  );
+};
+
+const GalleryGrid = ({ items, discipline }: GalleryGridProps) => {
+  const navigate = useNavigate();
+
+  const handleSelect = (id: string) => {
+    // Save scroll position before navigating away
+    sessionStorage.setItem(`scroll:${discipline}`, String(window.scrollY));
+    navigate(`/${discipline}/${id}`);
+  };
+
+  // Split into chunks for lazy mounting
+  const chunks: ArtworkItem[][] = [];
+  for (let i = 0; i < items.length; i += CHUNK_SIZE) {
+    chunks.push(items.slice(i, i + CHUNK_SIZE));
+  }
+
+  return (
+    <div
+      className="grid grid-cols-3 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-7"
+      role="list"
+      aria-label={`Galleria ${discipline}`}
+    >
+      {chunks.map((chunk, ci) => (
+        <Chunk
+          key={ci}
+          items={chunk}
+          baseIndex={ci * CHUNK_SIZE}
+          discipline={discipline}
+          onSelect={handleSelect}
+        />
+      ))}
     </div>
   );
 };

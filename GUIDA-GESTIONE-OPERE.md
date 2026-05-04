@@ -322,7 +322,85 @@ Checklist rapida:
 
 - **Lazy loading**: tutte le miniature delle gallerie e le immagini secondarie usano `loading="lazy"` automaticamente.
 - **Eager loading**: solo l'immagine principale dell'opera (above-the-fold) carica subito per ottimizzare LCP.
-- Il sito può gestire centinaia di immagini senza rallentamenti.
+- **Virtualizzazione galleria**: la galleria carica le opere a blocchi di 12 man mano che scorri. Il sito può gestire centinaia di immagini senza rallentamenti, anche da cellulare.
+- **Scroll restoration**: tornando indietro da un'opera alla galleria, la posizione di scroll viene ripristinata automaticamente.
+
+---
+
+## 📖 9. Significato dell'opera (testo descrittivo)
+
+Ogni opera può avere un testo opzionale che si apre in un pop-up elegante quando l'utente clicca su "Significato dell'opera" (nella colonna info, sotto il prezzo).
+
+### Come aggiungerlo
+
+1. Crea un file `meaning.md` nella cartella dell'opera:
+   ```
+   public/artworks/{categoria}/{slug}/meaning.md
+   ```
+   Esempio: `public/artworks/painting/pensieri-in-evoluzione/meaning.md`
+
+2. Scrivi il testo in **Markdown** (semplice):
+   ```markdown
+   ## Genesi dell'opera
+
+   Questa opera nasce da una riflessione sul tempo e sulla materia.
+   Le pennellate evocano un *flusso continuo* di pensieri.
+
+   La palette cromatica si ispira ai cieli notturni di Roma.
+   ```
+
+3. Committa su GitHub (sul branch di lavoro). Lovable sincronizzerà al merge.
+
+### Comportamento
+
+- Se il file `meaning.md` **esiste** → l'etichetta "Significato dell'opera" appare nella pagina dell'opera (stile uniforme alle altre etichette: PREZZO, TECNICA, DIMENSIONI).
+- Se il file **non esiste** → l'etichetta non viene mostrata. Nessun errore.
+- Per **rimuovere** il significato di un'opera: cancella il file `meaning.md`.
+
+---
+
+## 🎵 10. Atmosfera sonora (musica per sezione)
+
+Ogni sezione del sito può avere una propria musica ambient con crossfade morbido tra una sezione e l'altra. Un'icona discreta in basso a destra (altoparlante) permette all'utente di accendere/spegnere l'audio.
+
+### Comportamento
+
+- **Spento di default**: rispetta le policy dei browser sull'autoplay.
+- **Attivazione**: l'utente clicca l'icona altoparlante in basso a destra. La scelta viene ricordata (localStorage).
+- **Crossfade automatico**: passando da una sezione all'altra, la musica precedente fa fade-out e la nuova fa fade-in (1.5s).
+- **Volume ambient**: 35%, discreto.
+
+### Come caricare i file MP3
+
+1. Crea la cartella (se non esiste): `public/audio/`
+2. Carica i file con questi **nomi esatti**:
+
+| Sezione | Nome file |
+|---------|-----------|
+| Home | `public/audio/home.mp3` |
+| Painting | `public/audio/painting.mp3` |
+| Photography | `public/audio/photography.mp3` |
+| Digital Art | `public/audio/digital-art.mp3` |
+| T-Shirt | `public/audio/t-shirt.mp3` |
+| Archive | `public/audio/archive.mp3` |
+| Bio | `public/audio/bio.mp3` |
+| Contact | `public/audio/contact.mp3` |
+
+3. Committa su GitHub.
+
+### Specifiche consigliate per i file
+
+- **Formato**: MP3
+- **Bitrate**: 128 kbps (buon compromesso qualità/peso)
+- **Durata**: 2-5 minuti, **loop seamless** (deve concatenarsi senza stacco)
+- **Peso**: < 3 MB per file
+- **Mood**: ambient, discreto, non invasivo (è sottofondo)
+
+### Gestione
+
+- **Cambiare la musica di una sezione**: sostituisci il file omonimo
+- **Disabilitare la musica in una sezione**: rimuovi il file (l'audio si fermerà silenziosamente, nessun errore)
+- **Le pagine opera** ereditano la musica della loro disciplina (es. `/painting/nebulosa-urbana` suona `painting.mp3`)
 
 ---
 

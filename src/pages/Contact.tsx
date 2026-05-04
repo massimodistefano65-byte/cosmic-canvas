@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 
@@ -20,6 +21,7 @@ const socialLinks = [
 
 const Contact = () => {
   const { t } = useI18n();
+  useSectionAudio("contact");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");

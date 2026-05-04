@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import EnquiryModal from "@/components/EnquiryModal";
+import MeaningDialog from "@/components/MeaningDialog";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Plus } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
 import { useI18n } from "@/lib/i18n";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 import {
   Tooltip,
   TooltipContent,
@@ -29,9 +31,32 @@ const ArtworkDetail = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const [meaningOpen, setMeaningOpen] = useState(false);
+  const [hasMeaning, setHasMeaning] = useState(false);
   const { t } = useI18n();
 
+  useSectionAudio(discipline || "home");
+
   const artwork = getArtwork(discipline || "", artworkId || "");
+
+  // HEAD-check meaning.md to decide whether to show the label
+  const meaningUrl = artwork
+    ? `/artworks/${discipline}/${artwork.id}/meaning.md`
+    : "";
+  useEffect(() => {
+    if (!meaningUrl) return;
+    let cancelled = false;
+    fetch(meaningUrl, { method: "HEAD" })
+      .then((r) => {
+        if (!cancelled) setHasMeaning(r.ok);
+      })
+      .catch(() => {
+        if (!cancelled) setHasMeaning(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [meaningUrl]);
 
   if (!artwork) {
     return (
@@ -101,6 +126,12 @@ const ArtworkDetail = () => {
         onClose={() => setEnquiryOpen(false)}
         artworkTitle={artwork.title}
         discipline={discipline || ""}
+      />
+      <MeaningDialog
+        isOpen={meaningOpen}
+        onClose={() => setMeaningOpen(false)}
+        artworkTitle={artwork.title}
+        meaningUrl={meaningUrl}
       />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
@@ -226,6 +257,18 @@ const ArtworkDetail = () => {
                    style={{ fontFamily: "'Raleway', sans-serif" }}
                 >{artwork.price || "€ —"}</p>
               </div>
+              {hasMeaning && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setMeaningOpen(true)}
+                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    Significato dell'opera
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}
@@ -422,6 +465,17 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-xs text-foreground font-light">{artwork.price || "€ —"}</p>
               </div>
+              {hasMeaning && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setMeaningOpen(true)}
+                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                  >
+                    Significato dell'opera
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}

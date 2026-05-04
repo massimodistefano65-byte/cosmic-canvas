@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
 import SEOHead from "@/components/SEOHead";
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { getArtworksByDiscipline } from "@/lib/artworkData";
 import { useI18n } from "@/lib/i18n";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 interface DisciplineConfig {
   key: string;
@@ -63,6 +65,30 @@ interface Props {
 const DisciplinePage = ({ disciplineKey }: Props) => {
   const { t } = useI18n();
   const config = disciplines[disciplineKey];
+  useSectionAudio(disciplineKey);
+
+  // Scroll restoration: restore on mount, save before unload/nav
+  useEffect(() => {
+    if (!config) return;
+    const key = `scroll:${config.key}`;
+    const saved = sessionStorage.getItem(key);
+    if (saved) {
+      const y = parseInt(saved, 10);
+      // Wait for images to start laying out
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y);
+        // Second pass after first paint of lazy items
+        setTimeout(() => window.scrollTo(0, y), 80);
+      });
+    }
+    const save = () => sessionStorage.setItem(key, String(window.scrollY));
+    window.addEventListener("beforeunload", save);
+    return () => {
+      save();
+      window.removeEventListener("beforeunload", save);
+    };
+  }, [config]);
+
   if (!config) return null;
 
   const artworks = getArtworksByDiscipline(config.key);

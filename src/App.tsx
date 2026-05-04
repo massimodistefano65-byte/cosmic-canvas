@@ -19,6 +19,8 @@ import CookiePolicy from "./pages/CookiePolicy";
 import Contact from "./pages/Contact";
 import AdminArtworksStatus from "./pages/AdminArtworksStatus";
 import CookieBanner from "./components/CookieBanner";
+import { AudioProvider } from "./components/AudioProvider";
+import AudioToggle from "./components/AudioToggle";
 
 const queryClient = new QueryClient();
 
@@ -40,8 +42,10 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <AudioProvider>
         <BrowserRouter>
           <CookieBanner />
+          <AudioToggle />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
@@ -59,6 +63,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </AudioProvider>
       </TooltipProvider>
     </I18nProvider>
   </QueryClientProvider>

@@ -139,18 +139,20 @@ const StackedSection = ({
       </motion.div>
 
       {/* Scroll Indicator (same as Hero) */}
-      <motion.button
-        onClick={() => {
-          const api = (window as unknown as { fullpage_api?: { moveSectionDown: () => void } }).fullpage_api;
-          api?.moveSectionDown();
-        }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 p-2 hover:text-accent transition-colors text-white/70"
-        animate={{ y: [0, 12, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        aria-label="Scroll to next section"
-      >
-        <ChevronDown size={32} />
-      </motion.button>
+      <div className="absolute bottom-20 md:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+        <motion.button
+          onClick={() => {
+            const api = (window as unknown as { fullpage_api?: { moveSectionDown: () => void } }).fullpage_api;
+            api?.moveSectionDown();
+          }}
+          className="pointer-events-auto w-12 h-12 flex items-center justify-center hover:text-accent transition-colors text-white/70"
+          animate={{ y: [0, 12, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          aria-label="Scroll to next section"
+        >
+          <ChevronDown size={32} />
+        </motion.button>
+      </div>
     </div>
   );
 };

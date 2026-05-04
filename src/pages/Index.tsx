@@ -7,6 +7,7 @@ import StackedSection from "@/components/StackedSection";
 import ContactSection from "@/components/ContactSection";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
+import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 const useScrollToAnchor = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ const jsonLd = {
 
 const Index = () => {
   useScrollToAnchor();
+  useSectionAudio("home");
   const { t } = useI18n();
 
   const sections = [
