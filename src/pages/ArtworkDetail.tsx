@@ -165,7 +165,7 @@ const ArtworkDetail = () => {
         isOpen={meaningOpen}
         onClose={() => setMeaningOpen(false)}
         artworkTitle={artwork.title}
-        meaningUrl={meaningUrl}
+        content={meaningContent}
       />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
@@ -296,8 +296,8 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setMeaningOpen(true)}
-                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
-                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                    className="text-[9px] tracking-[0.25em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    style={{ fontFamily: "'Raleway', sans-serif", filter: "brightness(1.25)" }}
                   >
                     Significato dell'opera
                   </button>
@@ -504,7 +504,8 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setMeaningOpen(true)}
-                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    className="text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    style={{ filter: "brightness(1.25)" }}
                   >
                     Significato dell'opera
                   </button>
