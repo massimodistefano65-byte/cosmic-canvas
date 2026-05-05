@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { getSlugGradient } from "@/lib/slugGradient";
@@ -47,54 +46,22 @@ const getSizeForIndex = (idx: number) => {
   }
 };
 
-const CHUNK_SIZE = 12;
+const GalleryGrid = ({ items, discipline }: GalleryGridProps) => {
+  const navigate = useNavigate();
 
-interface ChunkProps {
-  items: ArtworkItem[];
-  baseIndex: number;
-  discipline: string;
-  onSelect: (id: string) => void;
-}
+  const handleSelect = (id: string) => {
+    sessionStorage.setItem(`scroll:${discipline}`, String(window.scrollY));
+    navigate(`/${discipline}/${id}`);
+  };
 
-const Chunk = ({ items, baseIndex, discipline, onSelect }: ChunkProps) => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const el = ref.current;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
-      },
-      { rootMargin: "600px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  // Reserve grid space even when not visible
   return (
-    <div ref={ref} className="contents">
-      {items.map((item, i) => {
-        const idx = baseIndex + i;
+    <div
+      className="grid grid-cols-3 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-7"
+      role="list"
+      aria-label={`Galleria ${discipline}`}
+    >
+      {items.map((item, idx) => {
         const size = getSizeForIndex(idx);
-        if (!visible) {
-          return (
-            <div
-              key={item.id}
-              style={{
-                gridColumn: `span ${size.col}`,
-                gridRow: `span ${size.row}`,
-              }}
-              className="rounded-lg bg-muted/5"
-              aria-hidden="true"
-            />
-          );
-        }
         return (
           <motion.div
             key={item.id}
@@ -106,9 +73,9 @@ const Chunk = ({ items, baseIndex, discipline, onSelect }: ChunkProps) => {
             }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: (i % CHUNK_SIZE) * 0.04 }}
+            transition={{ duration: 0.5, delay: (idx % 12) * 0.04 }}
             viewport={{ once: true }}
-            onClick={() => onSelect(item.id)}
+            onClick={() => handleSelect(item.id)}
           >
             <div className="absolute -inset-[3px] rounded-lg opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
             <div className="relative rounded-lg overflow-hidden w-full h-full border border-white/5">
@@ -145,40 +112,6 @@ const Chunk = ({ items, baseIndex, discipline, onSelect }: ChunkProps) => {
           </motion.div>
         );
       })}
-    </div>
-  );
-};
-
-const GalleryGrid = ({ items, discipline }: GalleryGridProps) => {
-  const navigate = useNavigate();
-
-  const handleSelect = (id: string) => {
-    // Save scroll position before navigating away
-    sessionStorage.setItem(`scroll:${discipline}`, String(window.scrollY));
-    navigate(`/${discipline}/${id}`);
-  };
-
-  // Split into chunks for lazy mounting
-  const chunks: ArtworkItem[][] = [];
-  for (let i = 0; i < items.length; i += CHUNK_SIZE) {
-    chunks.push(items.slice(i, i + CHUNK_SIZE));
-  }
-
-  return (
-    <div
-      className="grid grid-cols-3 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-7"
-      role="list"
-      aria-label={`Galleria ${discipline}`}
-    >
-      {chunks.map((chunk, ci) => (
-        <Chunk
-          key={ci}
-          items={chunk}
-          baseIndex={ci * CHUNK_SIZE}
-          discipline={discipline}
-          onSelect={handleSelect}
-        />
-      ))}
     </div>
   );
 };
