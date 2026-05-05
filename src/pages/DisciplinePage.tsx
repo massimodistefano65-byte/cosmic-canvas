@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
 import SEOHead from "@/components/SEOHead";
@@ -66,55 +66,59 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const { t } = useI18n();
   const config = disciplines[disciplineKey];
   useSectionAudio(disciplineKey);
+  
+  // Riferimento per bloccare il salvataggio durante il ripristino
+  const isRestoring = useRef(true);
 
-  // Scroll restoration: restore on mount, save continuously
   useEffect(() => {
     if (!config) return;
+    
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
+
     const key = `scroll:${config.key}`;
     const saved = sessionStorage.getItem(key);
     let cancelled = false;
 
     if (saved) {
       const y = parseInt(saved, 10);
-      // Poll: keep trying to scroll until the document is tall enough
-      // (images load progressively and grow the page)
       const start = Date.now();
+      
       const tryScroll = () => {
         if (cancelled) return;
         const maxY = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo(0, Math.min(y, Math.max(0, maxY)));
-        if (Math.abs(window.scrollY - y) > 4 && Date.now() - start < 3000) {
+        
+        // Se la pagina è abbastanza alta, scorriamo
+        if (maxY >= y || Date.now() - start > 2000) {
+          window.scrollTo(0, y);
+          // Dopo aver scorso, aspettiamo un attimo prima di riattivare il salvataggio
+          setTimeout(() => {
+            isRestoring.current = false;
+          }, 100);
+        } else {
+          // Altrimenti riproviamo al prossimo frame
           requestAnimationFrame(tryScroll);
         }
       };
       requestAnimationFrame(tryScroll);
+    } else {
+      isRestoring.current = false;
     }
 
-    // Save scroll position continuously (throttled)
-    let raf = 0;
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
+      // SALVIAMO SOLO SE NON STIAMO RIPRISTINANDO
+      if (!isRestoring.current) {
         sessionStorage.setItem(key, String(window.scrollY));
-        raf = 0;
-      });
+      }
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const save = () => sessionStorage.setItem(key, String(window.scrollY));
-    window.addEventListener("beforeunload", save);
-    window.addEventListener("pagehide", save);
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       cancelled = true;
-      save();
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("beforeunload", save);
-      window.removeEventListener("pagehide", save);
     };
-  }, [config]);
+  }, [config, disciplineKey]);
 
   if (!config) return null;
 
@@ -125,7 +129,6 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
     thumbnailUrl: a.preview,
   }));
 
-  // Schema.org ItemList per la galleria
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -161,14 +164,9 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <Link
             to="/"
-            onClick={() => {
-              const element = document.getElementById(config.key);
-              if (element) setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
-            }}
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-12"
-            aria-label={`Torna alla homepage, sezione ${config.h1}`}
           >
-            <ArrowLeft size={20} aria-hidden="true" />
+            <ArrowLeft size={20} />
             <span>{t("discipline.back")}</span>
           </Link>
 
@@ -179,7 +177,6 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
             >
               {config.h1}
             </h1>
-
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {t(config.introKey)}
@@ -188,7 +185,6 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
           </motion.div>
         </div>
 
-        {/* Gallery full-width con padding minimo */}
         <div className="px-3 md:px-6">
           <GalleryGrid
             items={items}
