@@ -33,6 +33,7 @@ const ArtworkDetail = () => {
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [meaningOpen, setMeaningOpen] = useState(false);
   const [hasMeaning, setHasMeaning] = useState(false);
+  const [meaningContent, setMeaningContent] = useState<string>("");
   const { t } = useI18n();
 
   useSectionAudio(discipline || "home");
@@ -43,15 +44,48 @@ const ArtworkDetail = () => {
   const meaningUrl = artwork
     ? `/artworks/${discipline}/${artwork.id}/meaning.md`
     : "";
+  // Use GET (not HEAD) and validate the content is real markdown — many SPA hosts
+  // (Aruba) fall back to index.html for missing files, which would falsely succeed.
   useEffect(() => {
-    if (!meaningUrl) return;
+    if (!meaningUrl) {
+      setHasMeaning(false);
+      setMeaningContent("");
+      return;
+    }
     let cancelled = false;
-    fetch(meaningUrl, { method: "HEAD" })
-      .then((r) => {
-        if (!cancelled) setHasMeaning(r.ok);
+    fetch(meaningUrl, { cache: "no-cache" })
+      .then(async (r) => {
+        if (!r.ok) return null;
+        const ctype = (r.headers.get("content-type") || "").toLowerCase();
+        if (ctype.includes("text/html")) return null;
+        const text = await r.text();
+        const head = text.trimStart().slice(0, 200).toLowerCase();
+        if (
+          head.startsWith("<!doctype") ||
+          head.startsWith("<html") ||
+          head.includes("<head") ||
+          head.includes("<script")
+        ) {
+          return null;
+        }
+        if (!text.trim()) return null;
+        return text;
+      })
+      .then((text) => {
+        if (cancelled) return;
+        if (text) {
+          setHasMeaning(true);
+          setMeaningContent(text);
+        } else {
+          setHasMeaning(false);
+          setMeaningContent("");
+        }
       })
       .catch(() => {
-        if (!cancelled) setHasMeaning(false);
+        if (!cancelled) {
+          setHasMeaning(false);
+          setMeaningContent("");
+        }
       });
     return () => {
       cancelled = true;
