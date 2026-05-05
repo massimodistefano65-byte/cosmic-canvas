@@ -45,7 +45,6 @@ const App = () => {
         <AudioProvider>
         <BrowserRouter>
           <CookieBanner />
-          <AudioToggle />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
