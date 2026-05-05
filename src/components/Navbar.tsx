@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import LanguageToggle from "@/components/LanguageToggle";
+import AudioToggle from "@/components/AudioToggle";
 import { useI18n } from "@/lib/i18n";
 
 const HIDE_DELAY = 1500; // ms di inattività mouse prima di nascondere
@@ -109,13 +110,15 @@ const Navbar = () => {
             {navItems.map((item) => (
               <NavLink key={item.label} item={item} />
             ))}
-            <div className="ml-2">
+            <div className="ml-2 flex items-center gap-2">
+              <AudioToggle />
               <LanguageToggle />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-3">
+            <AudioToggle />
             <LanguageToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}

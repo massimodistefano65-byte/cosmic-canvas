@@ -20,7 +20,6 @@ import Contact from "./pages/Contact";
 import AdminArtworksStatus from "./pages/AdminArtworksStatus";
 import CookieBanner from "./components/CookieBanner";
 import { AudioProvider } from "./components/AudioProvider";
-import AudioToggle from "./components/AudioToggle";
 
 const queryClient = new QueryClient();
 
