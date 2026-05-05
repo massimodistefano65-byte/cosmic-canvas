@@ -67,25 +67,52 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const config = disciplines[disciplineKey];
   useSectionAudio(disciplineKey);
 
-  // Scroll restoration: restore on mount, save before unload/nav
+  // Scroll restoration: restore on mount, save continuously
   useEffect(() => {
     if (!config) return;
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
     const key = `scroll:${config.key}`;
     const saved = sessionStorage.getItem(key);
+    let cancelled = false;
+
     if (saved) {
       const y = parseInt(saved, 10);
-      // Wait for images to start laying out
-      requestAnimationFrame(() => {
-        window.scrollTo(0, y);
-        // Second pass after first paint of lazy items
-        setTimeout(() => window.scrollTo(0, y), 80);
-      });
+      // Poll: keep trying to scroll until the document is tall enough
+      // (images load progressively and grow the page)
+      const start = Date.now();
+      const tryScroll = () => {
+        if (cancelled) return;
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo(0, Math.min(y, Math.max(0, maxY)));
+        if (Math.abs(window.scrollY - y) > 4 && Date.now() - start < 3000) {
+          requestAnimationFrame(tryScroll);
+        }
+      };
+      requestAnimationFrame(tryScroll);
     }
+
+    // Save scroll position continuously (throttled)
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        sessionStorage.setItem(key, String(window.scrollY));
+        raf = 0;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     const save = () => sessionStorage.setItem(key, String(window.scrollY));
     window.addEventListener("beforeunload", save);
+    window.addEventListener("pagehide", save);
+
     return () => {
+      cancelled = true;
       save();
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("beforeunload", save);
+      window.removeEventListener("pagehide", save);
     };
   }, [config]);
 
