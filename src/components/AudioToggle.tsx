@@ -1,4 +1,4 @@
-import { Volume2, VolumeX } from "lucide-react";
+import { motion } from "framer-motion";
 import { useAudio } from "./AudioProvider";
 
 interface Props {
@@ -6,18 +6,30 @@ interface Props {
 }
 
 const AudioToggle = ({ className = "" }: Props) => {
-  const { enabled, toggle, currentSection } = useAudio();
-
-  if (!currentSection) return null;
+  const { enabled, toggle } = useAudio();
+  const label = enabled ? "MUSIC ON" : "MUSIC OFF";
 
   return (
     <button
       onClick={toggle}
       aria-label={enabled ? "Disattiva musica" : "Attiva musica"}
-      className={`px-2 py-1 text-white hover:text-white/70 transition-all duration-300 inline-flex items-center justify-center ${className}`}
-      style={{ filter: "brightness(1.25)" }}
+      aria-pressed={enabled}
+      className={`relative px-3 py-2 text-white brightness-125 transition-all duration-300 hover:text-white/50 ${className}`}
+      style={{
+        fontFamily: "'Raleway', sans-serif",
+        fontWeight: 400,
+        letterSpacing: "0.14em",
+        fontSize: "1.1rem",
+        textTransform: "uppercase",
+      }}
     >
-      {enabled ? <Volume2 size={18} aria-hidden="true" /> : <VolumeX size={18} aria-hidden="true" />}
+      <motion.span
+        className="inline-block"
+        whileHover={{ y: [-2, 2, -2, 0] }}
+        transition={{ duration: 0.4, type: "spring" }}
+      >
+        {label}
+      </motion.span>
     </button>
   );
 };

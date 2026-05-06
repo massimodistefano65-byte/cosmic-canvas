@@ -111,15 +111,15 @@ const Navbar = () => {
               <NavLink key={item.label} item={item} />
             ))}
             <div className="ml-2 flex items-center gap-2">
-              <AudioToggle />
               <LanguageToggle />
+              <AudioToggle />
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-3">
-            <AudioToggle />
             <LanguageToggle />
+            <AudioToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-foreground hover:text-accent transition-colors"
