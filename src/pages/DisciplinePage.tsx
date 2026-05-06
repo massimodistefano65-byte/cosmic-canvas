@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
 import SEOHead from "@/components/SEOHead";
@@ -67,7 +67,9 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const config = disciplines[disciplineKey];
   useSectionAudio(disciplineKey);
 
-  // Scroll restoration: restore on mount, save continuously
+  // Blocca il salvataggio durante il ripristino (FIX scroll restoration)
+  const isRestoring = useRef(true);
+
   useEffect(() => {
     if (!config) return;
     if ("scrollRestoration" in window.history) {
@@ -79,42 +81,38 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
 
     if (saved) {
       const y = parseInt(saved, 10);
-      // Poll: keep trying to scroll until the document is tall enough
-      // (images load progressively and grow the page)
       const start = Date.now();
       const tryScroll = () => {
         if (cancelled) return;
         const maxY = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollTo(0, Math.min(y, Math.max(0, maxY)));
-        if (Math.abs(window.scrollY - y) > 4 && Date.now() - start < 3000) {
+        // Aspetta che la pagina sia abbastanza alta (immagini caricate) o timeout 2s
+        if (maxY >= y || Date.now() - start > 2000) {
+          window.scrollTo(0, y);
+          setTimeout(() => {
+            isRestoring.current = false;
+          }, 100);
+        } else {
           requestAnimationFrame(tryScroll);
         }
       };
       requestAnimationFrame(tryScroll);
+    } else {
+      isRestoring.current = false;
     }
 
-    // Save scroll position continuously (throttled)
-    let raf = 0;
     const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
+      // Salva solo se NON siamo in fase di ripristino
+      if (!isRestoring.current) {
         sessionStorage.setItem(key, String(window.scrollY));
-        raf = 0;
-      });
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    const save = () => sessionStorage.setItem(key, String(window.scrollY));
-    window.addEventListener("beforeunload", save);
-    window.addEventListener("pagehide", save);
 
     return () => {
       cancelled = true;
-      save();
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("beforeunload", save);
-      window.removeEventListener("pagehide", save);
     };
-  }, [config]);
+  }, [config, disciplineKey]);
 
   if (!config) return null;
 
