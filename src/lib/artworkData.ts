@@ -139,7 +139,6 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  * ═══════════════════════════════════════════════════════════════ */
 
 
-
 const painting: ArtworkFullData[] = [
   createArtwork({ slug: "exotic-trip", category: "painting", title: "Exotic trip", year: "2014", dimensions: "120 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 400", details: 8, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "ancient-traces", category: "painting", title: "Ancient traces", year: "2012", dimensions: "60 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 250", details: 5, roomViews: 3, format: "webp", published: true }),
@@ -318,7 +317,7 @@ const digitalArt: ArtworkFullData[] = [
   createArtwork({ slug: "evening-abstract", category: "digital-art", title: "Evening abstract", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "battito-primordiale", category: "digital-art", title: "Battito primordiale", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 7, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "the-begin-of-my-life", category: "digital-art", title: "The begin of my life", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true }),
+  createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),
 ];
 
@@ -330,6 +329,9 @@ const tShirt: ArtworkFullData[] = [
   createArtwork({ slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "dark-matter", category: "t-shirt", title: "Dark Matter", year: "2023", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
 ];
+
+
+
 
 
 /* ═══════════════════════════════════════════════════════════════ */
