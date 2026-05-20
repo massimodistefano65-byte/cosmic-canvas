@@ -139,6 +139,7 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  * ═══════════════════════════════════════════════════════════════ */
 
 
+
 const painting: ArtworkFullData[] = [
   createArtwork({ slug: "exotic-trip", category: "painting", title: "Exotic trip", year: "2014", dimensions: "120 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 400", details: 8, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "ancient-traces", category: "painting", title: "Ancient traces", year: "2012", dimensions: "60 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 250", details: 5, roomViews: 3, format: "webp", published: true }),
@@ -297,7 +298,7 @@ const digitalArt: ArtworkFullData[] = [
   createArtwork({ slug: "in-memory-of-david-bowie-10-01-2016", category: "digital-art", title: "In memory of David Bowie 10-01-2016", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "la-visione-delle-4-am", category: "digital-art", title: "La visione delle 4 AM", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "the-last-vision", category: "digital-art", title: "The Last Vision", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "captured-soul", category: "digital-art", title: "Captured soul 2", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true }),
+  createArtwork({ slug: "captured-soul", category: "digital-art", title: "Captured soul", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "close-to-the-soul", category: "digital-art", title: "Close to the soul", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "neuronal-expansion", category: "digital-art", title: "Neuronal expansion", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),
   createArtwork({ slug: "flowers", category: "digital-art", title: "Flowers", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", published: true }),
@@ -329,6 +330,7 @@ const tShirt: ArtworkFullData[] = [
   createArtwork({ slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "dark-matter", category: "t-shirt", title: "Dark Matter", year: "2023", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
 ];
+
 
 /* ═══════════════════════════════════════════════════════════════ */
 
