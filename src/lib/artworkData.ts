@@ -138,6 +138,7 @@ type DisciplineData = Record<string, ArtworkFullData[]>;
  *  PAINTING
  * ═══════════════════════════════════════════════════════════════ */
 
+
 const painting: ArtworkFullData[] = [
   createArtwork({ slug: "exotic-trip", category: "painting", title: "Exotic trip", year: "2014", dimensions: "120 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 400", details: 8, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "ancient-traces", category: "painting", title: "Ancient traces", year: "2012", dimensions: "60 x 60 x 3 cm", technique: "Mista su polistirene", price: "€ 250", details: 5, roomViews: 3, format: "webp", published: true }),
@@ -277,7 +278,7 @@ const photography: ArtworkFullData[] = [
   createArtwork({ slug: "spiando-il-mondo", category: "photography", title: "Spiando il mondo", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "frammento-di-luce", category: "photography", title: "Frammento di luce", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "verso-il-nuovo-giorno", category: "photography", title: "Verso il nuovo giorno", year: "2014", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "my-heart-beats-for-another-love", category: "photography", title: "My heart beats for another love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 0, format: "webp", published: true }),
+  createArtwork({ slug: "my-heart-beats-for-another-love", category: "photography", title: "My heart beats for another love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "lunedi-mattina-al-caffe", category: "photography", title: "Lunedì mattina al Caffè", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "€ Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
@@ -328,7 +329,6 @@ const tShirt: ArtworkFullData[] = [
   createArtwork({ slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "dark-matter", category: "t-shirt", title: "Dark Matter", year: "2023", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
 ];
-
 
 /* ═══════════════════════════════════════════════════════════════ */
 
