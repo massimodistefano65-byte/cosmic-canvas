@@ -38,23 +38,33 @@ type BioBlock =
   | { type: "video"; youtubeId: string; title?: string; caption?: string };
 
 const bioSections: BioBlock[] = [
-  // --- Prima parte biografia ---
-  { type: "text", key: "bio.p1" },
-  { type: "text", key: "bio.p2" },
-
+  // --- Intro: Urgenza del ritorno ---
+  { type: "text", key: "bio.intro" },
+  
+  // --- Professione Agronomo/Garden Designer ---
+  { type: "text", key: "bio.agronomo" },
+  
   // --- Foto al lavoro (piccola, sfalsata a destra) ---
   { type: "photo-sm", src: "/images/bio/massimo-di-stefano-at-work-1.webp", alt: "Massimo Di Stefano al lavoro" },
 
-  // --- Seconda parte biografia ---
-  { type: "text", key: "bio.p3" },
+  // --- Sezione Attrito ---
+  { type: "heading", key: "bio.heading_attrito" },
+  { type: "text", key: "bio.attrito_desc" },
 
-  // --- Pratica artistica ---
-  { type: "heading", key: "bio.practice" },
-  { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
+  // --- I Linguaggi (Lista) ---
+  { type: "heading", key: "bio.heading_linguaggi" },
+  { type: "list", keys: ["bio.list_pittura", "bio.list_foto", "bio.list_digital"] },
 
+  // --- Sezione Ufologia/Cosmo ---
+  { type: "heading", key: "bio.heading_cosmo" },
+  { type: "text", key: "bio.cosmo_desc" },
+
+  // --- Filosofia e Conclusione ---
+  { type: "heading", key: "bio.heading_filosofia" },
+  { type: "text", key: "bio.filosofia_desc" },
 
   // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
+  // Qui potrai aggiungere in futuro video, altre foto o nuovi paragrafi.
 ];
 
 const downloads: never[] = [];
