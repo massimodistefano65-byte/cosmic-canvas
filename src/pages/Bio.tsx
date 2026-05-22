@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
-import { Download } from "lucide-react";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
 
 const jsonLd = {
@@ -10,7 +9,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Massimo Di Stefano",
   jobTitle: "Artista Visivo",
-  description: "Artista contemporaneo che lavora tra pittura, fotografia, arte digitale e design indossabile.",
+  description: "Artista contemporaneo e ricercatore dell'invisibile.",
   url: "https://massimodistefano.com/bio",
 };
 
@@ -32,250 +31,100 @@ const jsonLd = {
 type BioBlock =
   | { type: "text"; key: string }
   | { type: "photo-sm"; src: string; alt: string }
-  | { type: "photo-lg"; src: string; alt: string; caption?: string }
   | { type: "heading"; key: string }
-  | { type: "list"; keys: string[] }
-  | { type: "video"; youtubeId: string; title?: string; caption?: string };
+  | { type: "list"; keys: string[] };
 
 const bioSections: BioBlock[] = [
-  // --- Intro: Urgenza del ritorno ---
   { type: "text", key: "bio.intro" },
-  
-  // --- Professione Agronomo/Garden Designer ---
   { type: "text", key: "bio.agronomo" },
-  
-  // --- Foto al lavoro (piccola, sfalsata a destra) ---
   { type: "photo-sm", src: "/images/bio/massimo-di-stefano-at-work-1.webp", alt: "Massimo Di Stefano al lavoro" },
-
-  // --- Sezione Attrito ---
   { type: "heading", key: "bio.heading_attrito" },
   { type: "text", key: "bio.attrito_desc" },
-
-  // --- I Linguaggi (Lista) ---
   { type: "heading", key: "bio.heading_linguaggi" },
   { type: "list", keys: ["bio.list_pittura", "bio.list_foto", "bio.list_digital"] },
-
-  // --- Sezione Ufologia/Cosmo ---
+  { type: "heading", key: "bio.heading_tshirt" },
+  { type: "text", key: "bio.tshirt_desc" },
   { type: "heading", key: "bio.heading_cosmo" },
   { type: "text", key: "bio.cosmo_desc" },
-
-  // --- Filosofia e Conclusione ---
   { type: "heading", key: "bio.heading_filosofia" },
   { type: "text", key: "bio.filosofia_desc" },
-
-  // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // Qui potrai aggiungere in futuro video, altre foto o nuovi paragrafi.
 ];
 
-const downloads: never[] = [];
-
-/* ── Sotto-componenti per ogni tipo di blocco ── */
-
 const TextBlock = ({ tKey, t }: { tKey: string; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 16 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+  <div className="max-w-3xl mx-auto md:ml-[33%] mb-10">
+    <p className="text-base md:text-lg text-foreground/80 leading-relaxed whitespace-pre-line">
       {t(tKey)}
     </p>
-  </motion.div>
+  </div>
 );
 
-let _photoSmCounter = 0;
-const PhotoSmBlock = ({ src, alt }: { src: string; alt: string }) => {
-  const index = _photoSmCounter++;
-  const isRight = index % 2 === 0;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className={`flex ${isRight ? "justify-center md:justify-end md:mr-[8%]" : "justify-center md:justify-start md:ml-[8%]"}`}
-    >
-      <div className="w-52 h-52 md:w-64 md:h-64 rounded-sm overflow-hidden border border-border/20 shadow-xl">
-        <img src={src} alt={alt} className="w-full h-full object-cover" loading="lazy" />
-      </div>
-    </motion.div>
-  );
-};
-
-const PhotoLgBlock = ({ src, alt, caption }: { src: string; alt: string; caption?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.98 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="max-w-5xl mx-auto"
-  >
-    <div className="aspect-[21/9] w-full rounded-sm overflow-hidden">
-      <img src={src} alt={alt} className="w-full h-full object-cover" loading="lazy" />
+const PhotoSmBlock = ({ src, alt }: { src: string; alt: string }) => (
+  <div className="flex justify-center md:justify-end md:mr-[10%] my-16">
+    <div className="w-72 h-72 md:w-96 md:h-96 rounded-sm overflow-hidden shadow-2xl">
+      <img src={src} alt={alt} className="w-full h-full object-cover" />
     </div>
-    {caption && (
-      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
-    )}
-  </motion.div>
+  </div>
 );
 
 const HeadingBlock = ({ tKey, t }: { tKey: string; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <div className="w-16 h-px bg-accent/40 mb-8" />
-    <h2
-      className="text-2xl md:text-3xl font-light text-foreground"
-      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-    >
+  <div className="max-w-3xl mx-auto md:ml-[33%] mt-20 mb-8">
+    <h2 className="text-3xl md:text-4xl font-light text-foreground" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
       {t(tKey)}
     </h2>
-  </motion.div>
+  </div>
 );
 
 const ListBlock = ({ keys, t }: { keys: string[]; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <ul className="space-y-4">
-      {keys.map((key, i) => (
-        <motion.li
-          key={key}
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: i * 0.1 }}
-          className="flex gap-4 items-start"
-        >
-          <span className="text-accent/70 mt-1 text-xs">●</span>
-          <span className="text-muted-foreground">{t(key)}</span>
-        </motion.li>
+  <div className="max-w-3xl mx-auto md:ml-[33%] mb-12">
+    <ul className="space-y-6">
+      {keys.map((key) => (
+        <li key={key} className="flex gap-4 items-start text-foreground/80 text-lg">
+          <span className="text-accent/60 mt-2 text-[8px]">●</span>
+          <span>{t(key)}</span>
+        </li>
       ))}
     </ul>
-  </motion.div>
+  </div>
 );
-
-const VideoBlock = ({ youtubeId, title, caption }: { youtubeId: string; title?: string; caption?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.98 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="max-w-4xl mx-auto"
-  >
-    {title && (
-      <h3 className="text-xl md:text-2xl font-light text-foreground mb-4 text-center" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-        {title}
-      </h3>
-    )}
-    <div className="aspect-video w-full rounded-sm overflow-hidden border border-border/20 shadow-xl">
-      <iframe
-        src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
-        title="Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="w-full h-full"
-        loading="lazy"
-      />
-    </div>
-    {caption && (
-      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
-    )}
-  </motion.div>
-);
-
-/* ── Pagina principale ── */
 
 const Bio = () => {
   const { t } = useI18n();
   useSectionAudio("bio");
-  // Reset counter on each render
-  _photoSmCounter = 0;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <SEOHead
-        title="Bio | Biografia - Massimo Di Stefano"
-        description="Scopri il mio percorso artistico. Learn about my background and artistic vision."
-        canonicalPath="/bio"
-        jsonLd={jsonLd}
-      />
+      <SEOHead title="Bio | Massimo Di Stefano" description="Biografia dell'artista." canonicalPath="/bio" jsonLd={jsonLd} />
       <Navbar />
 
-      <article className="pt-24 pb-20">
-        {/* ═══ HERO — foto ritratto + titolo ═══ */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="md:col-span-5 relative"
-            >
-              <div className="relative">
-                <div className="aspect-[3/4] w-full max-w-sm rounded-sm overflow-hidden">
-                  <img
-                    src="/images/bio/massimo-di-stefano-portrait-1.jpg"
-                    alt="Massimo Di Stefano"
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
-                </div>
-                <div className="absolute -left-4 top-8 w-px h-24 bg-gradient-to-b from-accent/60 to-transparent" />
+      <article className="pt-32 pb-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          {/* HERO SECTION COMPATTA: Foto e Nome Allineati */}
+          <div className="flex flex-col md:flex-row gap-12 items-start mb-12">
+            <div className="w-full md:w-[30%]">
+              <div className="aspect-[3/4] rounded-sm overflow-hidden shadow-2xl border border-white/5">
+                <img src="/images/bio/massimo-di-stefano-portrait-1.jpg" alt="Massimo Di Stefano" className="w-full h-full object-cover" />
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="md:col-span-7 pt-2 md:pt-8"
-            >
-              <h1
-                className="text-4xl md:text-6xl font-light tracking-tight mb-2 text-foreground"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
+            </div>
+            <div className="w-full md:w-[60%] pt-4">
+              <h1 className="text-5xl md:text-8xl font-light tracking-tight mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                 Massimo Di Stefano
               </h1>
-              <p className="text-sm uppercase tracking-[0.3em] text-foreground/80 mb-10">
+              <p className="text-xl uppercase tracking-[0.2em] text-accent/90 italic">
                 {t("bio.title")}
               </p>
-            </motion.div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            {bioSections.map((block, i) => {
+              if (block.type === "text") return <TextBlock key={i} tKey={block.key} t={t} />;
+              if (block.type === "photo-sm") return <PhotoSmBlock key={i} src={block.src} alt={block.alt} />;
+              if (block.type === "heading") return <HeadingBlock key={i} tKey={block.key} t={t} />;
+              if (block.type === "list") return <ListBlock key={i} keys={block.keys} t={t} />;
+              return null;
+            })}
           </div>
         </div>
-
-        {/* ═══ BLOCCHI MODULARI ═══ */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-16 space-y-14">
-          {bioSections.map((block, i) => {
-            switch (block.type) {
-              case "text":
-                return <TextBlock key={i} tKey={block.key} t={t} />;
-              case "photo-sm":
-                return <PhotoSmBlock key={i} src={block.src} alt={block.alt} />;
-              case "photo-lg":
-                return <PhotoLgBlock key={i} src={block.src} alt={block.alt} caption={block.caption} />;
-              case "heading":
-                return <HeadingBlock key={i} tKey={block.key} t={t} />;
-              case "list":
-                return <ListBlock key={i} keys={block.keys} t={t} />;
-              case "video":
-                return <VideoBlock key={i} youtubeId={block.youtubeId} title={block.title} caption={block.caption} />;
-              default:
-                return null;
-            }
-          })}
-        </div>
-
       </article>
     </main>
   );
