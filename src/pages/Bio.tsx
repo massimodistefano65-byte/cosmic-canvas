@@ -1,105 +1,166 @@
+import React from 'react';
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
-import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
 
-const Bio = () => {
+export default function PaginaBio() {
   const { t } = useI18n();
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#e0e0e0] font-sans">
-      <SEOHead title="Bio | Massimo Di Stefano" description="Il Ricercatore dell'Invisibile" canonicalPath="/bio" />
+    <main className="min-h-screen bg-background text-foreground antialiased font-sans px-4 py-12 md:py-20 max-w-5xl mx-auto">
+      <SEOHead 
+        title="Bio | Massimo Di Stefano" 
+        description="Il Ricercatore dell'Invisibile - Biografia ufficiale." 
+        canonicalPath="/bio" 
+      />
       <Navbar />
+      
+      {/* TESTATA */}
+      <header className="text-center mb-16 md:mb-24 pt-10">
+        <h1 className="font-serif text-4xl md:text-6xl font-light mb-4 text-white tracking-normal">
+          Massimo <span className="font-bold">Di Stefano</span>
+        </h1>
+        <p className="font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-muted-foreground">
+          {t("bio.header.tagline")}
+        </p>
+      </header>
 
-      <div className="max-w-[1100px] mx-auto px-6 py-24 md:py-32">
+      <div className="space-y-20 md:space-y-32">
         
-        {/* HEADER */}
-        <header className="text-center mb-20 md:mb-32">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 tracking-tighter">
-            {t("bio.header.name")}
-          </h1>
-          <p className="text-sm md:text-base uppercase tracking-[0.4em] text-zinc-500">
-            {t("bio.header.tagline")}
-          </p>
-        </header>
-
-        {/* SEZIONE 1: GRIGLIA FOTO + TESTO */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center mb-32">
-          <div className="rounded-lg overflow-hidden border border-zinc-800 shadow-2xl shadow-black/50">
-            <img 
-              src="/images/bio/massimo-di-stefano-portrait-1.jpg" 
-              alt="Massimo Di Stefano" 
-              className="w-full h-[480px] object-cover"
-            />
-          </div>
-          <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+        {/* SEZIONE 1: L'URGENZA DEL RITORNO */}
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="md:col-span-7 space-y-6">
+            <h2 className="font-serif text-xl md:text-2xl text-white border-b border-border pb-2">
               {t("bio.sec1.title")}
             </h2>
-            <p className="text-zinc-400 leading-relaxed text-lg">{t("bio.sec1.p1")}</p>
-            <p className="text-zinc-400 leading-relaxed text-lg">{t("bio.sec1.p2")}</p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.sec1.p1")}
+            </p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.sec1.p2")}
+            </p>
+          </div>
+          <div className="md:col-span-5 aspect-[4/5] bg-card rounded-lg overflow-hidden border border-border relative shadow-2xl">
+            <img src="/images/bio/massimo-di-stefano-portrait-1.jpg" className="w-full h-full object-cover" alt="Massimo Di Stefano" />
           </div>
         </section>
 
-        {/* SEZIONE 2: GRIGLIA TESTO + DOPPIA FOTO (REVERSE) */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center mb-32">
-          <div className="order-2 md:order-1 space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+        {/* SEZIONE 2: L'ATTRITO (ZIG-ZAG) */}
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="md:col-span-5 md:order-2 aspect-[4/5] bg-card rounded-lg overflow-hidden border border-border relative shadow-2xl">
+            <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover" alt="Lavoro materico" />
+          </div>
+          <div className="md:col-span-7 md:order-1 space-y-6">
+            <h2 className="font-serif text-xl md:text-2xl text-white border-b border-border pb-2">
               {t("bio.sec2.title")}
             </h2>
-            <p className="text-zinc-400 leading-relaxed text-lg">{t("bio.sec2.p1")}</p>
-            <p className="text-zinc-400 leading-relaxed text-lg">{t("bio.sec2.p2")}</p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.sec2.p1")}
+            </p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.sec2.p2")}
+            </p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.sec2.p3")}
+            </p>
           </div>
-          <div className="order-1 md:order-2 flex flex-col gap-6">
-            <div className="h-[230px] rounded-lg overflow-hidden border border-zinc-800">
-              <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover" alt="Lavoro" />
+        </section>
+
+        {/* SEZIONE 3: GEOGRAFIE DELL'ANIMA (3 COLONNE) */}
+        <section className="space-y-10 pt-6">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-serif text-2xl md:text-3xl text-white mb-4 tracking-wide">
+              {t("bio.cards.title")}
+            </h2>
+            <p className="font-light italic text-muted-foreground text-sm md:text-base">
+              {t("bio.cards.subtitle")}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
+            <div className="border-l-2 border-primary/60 pl-5 py-2 space-y-3">
+              <h3 className="font-serif text-lg text-white font-medium">{t("bio.card1.title")}</h3>
+              <p className="font-light text-sm leading-relaxed text-justify text-muted-foreground">
+                {t("bio.card1.desc")}
+              </p>
             </div>
-            <div className="h-[230px] rounded-lg overflow-hidden border border-zinc-800">
-              <img src="/images/bio/massimo-di-stefano-portrait-1.jpg" className="w-full h-full object-cover opacity-50" alt="Dettaglio" />
+            <div className="border-l-2 border-primary pl-5 py-2 space-y-3">
+              <h3 className="font-serif text-lg text-white font-medium">{t("bio.card2.title")}</h3>
+              <p className="font-light text-sm leading-relaxed text-justify text-muted-foreground">
+                {t("bio.card2.desc")}
+              </p>
+            </div>
+            <div className="border-l-2 border-primary/60 pl-5 py-2 space-y-3">
+              <h3 className="font-serif text-lg text-white font-medium">{t("bio.card3.title")}</h3>
+              <p className="font-light text-sm leading-relaxed text-justify text-muted-foreground">
+                {t("bio.card3.desc")}
+              </p>
             </div>
           </div>
         </section>
 
-        {/* SEZIONE 3: CARDS LINGUAGGI */}
-        <section className="mb-32">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
-            {t("bio.cards.title")}
+        {/* SEZIONE 4: T-SHIRT */}
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="md:col-span-7 space-y-6">
+            <h2 className="font-serif text-xl md:text-2xl text-white border-b border-border pb-2">
+              {t("bio.tshirt.title")}
+            </h2>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.tshirt.p1")}
+            </p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.tshirt.p2")}
+            </p>
+          </div>
+          <div className="md:col-span-5 aspect-[4/5] bg-card rounded-lg overflow-hidden border border-border relative shadow-2xl">
+            <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover opacity-60" alt="T-shirt d'arte" />
+          </div>
+        </section>
+
+        {/* SEZIONE 5: VISIONE COSMICA (ZIG-ZAG) */}
+        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="md:col-span-5 md:order-2 aspect-[4/5] bg-card rounded-lg overflow-hidden border border-border relative shadow-2xl">
+             <div className="w-full h-full bg-gradient-to-br from-purple-900/20 to-black flex items-center justify-center">
+                <span className="text-[10px] uppercase tracking-widest text-muted-foreground">Cosmic Vision</span>
+             </div>
+          </div>
+          <div className="md:col-span-7 md:order-1 space-y-6">
+            <h2 className="font-serif text-xl md:text-2xl text-white border-b border-border pb-2">
+              {t("bio.cosmo.title")}
+            </h2>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.cosmo.p1")}
+            </p>
+            <p className="font-light leading-relaxed text-justify text-sm md:text-base">
+              {t("bio.cosmo.p2")}
+            </p>
+          </div>
+        </section>
+
+        {/* SEZIONE 6: FILOSOFIA */}
+        <section className="max-w-3xl mx-auto space-y-6 text-center pt-8">
+          <h2 className="font-serif text-xl md:text-2xl text-white border-b border-border pb-2 inline-block px-6">
+            {t("bio.filosofia.title")}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((num) => (
-              <div key={num} className="bg-[#0d0d0d] border border-zinc-900 p-8 rounded-lg shadow-xl">
-                <h3 className="text-xl font-bold text-white mb-4">{t(`bio.card${num}.title`)}</h3>
-                <p className="text-zinc-500 leading-relaxed">{t(`bio.card${num}.desc`)}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* SEZIONE 4: BOX T-SHIRT */}
-        <section className="bg-gradient-to-r from-[#0f0f0f] to-[#171717] border border-zinc-800 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-12 mb-32">
-          <div className="flex-1 space-y-4">
-            <h3 className="text-2xl font-bold text-white">{t("bio.tshirt.title")}</h3>
-            <p className="text-zinc-400 leading-relaxed text-lg">{t("bio.tshirt.desc")}</p>
-          </div>
-          <div className="w-full md:w-1/3">
-            <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="rounded-lg border border-zinc-700 w-full h-48 object-cover" alt="Tshirt" />
-          </div>
-        </section>
-
-        {/* SEZIONE FINALE */}
-        <section className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">{t("bio.final.title")}</h2>
-          <p className="text-zinc-400 leading-relaxed text-lg mb-6">{t("bio.final.p1")}</p>
-          <p className="text-zinc-400 leading-relaxed text-lg mb-12">{t("bio.final.p2")}</p>
-          
-          <div className="pt-12 border-t border-zinc-900 italic text-zinc-600 leading-relaxed">
-            {t("bio.signature")}
-          </div>
+          <p className="font-light leading-relaxed text-justify md:text-center text-sm md:text-base">
+            {t("bio.filosofia.p1")}
+          </p>
+          <p className="font-light leading-relaxed text-justify md:text-center text-sm md:text-base">
+            {t("bio.filosofia.p2")}
+          </p>
+          <p className="font-light leading-relaxed text-justify md:text-center italic text-muted-foreground pt-2 text-sm md:text-base">
+            {t("bio.filosofia.p3")}
+          </p>
         </section>
 
       </div>
+
+      {/* FOOTER */}
+      <footer className="mt-24 pt-8 border-t border-border text-center">
+        <p className="font-light italic text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+          {t("bio.footer")}
+        </p>
+      </footer>
     </main>
   );
-};
-
-export default Bio;
+}
