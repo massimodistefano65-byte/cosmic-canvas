@@ -1,274 +1,147 @@
+import React from 'react';
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
-import { motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n";
-import { Download } from "lucide-react";
-import { useSectionAudio } from "@/hooks/useSectionAudio";
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Massimo Di Stefano",
-  jobTitle: "Artista Visivo",
-  description: "Artista contemporaneo che lavora tra pittura, fotografia, arte digitale e design indossabile.",
-  url: "https://massimodistefano.com/bio",
-};
-
-/*
-  ═══════════════════════════════════════════════════════════
-  SISTEMA MODULARE — Aggiungi sezioni in ordine.
-  
-  Tipi disponibili:
-    "text"       → blocco di testo (usa chiave i18n)
-    "photo-sm"   → foto piccola sfalsata (alterna sx/dx automaticamente)
-    "photo-lg"   → foto grande panoramica a tutta larghezza
-    "heading"    → sotto-titolo sezione
-    "list"       → elenco puntato (chiavi i18n)
-  
-  Per aggiungere foto: metti il file in public/images/bio/
-  poi aggiungi un blocco qui sotto.
-  ═══════════════════════════════════════════════════════════
-*/
-type BioBlock =
-  | { type: "text"; key: string }
-  | { type: "photo-sm"; src: string; alt: string }
-  | { type: "photo-lg"; src: string; alt: string; caption?: string }
-  | { type: "heading"; key: string }
-  | { type: "list"; keys: string[] }
-  | { type: "video"; youtubeId: string; title?: string; caption?: string };
-
-const bioSections: BioBlock[] = [
-  // --- Prima parte biografia ---
-  { type: "text", key: "bio.p1" },
-  { type: "text", key: "bio.p2" },
-
-  // --- Foto al lavoro (piccola, sfalsata a destra) ---
-  { type: "photo-sm", src: "/images/bio/massimo-di-stefano-at-work-1.webp", alt: "Massimo Di Stefano al lavoro" },
-
-  // --- Seconda parte biografia ---
-  { type: "text", key: "bio.p3" },
-
-  // --- Pratica artistica ---
-  { type: "heading", key: "bio.practice" },
-  { type: "list", keys: ["bio.practice1", "bio.practice2", "bio.practice3", "bio.practice4"] },
-
-
-  // ═══ AGGIUNGI ALTRE SEZIONI QUI SOTTO ═══
-  // { type: "photo-lg", src: "/images/bio/studio-panoramica.jpg", alt: "Lo studio", caption: "Lo studio a Roma" },
-];
-
-const downloads: never[] = [];
-
-/* ── Sotto-componenti per ogni tipo di blocco ── */
-
-const TextBlock = ({ tKey, t }: { tKey: string; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 16 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-      {t(tKey)}
-    </p>
-  </motion.div>
-);
-
-let _photoSmCounter = 0;
-const PhotoSmBlock = ({ src, alt }: { src: string; alt: string }) => {
-  const index = _photoSmCounter++;
-  const isRight = index % 2 === 0;
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className={`flex ${isRight ? "justify-center md:justify-end md:mr-[8%]" : "justify-center md:justify-start md:ml-[8%]"}`}
-    >
-      <div className="w-52 h-52 md:w-64 md:h-64 rounded-sm overflow-hidden border border-border/20 shadow-xl">
-        <img src={src} alt={alt} className="w-full h-full object-cover" loading="lazy" />
-      </div>
-    </motion.div>
-  );
-};
-
-const PhotoLgBlock = ({ src, alt, caption }: { src: string; alt: string; caption?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.98 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="max-w-5xl mx-auto"
-  >
-    <div className="aspect-[21/9] w-full rounded-sm overflow-hidden">
-      <img src={src} alt={alt} className="w-full h-full object-cover" loading="lazy" />
-    </div>
-    {caption && (
-      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
-    )}
-  </motion.div>
-);
-
-const HeadingBlock = ({ tKey, t }: { tKey: string; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <div className="w-16 h-px bg-accent/40 mb-8" />
-    <h2
-      className="text-2xl md:text-3xl font-light text-foreground"
-      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-    >
-      {t(tKey)}
-    </h2>
-  </motion.div>
-);
-
-const ListBlock = ({ keys, t }: { keys: string[]; t: (k: string) => string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 12 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="max-w-3xl mx-auto md:ml-[16.666%]"
-  >
-    <ul className="space-y-4">
-      {keys.map((key, i) => (
-        <motion.li
-          key={key}
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: i * 0.1 }}
-          className="flex gap-4 items-start"
-        >
-          <span className="text-accent/70 mt-1 text-xs">●</span>
-          <span className="text-muted-foreground">{t(key)}</span>
-        </motion.li>
-      ))}
-    </ul>
-  </motion.div>
-);
-
-const VideoBlock = ({ youtubeId, title, caption }: { youtubeId: string; title?: string; caption?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.98 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="max-w-4xl mx-auto"
-  >
-    {title && (
-      <h3 className="text-xl md:text-2xl font-light text-foreground mb-4 text-center" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-        {title}
-      </h3>
-    )}
-    <div className="aspect-video w-full rounded-sm overflow-hidden border border-border/20 shadow-xl">
-      <iframe
-        src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
-        title="Video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        className="w-full h-full"
-        loading="lazy"
-      />
-    </div>
-    {caption && (
-      <p className="text-sm text-muted-foreground/60 mt-3 text-center italic">{caption}</p>
-    )}
-  </motion.div>
-);
-
-/* ── Pagina principale ── */
-
-const Bio = () => {
+export default function PaginaBio() {
   const { t } = useI18n();
-  useSectionAudio("bio");
-  // Reset counter on each render
-  _photoSmCounter = 0;
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <SEOHead
-        title="Bio | Biografia - Massimo Di Stefano"
-        description="Scopri il mio percorso artistico. Learn about my background and artistic vision."
-        canonicalPath="/bio"
-        jsonLd={jsonLd}
+    <main className="min-h-screen bg-background text-foreground antialiased font-sans">
+      <SEOHead 
+        title="Bio | Massimo Di Stefano" 
+        description="Il Ricercatore dell'Invisibile - Biografia ufficiale." 
+        canonicalPath="/bio" 
       />
+      
+      {/* NAVBAR: Libera come in Archive per centrarsi automaticamente */}
       <Navbar />
 
-      <article className="pt-24 pb-20">
-        {/* ═══ HERO — foto ritratto + titolo ═══ */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="md:col-span-5 relative"
-            >
-              <div className="relative">
-                <div className="aspect-[3/4] w-full max-w-sm rounded-sm overflow-hidden">
-                  <img
-                    src="/images/bio/massimo-di-stefano-portrait-1.jpg"
-                    alt="Massimo Di Stefano"
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                  />
-                </div>
-                <div className="absolute -left-4 top-8 w-px h-24 bg-gradient-to-b from-accent/60 to-transparent" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="md:col-span-7 pt-2 md:pt-8"
-            >
-              <h1
-                className="text-4xl md:text-6xl font-light tracking-tight mb-2 text-foreground"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Massimo Di Stefano
-              </h1>
-              <p className="text-sm uppercase tracking-[0.3em] text-foreground/80 mb-10">
-                {t("bio.title")}
-              </p>
-            </motion.div>
+      <div className="pt-24 pb-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          
+          {/* HEADER: CLONATO DA ARCHIVE */}
+          <div className="mb-20 text-center">
+            <h1 className="mb-4 text-4xl font-light tracking-wider text-white md:text-6xl uppercase">
+              Massimo Di Stefano
+            </h1>
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground tracking-wide">
+              {t("bio.header.tagline")}
+            </p>
           </div>
-        </div>
 
-        {/* ═══ BLOCCHI MODULARI ═══ */}
-        <div className="max-w-6xl mx-auto px-6 md:px-12 mt-16 space-y-14">
-          {bioSections.map((block, i) => {
-            switch (block.type) {
-              case "text":
-                return <TextBlock key={i} tKey={block.key} t={t} />;
-              case "photo-sm":
-                return <PhotoSmBlock key={i} src={block.src} alt={block.alt} />;
-              case "photo-lg":
-                return <PhotoLgBlock key={i} src={block.src} alt={block.alt} caption={block.caption} />;
-              case "heading":
-                return <HeadingBlock key={i} tKey={block.key} t={t} />;
-              case "list":
-                return <ListBlock key={i} keys={block.keys} t={t} />;
-              case "video":
-                return <VideoBlock key={i} youtubeId={block.youtubeId} title={block.title} caption={block.caption} />;
-              default:
-                return null;
-            }
-          })}
-        </div>
+          {/* CONTENUTO A ZIGZAG */}
+          <div className="mx-auto max-w-5xl space-y-24 md:space-y-40">
+            
+            {/* SEZIONE 1 */}
+            <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+              <div className="md:col-span-7 space-y-6">
+                <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
+                  {t("bio.sec1.title")}
+                </h2>
+                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed font-light">
+                  <p>{t("bio.sec1.p1")}</p>
+                  <p>{t("bio.sec1.p2")}</p>
+                </div>
+              </div>
+              <div className="md:col-span-5 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/images/bio/massimo-di-stefano-portrait-1.jpg" className="w-full h-full object-cover" alt="Massimo Di Stefano" />
+              </div>
+            </section>
 
-      </article>
+            {/* SEZIONE 2 (ZIG-ZAG) */}
+            <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+              <div className="md:col-span-5 md:order-1 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover" alt="Lavoro materico" />
+              </div>
+              <div className="md:col-span-7 md:order-2 space-y-6">
+                <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
+                  {t("bio.sec2.title")}
+                </h2>
+                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed font-light">
+                  <p>{t("bio.sec2.p1")}</p>
+                  <p>{t("bio.sec2.p2")}</p>
+                  <p>{t("bio.sec2.p3")}</p>
+                </div>
+              </div>
+            </section>
+
+            {/* SEZIONE 3: GEOGRAFIE (3 COLONNE) */}
+            <section className="space-y-12 pt-10">
+              <div className="text-center">
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                  {t("bio.cards.title")}
+                </h2>
+                <p className="text-xl text-muted-foreground font-light italic">
+                  {t("bio.cards.subtitle")}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                {[1, 2, 3].map((num) => (
+                  <div key={num} className="border-l-2 border-primary/40 pl-6 py-2">
+                    <h3 className="text-xl font-semibold text-white mb-3">{t(`bio.card${num}.title`)}</h3>
+                    <p className="text-muted-foreground leading-relaxed font-light">{t(`bio.card${num}.desc`)}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* SEZIONE 4: T-SHIRT */}
+            <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+              <div className="md:col-span-7 space-y-6">
+                <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
+                  {t("bio.tshirt.title")}
+                </h2>
+                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed font-light">
+                  <p>{t("bio.tshirt.p1")}</p>
+                  <p>{t("bio.tshirt.p2")}</p>
+                </div>
+              </div>
+              <div className="md:col-span-5 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700" alt="T-shirt" />
+              </div>
+            </section>
+
+            {/* SEZIONE 5: VISIONE COSMICA */}
+            <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+              <div className="md:col-span-5 md:order-1 aspect-[4/5] bg-zinc-900/40 rounded-lg border border-white/5 flex items-center justify-center">
+                 <span className="text-xs uppercase tracking-[0.6em] text-zinc-600">Cosmic Research</span>
+              </div>
+              <div className="md:col-span-7 md:order-2 space-y-6">
+                <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
+                  {t("bio.cosmo.title")}
+                </h2>
+                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed font-light">
+                  <p>{t("bio.cosmo.p1")}</p>
+                  <p>{t("bio.cosmo.p2")}</p>
+                </div>
+              </div>
+            </section>
+
+            {/* SEZIONE 6: FILOSOFIA */}
+            <section className="max-w-3xl mx-auto space-y-10 text-center pt-16 border-t border-white/5">
+              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+                {t("bio.filosofia.title")}
+              </h2>
+              <div className="space-y-6 text-muted-foreground text-lg leading-relaxed font-light">
+                <p>{t("bio.filosofia.p1")}</p>
+                <p>{t("bio.filosofia.p2")}</p>
+                <p className="text-white font-medium italic text-xl md:text-2xl pt-6">
+                  {t("bio.filosofia.p3")}
+                </p>
+              </div>
+            </section>
+
+          </div>
+
+          {/* FOOTER */}
+          <footer className="mt-32 pt-16 border-t border-white/10 text-center">
+            <p className="text-muted-foreground max-w-3xl mx-auto leading-loose text-lg font-light italic">
+              {t("bio.footer")}
+            </p>
+          </footer>
+        </div>
+      </div>
     </main>
   );
-};
-
-export default Bio;
+}
