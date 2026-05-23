@@ -97,6 +97,54 @@ const ArtworkDetail = () => {
     };
   }, [meaningUrl]);
 
+  // HEAD-check purchase.md (per discipline, not per artwork)
+  const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
+  useEffect(() => {
+    if (!purchaseUrl) {
+      setHasPurchase(false);
+      setPurchaseContent("");
+      return;
+    }
+    let cancelled = false;
+    fetch(purchaseUrl, { cache: "no-cache" })
+      .then(async (r) => {
+        if (!r.ok) return null;
+        const ctype = (r.headers.get("content-type") || "").toLowerCase();
+        if (ctype.includes("text/html")) return null;
+        const text = await r.text();
+        const head = text.trimStart().slice(0, 200).toLowerCase();
+        if (
+          head.startsWith("<!doctype") ||
+          head.startsWith("<html") ||
+          head.includes("<head") ||
+          head.includes("<script")
+        ) {
+          return null;
+        }
+        if (!text.trim()) return null;
+        return text;
+      })
+      .then((text) => {
+        if (cancelled) return;
+        if (text) {
+          setHasPurchase(true);
+          setPurchaseContent(text);
+        } else {
+          setHasPurchase(false);
+          setPurchaseContent("");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setHasPurchase(false);
+          setPurchaseContent("");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [purchaseUrl]);
+
   if (!artwork) {
     return (
       <div className="h-screen bg-background text-foreground flex items-center justify-center">
