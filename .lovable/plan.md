@@ -1,32 +1,46 @@
-## Problema
+## Piano d'intervento
 
-In `GalleryGrid.tsx` ogni "chunk" è avvolto in un `<div className="contents">` con `IntersectionObserver`. Con `display: contents` il div non ha un box renderizzato → l'observer non riceve mai un'intersezione → `visible` resta `false` → vengono mostrati solo i placeholder vuoti `bg-muted/5`. Risultato: galleria nera/invisibile.
+### 1. Fix 404.3 di Aruba/IIS sui file `.md`
 
-## Soluzione
+Aggiungere il MIME type `text/markdown` per l'estensione `.md` in `public/web.config`, nella sezione `<staticContent>` già esistente. Senza questo, IIS rifiuta di servire il file (404.3 = "extension configuration").
 
-Rimuovere completamente la virtualizzazione a chunk e tornare al rendering diretto di tutti gli item, affidandosi al **lazy loading nativo** (`loading="lazy"` + `decoding="async"`) che era già presente sulle `<img>` e funzionava bene.
+```xml
+<remove fileExtension=".md" />
+<mimeMap fileExtension=".md" mimeType="text/markdown" />
+```
 
-## Modifiche
+Inoltre la regola SPA "Rewrite to /index.html" gestisce già il caso "file non esistente" (i due `negate="true"` su `IsFile`/`IsDirectory`), quindi una volta dichiarato il MIME, i `.md` esistenti verranno serviti correttamente, e quelli mancanti continueranno a cadere su index.html — già correttamente filtrati dal controllo anti-HTML lato client.
 
-**`src/components/GalleryGrid.tsx`** — riscrittura mirata:
-- Eliminare il componente `Chunk` e la logica `IntersectionObserver` / `CHUNK_SIZE` / `visible`.
-- Mappare direttamente `items` nella griglia, calcolando `getSizeForIndex(idx)` per ciascun item (pattern asimmetrici invariati).
-- Mantenere: `motion.div` con `whileInView`, hover scale, fallback gradient, blur ring, click → `handleSelect`.
-- Mantenere `handleSelect` che salva `sessionStorage.setItem('scroll:{discipline}', scrollY)` prima di navigare (scroll restoration intatta).
-- Mantenere `loading="lazy"` e `decoding="async"` sulle immagini.
+### 2. Nuovo tasto "Opzioni d'acquisto"
 
-## Cosa NON viene toccato (resta funzionante)
+In `src/pages/ArtworkDetail.tsx`:
 
-- `AudioProvider`, `AudioToggle`, `useSectionAudio` (musica + crossfade).
-- Scroll restoration in `DisciplinePage.tsx` (legge `sessionStorage` al mount).
-- Frecce centrate mobile in `StackedSection.tsx` e `HeroSection.tsx`.
-- `MeaningDialog` e link "Significato dell'opera" in `ArtworkDetail.tsx`.
-- Pattern asimmetrici della griglia (A/B/C/D) e tutto lo styling.
+- Aggiungere stato: `purchaseOpen`, `hasPurchase`, `purchaseContent`.
+- Aggiungere un secondo `useEffect` analogo a quello di `meaning.md`, che fetcha `/artworks/{discipline}/purchase.md` (cartella radice della categoria, **non** della singola opera) con identico filtro anti-HTML/SPA fallback.
+- Etichetta dinamica:
+  - `painting` → `"Opzioni d'acquisto"`
+  - altri (`photography`, `digital-art`, `t-shirt`) → `"Opzioni d'acquisto e supporti"`
+- Renderizzare il bottone **subito sotto** "Significato dell'opera" (sia desktop che mobile), con **stile identico alle altre etichette tecniche** (Dimensioni/Tecnica/Prezzo): stesso font Raleway, stessa size (`text-[9px]` desktop / `text-[10px]` mobile), stesso tracking, **stesso colore** `text-foreground/70` — niente bianco luminoso, niente `animate-pulse`. Cursor pointer + leggera opacità in hover.
+- Effetto spring on hover: wrappare il testo in `<motion.span whileHover={{ x: [-2, 2, -2, 0] }} transition={{ type: "spring", duration: 0.4 }}>` per il movimento orizzontale di molla.
+- Riutilizzare `MeaningDialog` esistente passando `purchaseContent` e come titolo l'etichetta dinamica (il dialog è generico, mostra titolo + markdown).
 
-## File modificati
+### 3. Aggiornare `GUIDA-GESTIONE-OPERE.md`
 
-| File | Cosa |
-|---|---|
-| `src/components/GalleryGrid.tsx` | Rimossa virtualizzazione a chunk, ripristinato rendering diretto con lazy loading nativo |
+Documentare brevemente: dove mettere `purchase.md` (in `public/artworks/{discipline}/purchase.md`), e che il pulsante appare solo se il file esiste.
 
-Nessun altro file viene modificato.
+### Dettagli tecnici
+
+File modificati:
+- `public/web.config` — aggiunta mimeMap `.md`
+- `src/pages/ArtworkDetail.tsx` — nuovo stato, fetch purchase, bottone desktop+mobile
+- `GUIDA-GESTIONE-OPERE.md` — nota su `purchase.md`
+
+Nessun nuovo componente: il `MeaningDialog` esistente è già adatto (mostra titolo + markdown), quindi viene riusato.
+
+### Domanda
+
+L'effetto "spring" lo preferisci come:
+- **A)** Piccola oscillazione orizzontale `x: [-2, 2, -2, 0]` (più sobrio, in linea con l'animazione delle voci del menu Navbar)
+- **B)** Pulsazione di scala `scale: [1, 1.05, 1]` (più "tattile", suggerisce cliccabilità)
+
+Proporrei **A** per coerenza con il resto del sito, ma confermi tu prima che procediamo in build mode.

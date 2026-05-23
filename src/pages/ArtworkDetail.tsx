@@ -34,7 +34,12 @@ const ArtworkDetail = () => {
   const [meaningOpen, setMeaningOpen] = useState(false);
   const [hasMeaning, setHasMeaning] = useState(false);
   const [meaningContent, setMeaningContent] = useState<string>("");
+  const [purchaseOpen, setPurchaseOpen] = useState(false);
+  const [hasPurchase, setHasPurchase] = useState(false);
+  const [purchaseContent, setPurchaseContent] = useState<string>("");
   const { t } = useI18n();
+
+  const purchaseLabel = discipline === "painting" ? "Opzioni d'acquisto" : "Opzioni d'acquisto e supporti";
 
   useSectionAudio(discipline || "home");
 
@@ -91,6 +96,54 @@ const ArtworkDetail = () => {
       cancelled = true;
     };
   }, [meaningUrl]);
+
+  // HEAD-check purchase.md (per discipline, not per artwork)
+  const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
+  useEffect(() => {
+    if (!purchaseUrl) {
+      setHasPurchase(false);
+      setPurchaseContent("");
+      return;
+    }
+    let cancelled = false;
+    fetch(purchaseUrl, { cache: "no-cache" })
+      .then(async (r) => {
+        if (!r.ok) return null;
+        const ctype = (r.headers.get("content-type") || "").toLowerCase();
+        if (ctype.includes("text/html")) return null;
+        const text = await r.text();
+        const head = text.trimStart().slice(0, 200).toLowerCase();
+        if (
+          head.startsWith("<!doctype") ||
+          head.startsWith("<html") ||
+          head.includes("<head") ||
+          head.includes("<script")
+        ) {
+          return null;
+        }
+        if (!text.trim()) return null;
+        return text;
+      })
+      .then((text) => {
+        if (cancelled) return;
+        if (text) {
+          setHasPurchase(true);
+          setPurchaseContent(text);
+        } else {
+          setHasPurchase(false);
+          setPurchaseContent("");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setHasPurchase(false);
+          setPurchaseContent("");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [purchaseUrl]);
 
   if (!artwork) {
     return (
@@ -166,6 +219,12 @@ const ArtworkDetail = () => {
         onClose={() => setMeaningOpen(false)}
         artworkTitle={artwork.title}
         content={meaningContent}
+      />
+      <MeaningDialog
+        isOpen={purchaseOpen}
+        onClose={() => setPurchaseOpen(false)}
+        artworkTitle={purchaseLabel}
+        content={purchaseContent}
       />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
@@ -300,6 +359,24 @@ const ArtworkDetail = () => {
                     style={{ fontFamily: "'Raleway', sans-serif", filter: "brightness(1.25)" }}
                   >
                     Significato dell'opera
+                  </button>
+                </div>
+              )}
+              {hasPurchase && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setPurchaseOpen(true)}
+                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    <motion.span
+                      className="inline-block"
+                      whileHover={{ x: [-2, 2, -2, 0] }}
+                      transition={{ duration: 0.4, type: "spring" }}
+                    >
+                      {purchaseLabel}
+                    </motion.span>
                   </button>
                 </div>
               )}
@@ -508,6 +585,23 @@ const ArtworkDetail = () => {
                     style={{ filter: "brightness(1.25)" }}
                   >
                     Significato dell'opera
+                  </button>
+                </div>
+              )}
+              {hasPurchase && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setPurchaseOpen(true)}
+                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                  >
+                    <motion.span
+                      className="inline-block"
+                      whileHover={{ x: [-2, 2, -2, 0] }}
+                      transition={{ duration: 0.4, type: "spring" }}
+                    >
+                      {purchaseLabel}
+                    </motion.span>
                   </button>
                 </div>
               )}
