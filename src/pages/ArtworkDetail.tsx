@@ -220,6 +220,12 @@ const ArtworkDetail = () => {
         artworkTitle={artwork.title}
         content={meaningContent}
       />
+      <MeaningDialog
+        isOpen={purchaseOpen}
+        onClose={() => setPurchaseOpen(false)}
+        artworkTitle={purchaseLabel}
+        content={purchaseContent}
+      />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
