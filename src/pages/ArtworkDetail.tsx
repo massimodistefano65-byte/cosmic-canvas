@@ -362,6 +362,24 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
+              {hasPurchase && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setPurchaseOpen(true)}
+                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    <motion.span
+                      className="inline-block"
+                      whileHover={{ x: [-2, 2, -2, 0] }}
+                      transition={{ duration: 0.4, type: "spring" }}
+                    >
+                      {purchaseLabel}
+                    </motion.span>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Action buttons — below metadata */}
