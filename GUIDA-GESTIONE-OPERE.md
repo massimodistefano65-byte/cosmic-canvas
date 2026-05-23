@@ -420,3 +420,11 @@ Ogni sezione del sito può avere una propria musica ambient con crossfade morbid
 ---
 
 ✨ **Tutto qui.** Con questa guida puoi gestire ogni aspetto del sito in autonomia e in totale sicurezza.
+
+## Opzioni d'acquisto (purchase.md)
+
+Per mostrare il pulsante "Opzioni d'acquisto" (o "Opzioni d'acquisto e supporti" per photography/digital-art/t-shirt) sulle pagine di dettaglio opera, crea un file:
+
+`public/artworks/{discipline}/purchase.md`
+
+Esempio: `public/artworks/photography/purchase.md` — il file vale per tutte le opere della categoria. Se il file non esiste, il pulsante non viene mostrato. Su Aruba assicurati che il MIME type `.md` sia configurato in `public/web.config` (già presente).
