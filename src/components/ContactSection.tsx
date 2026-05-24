@@ -194,6 +194,9 @@ const ContactSection = () => {
           viewport={{ once: false }}
         >
           <p>© 2026 Massimo Di Stefano. {t("contact.rights")}</p>
+          <p className="text-[10px] text-muted-foreground/40 mt-2 font-light tracking-wide">
+  Music: "Glimmer of hope" (AI music) by xkeril -- https://freesound.org/s/671962/ -- License: Creative Commons 0 -- Edited & Loop version by Massimo Di Stefano
+</p>
           <div className="mt-3 flex items-center justify-center gap-4 text-xs">
             <Link to="/privacy-policy" className="hover:text-accent transition-colors">
               Privacy Policy
