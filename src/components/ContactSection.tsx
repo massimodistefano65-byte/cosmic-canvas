@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useI18n } from "@/lib/i18n";
-import NewsletterSection from "@/components/NewsletterSection";
 
 const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 
@@ -15,6 +14,7 @@ const ContactSection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
@@ -44,169 +44,120 @@ const ContactSection = () => {
   const socialLinks = [
     { name: "Linktree", url: "https://linktr.ee/radmax", icon: "🔗" },
     { name: "Facebook", url: "https://www.facebook.com/massimodistefanoarte", icon: Facebook },
-    { name: "X", displayName: "", url: "https://x.com/disty65", icon: () => <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
+    { name: "X", url: "https://x.com/disty65", icon: () => <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
     { name: "Instagram", url: "https://www.instagram.com/massimodistefano65/", icon: Instagram },
   ];
 
   return (
-    <section id="contacts" className="relative w-full bg-black/60 py-10 md:py-20 border-t border-border/50" aria-label="Sezione contatti">
-      <div className="max-w-4xl mx-auto px-6 md:px-12">
+    <section id="contacts" className="relative w-full bg-black/60 py-10 md:py-12" aria-label="Sezione contatti">
+      <div className="max-w-5xl mx-auto px-6 md:px-12">
         <motion.div
-          className="mb-6 md:mb-16"
+          className="mb-6 md:mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: false }}
         >
-          <h2 className="text-3xl md:text-5xl text-foreground mb-3 md:mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.title")}</h2>
+          <h2 className="text-3xl md:text-5xl text-foreground mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.title")}</h2>
           <p className="text-muted-foreground">
             <a href="mailto:arte@massimodistefano.com" className="hover:text-accent transition-colors">
               arte@massimodistefano.com
             </a>
           </p>
-
-          {/* Compact social icons - mobile only */}
-          <div className="flex items-center gap-4 mt-4 md:hidden">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Visita il profilo ${social.name}`}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary/40 border border-border/50 text-foreground hover:border-accent hover:bg-secondary/60 transition-all"
-              >
-                <span className="text-sm">
-                  {typeof social.icon === "string" ? social.icon : <social.icon size={16} />}
-                </span>
-              </a>
-            ))}
-          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+          {/* COLONNA SINISTRA: MODULO */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: false }}
           >
             {sent ? (
-              <div className="py-8 text-center" role="status">
+              <div className="py-8 text-center">
                 <p className="text-accent text-sm">{t("contact.sent")}</p>
-                <p className="text-muted-foreground text-xs mt-1">{t("contact.sentSub")}</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4" aria-label="Modulo di contatto">
-                <div>
-                  <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">{t("contact.nameLbl")}</label>
-                  <Input
-                    id="contact-name"
-                    type="text"
-                    placeholder={t("contact.name")}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    maxLength={100}
-                    className="bg-secondary/50 border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">{t("contact.emailLbl")}</label>
-                  <Input
-                    id="contact-email"
-                    type="email"
-                    placeholder={t("contact.email")}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    maxLength={255}
-                    className="bg-secondary/50 border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">{t("contact.messageLbl")}</label>
-                  <Textarea
-                    id="contact-message"
-                    placeholder={t("contact.message")}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    required
-                    maxLength={1000}
-                    className="bg-secondary/50 border-border/50 text-foreground placeholder:text-muted-foreground focus:border-accent resize-none"
-                    rows={4}
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={sending}
-                  className="w-full bg-accent hover:bg-accent/80 text-accent-foreground disabled:opacity-50"
-                >
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <Input
+                  placeholder={t("contact.name")}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="bg-secondary/30 border-border/40 h-10"
+                />
+                <Input
+                  type="email"
+                  placeholder={t("contact.email")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="bg-secondary/30 border-border/40 h-10"
+                />
+                <Textarea
+                  placeholder={t("contact.message")}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  className="bg-secondary/30 border-border/40 resize-none"
+                  rows={3}
+                />
+                <Button type="submit" disabled={sending} className="w-full bg-accent hover:scale-[1.02] transition-transform h-10">
                   {sending ? t("contact.sending") : t("contact.send")}
                 </Button>
-                {error && <p className="text-xs text-destructive text-center" role="alert">{error}</p>}
               </form>
             )}
           </motion.div>
 
-          <motion.div
-            className="hidden md:flex flex-col justify-center"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: false }}
-          >
-            <h3 className="text-2xl text-foreground mb-8" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}>{t("contact.connect")}</h3>
-            <div className="space-y-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
+          {/* COLONNA DESTRA: SOCIAL + NEWSLETTER COMPATTA */}
+          <div className="flex flex-col gap-8">
+            {/* Social in riga orizzontale */}
+            <div className="flex flex-row gap-4 justify-center md:justify-start">
+              {socialLinks.map((social) => (
+                <a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Visita il profilo ${social.name} di Massimo Di Stefano`}
-                  className="flex items-center gap-3 p-4 rounded-lg bg-secondary/30 border border-border/50 text-foreground hover:border-accent hover:bg-secondary/50 transition-all group"
-                  whileHover={{ x: 4 }}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: false }}
+                  className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/30 border border-border/40 text-foreground hover:border-accent hover:bg-secondary/50 transition-all hover:-translate-y-1"
+                  aria-label={social.name}
                 >
-                  <span className="text-xl" aria-hidden="true">
-                    {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
-                  </span>
-                  {('displayName' in social ? social.displayName : social.name) && <span className="font-medium">{'displayName' in social ? social.displayName : social.name}</span>}
-                  <span className="ml-auto text-muted-foreground group-hover:text-accent" aria-hidden="true">→</span>
-                </motion.a>
+                  {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
+                </a>
               ))}
             </div>
 
-            {/* Newsletter */}
-            <NewsletterSection />
-          </motion.div>
+            {/* Newsletter compatta */}
+            <div className="bg-secondary/20 p-5 rounded-lg border border-border/30">
+              <p className="text-[10px] uppercase tracking-[0.2em] mb-3 text-foreground/70 text-center md:text-left">Newsletter</p>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Input
+                  type="email"
+                  placeholder="La tua email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="bg-black/40 border-border/40 flex-1 h-10"
+                />
+                <Button className="bg-white text-black hover:bg-accent hover:text-white transition-all hover:scale-105 px-6 h-10 text-xs font-bold">
+                  ISCRIVITI
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <motion.footer
-          className="mt-16 pt-8 border-t border-border/50 text-center text-muted-foreground text-sm"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: false }}
-        >
-          <p>© 2026 Massimo Di Stefano. {t("contact.rights")}</p>
-          <p className="text-[10px] text-muted-foreground/40 mt-2 font-light tracking-wide">
-  Music: "Glimmer of hope" (AI music) by xkeril -- https://freesound.org/s/671962/ -- License: Creative Commons 0 -- Edited & Loop version by Massimo Di Stefano
-</p>
-          <div className="mt-3 flex items-center justify-center gap-4 text-xs">
-            <Link to="/privacy-policy" className="hover:text-accent transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="text-border">·</span>
-            <Link to="/cookie-policy" className="hover:text-accent transition-colors">
-              Cookie Policy
-            </Link>
+        {/* FOOTER SEMPRE VISIBILE E BIANCO */}
+        <footer className="mt-10 pt-6 text-center text-white">
+          <p className="text-xs font-light tracking-wide">
+            © 2026 Massimo Di Stefano. {t("contact.rights")}
+          </p>
+          <p className="text-xs font-light tracking-wide mt-2">
+            Music: "Glimmer of hope" (AI music) by xkeril -- https://freesound.org/s/671962/ -- License: Creative Commons 0 -- Edited & Loop version by Massimo Di Stefano
+          </p>
+          <div className="mt-4 flex items-center justify-center gap-6 text-[10px] opacity-70">
+            <Link to="/privacy-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Privacy Policy</Link>
+            <Link to="/cookie-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Cookie Policy</Link>
           </div>
-        </motion.footer>
+        </footer>
       </div>
     </section>
   );
