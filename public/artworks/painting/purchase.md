@@ -1,5 +1,3 @@
----
-
 **Opera come presentata**
 *Venduta nello stato in cui appare nella foto principale*
 Prezzo: **Prezzo indicato**
