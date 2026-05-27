@@ -1,11 +1,10 @@
----
-### Opzioni d'Acquisto - Opere Originali
+### Opzioni d'Acquisto
 
-| Opzione | Descrizione | Prezzo |
+| OPZIONE | DESCRIZIONE | PREZZO |
 | :--- | :--- | :--- |
-| **Opera Sola** | Senza cornice, pronta da appendere | Incluso |
-| **Cornice Legno** | Legno naturale, bianco o nero (spessore 3cm) | + € 60 |
-| **Cornice Artigianale** | Realizzata su misura (contattami per modelli) | Su preventivo |
+| **Opera come presentata** | Venduta nello stato in cui appare nella foto principale | **Prezzo indicato** |
+| **Aggiunta Cornice** | In legno (Nero, Bianco o Naturale) | **Su richiesta** |
+| **Cornice Artigianale** | Realizzata su misura con finiture personalizzate | **Su preventivo** |
 
----
-*L'opera viene spedita con certificato di autenticità firmato dall'artista. Per spedizioni internazionali o casse di legno speciali, richiedi info tramite il tasto [+].*
+**Note per il collezionista:**
+L'opera viene spedita con certificato di autenticità firmato dall'artista. Il costo di un'eventuale cornice aggiuntiva varia in base alle dimensioni dell'opera. Per spedizioni internazionali, casse di legno speciali o per ricevere un preventivo esatto, clicca sul tasto [+].
