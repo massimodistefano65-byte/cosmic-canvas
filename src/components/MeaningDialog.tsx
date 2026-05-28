@@ -11,53 +11,50 @@ interface Props {
 
 const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
   
-  // FUNZIONE MAGICA: Trasforma le righe con le barrette "|" in schede grafiche
   const renderContent = (rawContent: string) => {
-    const lines = rawContent.split('\n');
+    // Pulizia: trasformiamo i <br> in veri a capo prima di processare
+    const cleanContent = rawContent.replace(/<br\s*\/?>/gi, '\n');
+    const lines = cleanContent.split('\n');
     const processedElements: React.ReactNode[] = [];
     let currentTable: React.ReactNode[] = [];
 
     lines.forEach((line, index) => {
       const trimmedLine = line.trim();
       
-      // Se la riga contiene le barrette ed è una riga di dati (non l'intestazione o la linea di separazione)
       if (trimmedLine.startsWith('|') && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
         const cells = trimmedLine.split('|').filter(cell => cell.trim() !== '');
         if (cells.length >= 2) {
           currentTable.push(
-            <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/40 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/80 transition-colors">
-              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/20 text-[#1A1A1A] text-sm md:text-base">
+            <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/30 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/60 transition-colors">
+              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/15 text-[#1A1A1A] text-sm md:text-base leading-relaxed">
                 <ReactMarkdown>{cells[0].trim()}</ReactMarkdown>
               </div>
-              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base">
+              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base whitespace-nowrap">
                 <ReactMarkdown>{cells[1].trim()}</ReactMarkdown>
               </div>
             </div>
           );
         }
       } else {
-        // Se abbiamo finito una tabella, aggiungiamola agli elementi
         if (currentTable.length > 0) {
-          processedElements.push(<div key={`table-${index}`} className="my-6">{currentTable}</div>);
+          processedElements.push(<div key={`table-${index}`} className="my-4">{currentTable}</div>);
           currentTable = [];
         }
         
-        // Se è una riga normale (non tabella), usiamo il Markdown standard
         if (trimmedLine !== '' && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
           processedElements.push(
-            <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-4 text-base md:text-lg">
+            <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-3 text-base md:text-lg">
               <ReactMarkdown>{line}</ReactMarkdown>
             </div>
           );
         } else if (trimmedLine === '---') {
-          processedElements.push(<hr key={`hr-${index}`} className="my-8 border-[#D4BE96]/30" />);
+          processedElements.push(<hr key={`hr-${index}`} className="my-6 border-[#D4BE96]/20" />);
         }
       }
     });
 
-    // Aggiungiamo l'ultima tabella se rimasta in sospeso
     if (currentTable.length > 0) {
-      processedElements.push(<div key="last-table" className="my-6">{currentTable}</div>);
+      processedElements.push(<div key="last-table" className="my-4">{currentTable}</div>);
     }
 
     return processedElements;
@@ -68,7 +65,6 @@ const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
       <DialogContent 
         className="max-w-4xl w-[95vw] min-h-[400px] max-h-[85vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl"
       >
-        {/* Header con Titolo */}
         <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-16 pt-10 pb-4 flex justify-between items-start">
           <DialogTitle
             className="text-3xl md:text-5xl text-[#1A1A1A] font-light leading-tight"
@@ -76,19 +72,12 @@ const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
           >
             {artworkTitle}
           </DialogTitle>
-          <button 
-            onClick={onClose}
-            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
-          >
+          <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]">
             <X size={28} />
           </button>
         </div>
 
-        {/* Contenuto con Pass-partout */}
-        <div
-          className="px-8 md:px-16 pb-16"
-          style={{ fontFamily: "'Raleway', sans-serif" }}
-        >
+        <div className="px-8 md:px-16 pb-16" style={{ fontFamily: "'Raleway', sans-serif" }}>
           {content ? renderContent(content) : (
             <p className="text-[#1A1A1A]/40 text-sm italic">Caricamento contenuti...</p>
           )}
