@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 
 interface Props {
@@ -10,70 +10,86 @@ interface Props {
 }
 
 const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
+  
+  // FUNZIONE MAGICA: Trasforma le righe con le barrette "|" in schede grafiche
+  const renderContent = (rawContent: string) => {
+    const lines = rawContent.split('\n');
+    const processedElements: React.ReactNode[] = [];
+    let currentTable: React.ReactNode[] = [];
+
+    lines.forEach((line, index) => {
+      const trimmedLine = line.trim();
+      
+      // Se la riga contiene le barrette ed è una riga di dati (non l'intestazione o la linea di separazione)
+      if (trimmedLine.startsWith('|') && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
+        const cells = trimmedLine.split('|').filter(cell => cell.trim() !== '');
+        if (cells.length >= 2) {
+          currentTable.push(
+            <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/40 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/80 transition-colors">
+              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/20 text-[#1A1A1A] text-sm md:text-base">
+                <ReactMarkdown>{cells[0].trim()}</ReactMarkdown>
+              </div>
+              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base">
+                <ReactMarkdown>{cells[1].trim()}</ReactMarkdown>
+              </div>
+            </div>
+          );
+        }
+      } else {
+        // Se abbiamo finito una tabella, aggiungiamola agli elementi
+        if (currentTable.length > 0) {
+          processedElements.push(<div key={`table-${index}`} className="my-6">{currentTable}</div>);
+          currentTable = [];
+        }
+        
+        // Se è una riga normale (non tabella), usiamo il Markdown standard
+        if (trimmedLine !== '' && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
+          processedElements.push(
+            <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-4 text-base md:text-lg">
+              <ReactMarkdown>{line}</ReactMarkdown>
+            </div>
+          );
+        } else if (trimmedLine === '---') {
+          processedElements.push(<hr key={`hr-${index}`} className="my-8 border-[#D4BE96]/30" />);
+        }
+      }
+    });
+
+    // Aggiungiamo l'ultima tabella se rimasta in sospeso
+    if (currentTable.length > 0) {
+      processedElements.push(<div key="last-table" className="my-6">{currentTable}</div>);
+    }
+
+    return processedElements;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent 
-        className="max-w-4xl w-[95vw] min-h-[450px] max-h-[85vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl"
+        className="max-w-4xl w-[95vw] min-h-[400px] max-h-[85vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl"
       >
-        {/* Tasto chiusura in alto a destra */}
-        <button 
-          onClick={onClose}
-          className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A] z-20"
-        >
-          <X size={24} />
-        </button>
-
-        {/* Header con Titolo - Font Elegante */}
-        <div className="px-8 md:px-16 pt-12 pb-6">
+        {/* Header con Titolo */}
+        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-16 pt-10 pb-4 flex justify-between items-start">
           <DialogTitle
             className="text-3xl md:text-5xl text-[#1A1A1A] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {artworkTitle}
           </DialogTitle>
-          <hr className="mt-6 border-[#D4BE96]/30" />
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
+          >
+            <X size={28} />
+          </button>
         </div>
 
-        {/* Contenuto con Pass-partout (Padding generoso) */}
+        {/* Contenuto con Pass-partout */}
         <div
-          className="px-8 md:px-16 pb-16 text-[#1A1A1A] leading-relaxed"
+          className="px-8 md:px-16 pb-16"
           style={{ fontFamily: "'Raleway', sans-serif" }}
         >
-          {content ? (
-            <ReactMarkdown
-              components={{
-                // Trasformiamo la tabella Markdown nelle schede grafiche
-                table: ({ children }) => <div className="flex flex-col gap-4 my-8">{children}</div>,
-                thead: () => null,
-                tbody: ({ children }) => <>{children}</>,
-                tr: ({ children }) => (
-                  <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] border border-[#D4BE96]/40 rounded-xl overflow-hidden bg-white/60 shadow-sm hover:shadow-md transition-all">
-                    {children}
-                  </div>
-                ),
-                td: ({ children, index }) => {
-                  if (index === 0) {
-                    return (
-                      <div className="p-6 border-b md:border-b-0 md:border-r border-[#D4BE96]/20 text-base md:text-lg">
-                        {children}
-                      </div>
-                    );
-                  }
-                  return (
-                    <div className="p-6 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-lg text-[#1A1A1A]">
-                      {children}
-                    </div>
-                  );
-                },
-                // Stile per i testi fuori dalla tabella (Significato)
-                p: ({ children }) => <p className="my-4 text-lg md:text-xl opacity-90 font-light">{children}</p>,
-                strong: ({ children }) => <strong className="font-semibold text-[#1A1A1A]">{children}</strong>,
-                em: ({ children }) => <em className="italic opacity-70">{children}</em>,
-              }}
-            >
-              {content}
-            </ReactMarkdown>
-          ) : (
+          {content ? renderContent(content) : (
             <p className="text-[#1A1A1A]/40 text-sm italic">Caricamento contenuti...</p>
           )}
         </div>
