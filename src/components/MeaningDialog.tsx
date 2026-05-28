@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { X } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
@@ -9,25 +10,84 @@ interface Props {
 }
 
 const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
+  
+  const renderContent = (rawContent: string) => {
+    // Dividiamo il contenuto originale riga per riga senza toccare i <br> per ora
+    const lines = rawContent.split('\n');
+    const processedElements: React.ReactNode[] = [];
+    let currentTable: React.ReactNode[] = [];
+
+    lines.forEach((line, index) => {
+      const trimmedLine = line.trim();
+      
+      // 1. Riconoscimento righe tabella (per le schede grafiche)
+      if (trimmedLine.startsWith('|') && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
+        const cells = trimmedLine.split('|').filter(cell => cell.trim() !== '');
+        if (cells.length >= 2) {
+          // PULIZIA <br> SOLO DENTRO LA CELLA: lo sostituiamo con due spazi + a capo (standard Markdown)
+          const cellText = cells[0].trim().replace(/<br\s*\/?>/gi, '  \n');
+          const priceText = cells[1].trim().replace(/<br\s*\/?>/gi, '  \n');
+
+          currentTable.push(
+            <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/30 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/60 transition-colors">
+              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/15 text-[#1A1A1A] text-sm md:text-base leading-relaxed">
+                <ReactMarkdown>{cellText}</ReactMarkdown>
+              </div>
+              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base">
+                <ReactMarkdown>{priceText}</ReactMarkdown>
+              </div>
+            </div>
+          );
+        }
+      } else {
+        // Se finisce la tabella, la aggiungiamo
+        if (currentTable.length > 0) {
+          processedElements.push(<div key={`table-${index}`} className="my-4">{currentTable}</div>);
+          currentTable = [];
+        }
+        
+        // 2. Gestione testo normale (fuori dalle schede)
+        if (trimmedLine !== '' && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
+          // Pulizia <br> anche nel testo normale
+          const cleanLine = line.replace(/<br\s*\/?>/gi, '  \n');
+          processedElements.push(
+            <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-3 text-base md:text-lg">
+              <ReactMarkdown>{cleanLine}</ReactMarkdown>
+            </div>
+          );
+        } else if (trimmedLine === '---') {
+          processedElements.push(<hr key={`hr-${index}`} className="my-6 border-[#D4BE96]/20" />);
+        }
+      }
+    });
+
+    if (currentTable.length > 0) {
+      processedElements.push(<div key="last-table" className="my-4">{currentTable}</div>);
+    }
+
+    return processedElements;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto bg-background/95 backdrop-blur-md border-border/50">
-        <DialogHeader>
+      <DialogContent 
+        className="max-w-4xl w-[95vw] min-h-[400px] max-h-[85vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl"
+      >
+        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-16 pt-10 pb-4 flex justify-between items-start">
           <DialogTitle
-            className="text-2xl text-foreground font-light pr-8"
+            className="text-3xl md:text-5xl text-[#1A1A1A] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {artworkTitle}
           </DialogTitle>
-        </DialogHeader>
-        <div
-          className="prose prose-invert max-w-none text-foreground/90 leading-relaxed text-sm md:text-base break-words [overflow-wrap:anywhere] [&_*]:max-w-full [&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_code]:break-words [&_p]:my-3"
-          style={{ fontFamily: "'Raleway', sans-serif", whiteSpace: "normal" }}
-        >
-          {content ? (
-            <ReactMarkdown>{content}</ReactMarkdown>
-          ) : (
-            <p className="text-muted-foreground text-sm">Nessun contenuto disponibile.</p>
+          <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]">
+            <X size={28} />
+          </button>
+        </div>
+
+        <div className="px-8 md:px-16 pb-16" style={{ fontFamily: "'Raleway', sans-serif" }}>
+          {content ? renderContent(content) : (
+            <p className="text-[#1A1A1A]/40 text-sm italic">Caricamento contenuti...</p>
           )}
         </div>
       </DialogContent>
