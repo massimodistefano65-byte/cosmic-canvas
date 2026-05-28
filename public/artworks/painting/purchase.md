@@ -6,7 +6,6 @@
 
 ---
 
-**Certificato di autenticità:**
-Ogni opera è spedita con certificato di autenticità firmato dall'artista. Per spedizioni internazionali o imballaggi speciali, il costo aggiuntivo viene comunicato su richiesta.
+Ogni opera è spedita con certificato di autenticità firmato dall'artista. Il costo della spedizione viene comunicato su richiesta.
 
 *Per richiedere informazioni o un preventivo, utilizza il tasto **[+]** presente sulla pagina dell'opera.*
