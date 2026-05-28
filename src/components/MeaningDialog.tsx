@@ -12,39 +12,47 @@ interface Props {
 const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
   
   const renderContent = (rawContent: string) => {
-    // Pulizia: trasformiamo i <br> in veri a capo prima di processare
-    const cleanContent = rawContent.replace(/<br\s*\/?>/gi, '\n');
-    const lines = cleanContent.split('\n');
+    // Dividiamo il contenuto originale riga per riga senza toccare i <br> per ora
+    const lines = rawContent.split('\n');
     const processedElements: React.ReactNode[] = [];
     let currentTable: React.ReactNode[] = [];
 
     lines.forEach((line, index) => {
       const trimmedLine = line.trim();
       
+      // 1. Riconoscimento righe tabella (per le schede grafiche)
       if (trimmedLine.startsWith('|') && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
         const cells = trimmedLine.split('|').filter(cell => cell.trim() !== '');
         if (cells.length >= 2) {
+          // PULIZIA <br> SOLO DENTRO LA CELLA: lo sostituiamo con due spazi + a capo (standard Markdown)
+          const cellText = cells[0].trim().replace(/<br\s*\/?>/gi, '  \n');
+          const priceText = cells[1].trim().replace(/<br\s*\/?>/gi, '  \n');
+
           currentTable.push(
             <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/30 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/60 transition-colors">
               <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/15 text-[#1A1A1A] text-sm md:text-base leading-relaxed">
-                <ReactMarkdown>{cells[0].trim()}</ReactMarkdown>
+                <ReactMarkdown>{cellText}</ReactMarkdown>
               </div>
-              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base whitespace-nowrap">
-                <ReactMarkdown>{cells[1].trim()}</ReactMarkdown>
+              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base">
+                <ReactMarkdown>{priceText}</ReactMarkdown>
               </div>
             </div>
           );
         }
       } else {
+        // Se finisce la tabella, la aggiungiamo
         if (currentTable.length > 0) {
           processedElements.push(<div key={`table-${index}`} className="my-4">{currentTable}</div>);
           currentTable = [];
         }
         
+        // 2. Gestione testo normale (fuori dalle schede)
         if (trimmedLine !== '' && !trimmedLine.includes(':---') && !trimmedLine.toLowerCase().includes('| opzione |')) {
+          // Pulizia <br> anche nel testo normale
+          const cleanLine = line.replace(/<br\s*\/?>/gi, '  \n');
           processedElements.push(
             <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-3 text-base md:text-lg">
-              <ReactMarkdown>{line}</ReactMarkdown>
+              <ReactMarkdown>{cleanLine}</ReactMarkdown>
             </div>
           );
         } else if (trimmedLine === '---') {
