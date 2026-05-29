@@ -148,3 +148,7 @@ a img,
 [role="listitem"] img {
   pointer-events: none;
 }
+/* Nasconde il marchio bianco di fullPage.js in basso a destra */
+.fp-watermark {
+  display: none !important;
+}

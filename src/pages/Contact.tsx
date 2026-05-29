@@ -156,7 +156,10 @@ const Contact = () => {
               © 2026 Massimo Di Stefano. {t("contact.rights")}
             </p>
             <p className="text-xs font-light tracking-wide mt-2">
-              Music: "Glimmer of hope" (AI music) by xkeril -- https://freesound.org/s/671962/ -- License: Creative Commons 0 -- Edited & Loop version by Massimo Di Stefano
+              Music (Home): "Glimmer of hope" (AI music) by xkeril -- https://freesound.org/s/671962/ -- License: Creative Commons 0 -- Edited & Loop version by Massimo Di Stefano
+            </p>
+            <p className="text-xs font-light tracking-wide mt-1">
+              Music (Digital Art): "Ambient Celestial Divine Texture with Grains on Top" by bassimat -- https://freesound.org/s/852823/ -- License: Creative Commons 0
             </p>
             <div className="mt-4 flex items-center justify-center gap-6 text-[10px] opacity-70">
               <Link to="/privacy-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Privacy Policy</Link>
