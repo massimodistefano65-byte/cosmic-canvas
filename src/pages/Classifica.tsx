@@ -72,7 +72,6 @@ const Classifica = () => {
         title="Classifica Like - Massimo Di Stefano"
         description="Classifica delle opere più apprezzate."
         canonicalPath="/classifica"
-        noindex
       />
       <Navbar />
       <div className="pt-24 pb-16 max-w-5xl mx-auto px-6 md:px-12">
