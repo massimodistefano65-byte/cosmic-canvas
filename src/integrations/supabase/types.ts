@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      artwork_likes: {
+        Row: {
+          artwork_id: string
+          created_at: string
+          device_id: string
+          discipline: string
+          id: string
+        }
+        Insert: {
+          artwork_id: string
+          created_at?: string
+          device_id: string
+          discipline: string
+          id?: string
+        }
+        Update: {
+          artwork_id?: string
+          created_at?: string
+          device_id?: string
+          discipline?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
