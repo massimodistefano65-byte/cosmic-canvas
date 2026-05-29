@@ -29,6 +29,9 @@ const Contact = () => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [nlSending, setNlSending] = useState(false);
+  const [nlSent, setNlSent] = useState(false);
+  const [nlError, setNlError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +52,30 @@ const Contact = () => {
       setError(t("contact.error"));
     } finally {
       setSending(false);
+    }
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNlSending(true);
+    setNlError("");
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          email: newsletterEmail,
+          type: "newsletter",
+          _subject: "Nuova iscrizione newsletter",
+        }),
+      });
+      if (!res.ok) throw new Error("fail");
+      setNlSent(true);
+      setNewsletterEmail("");
+    } catch {
+      setNlError("Errore, riprova.");
+    } finally {
+      setNlSending(false);
     }
   };
 
@@ -134,18 +161,25 @@ const Contact = () => {
               {/* Newsletter compatta */}
               <div className="bg-secondary/20 p-5 rounded-lg border border-border/30">
                 <p className="text-[10px] uppercase tracking-[0.2em] mb-3 text-foreground/70 text-center md:text-left">Newsletter</p>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Input
-                    type="email"
-                    placeholder="La tua email"
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    className="bg-black/40 border-border/40 flex-1 h-10"
-                  />
-                  <Button className="bg-white text-black hover:bg-accent hover:text-white transition-all hover:scale-105 px-6 h-10 text-xs font-bold">
-                    ISCRIVITI
-                  </Button>
-                </div>
+                {nlSent ? (
+                  <p className="text-accent text-xs text-center py-2">Grazie! Iscrizione registrata.</p>
+                ) : (
+                  <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
+                    <Input
+                      type="email"
+                      placeholder="La tua email"
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                      required
+                      maxLength={255}
+                      className="bg-black/40 border-border/40 flex-1 h-10"
+                    />
+                    <Button type="submit" disabled={nlSending} className="bg-white text-black hover:bg-accent hover:text-white transition-all hover:scale-105 px-6 h-10 text-xs font-bold whitespace-nowrap">
+                      {nlSending ? "..." : "Segui il mio percorso creativo"}
+                    </Button>
+                  </form>
+                )}
+                {nlError && <p className="text-destructive text-xs mt-2">{nlError}</p>}
               </div>
             </div>
           </div>

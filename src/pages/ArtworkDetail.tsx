@@ -11,6 +11,7 @@ import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
 import { useI18n } from "@/lib/i18n";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
+import { useArtworkLike } from "@/hooks/useArtworkLike";
 import {
   Tooltip,
   TooltipContent,
@@ -29,7 +30,7 @@ const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [meaningOpen, setMeaningOpen] = useState(false);
   const [hasMeaning, setHasMeaning] = useState(false);
@@ -385,15 +386,16 @@ const ArtworkDetail = () => {
             {/* Action buttons — below metadata */}
             <div className="flex items-center gap-3 pt-2">
               <button
-                onClick={() => setLiked(!liked)}
+                onClick={toggleLike}
                 aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                   liked
                     ? "text-red-500 border-red-500/40"
                     : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
                 }`}
               >
                 <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+                <span className="text-xs tabular-nums">{likeCount}</span>
               </button>
 
               <TooltipProvider delayDuration={200}>
@@ -610,15 +612,16 @@ const ArtworkDetail = () => {
             {/* Action buttons — below metadata */}
             <div className="flex items-center gap-3 pt-2">
               <button
-                onClick={() => setLiked(!liked)}
+                onClick={toggleLike}
                 aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                   liked
                     ? "text-red-500 border-red-500/40"
                     : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
                 }`}
               >
                 <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+                <span className="text-xs tabular-nums">{likeCount}</span>
               </button>
               <button
                 onClick={() => setEnquiryOpen(true)}

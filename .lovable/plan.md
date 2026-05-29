@@ -1,46 +1,74 @@
-## Piano d'intervento
+## 1. Fix Newsletter (tasto "Iscriviti")
 
-### 1. Fix 404.3 di Aruba/IIS sui file `.md`
+**File toccati:** `src/components/ContactSection.tsx`, `src/pages/Contact.tsx`
 
-Aggiungere il MIME type `text/markdown` per l'estensione `.md` in `public/web.config`, nella sezione `<staticContent>` già esistente. Senza questo, IIS rifiuta di servire il file (404.3 = "extension configuration").
+- Trasformo il blocco newsletter da `<div>` statico a `<form onSubmit>`.
+- POST a `https://formspree.io/f/xpqyapgb` con body:
+  - `email`: valore input
+  - `_subject`: `"Nuova iscrizione newsletter"`
+  - `type`: `"newsletter"` (campo extra per filtrare in Formspree)
+- Stato locale `sending` / `sent` / `error` con feedback inline (riuso pattern già presente in `ContactSection`).
+- Cambio testo bottone da **"ISCRIVITI"** → **"Segui il mio percorso creativo"** (in entrambe le occorrenze: `ContactSection` e `Contact.tsx`).
+- Validazione email HTML5 (`type="email" required`) + `maxLength={255}`.
 
-```xml
-<remove fileExtension=".md" />
-<mimeMap fileExtension=".md" mimeType="text/markdown" />
+## 2. Sistema Like persistente (Lovable Cloud / Supabase)
+
+**Attivazione Lovable Cloud** (necessaria per il database).
+
+### Schema DB
+Migration con una sola tabella `public.artwork_likes`:
+
+```
+id           uuid PK default gen_random_uuid()
+discipline   text not null
+artwork_id   text not null
+device_id    text not null
+created_at   timestamptz default now()
+UNIQUE (discipline, artwork_id, device_id)
 ```
 
-Inoltre la regola SPA "Rewrite to /index.html" gestisce già il caso "file non esistente" (i due `negate="true"` su `IsFile`/`IsDirectory`), quindi una volta dichiarato il MIME, i `.md` esistenti verranno serviti correttamente, e quelli mancanti continueranno a cadere su index.html — già correttamente filtrati dal controllo anti-HTML lato client.
+**RLS policies (pubbliche, niente auth):**
+- `SELECT` a `anon` + `authenticated` → `USING (true)` (serve per leggere conteggi e classifica)
+- `INSERT` a `anon` + `authenticated` → `WITH CHECK (true)`
+- `DELETE` a `anon` + `authenticated` → `USING (true)` (per unlike — limitato logicamente dal `device_id` lato client)
+- GRANT espliciti su tutti i ruoli secondo regole Data API.
 
-### 2. Nuovo tasto "Opzioni d'acquisto"
+### Hook `useArtworkLike(discipline, artworkId)`
+**File nuovo:** `src/hooks/useArtworkLike.ts`
 
-In `src/pages/ArtworkDetail.tsx`:
+- Genera/recupera `device_id` (UUID v4) in `localStorage` chiave `mds_device_id`.
+- Query iniziale: `liked` (esiste riga con quel device_id) + `count` totale.
+- `toggle()`: insert o delete sulla riga (con `discipline + artwork_id + device_id`).
+- Ottimistic update per UI istantanea.
 
-- Aggiungere stato: `purchaseOpen`, `hasPurchase`, `purchaseContent`.
-- Aggiungere un secondo `useEffect` analogo a quello di `meaning.md`, che fetcha `/artworks/{discipline}/purchase.md` (cartella radice della categoria, **non** della singola opera) con identico filtro anti-HTML/SPA fallback.
-- Etichetta dinamica:
-  - `painting` → `"Opzioni d'acquisto"`
-  - altri (`photography`, `digital-art`, `t-shirt`) → `"Opzioni d'acquisto e supporti"`
-- Renderizzare il bottone **subito sotto** "Significato dell'opera" (sia desktop che mobile), con **stile identico alle altre etichette tecniche** (Dimensioni/Tecnica/Prezzo): stesso font Raleway, stessa size (`text-[9px]` desktop / `text-[10px]` mobile), stesso tracking, **stesso colore** `text-foreground/70` — niente bianco luminoso, niente `animate-pulse`. Cursor pointer + leggera opacità in hover.
-- Effetto spring on hover: wrappare il testo in `<motion.span whileHover={{ x: [-2, 2, -2, 0] }} transition={{ type: "spring", duration: 0.4 }}>` per il movimento orizzontale di molla.
-- Riutilizzare `MeaningDialog` esistente passando `purchaseContent` e come titolo l'etichetta dinamica (il dialog è generico, mostra titolo + markdown).
+### Integrazione UI
+**File toccato:** `src/pages/ArtworkDetail.tsx`
 
-### 3. Aggiornare `GUIDA-GESTIONE-OPERE.md`
+- Sostituisco `useState(false)` con `useArtworkLike(discipline, artworkId)`.
+- Mostro accanto al cuore il counter (`{count}`) — stile minimal coerente col tema.
+- Entrambe le occorrenze del bottone Heart aggiornate.
 
-Documentare brevemente: dove mettere `purchase.md` (in `public/artworks/{discipline}/purchase.md`), e che il pulsante appare solo se il file esiste.
+## 3. Pagina pubblica `/classifica`
 
-### Dettagli tecnici
+**File nuovi:** `src/pages/Classifica.tsx`, rotta aggiunta in `src/App.tsx` sopra il catch-all.
 
-File modificati:
-- `public/web.config` — aggiunta mimeMap `.md`
-- `src/pages/ArtworkDetail.tsx` — nuovo stato, fetch purchase, bottone desktop+mobile
-- `GUIDA-GESTIONE-OPERE.md` — nota su `purchase.md`
+- Nessuna password, nessuna auth — stesso pattern di `/admin/artworks-status`.
+- Query: aggrego `artwork_likes` per `(discipline, artwork_id)` con conteggio, ordinato DESC.
+- Join lato client con `getArtworksByDiscipline()` per mostrare titolo + preview.
+- Tabella con: posizione, preview thumb, titolo, disciplina, n° like.
+- Link cliccabile a ogni opera (`/:discipline/:artworkId`).
+- Navbar standard + SEO `noindex` (pagina di servizio).
 
-Nessun nuovo componente: il `MeaningDialog` esistente è già adatto (mostra titolo + markdown), quindi viene riusato.
+## 4. Verifica conflitti scroll/musica
 
-### Domanda
+- Newsletter form: solo `fetch` async, nessun listener su window/scroll → zero impatto su fullPage.js o `AudioProvider`.
+- Like: hook React isolato, solo chiamate Supabase → nessun listener globale.
+- `/classifica` è pagina standard (no fullPage.js), come `/admin/artworks-status` → nessun conflitto.
+- `useSectionAudio` non viene chiamato nella nuova pagina → musica non interferisce.
 
-L'effetto "spring" lo preferisci come:
-- **A)** Piccola oscillazione orizzontale `x: [-2, 2, -2, 0]` (più sobrio, in linea con l'animazione delle voci del menu Navbar)
-- **B)** Pulsazione di scala `scale: [1, 1.05, 1]` (più "tattile", suggerisce cliccabilità)
+## Note tecniche
 
-Proporrei **A** per coerenza con il resto del sito, ma confermi tu prima che procediamo in build mode.
+- Il `device_id` è anonimo, generato lato client. Non identifica la persona, solo il browser.
+- Cancellando i dati del browser l'utente perde i suoi Like (accettabile per esperienza "senza frizione").
+- RLS `DELETE USING (true)` è volutamente permissivo: chiunque potrebbe teoricamente cancellare like altrui via API diretta. Per un sito-portfolio è un trade-off accettabile; se in futuro vorrai blindarlo, si passa a edge function con verifica server-side del device_id.
+- Link alla pagina `/classifica` **non** verrà aggiunto al menu Navbar (resta "nascosta" come `/admin/artworks-status`).
