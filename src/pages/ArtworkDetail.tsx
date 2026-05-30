@@ -39,6 +39,7 @@ const ArtworkDetail = () => {
   const [purchaseOpen, setPurchaseOpen] = useState(false);
   const [hasPurchase, setHasPurchase] = useState(false);
   const [purchaseContent, setPurchaseContent] = useState<string>("");
+  const [certificateOpen, setCertificateOpen] = useState(false);
   const { t } = useI18n();
 
   const purchaseLabel = discipline === "painting" ? "Opzioni d'acquisto" : "Opzioni d'acquisto e supporti";
