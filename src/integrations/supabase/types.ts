@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      archive_certificates: {
+        Row: {
+          archive_id: string
+          created_at: string
+          id: string
+          secret_hash: string
+          updated_at: string
+        }
+        Insert: {
+          archive_id: string
+          created_at?: string
+          id?: string
+          secret_hash: string
+          updated_at?: string
+        }
+        Update: {
+          archive_id?: string
+          created_at?: string
+          id?: string
+          secret_hash?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       artwork_likes: {
         Row: {
           artwork_id: string
@@ -43,7 +67,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      list_archive_codes: {
+        Args: never
+        Returns: {
+          archive_id: string
+          created_at: string
+        }[]
+      }
+      register_archive_code: {
+        Args: { _archive_id: string; _code: string }
+        Returns: string
+      }
+      verify_archive_code: {
+        Args: { _archive_id: string; _code: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
