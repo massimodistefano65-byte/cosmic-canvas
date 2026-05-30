@@ -105,6 +105,7 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     dimensions,
     technique,
     price,
+    archiveId,
     details = 0,
     roomViews = 0,
     format = "jpg",
@@ -112,7 +113,6 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
   } = input;
 
   const dir = `/artworks/${category}/${slug}`;
-  // Prefisso unico: include SEMPRE la categoria. Vale per ogni tipo di file.
   const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
   const ext = format;
 
@@ -126,12 +126,13 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
   }
 
   return {
-    id: slug, // ID === slug (URL SEO-friendly)
+    id: slug,
     title,
     year,
     dimensions,
     technique,
     price,
+    archiveId,
     preview: `${base}-preview.${ext}`,
     main: `${base}-1.${ext}`,
     full: `${base}-1.${ext}`,
