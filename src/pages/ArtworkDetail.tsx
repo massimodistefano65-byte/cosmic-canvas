@@ -158,6 +158,31 @@ const ArtworkDetail = () => {
 
   const discLabel = disciplineLabels[discipline || ""] || discipline;
 
+  const isArchived =
+    !!artwork.archiveId && /collezione\s+privata/i.test(artwork.price ?? "");
+
+  const sealButton = (size: number) => (
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={() => setCertificateOpen(true)}
+            aria-label="Apri Certificato di Autenticità Digitale"
+            className="inline-flex items-center text-white hover:text-white/80 transition-colors animate-archive-pulse align-middle ml-2"
+          >
+            <Stamp size={size} aria-hidden="true" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-[260px] text-xs leading-relaxed">
+          Archivio Storico MDS — Certificato di Autenticità.
+          Clicca per verificare la proprietà.
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
+
   const gradientMap: Record<string, [string, string]> = {
     painting: ["rgba(168,85,247,0.3)", "rgba(59,130,246,0.3)"],
     photography: ["rgba(59,130,246,0.3)", "rgba(20,184,166,0.3)"],
