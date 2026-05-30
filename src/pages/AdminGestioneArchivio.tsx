@@ -96,7 +96,6 @@ const AdminGestioneArchivio = () => {
         title="Gestione Archivio Storico — MDS"
         description="Pannello di gestione dei codici dell'Archivio Storico Massimo Di Stefano."
         canonicalPath="/admin/gestione-archivio-md"
-        noindex
       />
       <Navbar />
 
