@@ -4,9 +4,10 @@ import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import EnquiryModal from "@/components/EnquiryModal";
 import MeaningDialog from "@/components/MeaningDialog";
+import CertificateDialog from "@/components/CertificateDialog";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
-import { ArrowLeft, Heart, Plus } from "lucide-react";
+import { ArrowLeft, Heart, Plus, Stamp } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
 import { useI18n } from "@/lib/i18n";
@@ -38,6 +39,7 @@ const ArtworkDetail = () => {
   const [purchaseOpen, setPurchaseOpen] = useState(false);
   const [hasPurchase, setHasPurchase] = useState(false);
   const [purchaseContent, setPurchaseContent] = useState<string>("");
+  const [certificateOpen, setCertificateOpen] = useState(false);
   const { t } = useI18n();
 
   const purchaseLabel = discipline === "painting" ? "Opzioni d'acquisto" : "Opzioni d'acquisto e supporti";
@@ -156,6 +158,31 @@ const ArtworkDetail = () => {
 
   const discLabel = disciplineLabels[discipline || ""] || discipline;
 
+  const isArchived =
+    !!artwork.archiveId && /collezione\s+privata/i.test(artwork.price ?? "");
+
+  const sealButton = (size: number) => (
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={() => setCertificateOpen(true)}
+            aria-label="Apri Certificato di Autenticità Digitale"
+            className="inline-flex items-center text-white hover:text-white/80 transition-colors animate-archive-pulse align-middle ml-2"
+          >
+            <Stamp size={size} aria-hidden="true" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-[260px] text-xs leading-relaxed">
+          Archivio Storico MDS — Certificato di Autenticità.
+          Clicca per verificare la proprietà.
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
+
   const gradientMap: Record<string, [string, string]> = {
     painting: ["rgba(168,85,247,0.3)", "rgba(59,130,246,0.3)"],
     photography: ["rgba(59,130,246,0.3)", "rgba(20,184,166,0.3)"],
@@ -227,6 +254,14 @@ const ArtworkDetail = () => {
         artworkTitle={purchaseLabel}
         content={purchaseContent}
       />
+      {isArchived && artwork.archiveId && (
+        <CertificateDialog
+          isOpen={certificateOpen}
+          onClose={() => setCertificateOpen(false)}
+          archiveId={artwork.archiveId}
+          artworkTitle={artwork.title}
+        />
+      )}
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
@@ -349,7 +384,10 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.price || "€ —"}</p>
+                >
+                  <span>{artwork.price || "€ —"}</span>
+                  {isArchived && sealButton(14)}
+                </p>
               </div>
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
@@ -576,7 +614,10 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.price")}
                 </p>
-                <p className="text-xs text-foreground font-light">{artwork.price || "€ —"}</p>
+                <p className="text-xs text-foreground font-light">
+                  <span>{artwork.price || "€ —"}</span>
+                  {isArchived && sealButton(13)}
+                </p>
               </div>
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
