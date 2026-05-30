@@ -384,7 +384,10 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.price || "€ —"}</p>
+                >
+                  <span>{artwork.price || "€ —"}</span>
+                  {isArchived && sealButton(14)}
+                </p>
               </div>
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
