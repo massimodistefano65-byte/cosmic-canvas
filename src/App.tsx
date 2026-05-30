@@ -18,6 +18,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Contact from "./pages/Contact";
 import AdminArtworksStatus from "./pages/AdminArtworksStatus";
+import AdminGestioneArchivio from "./pages/AdminGestioneArchivio";
 import Classifica from "./pages/Classifica";
 import CookieBanner from "./components/CookieBanner";
 import { AudioProvider } from "./components/AudioProvider";
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/artworks-status" element={<AdminArtworksStatus />} />
+            <Route path="/admin/gestione-archivio-md" element={<AdminGestioneArchivio />} />
             <Route path="/classifica" element={<Classifica />} />
             <Route path="/:discipline/:artworkId" element={<ArtworkDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
