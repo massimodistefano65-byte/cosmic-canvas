@@ -614,7 +614,10 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.price")}
                 </p>
-                <p className="text-xs text-foreground font-light">{artwork.price || "€ —"}</p>
+                <p className="text-xs text-foreground font-light">
+                  <span>{artwork.price || "€ —"}</span>
+                  {isArchived && sealButton(13)}
+                </p>
               </div>
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
