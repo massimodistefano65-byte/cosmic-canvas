@@ -254,6 +254,14 @@ const ArtworkDetail = () => {
         artworkTitle={purchaseLabel}
         content={purchaseContent}
       />
+      {isArchived && artwork.archiveId && (
+        <CertificateDialog
+          isOpen={certificateOpen}
+          onClose={() => setCertificateOpen(false)}
+          archiveId={artwork.archiveId}
+          artworkTitle={artwork.title}
+        />
+      )}
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
