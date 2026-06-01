@@ -69,6 +69,10 @@ export interface ArtworkFullData {
    * il sigillo del Certificato di Autenticità Digitale.
    */
   archiveId?: string;
+  /** Solo per t-shirt: nome piattaforma di vendita esterna (es. "Hoplix") */
+  shopPlatform?: string;
+  /** Solo per t-shirt: URL prodotto sulla piattaforma esterna */
+  shopUrl?: string;
   preview: string;
   main: string;
   full: string;
@@ -76,6 +80,7 @@ export interface ArtworkFullData {
   /** True quando i file fisici esistono — entra in sitemap.xml */
   published: boolean;
 }
+
 
 /* ─── Helper: genera automaticamente i percorsi immagine ─── */
 
@@ -89,6 +94,10 @@ interface CreateArtworkInput {
   price?: string;
   /** Codice Archivio Storico MDS (opzionale) — es. "MDS-26P-7K2" */
   archiveId?: string;
+  /** Solo t-shirt: piattaforma di vendita esterna (es. "Hoplix") */
+  shopPlatform?: string;
+  /** Solo t-shirt: URL prodotto esterno */
+  shopUrl?: string;
   details?: number;
   roomViews?: number;
   format?: "jpg" | "webp";
@@ -106,6 +115,8 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     technique,
     price,
     archiveId,
+    shopPlatform,
+    shopUrl,
     details = 0,
     roomViews = 0,
     format = "jpg",
@@ -133,6 +144,8 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     technique,
     price,
     archiveId,
+    shopPlatform,
+    shopUrl,
     preview: `${base}-preview.${ext}`,
     main: `${base}-1.${ext}`,
     full: `${base}-1.${ext}`,
@@ -140,6 +153,7 @@ function createArtwork(input: CreateArtworkInput): ArtworkFullData {
     published,
   };
 }
+
 
 type DisciplineData = Record<string, ArtworkFullData[]>;
 
@@ -331,13 +345,11 @@ const digitalArt: ArtworkFullData[] = [
 ];
 
 const tShirt: ArtworkFullData[] = [
-  createArtwork({ slug: "nebula-wear", category: "t-shirt", title: "Nebula Wear", year: "2024", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "cosmic-print", category: "t-shirt", title: "Cosmic Print", year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "urban-galaxy", category: "t-shirt", title: "Urban Galaxy", year: "2024", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "abstract-flow", category: "t-shirt", title: "Abstract Flow", year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "stellar-edition", category: "t-shirt", title: "Stellar Edition", year: "2023", dimensions: "Formato variabile", technique: "Serigrafia", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "dark-matter", category: "t-shirt", title: "Dark Matter", year: "2023", dimensions: "Formato variabile", technique: "Stampa digitale", price: "€ 35", details: 0, roomViews: 0, format: "webp", published: false }),
+  createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful Meditation", year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale", shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax", details: 0, roomViews: 0, format: "webp", published: false }),
+  createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale", shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2", details: 0, roomViews: 0, format: "webp", published: false }),
+  createArtwork({ slug: "time-is-an-illusion", category: "t-shirt", title: "Time is an Illusion", year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale", shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/time-is-an-illusion-2", details: 0, roomViews: 0, format: "webp", published: false }),
 ];
+
 
 
 

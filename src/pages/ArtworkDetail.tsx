@@ -7,7 +7,7 @@ import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
-import { ArrowLeft, Heart, Plus, Stamp } from "lucide-react";
+import { ArrowLeft, Heart, Plus, Stamp, ExternalLink } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
 import { useI18n } from "@/lib/i18n";
@@ -42,7 +42,11 @@ const ArtworkDetail = () => {
   const [certificateOpen, setCertificateOpen] = useState(false);
   const { t } = useI18n();
 
-  const purchaseLabel = discipline === "painting" ? "Opzioni d'acquisto" : "Opzioni d'acquisto e supporti";
+  const isTshirt = discipline === "t-shirt";
+  const purchaseLabel = discipline === "painting"
+    ? t("artwork.purchaseOptions")
+    : t("artwork.purchaseOptionsExt");
+
 
   useSectionAudio(discipline || "home");
 
@@ -356,16 +360,18 @@ const ArtworkDetail = () => {
 
             {/* Metadata */}
             <div className="space-y-4">
-              <div className="border-t border-border/30 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
-                   style={{ fontFamily: "'Raleway', sans-serif" }}
-                >
-                  {t("artwork.dimensions")}
-                </p>
-                <p className="text-[13px] text-foreground font-light"
-                   style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.dimensions}</p>
-              </div>
+              {!isTshirt && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    {t("artwork.dimensions")}
+                  </p>
+                  <p className="text-[13px] text-foreground font-light"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >{artwork.dimensions}</p>
+                </div>
+              )}
               <div className="border-t border-border/30 pt-3">
                 <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
@@ -374,21 +380,36 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.technique}</p>
+                >{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
               </div>
-              <div className="border-t border-border/30 pt-3">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
-                   style={{ fontFamily: "'Raleway', sans-serif" }}
-                >
-                  {t("artwork.price")}
-                </p>
-                <p className="text-[13px] text-foreground font-light"
-                   style={{ fontFamily: "'Raleway', sans-serif" }}
-                >
-                  <span>{artwork.price || "€ —"}</span>
-                  {isArchived && sealButton(14)}
-                </p>
-              </div>
+              {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
+                <div className="border-t border-border/30 pt-4">
+                  <a
+                    href={artwork.shopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="animate-shop-pulse inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded border border-border/40 hover:border-foreground/40 bg-white/5 hover:bg-white/10 text-foreground text-[11px] tracking-[0.3em] uppercase transition-colors"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    <span>{t("artwork.buyOn")} {artwork.shopPlatform}</span>
+                    <ExternalLink size={13} aria-hidden="true" />
+                  </a>
+                </div>
+              ) : (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-1.5"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    {t("artwork.price")}
+                  </p>
+                  <p className="text-[13px] text-foreground font-light"
+                     style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    <span>{artwork.price || "€ —"}</span>
+                    {isArchived && sealButton(14)}
+                  </p>
+                </div>
+              )}
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
                   <button
@@ -397,7 +418,7 @@ const ArtworkDetail = () => {
                     className="text-[9px] tracking-[0.25em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
                     style={{ fontFamily: "'Raleway', sans-serif", filter: "brightness(1.25)" }}
                   >
-                    Significato dell'opera
+                    {t("artwork.meaning")}
                   </button>
                 </div>
               )}
@@ -419,6 +440,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
+
             </div>
 
             {/* Action buttons — below metadata */}
@@ -598,27 +620,43 @@ const ArtworkDetail = () => {
             </div>
 
             <div className="space-y-3">
-              <div className="border-t border-border/30 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
-                  {t("artwork.dimensions")}
-                </p>
-                <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
-              </div>
+              {!isTshirt && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
+                    {t("artwork.dimensions")}
+                  </p>
+                  <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
+                </div>
+              )}
               <div className="border-t border-border/30 pt-3">
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
               </div>
-              <div className="border-t border-border/30 pt-3">
-                <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
-                  {t("artwork.price")}
-                </p>
-                <p className="text-xs text-foreground font-light">
-                  <span>{artwork.price || "€ —"}</span>
-                  {isArchived && sealButton(13)}
-                </p>
-              </div>
+              {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
+                <div className="border-t border-border/30 pt-4">
+                  <a
+                    href={artwork.shopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="animate-shop-pulse inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded border border-border/40 hover:border-foreground/40 bg-white/5 hover:bg-white/10 text-foreground text-[10px] tracking-[0.25em] uppercase transition-colors"
+                  >
+                    <span>{t("artwork.buyOn")} {artwork.shopPlatform}</span>
+                    <ExternalLink size={12} aria-hidden="true" />
+                  </a>
+                </div>
+              ) : (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
+                    {t("artwork.price")}
+                  </p>
+                  <p className="text-xs text-foreground font-light">
+                    <span>{artwork.price || "€ —"}</span>
+                    {isArchived && sealButton(13)}
+                  </p>
+                </div>
+              )}
               {hasMeaning && (
                 <div className="border-t border-border/30 pt-3">
                   <button
@@ -627,7 +665,7 @@ const ArtworkDetail = () => {
                     className="text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
                     style={{ filter: "brightness(1.25)" }}
                   >
-                    Significato dell'opera
+                    {t("artwork.meaning")}
                   </button>
                 </div>
               )}
@@ -648,6 +686,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
+
             </div>
 
             {/* Action buttons — below metadata */}
