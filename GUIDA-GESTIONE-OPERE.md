@@ -428,3 +428,66 @@ Per mostrare il pulsante "Opzioni d'acquisto" (o "Opzioni d'acquisto e supporti"
 `public/artworks/{discipline}/purchase.md`
 
 Esempio: `public/artworks/photography/purchase.md` — il file vale per tutte le opere della categoria. Se il file non esiste, il pulsante non viene mostrato. Su Aruba assicurati che il MIME type `.md` sia configurato in `public/web.config` (già presente).
+
+---
+
+## 👕 Aggiungere una T-Shirt
+
+Le t-shirt hanno una **gestione commerciale dedicata**: la vendita avviene su piattaforme esterne (Hoplix, Redbubble, Printify…), quindi la scheda mostra un **bottone "Acquista su {Piattaforma}"** al posto del prezzo, nasconde il blocco "Dimensioni" e cambia l'etichetta "Tecnica" in **"Stampa"**.
+
+### Schema
+
+```ts
+createArtwork({
+  slug: "wonderful-meditation",          // URL e cartella
+  category: "t-shirt",                    // obbligatorio
+  title: "Wonderful Meditation",
+  year: "2024",
+  dimensions: "Formato variabile",        // ignorato in UI ma utile per i dati
+  technique: "Stampa digitale",           // sovrascritto in UI con "Stampa"
+  shopPlatform: "Hoplix",                 // ⭐ piattaforma esterna
+  shopUrl: "https://hoplix.shop/radmax",  // ⭐ link prodotto
+  details: 0,
+  roomViews: 0,
+  format: "webp",
+  published: false,                       // true quando le foto sono caricate
+}),
+```
+
+**Regole:**
+- Se `shopPlatform` o `shopUrl` mancano, ricompare il prezzo classico (fallback).
+- I file immagine seguono la stessa convenzione delle altre categorie (`public/artworks/t-shirt/{slug}/...`).
+- Fino al caricamento delle foto reali, l'opera appare con il placeholder gradient.
+
+### Esempio attivo (Hoplix)
+
+| Slug | Piattaforma | URL |
+|---|---|---|
+| `wonderful-meditation` | Hoplix | https://hoplix.shop/radmax |
+| `the-hidden-side-of-a-thought` | Hoplix | https://hoplix.shop/radmax2 |
+| `time-is-an-illusion` | Hoplix | https://hoplix.shop/time-is-an-illusion-2 |
+
+---
+
+## 📊 Workflow Excel / Python — colonne T-Shirt
+
+Per generare automaticamente i blocchi `createArtwork` delle t-shirt dal CSV, aggiungi due colonne **solo per le righe `category = t-shirt`**:
+
+| Colonna CSV | Esempio | Note |
+|---|---|---|
+| `shop_platform` | `Hoplix` | Nome piattaforma esterna |
+| `shop_url` | `https://hoplix.shop/radmax` | URL completo prodotto |
+
+### Patch consigliata per `optimize.py`
+
+Quando lo script emette il blocco `createArtwork(...)`, se la categoria è `t-shirt` e i due campi sono non vuoti, aggiungi:
+
+```python
+if row["category"] == "t-shirt":
+    if row.get("shop_platform"):
+        fields.append(f'shopPlatform: "{row["shop_platform"]}"')
+    if row.get("shop_url"):
+        fields.append(f'shopUrl: "{row["shop_url"]}"')
+```
+
+Per le altre categorie le colonne vengono ignorate, così non rompe il workflow esistente.
