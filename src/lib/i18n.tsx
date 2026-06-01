@@ -111,6 +111,12 @@ const translations: Record<string, Record<Lang, string>> = {
   "artwork.technique": { it: "Tecnica", en: "Technique" },
   "artwork.price": { it: "Prezzo", en: "Price" },
   "artwork.back": { it: "Back", en: "Back" },
+  "artwork.meaning": { it: "Significato dell'opera", en: "Meaning of the work" },
+  "artwork.purchaseOptions": { it: "Opzioni d'acquisto", en: "Purchase options" },
+  "artwork.purchaseOptionsExt": { it: "Opzioni d'acquisto e supporti", en: "Purchase options & supports" },
+  "artwork.technique.tshirt": { it: "Stampa", en: "Print" },
+  "artwork.buyOn": { it: "Acquista su", en: "Buy on" },
+
 
   // EnquiryModal
   "enquiry.title": { it: "Informazioni su:", en: "Enquiry about:" },
