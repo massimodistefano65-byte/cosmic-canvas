@@ -353,10 +353,8 @@ const tShirt = [
   createArtwork({ slug: "blind-in-the-storm", category: "t-shirt", title: "Blind in the storm", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 6, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "cat-dream", category: "t-shirt", title: "Cat dream", year: "2022", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 3, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "when-the-soul-is-joined-to-the-spirit", category: "t-shirt", title: "When the soul is joined to the Spirit", year: "2021", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 2, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "ths-the-awakening-sound", category: "t-shirt", title: "The awakening sound", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 7, roomViews: 5, format: "webp", published: true }),
+  createArtwork({ slug: "the-awakening-sound", category: "t-shirt", title: "The awakening sound", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 7, roomViews: 5, format: "webp", published: true }),
   createArtwork({ slug: "my-mind-is-over", category: "t-shirt", title: "My mind is over", year: "2022", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 5, roomViews: 5, format: "webp", published: true }),];
-
-
 
 
 
