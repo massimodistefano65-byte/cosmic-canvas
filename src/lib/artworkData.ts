@@ -342,7 +342,7 @@ const digitalArt = [
 
 const tShirt = [
   createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful meditation", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 3, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax" }),
-  createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 3, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2" }),
+  createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 4, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2" }),
   createArtwork({ slug: "time-is-an-illusion", category: "t-shirt", title: "Time is an Illusion", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 1, roomViews: 2, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/time-is-an-illusion-2" }),
   createArtwork({ slug: "messed-up-mind", category: "t-shirt", title: "Messed up mind", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 4, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "extasi-1", category: "t-shirt", title: "Extasi 1", year: "2015", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 2, roomViews: 2, format: "webp", published: true }),
@@ -355,7 +355,6 @@ const tShirt = [
   createArtwork({ slug: "when-the-soul-is-joined-to-the-spirit", category: "t-shirt", title: "When the soul is joined to the Spirit", year: "2021", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 2, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "ths-the-awakening-sound", category: "t-shirt", title: "The awakening sound", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 7, roomViews: 5, format: "webp", published: true }),
   createArtwork({ slug: "my-mind-is-over", category: "t-shirt", title: "My mind is over", year: "2022", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 5, roomViews: 5, format: "webp", published: true }),];
-
 
 
 
