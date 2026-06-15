@@ -195,8 +195,11 @@ const Contact = () => {
             <p className="text-xs font-light tracking-wide mt-1">
               Music (Digital Art): "Ambient Celestial Divine Texture with Grains on Top" by bassimat -- https://freesound.org/s/852823/ -- License: Creative Commons 0
             </p>
-            <p className="text-xs text-white tracking-wide mt-1">
+            <p className="text-xs font-light tracking-wide mt-1">
   Music (Painting): "Cosmic Drift" (Autore sconosciuto, traccia royalty-free). Se sei il legittimo proprietario di questo brano, contattami per l'attribuzione o la rimozione
+</p>
+<p className="text-xs font-light tracking-wide mt-1">
+  Music (T-shirt): "3 guitars, uplifting buildup" by RhysTemple54 -- https://freesound.org/s/846011/ -- License: CC0
 </p>
             <div className="mt-4 flex items-center justify-center gap-6 text-[10px] opacity-70">
               <Link to="/privacy-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Privacy Policy</Link>
