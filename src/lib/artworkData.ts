@@ -2,164 +2,33 @@
  * ═══════════════════════════════════════════════════════════════════
  *  GESTIONE OPERE — GUIDA DEFINITIVA
  * ═══════════════════════════════════════════════════════════════════
- *
- *  ── CONVENZIONE NOMI FILE (regola unica e rigorosa) ──────────
- *  Ogni file dell'opera DEVE seguire questo schema:
- *
- *    massimo-di-stefano-{slug}-{category}-{tipo}.{format}
- *
- *  Tipi:
- *    • preview            → thumbnail per la galleria
- *    • 1                  → immagine principale (main / full)
- *    • detail-1, detail-2 → dettagli ravvicinati
- *    • room-view-1, ...   → opera ambientata
- *
- *  Esempio:
- *    massimo-di-stefano-pensieri-in-evoluzione-painting-preview.jpg
- *    massimo-di-stefano-pensieri-in-evoluzione-painting-1.jpg
- *    massimo-di-stefano-pensieri-in-evoluzione-painting-detail-1.jpg
- *    massimo-di-stefano-pensieri-in-evoluzione-painting-room-view-1.jpg
- *
- *  ── COME AGGIUNGERE UN'OPERA ──────────────────────────────────
- *  1. Crea la cartella:  public/artworks/{categoria}/{slug}/
- *     Esempio:           public/artworks/painting/nebulosa-urbana/
- *
- *  2. Carica i file rispettando la convenzione qui sopra.
- *     Formato: .jpg (default) o .webp (specifica `format: "webp"`).
- *
- *  3. Aggiungi un blocco createArtwork({...}) nell'array della categoria.
- *
- *  ── TEMPLATE DA COPIARE ─────────────────────────────────────
- *
- *     createArtwork({
- *       slug: "titolo-in-minuscolo",   // identifica cartella, file e URL
- *       category: "painting",          // painting | photography | digital-art | t-shirt
- *       title: "Titolo Opera",
- *       year: "2024",
- *       dimensions: "100 × 50 cm",
- *       technique: "Tecnica mista su tela",
- *       price: "€ 1.500",              // opzionale
- *       details: 3,                     // numero di foto detail (0 se nessuna)
- *       roomViews: 2,                   // numero di foto room-view (0 se nessuna)
- *       format: "jpg",                  // opzionale: "jpg" (default) | "webp"
- *     }),
- *
- *  ── REGOLE ──────────────────────────────────────────────────
- *  • L'ID dell'opera coincide SEMPRE con lo slug (URL SEO-friendly).
- *  • Lo slug deve corrispondere al nome della cartella e dei file.
- *  • La categoria appare SEMPRE nel nome di OGNI file.
- *  • Categorie valide: painting, photography, digital-art, t-shirt.
- *  • Le opere senza file reali appaiono come placeholder colorati
- *    (gradiente generato dallo slug) — vedi src/lib/slugGradient.ts.
- *  • Per l'Archive usa il file separato: src/lib/archiveData.ts.
- *
- * ═══════════════════════════════════════════════════════════════════
  */
 
 export interface ArtworkFullData {
-  id: string;
-  title: string;
-  year: string;
-  dimensions: string;
-  technique: string;
-  price?: string;
-  /**
-   * Codice Archivio Storico MDS (es. "MDS-26P-7K2").
-   * Se presente E il prezzo è "Collezione privata", l'opera mostra
-   * il sigillo del Certificato di Autenticità Digitale.
-   */
-  archiveId?: string;
-  /** Solo per t-shirt: nome piattaforma di vendita esterna (es. "Hoplix") */
-  shopPlatform?: string;
-  /** Solo per t-shirt: URL prodotto sulla piattaforma esterna */
-  shopUrl?: string;
-  preview: string;
-  main: string;
-  full: string;
-  images: { url: string; label: string }[];
-  /** True quando i file fisici esistono — entra in sitemap.xml */
+  id: string; title: string; year: string; dimensions: string; technique: string; price?: string;
+  archiveId?: string; shopPlatform?: string; shopUrl?: string;
+  preview: string; main: string; full: string; images: { url: string; label: string }[];
   published: boolean;
 }
 
-
-/* ─── Helper: genera automaticamente i percorsi immagine ─── */
-
 interface CreateArtworkInput {
-  slug: string;
-  category: string;
-  title: string;
-  year: string;
-  dimensions: string;
-  technique: string;
-  price?: string;
-  /** Codice Archivio Storico MDS (opzionale) — es. "MDS-26P-7K2" */
-  archiveId?: string;
-  /** Solo t-shirt: piattaforma di vendita esterna (es. "Hoplix") */
-  shopPlatform?: string;
-  /** Solo t-shirt: URL prodotto esterno */
-  shopUrl?: string;
-  details?: number;
-  roomViews?: number;
-  format?: "jpg" | "webp";
-  /** Imposta a true SOLO se i file immagine esistono fisicamente. Default: false. */
-  published?: boolean;
+  slug: string; category: string; title: string; year: string; dimensions: string; technique: string;
+  price?: string; archiveId?: string; shopPlatform?: string; shopUrl?: string;
+  details?: number; roomViews?: number; format?: "jpg" | "webp"; published?: boolean;
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
-  const {
-    slug,
-    category,
-    title,
-    year,
-    dimensions,
-    technique,
-    price,
-    archiveId,
-    shopPlatform,
-    shopUrl,
-    details = 0,
-    roomViews = 0,
-    format = "jpg",
-    published = false,
-  } = input;
-
+  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false } = input;
   const dir = `/artworks/${category}/${slug}`;
   const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
   const ext = format;
-
   const images: { url: string; label: string }[] = [];
-
-  for (let i = 1; i <= roomViews; i++) {
-    images.push({ url: `${base}-room-view-${i}.${ext}`, label: `Room View ${i}` });
-  }
-  for (let i = 1; i <= details; i++) {
-    images.push({ url: `${base}-detail-${i}.${ext}`, label: `Dettaglio ${i}` });
-  }
-
-  return {
-    id: slug,
-    title,
-    year,
-    dimensions,
-    technique,
-    price,
-    archiveId,
-    shopPlatform,
-    shopUrl,
-    preview: `${base}-preview.${ext}`,
-    main: `${base}-1.${ext}`,
-    full: `${base}-1.${ext}`,
-    images,
-    published,
-  };
+  for (let i = 1; i <= roomViews; i++) images.push({ url: `${base}-room-view-${i}.${ext}`, label: `Room View ${i}` });
+  for (let i = 1; i <= details; i++) images.push({ url: `${base}-detail-${i}.${ext}`, label: `Dettaglio ${i}` });
+  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.${ext}`, main: `${base}-1.${ext}`, full: `${base}-1.${ext}`, images, published };
 }
 
-
 type DisciplineData = Record<string, ArtworkFullData[]>;
-
-/* ═══════════════════════════════════════════════════════════════
- *  PAINTING
- * ═══════════════════════════════════════════════════════════════ */
 
 const painting = [
   createArtwork({ slug: "exotic-trip", category: "painting", title: "Exotic trip", year: "2014", dimensions: "120 x 60 cm", technique: "Mista su polistirene", price: "400", details: 8, roomViews: 3, format: "webp", published: true }),
@@ -278,7 +147,8 @@ const painting = [
   createArtwork({ slug: "before-the-astral-trip", category: "painting", title: "Before the astral trip", year: "2012", dimensions: "120 x 120 cm", technique: "Acrilico", price: "600", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "rain", category: "painting", title: "Rain", year: "2010", dimensions: "80 x 80 cm", technique: "Mista su tela", price: "350", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "falling-down", category: "painting", title: "Falling down", year: "2012", dimensions: "120 x 60 cm", technique: "mista su polistirene", price: "400", details: 0, roomViews: 0, format: "webp", published: false }),
-  createArtwork({ slug: "sharp-blades", category: "painting", title: "Sharp blades", year: "2019", dimensions: "29 x 39 cm", technique: "Mista su cartoncino", price: "Collezione privata", details: 0, roomViews: 0, format: "webp", published: false }),];
+  createArtwork({ slug: "sharp-blades", category: "painting", title: "Sharp blades", year: "2019", dimensions: "29 x 39 cm", technique: "Mista su cartoncino", price: "Collezione privata", details: 0, roomViews: 0, format: "webp", published: false }),
+];
 
 const photography = [
   createArtwork({ slug: "and-the-rest-is-only-love", category: "photography", title: "And the rest is only love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
@@ -302,7 +172,8 @@ const photography = [
   createArtwork({ slug: "my-heart-beats-for-another-love", category: "photography", title: "My heart beats for another love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "lunedi-mattina-al-caffe", category: "photography", title: "Lunedì mattina al Caffè", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),];
+  createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
+];
 
 const digitalArt = [
   createArtwork({ slug: "anima-indomabile", category: "digital-art", title: "Anima indomabile", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
@@ -338,9 +209,11 @@ const digitalArt = [
   createArtwork({ slug: "battito-primordiale", category: "digital-art", title: "Battito primordiale", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 7, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "the-begin-of-my-life", category: "digital-art", title: "The begin of my life", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
-  createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),];
+  createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),
+];
 
-const tShirt = [  createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful meditation", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 3, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax" }),
+const tShirt = [
+  createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful meditation", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 3, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax" }),
   createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 4, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2" }),
   createArtwork({ slug: "time-is-an-illusion", category: "t-shirt", title: "Time is an Illusion", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 1, roomViews: 2, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/time-is-an-illusion-2" }),
   createArtwork({ slug: "messed-up-mind", category: "t-shirt", title: "Messed up mind", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 4, roomViews: 2, format: "webp", published: true }),
@@ -354,23 +227,9 @@ const tShirt = [  createArtwork({ slug: "wonderful-meditation", category: "t-shi
   createArtwork({ slug: "when-the-soul-is-joined-to-the-spirit", category: "t-shirt", title: "When the soul is joined to the Spirit", year: "2021", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 2, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "the-awakening-sound", category: "t-shirt", title: "The awakening sound", year: "2019", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 7, roomViews: 5, format: "webp", published: true }),
   createArtwork({ slug: "my-mind-is-over", category: "t-shirt", title: "My mind is over", year: "2022", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 6, roomViews: 5, format: "webp", published: true }),
- ];
+];
 
+const data: DisciplineData = { painting, photography, "digital-art": digitalArt, "t-shirt": tShirt };
 
-
-/* ═══════════════════════════════════════════════════════════════ */
-
-const data: DisciplineData = {
-  painting,
-  photography,
-  "digital-art": digitalArt,
-  "t-shirt": tShirt,
-};
-
-export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] {
-  return data[discipline] || [];
-}
-
-export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined {
-  return data[discipline]?.find((a) => a.id === artworkId);
-}
+export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] { return data[discipline] || []; }
+export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined { return data[discipline]?.find((a) => a.id === artworkId); }
