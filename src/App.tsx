@@ -8,6 +8,12 @@ import { I18nProvider } from "@/lib/i18n";
 import Index from "./pages/Index";
 import Bio from "./pages/Bio";
 import Archive from "./pages/Archive";
+import MostreIndex from "./pages/archive/MostreIndex";
+import PercorsoEspositivo from "./pages/archive/PercorsoEspositivo";
+import VideoIndex from "./pages/archive/VideoIndex";
+import DownloadIndex from "./pages/archive/DownloadIndex";
+import CritichePagina from "./pages/archive/CritichePagina";
+import ProgettiIndex from "./pages/archive/ProgettiIndex";
 import Painting from "./pages/Painting";
 import Photography from "./pages/Photography";
 import DigitalArt from "./pages/DigitalArt";
@@ -50,6 +56,14 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
             <Route path="/archive" element={<Archive />} />
+            <Route path="/archive/mostre" element={<MostreIndex />} />
+            <Route path="/archive/mostre/percorso-espositivo" element={<PercorsoEspositivo />} />
+            <Route path="/archive/video" element={<VideoIndex />} />
+            <Route path="/archive/download" element={<DownloadIndex />} />
+            <Route path="/archive/critiche" element={<CritichePagina />} />
+            <Route path="/archive/critiche/:slug" element={<CritichePagina />} />
+            <Route path="/archive/progetti" element={<ProgettiIndex />} />
+            <Route path="/archive/progetti/:slug" element={<ProgettiIndex />} />
             <Route path="/painting" element={<Painting />} />
             <Route path="/photography" element={<Photography />} />
             <Route path="/digital-art" element={<DigitalArt />} />
