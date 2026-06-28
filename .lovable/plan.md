@@ -1,84 +1,169 @@
-Procedo con 4 interventi mirati, tutti frontend/contenuti (zero modifiche backend; nessun impatto su Like, Classifica, audio, navigazione).
+# Piano — Ristrutturazione sezione Archive (rev. 3)
 
-## 1. Sezione T-Shirt — pagina dettaglio dedicata
+Recepite le tue precisazioni:
+- **Critiche** completamente espandibile (data-driven: basta aggiungere un oggetto nel file dati).
+- **Timeline & popup editoriali**: layout ampio tipo PDF/A4 (max-width ~900-920px, padding generoso, line-height arioso).
+- **Naming**: "Percorso Espositivo" ovunque (titolo card, rotta, breadcrumb, SEO).
+- **Nessuna nota finale** sotto la timeline: tono archivistico e definitivo, niente "in aggiornamento".
 
-**Schema dati** (`src/lib/artworkData.ts`)
-- Aggiungo a `ArtworkFullData` e `CreateArtworkInput` due campi opzionali:
-  - `shopPlatform?: string`
-  - `shopUrl?: string`
-- `createArtwork` li propaga.
-- **Aggiorno le 3 nuove t-shirt** (sostituisco quelle placeholder attuali con i tuoi slug reali, `published: false` così restano placeholder colorati finché non carichi le foto):
+---
 
-```ts
-createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful Meditation",
-  year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale",
-  shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax",
-  details: 0, roomViews: 0, format: "webp", published: false }),
-createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought",
-  year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale",
-  shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2",
-  details: 0, roomViews: 0, format: "webp", published: false }),
-createArtwork({ slug: "time-is-an-illusion", category: "t-shirt", title: "Time is an Illusion",
-  year: "2024", dimensions: "Formato variabile", technique: "Stampa digitale",
-  shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/time-is-an-illusion-2",
-  details: 0, roomViews: 0, format: "webp", published: false }),
+## 1. Home Archive — griglia a 5 card
+
+Rimuovo `<Tabs>` e le card finte ("Pensieri in Evoluzione", "Dr. Maria Rossi").
+
+Nuova `Archive.tsx`: griglia 5 card quadrate (3+2 centrate desktop, 2+2+1 tablet, 1 colonna mobile):
+**Mostre · Video · Download · Critiche · Altri Progetti**
+- area intera cliccabile → naviga al sotto-livello
+- titolo Cormorant sotto al quadrato
+- hover scale + glow oro coerente con gallerie opere
+- placeholder gradiente cosmico finché manca cover reale
+- overlay hover "Contenuto in arrivo" solo per sezioni vuote
+- audio `useSectionAudio("archive")` attivo qui e su tutte le sotto-rotte
+
+## 2. Architettura routing modulare ("scatole cinesi")
+
+```
+/archive                             → griglia 5 card
+/archive/mostre                      → griglia Mostre (include card "Percorso Espositivo")
+/archive/mostre/percorso-espositivo  → timeline editoriale
+/archive/video                       → griglia video
+/archive/download                    → griglia download (link diretti)
+/archive/critiche                    → griglia critiche (4 ora, N in futuro)
+/archive/critiche/:slug              → popup editoriale critica
+/archive/progetti                    → griglia Altri Progetti
+/archive/progetti/:slug              → popup editoriale progetto
 ```
 
-Domanda: vuoi che **rimuova** le 6 t-shirt fittizie attuali (Nebula Wear, Cosmic Print, Urban Galaxy, Abstract Flow, Stellar Edition, Dark Matter) e tenga **solo** queste 3 reali? Procedo così salvo diverso avviso.
+Back-button coerente con ArtworkDetail. Navbar globale sempre visibile. X per chiudere popup.
 
-**Rendering condizionale** (`src/pages/ArtworkDetail.tsx`, sia desktop sia mobile)
-Quando `discipline === "t-shirt"`:
-- Etichetta TECNICA → STAMPA / PRINT (nuova chiave i18n).
-- Nascondo l'intero blocco DIMENSIONI.
-- Sostituisco il valore prezzo con un **bottone prominente**: se `shopPlatform && shopUrl` sono presenti, mostro `<a target="_blank" rel="noopener noreferrer">` con testo `Acquista su {shopPlatform}` / `Buy on {shopPlatform}` + icona `ExternalLink` (lucide), classe `animate-shop-pulse` (pulsazione lenta), stile coerente al design system (border `border-border/40`, padding generoso, Raleway uppercase). Se i campi mancano → fallback testo prezzo (compatibilità).
+## 3. Mostre + Percorso Espositivo
 
-**Pulsazione lenta** in `tailwind.config.ts`: keyframe `shop-pulse` (opacità 1 ↔ 0.78, scala 1 ↔ 1.02, 2.6s ease-in-out infinite) + `animate-shop-pulse`.
+Griglia Mostre: per ora una sola card "Percorso Espositivo" (placeholder cosmico). Altre card future via file dati.
 
-## 2. Workflow Excel + Python (istruzioni, no modifiche al repo)
+Pagina `/archive/mostre/percorso-espositivo` — **lettura tipo A4**:
+- contenitore largo, max-width ~900px, padding orizzontale generoso (px-6 md:px-12), padding verticale arioso
+- titolo Cormorant grande "Massimo Di Stefano — Percorso Espositivo" + sottotitolo decorativo
+- raggruppata per anno (2010 → 2016), ogni anno = sezione con heading anno grande
+- ogni voce = riga con bullet sobrio + testo Raleway 16/17px, line-height ~1.8
+- accapi, rientri, note curatore e indentazioni preservati esattamente come nel documento fornito
+- responsive: stesso ritmo arioso su mobile con padding adattato
+- **nessuna nota finale**: la pagina si chiude in modo naturale dopo l'ultima voce, mantenendo un tono archivistico definitivo
 
-`optimize.py` è locale fuori dal repo: te lo aggiorno nel manuale come patch da applicare.
+### Puntini pulsanti auto-attivanti (predisposizione completa)
 
-**Nuove colonne CSV** (solo righe `category = t-shirt`):
-- `shop_platform` (es. `Hoplix`)
-- `shop_url` (URL completo prodotto)
+Stessa logica già usata per "Significato dell'opera":
+- ogni `TimelineEntry` in `archiveData.ts` ha campo opzionale `materials?: MediaItem[]`
+- accanto alla voce viene renderizzato puntino dorato pulsante **solo se** `materials` ha almeno 1 elemento
+- nessun `materials` → nessun puntino
+- click sul puntino → apre `ArchiveMediaDialog` con quei materiali
+- struttura predisposta fin da subito su **tutte** le voci: in futuro basta aggiungere `materials: [...]` nel file dati e il puntino compare automaticamente, senza alcuna modifica al codice
 
-**Patch `optimize.py`**: quando emette il blocco `createArtwork`, se i due campi sono non vuoti aggiunge `shopPlatform: "..."` e `shopUrl: "..."`. Per le altre categorie ignora i campi.
+## 4. Critiche — struttura espandibile
 
-## 3. Bug traduzioni (i18n)
+`/archive/critiche` → griglia che mappa l'array `criticisms`. Inizialmente 4 voci, ma il sistema è completamente data-driven: aggiungere una 5ª, 6ª, Nª critica significa solo aggiungere un oggetto al file dati.
 
-In `src/lib/i18n.tsx` aggiungo:
-- `artwork.meaning` → "Significato dell'opera" / "Meaning of the work"
-- `artwork.purchaseOptions` → "Opzioni d'acquisto" / "Purchase options"
-- `artwork.purchaseOptionsExt` → "Opzioni d'acquisto e supporti" / "Purchase options & supports"
-- `artwork.technique.tshirt` → "Stampa" / "Print"
-- `artwork.buyOn` → "Acquista su" / "Buy on"
+Card iniziali:
+1. **Critica dott. Andrea Domenico Taricco** — "Psicocreativismo siderale"
+2. **Critica Oxan Clounot**
+3. **Critica dott. Luciano Lepri**
+4. **Dicono di me**
 
-In `ArtworkDetail.tsx` sostituisco le stringhe hard-coded con `t(...)` (desktop + mobile).
+Ogni card → rotta `/archive/critiche/:slug` con popup editoriale ampio (vedi §5).
 
-## 4. Fix definitivo fade pop-up
+Schema esteso `Criticism`: `id, slug, title, author, year, excerpt, body, coverImage?, materials?: MediaItem[], published?`. Materiali aggiuntivi (immagini/video/PDF) appaiono nel popup solo se popolati — stessa logica auto-attivante.
 
-Il problema attuale: `DialogContent` usa `data-[state=open]:animate-in` Tailwind con `zoom-in-[0.98]` + `duration-500`. Su Safari/Firefox lo scatto resta percepibile per via di transform iniziale + overflow.
+Sitemap si rigenera leggendo solo le critiche con `published: true`.
 
-**Soluzione**: bypasso l'animazione Tailwind e uso `framer-motion` (già nel progetto) dentro `MeaningDialog` e `CertificateDialog`:
-- Disattivo le classi animate nel `DialogContent` (`data-[state=open]:animate-none data-[state=closed]:animate-none`).
-- Avvolgo il contenuto in `<motion.div initial={{opacity:0, scale:0.985}} animate={{opacity:1, scale:1}} transition={{duration:0.45, ease:[0.22,1,0.36,1]}} style={{willChange:'opacity, transform'}}>`.
-- Overlay: porto a `duration-700 ease-out` per fade-in percepibile e cross-browser.
+## 5. Popup editoriali archivistici (`ArchiveMediaDialog`)
 
-Risultato: apertura fluida ~450ms, identica su Chromium/Firefox/Safari (iOS incluso).
+Nuovo componente coerente con `MeaningDialog`/`CertificateDialog` ma **percezione PDF/A4**:
+- max-width ~920px, max-height 90vh, scroll interno fluido
+- padding interno generoso (p-8 md:p-12), line-height arioso (~1.8)
+- header: titolo Cormorant grande + sottotitolo (autore/anno)
+- body: contenuti misti renderizzati in ordine dall'array `MediaItem[]` (testi lunghi, immagini, gallerie, embed YouTube, PDF download, link esterni)
+- atmosfera identica ai dialog esistenti (overlay scuro, bordo sottile, glow oro discreto)
+- X chiusura in alto a destra
+- responsive: padding ridotto mobile, immagini full-width, ma sempre ariose
 
-## 5. Manuale e verifica finale
+Sostituisce `ProjectContentModal.tsx` (verrà rimosso).
 
-`GUIDA-GESTIONE-OPERE.md`: aggiungo sezioni **"👕 Aggiungere una T-Shirt"** (schema con `shopPlatform`/`shopUrl`, note su dimensioni nascoste e tecnica = "Stampa", esempio Hoplix) e **"📊 Workflow Excel/Python — colonne T-Shirt"** con la patch a `optimize.py`.
+## 6. Fluidità apertura popup (fix definitivo, vale per tutti i dialog)
 
-Verifica: niente di toccato in Like/Classifica/audio/navbar. File modificati:
-```
-src/lib/artworkData.ts
-src/pages/ArtworkDetail.tsx
-src/lib/i18n.tsx
-src/components/MeaningDialog.tsx
-src/components/CertificateDialog.tsx
-tailwind.config.ts
-GUIDA-GESTIONE-OPERE.md
-```
+Apertura attuale percepita "a scatto" perché Tailwind `animate-in fade-in-0` ha durata troppo breve rispetto al timing Radix.
 
-Confermi la rimozione delle 6 t-shirt fittizie esistenti? Procedo comunque a meno che tu non dica il contrario subito dopo l'approvazione del piano.
+Soluzione applicata a `dialog.tsx` e `alert-dialog.tsx`:
+- rimozione `data-[state=open]:animate-in fade-in-0`
+- keyframes dedicati in `index.css`:
+  - `@keyframes dialog-fade-in` (opacity 0→1 + scale 0.985→1) — 520ms `cubic-bezier(0.22, 0.61, 0.36, 1)`
+  - `@keyframes dialog-overlay-fade` — 640ms ease-out
+- `transform-origin: center`, `will-change: opacity, transform`, `backface-visibility: hidden` per stabilità Safari/Firefox
+- comparsa morbida, graduale, non teatrale
+
+Si applica a tutti i popup esistenti (Significato, Certificato, Enquiry, Lightbox dialog) e ai nuovi popup Archive.
+
+## 7. Download — link diretti reali
+
+Card download usano `<a href="/downloads/file.pdf" download>` puro (no `target="_blank"` ambiguo). Verifico che i file in `public/downloads/` siano serviti correttamente (MIME PDF già configurato in `web.config` Aruba).
+
+## 8. Audio Archive (sezione)
+
+`useSectionAudio("archive")` già usato in Archive.tsx. Lo estendo a **tutte** le sotto-rotte `/archive/*` (Mostre, Percorso Espositivo, Video, Download, Critiche + dettaglio, Progetti + dettaglio): l'audio non si interrompe navigando dentro la sezione.
+
+File atteso (caricato in autonomia via GitHub): `public/audio/archive.mp3`. Stesso pattern delle altre sezioni — documentato nella guida.
+
+## 9. SEO & Sitemap
+
+- `SEOHead` su ogni sotto-rotta con title/description/canonical dedicati:
+  - "Percorso Espositivo — Massimo Di Stefano"
+  - "Critica Luciano Lepri — Massimo Di Stefano"
+  - ecc.
+- aggiorno `scripts/generate-sitemap.ts` per includere:
+  `/archive`, `/archive/mostre`, `/archive/mostre/percorso-espositivo`, `/archive/video`, `/archive/download`, `/archive/critiche`, `/archive/critiche/:slug` (per ogni slug `published: true`), `/archive/progetti`, `/archive/progetti/:slug`
+- rigenero `public/sitemap.xml`
+- flag `published?: boolean` rispettato come per le opere
+- verifica responsive desktop/mobile e collegamenti interni dopo build
+
+## 10. Guida operativa (aggiornamento, non riscrittura)
+
+Aggiungo a `GUIDA-GESTIONE-OPERE.md` una nuova sezione **"📚 Gestione sezione Archive"** con istruzioni dettagliate:
+- aggiungere/modificare voci della **timeline** (struttura `TimelineEntry`, esempi)
+- **attivare il puntino pulsante**: basta popolare `materials: [...]` su quella voce — niente modifiche al codice
+- aggiungere **nuove critiche** (nuovo oggetto in `criticisms[]` con slug, titolo, autore, body, eventuali `materials`)
+- aggiungere **nuovi "Altri Progetti"** (UFO, Bonsai, Micro-ecosistemi futuri)
+- inserire testi/immagini/video/PDF nei popup editoriali (esempi MediaItem per ogni tipo)
+- caricare l'**MP3 di sezione** (`public/audio/archive.mp3`)
+- regola d'oro: contenuti vuoti → niente puntino/card/menu — tutto automatico
+- come mantenere la coerenza strutturale negli aggiornamenti futuri
+
+---
+
+## Dettagli tecnici (riferimento)
+
+**File nuovi:**
+- `src/pages/archive/ArchiveHome.tsx`
+- `src/pages/archive/MostreIndex.tsx`
+- `src/pages/archive/PercorsoEspositivo.tsx`
+- `src/pages/archive/VideoIndex.tsx`
+- `src/pages/archive/DownloadIndex.tsx`
+- `src/pages/archive/CritichePagina.tsx` + `CriticaDetail.tsx`
+- `src/pages/archive/ProgettiIndex.tsx` + `ProgettoDetail.tsx`
+- `src/components/archive/ArchiveCard.tsx` (card quadrata riusabile)
+- `src/components/archive/ArchiveBackButton.tsx`
+- `src/components/archive/ArchiveMediaDialog.tsx`
+- `src/components/archive/PulseDot.tsx`
+- `src/components/archive/TimelineYear.tsx`
+
+**File modificati:**
+- `src/lib/archiveData.ts`: nuovo tipo `TimelineEntry { id, year, text, indent?, materials?: MediaItem[] }`; `Criticism` esteso con `slug`, `body`, `coverImage?`, `materials?`, `published?`; array `timeline` con contenuto 2010-2016 verbatim; `criticisms` aggiornate (4 voci iniziali); array `otherProjects` ripulito dai placeholder
+- `src/App.tsx`: nuove rotte `/archive/*`
+- `src/pages/Archive.tsx`: entrypoint → ArchiveHome
+- `src/components/ui/dialog.tsx` + `alert-dialog.tsx`: nuova animazione fade
+- `src/index.css`: keyframes `dialog-fade-in` + `dialog-overlay-fade`
+- `scripts/generate-sitemap.ts` + `public/sitemap.xml`
+- `src/lib/i18n.tsx`: nuove chiavi `archive.*`
+- `GUIDA-GESTIONE-OPERE.md`: nuova sezione "Gestione sezione Archive"
+
+**File rimossi:** `src/components/archive/ProjectContentModal.tsx` (sostituito da ArchiveMediaDialog).
+
+**Contenuti importati dai documenti forniti:** timeline 2010-2016 verbatim (anni, mostre, curatori, sedi); 4 testi critici dai file `.docx` allegati (Taricco/Psicocreativismo siderale, Oxan Clounot, Luciano Lepri, Dicono di me).
