@@ -66,7 +66,7 @@ ${allUrls
 </urlset>
 `;
 
-const outPath = resolve(__dirname, "../public/sitemap.xml");
+const outPath = resolve(HERE, "../public/sitemap.xml");
 writeFileSync(outPath, xml, "utf-8");
 console.log(`✅ Sitemap generata con ${allUrls.length} URL → public/sitemap.xml`);
 console.log(`   • ${staticPages.length} pagine statiche`);
