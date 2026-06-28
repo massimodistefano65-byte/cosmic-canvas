@@ -9,8 +9,7 @@ import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const HERE = dirname(fileURLToPath(import.meta.url));
 
 const BASE = "https://www.massimodistefano.com";
 
