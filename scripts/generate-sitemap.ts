@@ -4,9 +4,12 @@
  */
 
 import { getArtworksByDiscipline } from "../src/lib/artworkData";
-import { exhibitions, videos, otherProjects } from "../src/lib/archiveData";
+import { criticisms, otherProjects } from "../src/lib/archiveData";
 import { writeFileSync } from "fs";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
 
 const BASE = "https://www.massimodistefano.com";
 
@@ -18,6 +21,12 @@ const staticPages = [
   { path: "/digital-art", priority: "0.9", changefreq: "weekly" },
   { path: "/t-shirt", priority: "0.9", changefreq: "weekly" },
   { path: "/archive", priority: "0.7", changefreq: "monthly" },
+  { path: "/archive/mostre", priority: "0.6", changefreq: "monthly" },
+  { path: "/archive/mostre/percorso-espositivo", priority: "0.7", changefreq: "monthly" },
+  { path: "/archive/video", priority: "0.6", changefreq: "monthly" },
+  { path: "/archive/download", priority: "0.6", changefreq: "monthly" },
+  { path: "/archive/critiche", priority: "0.7", changefreq: "monthly" },
+  { path: "/archive/progetti", priority: "0.6", changefreq: "monthly" },
   { path: "/contact", priority: "0.6", changefreq: "monthly" },
   { path: "/privacy-policy", priority: "0.3", changefreq: "yearly" },
   { path: "/cookie-policy", priority: "0.3", changefreq: "yearly" },
@@ -25,27 +34,20 @@ const staticPages = [
 
 const disciplines = ["painting", "photography", "digital-art", "t-shirt"];
 
-// Solo opere con published: true
 const artworkUrls = disciplines.flatMap((d) =>
   getArtworksByDiscipline(d)
     .filter((a) => a.published)
     .map((a) => ({ path: `/${d}/${a.id}`, priority: "0.6", changefreq: "monthly" }))
 );
 
-// Archivio: include solo elementi published: true (ancora ancorati a /archive)
 const archiveUrls = [
-  ...exhibitions.filter((e) => e.published).map((e) => ({
-    path: `/archive#exhibition-${e.id}`,
-    priority: "0.5",
-    changefreq: "monthly",
-  })),
-  ...videos.filter((v) => v.published).map((v) => ({
-    path: `/archive#video-${v.id}`,
+  ...criticisms.filter((c) => c.published).map((c) => ({
+    path: `/archive/critiche/${c.slug}`,
     priority: "0.5",
     changefreq: "monthly",
   })),
   ...otherProjects.filter((p) => p.published).map((p) => ({
-    path: `/archive#project-${p.id}`,
+    path: `/archive/progetti/${p.slug}`,
     priority: "0.5",
     changefreq: "monthly",
   })),
@@ -64,7 +66,7 @@ ${allUrls
 </urlset>
 `;
 
-const outPath = resolve(__dirname, "../public/sitemap.xml");
+const outPath = resolve(HERE, "../public/sitemap.xml");
 writeFileSync(outPath, xml, "utf-8");
 console.log(`✅ Sitemap generata con ${allUrls.length} URL → public/sitemap.xml`);
 console.log(`   • ${staticPages.length} pagine statiche`);

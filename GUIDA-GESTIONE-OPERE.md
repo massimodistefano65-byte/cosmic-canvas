@@ -491,3 +491,156 @@ if row["category"] == "t-shirt":
 ```
 
 Per le altre categorie le colonne vengono ignorate, così non rompe il workflow esistente.
+
+---
+
+## 📚 Gestione sezione Archive
+
+La sezione Archive è organizzata a "scatole cinesi": una griglia di 5 card principali (`Mostre`, `Video`, `Download`, `Critiche`, `Altri Progetti`) che apre sotto-griglie e popup editoriali.
+
+**File unico da modificare:** `src/lib/archiveData.ts`
+
+### Regola d'oro automatica
+
+Tutto si attiva/disattiva in base ai dati:
+- Card senza contenuti → mostra overlay "Contenuto in arrivo".
+- Voce timeline **senza** `materials: [...]` → nessun puntino pulsante.
+- Voce timeline **con** `materials: [...]` (anche 1 solo elemento) → puntino pulsante automatico + popup editoriale.
+- Critica/Progetto con `published: true` → finisce in sitemap.xml.
+
+Non serve toccare il codice React: aggiungi contenuti al file dati e tutto compare.
+
+### 1. Aggiungere una voce alla timeline "Percorso Espositivo"
+
+Apri `src/lib/archiveData.ts`, trova l'array `timeline` e individua l'anno. Aggiungi un nuovo oggetto `TimelineEntry`:
+
+```ts
+{
+  id: "2017-01",  // formato libero ma univoco
+  text: "Mostra Personale, Galleria X, Città",
+  note: "a cura del Prof. Y",  // opzionale, riga in corsivo sotto
+}
+```
+
+Se l'anno non esiste, aggiungi un nuovo blocco `{ year: "2017", entries: [...] }`.
+
+### 2. Attivare il puntino pulsante su una voce della timeline
+
+Aggiungi il campo `materials` alla voce con almeno un `MediaItem`:
+
+```ts
+{
+  id: "2014-07",
+  text: "Mostra Personale, Galleria 'Rinascenza Contemporanea', Pescara",
+  note: "a cura del Dott. Andrea Domenico Taricco",
+  materials: [
+    { type: "image", src: "/archive/materials/rinascenza-1.jpg", title: "Allestimento" },
+    { type: "text", title: "Catalogo", content: "Testo lungo del catalogo..." },
+    { type: "pdf", src: "/downloads/catalogo-rinascenza.pdf", title: "Catalogo PDF", fileSize: "5 MB" },
+  ],
+}
+```
+
+Il puntino dorato pulsante compare automaticamente accanto alla voce. Cliccandolo si apre il popup editoriale.
+
+Tipi di `MediaItem` supportati: `image`, `youtube`, `video`, `pdf`, `doc`, `link`, `text`.
+
+### 3. Aggiungere una nuova Critica
+
+Nell'array `criticisms`, aggiungi un nuovo oggetto:
+
+```ts
+{
+  id: "5",
+  slug: "critica-nome-autore",  // diventa l'URL: /archive/critiche/critica-nome-autore
+  title: "Critica nome dell'autore",
+  author: "Nome dell'autore — ruolo",
+  excerpt: "Sintesi visualizzata in card e SEO description.",
+  published: true,
+  body: `## Titolo
+
+Primo paragrafo del testo.
+
+Secondo paragrafo. Puoi usare *corsivo*, **grassetto**, > citazioni.
+`,
+  // opzionale:
+  // materials: [{ type: "image", src: "...", title: "..." }],
+  // coverImage: "/archive/critiche/cover.jpg",
+}
+```
+
+La card e la rotta vengono create automaticamente. Per nasconderla in produzione, metti `published: false`.
+
+### 4. Aggiungere un nuovo "Altro Progetto"
+
+Nell'array `otherProjects`:
+
+```ts
+{
+  id: "ufo",
+  slug: "ufo",
+  title: "UFO",
+  category: "Ricerca",
+  description: "Documentazione e materiali sui fenomeni UFO.",
+  tags: ["ricerca", "documenti"],
+  published: true,
+  media: [
+    { type: "image", src: "/archive/projects/ufo/foto-1.jpg", title: "Foto 1" },
+    { type: "youtube", youtubeId: "ABC123", title: "Documentario" },
+    { type: "pdf", src: "/archive/projects/ufo/dossier.pdf", title: "Dossier" },
+    { type: "text", title: "Premessa", content: "Testo lungo..." },
+  ],
+}
+```
+
+### 5. Inserire testi/immagini/video/PDF nei popup
+
+Dentro `materials` o `media` puoi mescolare liberamente:
+
+```ts
+{ type: "text",    title: "Introduzione", content: "Testo markdown..." }
+{ type: "image",   src: "/path/foto.jpg", title: "Didascalia", description: "Dettaglio" }
+{ type: "youtube", youtubeId: "x9ZMeR7e4MU", title: "Video", description: "Note" }
+{ type: "video",   src: "/path/clip.mp4", title: "Clip locale" }
+{ type: "pdf",     src: "/downloads/doc.pdf", title: "Documento", fileSize: "2 MB" }
+{ type: "link",    src: "https://esempio.com", title: "Link", description: "Riferimento" }
+```
+
+Gli elementi vengono renderizzati nell'ordine in cui li metti nell'array.
+
+### 6. Caricare nuove immagini / file PDF
+
+- Immagini critiche/timeline → `public/archive/materials/`
+- Immagini progetti → `public/archive/projects/{slug}/`
+- PDF cataloghi/dossier → `public/downloads/`
+
+Poi referenziali nel campo `src` con il percorso assoluto (es. `/archive/materials/foto.jpg`).
+
+### 7. Audio della sezione Archive
+
+L'audio di sottofondo della sezione Archive (e di tutte le sotto-rotte) è già predisposto. Per attivarlo:
+
+1. Carica il file MP3 in `public/audio/archive.mp3`
+2. Commit + push come per le altre sezioni
+
+Il sistema lo carica automaticamente in crossfade quando l'utente entra in `/archive/*` con l'audio acceso. Se il file non esiste, non succede nulla (nessun errore).
+
+Stesso pattern delle altre sezioni: `home.mp3`, `painting.mp3`, `photography.mp3`, `digital-art.mp3`, `t-shirt.mp3`, `archive.mp3`.
+
+### 8. SEO / sitemap
+
+Dopo aver aggiunto/rimosso critiche o progetti con `published: true`, rigenera la sitemap:
+
+```bash
+npx tsx scripts/generate-sitemap.ts
+```
+
+Poi commit di `public/sitemap.xml`.
+
+### 9. Coerenza strutturale negli aggiornamenti futuri
+
+- Non rimuovere/rinominare campi (`slug`, `id`) di voci già pubblicate: spezzeresti link esterni e SEO.
+- Per disabilitare temporaneamente un contenuto usa `published: false`, non cancellarlo.
+- Mantieni `slug` URL-friendly (minuscolo, trattini, niente caratteri speciali).
+- Le card vuote (senza media) mostrano automaticamente "Contenuto in arrivo": è il comportamento desiderato in fase di lavorazione.
+

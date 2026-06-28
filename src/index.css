@@ -152,3 +152,75 @@ a img,
 .fp-watermark {
   display: none !important;
 }
+
+/* ===== Dialog smooth fade (overlay + content) ===== */
+@keyframes dialog-content-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes dialog-content-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.985);
+  }
+}
+@keyframes dialog-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes dialog-overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+.dialog-content-anim[data-state="open"] {
+  animation: dialog-content-in 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: center;
+}
+.dialog-content-anim[data-state="closed"] {
+  animation: dialog-content-out 320ms cubic-bezier(0.4, 0, 1, 1);
+  transform-origin: center;
+}
+.dialog-overlay-anim[data-state="open"] {
+  animation: dialog-overlay-in 640ms ease-out;
+}
+.dialog-overlay-anim[data-state="closed"] {
+  animation: dialog-overlay-out 320ms ease-in;
+}
+
+/* ===== Archive editorial prose (popup critiche, materiali) ===== */
+.archive-prose p {
+  margin-bottom: 1.1em;
+}
+.archive-prose h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin: 1.4em 0 0.6em;
+  color: #1A1A1A;
+}
+.archive-prose h3, .archive-prose h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  margin: 1.2em 0 0.5em;
+}
+.archive-prose blockquote {
+  border-left: 3px solid rgba(212, 175, 122, 0.5);
+  padding: 0.2em 1.1em;
+  margin: 1em 0;
+  font-style: italic;
+  color: rgba(26, 26, 26, 0.75);
+}
+.archive-prose blockquote p { margin-bottom: 0.5em; }
+.archive-prose em { font-style: italic; }
+.archive-prose strong { font-weight: 600; }
+.archive-prose hr { margin: 1.5em 0; border-color: rgba(212, 190, 150, 0.3); }
