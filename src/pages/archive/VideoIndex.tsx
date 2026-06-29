@@ -12,8 +12,8 @@ const VideoIndex = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Video — Archive — Massimo Di Stefano"
-        description="Video e documentari dedicati al percorso artistico di Massimo Di Stefano."
+        title="Video e documentari — Massimo Di Stefano artista"
+        description="Video, interviste e documentari dedicati al percorso artistico di Massimo Di Stefano."
         canonicalPath="/archive/video"
       />
       <Navbar />
