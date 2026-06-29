@@ -405,12 +405,24 @@ const ArtworkDetail = () => {
                   >
                     {t("artwork.price")}
                   </p>
-                  <p className="text-[13px] text-foreground font-light"
-                     style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    <span>{artwork.price || "€ —"}</span>
-                    {isArchived && sealButton(14)}
-                  </p>
+                  {isArchived ? (
+                    <button
+                      type="button"
+                      onClick={() => setCertificateOpen(true)}
+                      aria-label="Apri Certificato di Autenticità Digitale"
+                      className="group w-full text-left text-[13px] font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
+                      style={{ fontFamily: "'Raleway', sans-serif" }}
+                    >
+                      <span>{artwork.price}</span>
+                      {sealIcon(14)}
+                    </button>
+                  ) : (
+                    <p className="text-[13px] text-foreground font-light"
+                       style={{ fontFamily: "'Raleway', sans-serif" }}
+                    >
+                      <span>{artwork.price || "€ —"}</span>
+                    </p>
+                  )}
                 </div>
               )}
               {hasMeaning && (
@@ -425,7 +437,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && (
+              {hasPurchase && !isSold && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"
