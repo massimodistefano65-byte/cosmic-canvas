@@ -9,9 +9,9 @@ export default function PaginaBio() {
   return (
     <main className="min-h-screen bg-background text-foreground antialiased font-sans">
       <SEOHead 
-        title="Bio | Massimo Di Stefano" 
-        description="Il Ricercatore dell'Invisibile - Biografia ufficiale." 
-        canonicalPath="/bio" 
+        title="Biografia — Massimo Di Stefano, artista visivo italiano" 
+        description="Biografia ufficiale di Massimo Di Stefano, artista visivo italiano. Percorso artistico, ricerca, pittura, fotografia e arte digitale." 
+        canonicalPath="/bio"
       />
       
       {/* NAVBAR: Libera come in Archive per centrarsi automaticamente */}

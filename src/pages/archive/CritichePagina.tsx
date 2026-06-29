@@ -24,9 +24,9 @@ const CritichePagina = () => {
   }, [slug, current, navigate]);
 
   const seoTitle = current
-    ? `${current.title} — Massimo Di Stefano`
-    : "Critiche — Archive — Massimo Di Stefano";
-  const seoDesc = current?.excerpt || "Testi critici dedicati all'opera di Massimo Di Stefano.";
+    ? `${current.title} — critica d'arte | Massimo Di Stefano artista`
+    : "Critiche d'arte — Archivio Massimo Di Stefano artista visivo";
+  const seoDesc = current?.excerpt || "Testi critici e recensioni dedicati all'opera di Massimo Di Stefano, artista visivo italiano.";
   const seoPath = current ? `/archive/critiche/${current.slug}` : "/archive/critiche";
 
   return (

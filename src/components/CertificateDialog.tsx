@@ -8,13 +8,14 @@ interface Props {
   onClose: () => void;
   archiveId: string;
   artworkTitle: string;
+  dedication?: string;
 }
 
 type Status = "idle" | "verifying" | "verified" | "error";
 
 const storageKey = (archiveId: string) => `mds_archive_verified_${archiveId}`;
 
-const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle }: Props) => {
+const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle, dedication }: Props) => {
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -135,12 +136,37 @@ const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle }: Props) 
 
           {/* Livello 2 — verifica o conferma */}
           {status === "verified" ? (
-            <div className="bg-emerald-50 border border-emerald-300 rounded-lg p-6 text-center">
-              <p className="text-emerald-800 text-base md:text-lg leading-relaxed">
-                ✅ <strong>AUTENTICITÀ VERIFICATA.</strong>
-                <br />
-                Si conferma ufficialmente che l'opera in tuo possesso è l'originale catalogato nell'Archivio Ufficiale.
-              </p>
+            <div className="space-y-6">
+              <div className="bg-emerald-50 border border-emerald-300 rounded-lg p-6 text-center">
+                <p className="text-emerald-800 text-base md:text-lg leading-relaxed">
+                  ✅ <strong>AUTENTICITÀ VERIFICATA.</strong>
+                  <br />
+                  Si conferma ufficialmente che l'opera in tuo possesso è l'originale catalogato nell'Archivio Ufficiale.
+                </p>
+              </div>
+
+              {dedication && dedication.trim() && (
+                <div className="border border-[#D4BE96]/60 rounded-lg p-6 md:p-8 bg-white/60 text-center">
+                  <p
+                    className="text-[10px] tracking-[0.35em] uppercase text-[#1A1A1A]/60 mb-4"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    Dedica Privata dell'Artista
+                  </p>
+                  <p
+                    className="text-[#1A1A1A] text-lg md:text-xl leading-relaxed italic"
+                    style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 }}
+                  >
+                    “{dedication}”
+                  </p>
+                  <p
+                    className="mt-5 text-xs tracking-[0.25em] uppercase text-[#1A1A1A]/55"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
+                  >
+                    — Massimo Di Stefano
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div>

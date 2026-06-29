@@ -27,6 +27,15 @@ const disciplineLabels: Record<string, string> = {
   "t-shirt": "T-Shirt",
 };
 
+// SEO label per disciplina — usata nei title delle opere singole.
+// Keyword semantiche forti per Google ("pittura contemporanea", "fotografia artistica", ecc.).
+const disciplineSeoLabel: Record<string, string> = {
+  painting: "pittura contemporanea",
+  photography: "fotografia artistica",
+  "digital-art": "arte digitale",
+  "t-shirt": "t-shirt d'artista",
+};
+
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -161,29 +170,19 @@ const ArtworkDetail = () => {
   }
 
   const discLabel = disciplineLabels[discipline || ""] || discipline;
+  const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
-  const isArchived =
-    !!artwork.archiveId && /collezione\s+privata/i.test(artwork.price ?? "");
+  const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
+  const isArchived = !!artwork.archiveId && isSold;
 
-  const sealButton = (size: number) => (
-    <TooltipProvider delayDuration={200}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            onClick={() => setCertificateOpen(true)}
-            aria-label="Apri Certificato di Autenticità Digitale"
-            className="inline-flex items-center text-white hover:text-white/80 transition-colors animate-archive-pulse align-middle ml-2"
-          >
-            <Stamp size={size} aria-hidden="true" />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-[260px] text-xs leading-relaxed">
-          Archivio Storico MDS — Certificato di Autenticità.
-          Clicca per verificare la proprietà.
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+  // Sigillo inline (icona oro) usato inline accanto al prezzo
+  const sealIcon = (size: number) => (
+    <Stamp
+      size={size}
+      aria-hidden="true"
+      className="text-[#d4af7a] inline-block align-middle ml-2 animate-archive-pulse"
+      style={{ filter: "drop-shadow(0 0 4px rgba(212,175,122,0.55))" }}
+    />
   );
 
 
@@ -210,25 +209,29 @@ const ArtworkDetail = () => {
     artist: {
       "@type": "Person",
       name: "Massimo Di Stefano",
-      url: "https://massimodistefano.com",
-      sameAs: "https://massimodistefano.com/bio",
+      url: "https://www.massimodistefano.com",
+      sameAs: "https://www.massimodistefano.com/bio",
+      jobTitle: "Artista Visivo",
     },
     dateCreated: artwork.year,
     artMedium: artwork.technique,
     artform: discLabel,
     width: artwork.dimensions,
     image: artwork.main
-      ? `https://massimodistefano.com${artwork.main}`
+      ? `https://www.massimodistefano.com${artwork.main}`
       : undefined,
-    url: `https://massimodistefano.com/${discipline}/${artworkId}`,
-    description: `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano.`,
+    url: `https://www.massimodistefano.com/${discipline}/${artworkId}`,
+    description: `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano, artista visivo.`,
   };
+
+  const seoTitle = `${artwork.title} (${artwork.year}) — ${seoDiscLabel} di Massimo Di Stefano`;
+  const seoDescription = `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano, artista visivo italiano.`;
 
   return (
     <main className="min-h-screen md:h-screen md:overflow-hidden bg-background text-foreground flex flex-col">
       <SEOHead
-        title={`${artwork.title} — ${discLabel}`}
-        description={`${artwork.title} (${artwork.year}) di Massimo Di Stefano. ${artwork.technique}, ${artwork.dimensions}. ${discLabel}.`}
+        title={seoTitle}
+        description={seoDescription}
         canonicalPath={`/${discipline}/${artworkId}`}
         ogImage={artwork.main}
         jsonLd={jsonLd}
@@ -264,6 +267,7 @@ const ArtworkDetail = () => {
           onClose={() => setCertificateOpen(false)}
           archiveId={artwork.archiveId}
           artworkTitle={artwork.title}
+          dedication={artwork.dedication}
         />
       )}
 
@@ -380,7 +384,7 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
+                >{artwork.technique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -402,12 +406,24 @@ const ArtworkDetail = () => {
                   >
                     {t("artwork.price")}
                   </p>
-                  <p className="text-[13px] text-foreground font-light"
-                     style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    <span>{artwork.price || "€ —"}</span>
-                    {isArchived && sealButton(14)}
-                  </p>
+                  {isArchived ? (
+                    <button
+                      type="button"
+                      onClick={() => setCertificateOpen(true)}
+                      aria-label="Apri Certificato di Autenticità Digitale"
+                      className="group w-full text-left text-[13px] font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
+                      style={{ fontFamily: "'Raleway', sans-serif" }}
+                    >
+                      <span>{artwork.price}</span>
+                      {sealIcon(14)}
+                    </button>
+                  ) : (
+                    <p className="text-[13px] text-foreground font-light"
+                       style={{ fontFamily: "'Raleway', sans-serif" }}
+                    >
+                      <span>{artwork.price || "€ —"}</span>
+                    </p>
+                  )}
                 </div>
               )}
               {hasMeaning && (
@@ -422,7 +438,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && (
+              {hasPurchase && !isSold && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"
@@ -632,7 +648,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-foreground font-light">{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -651,10 +667,21 @@ const ArtworkDetail = () => {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                     {t("artwork.price")}
                   </p>
-                  <p className="text-xs text-foreground font-light">
-                    <span>{artwork.price || "€ —"}</span>
-                    {isArchived && sealButton(13)}
-                  </p>
+                  {isArchived ? (
+                    <button
+                      type="button"
+                      onClick={() => setCertificateOpen(true)}
+                      aria-label="Apri Certificato di Autenticità Digitale"
+                      className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
+                    >
+                      <span>{artwork.price}</span>
+                      {sealIcon(13)}
+                    </button>
+                  ) : (
+                    <p className="text-xs text-foreground font-light">
+                      <span>{artwork.price || "€ —"}</span>
+                    </p>
+                  )}
                 </div>
               )}
               {hasMeaning && (
@@ -669,7 +696,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && (
+              {hasPurchase && !isSold && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"
