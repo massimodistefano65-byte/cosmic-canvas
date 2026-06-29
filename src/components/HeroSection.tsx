@@ -37,12 +37,15 @@ const HeroSection = () => {
         animate={{ opacity: imageLoaded ? 1 : 0, scale: [1, 1.07] }}
         transition={{ opacity: { duration: isRevisit ? 0.3 : 0.6 }, scale: { duration: 22, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } }}
       >
-        <img
-          src="/images/hero-background.jpg"
-          alt="Hero background artwork"
-          className="w-full h-full object-cover"
-          fetchPriority="high"
-        />
+        <picture>
+          <source srcSet="/images/hero-background.webp" type="image/webp" />
+          <img
+            src="/images/hero-background.jpg"
+            alt="Massimo Di Stefano — opera visiva, sfondo della home"
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+          />
+        </picture>
       </motion.div>
 
       {/* Gradient Overlay */}
