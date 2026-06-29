@@ -8,6 +8,7 @@ interface Props {
   onClose: () => void;
   archiveId: string;
   artworkTitle: string;
+  dedication?: string;
 }
 
 type Status = "idle" | "verifying" | "verified" | "error";
