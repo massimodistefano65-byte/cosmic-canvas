@@ -15,7 +15,7 @@ type Status = "idle" | "verifying" | "verified" | "error";
 
 const storageKey = (archiveId: string) => `mds_archive_verified_${archiveId}`;
 
-const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle }: Props) => {
+const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle, dedication }: Props) => {
   const [code, setCode] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
