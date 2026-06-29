@@ -170,29 +170,19 @@ const ArtworkDetail = () => {
   }
 
   const discLabel = disciplineLabels[discipline || ""] || discipline;
+  const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
-  const isArchived =
-    !!artwork.archiveId && /collezione\s+privata/i.test(artwork.price ?? "");
+  const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
+  const isArchived = !!artwork.archiveId && isSold;
 
-  const sealButton = (size: number) => (
-    <TooltipProvider delayDuration={200}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            onClick={() => setCertificateOpen(true)}
-            aria-label="Apri Certificato di Autenticità Digitale"
-            className="inline-flex items-center text-white hover:text-white/80 transition-colors animate-archive-pulse align-middle ml-2"
-          >
-            <Stamp size={size} aria-hidden="true" />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-[260px] text-xs leading-relaxed">
-          Archivio Storico MDS — Certificato di Autenticità.
-          Clicca per verificare la proprietà.
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+  // Sigillo inline (icona oro) usato inline accanto al prezzo
+  const sealIcon = (size: number) => (
+    <Stamp
+      size={size}
+      aria-hidden="true"
+      className="text-[#d4af7a] inline-block align-middle ml-2 animate-archive-pulse"
+      style={{ filter: "drop-shadow(0 0 4px rgba(212,175,122,0.55))" }}
+    />
   );
 
 
