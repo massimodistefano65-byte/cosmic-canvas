@@ -29,9 +29,9 @@ const useScrollToAnchor = () => {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Massimo Di Stefano",
-  description: "Portfolio ufficiale di Massimo Di Stefano: pittura, fotografia, arte digitale e design.",
-  url: "https://massimodistefano.com",
+  name: "Massimo Di Stefano — Artista Visivo",
+  description: "Sito ufficiale di Massimo Di Stefano, artista visivo italiano. Pittura contemporanea, fotografia artistica, arte digitale.",
+  url: "https://www.massimodistefano.com",
   author: {
     "@type": "Person",
     name: "Massimo Di Stefano",
