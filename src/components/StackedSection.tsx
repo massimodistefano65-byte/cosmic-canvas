@@ -54,24 +54,30 @@ const StackedSection = ({
       <div className="absolute inset-0" style={{ background: gradient }} />
 
       {/* Cover Image with parallax (oversized for parallax effect) + hover zoom */}
-      {coverImage && imageVisible && (
-        <div className="absolute inset-0 overflow-hidden">
-          <div
-            style={{
-              position: "absolute",
-              top: "-25%",
-              left: 0,
-              right: 0,
-              height: "150%",
-              backgroundImage: `url(${coverImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              transform: hovered ? "scale(1.04)" : "scale(1)",
-              transition: "transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            }}
-          />
-        </div>
-      )}
+      {coverImage && imageVisible && (() => {
+        const coverWebp = coverImage.replace(/\.jpe?g$/i, ".webp");
+        const bgValue = coverWebp !== coverImage
+          ? `image-set(url("${coverWebp}") type("image/webp"), url("${coverImage}") type("image/jpeg"))`
+          : `url("${coverImage}")`;
+        return (
+          <div className="absolute inset-0 overflow-hidden">
+            <div
+              style={{
+                position: "absolute",
+                top: "-25%",
+                left: 0,
+                right: 0,
+                height: "150%",
+                backgroundImage: bgValue,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                transform: hovered ? "scale(1.04)" : "scale(1)",
+                transition: "transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
+            />
+          </div>
+        );
+      })()}
 
       {/* Gradient overlay – softer, with side vignette */}
       <div
