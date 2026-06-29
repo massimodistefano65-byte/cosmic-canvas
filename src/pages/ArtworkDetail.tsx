@@ -27,6 +27,15 @@ const disciplineLabels: Record<string, string> = {
   "t-shirt": "T-Shirt",
 };
 
+// SEO label per disciplina — usata nei title delle opere singole.
+// Keyword semantiche forti per Google ("pittura contemporanea", "fotografia artistica", ecc.).
+const disciplineSeoLabel: Record<string, string> = {
+  painting: "pittura contemporanea",
+  photography: "fotografia artistica",
+  "digital-art": "arte digitale",
+  "t-shirt": "t-shirt d'artista",
+};
+
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
