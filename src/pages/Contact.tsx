@@ -82,8 +82,8 @@ const Contact = () => {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Contact | Contatti - Massimo Di Stefano"
-        description="Contact Massimo Di Stefano for collaborations and inquiries."
+        title="Contatti — Massimo Di Stefano artista visivo"
+        description="Contatta Massimo Di Stefano per acquisto opere, mostre, collaborazioni e progetti artistici."
         canonicalPath="/contact"
       />
       <Navbar />

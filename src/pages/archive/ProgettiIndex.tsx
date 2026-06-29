@@ -23,8 +23,8 @@ const ProgettiIndex = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title={current ? `${current.title} — Massimo Di Stefano` : "Altri Progetti — Archive — Massimo Di Stefano"}
-        description={current?.description || "Altri progetti artistici di Massimo Di Stefano."}
+        title={current ? `${current.title} — progetto di Massimo Di Stefano artista` : "Altri progetti artistici — Massimo Di Stefano"}
+        description={current?.description || "Progetti d'autore e collaborazioni di Massimo Di Stefano, artista visivo italiano."}
         canonicalPath={current ? `/archive/progetti/${current.slug}` : "/archive/progetti"}
       />
       <Navbar />

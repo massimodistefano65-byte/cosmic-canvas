@@ -13,8 +13,8 @@ const DownloadIndex = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Download — Archive — Massimo Di Stefano"
-        description="Cataloghi e materiali scaricabili in PDF di Massimo Di Stefano."
+        title="Cataloghi e download — Massimo Di Stefano artista"
+        description="Cataloghi, portfolio e materiali PDF scaricabili dell'artista visivo Massimo Di Stefano."
         canonicalPath="/archive/download"
       />
       <Navbar />

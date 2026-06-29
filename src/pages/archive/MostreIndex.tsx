@@ -12,8 +12,8 @@ const MostreIndex = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Mostre — Archive — Massimo Di Stefano"
-        description="Mostre, esposizioni e percorso espositivo di Massimo Di Stefano."
+        title="Mostre ed esposizioni — Massimo Di Stefano artista"
+        description="Mostre ed esposizioni di Massimo Di Stefano, artista visivo italiano. Percorso espositivo personale e collettive."
         canonicalPath="/archive/mostre"
       />
       <Navbar />

@@ -14,8 +14,8 @@ const PercorsoEspositivo = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Percorso Espositivo — Massimo Di Stefano"
-        description="Timeline completa delle mostre ed esposizioni di Massimo Di Stefano."
+        title="Percorso espositivo — Massimo Di Stefano artista visivo"
+        description="Timeline ufficiale delle mostre ed esposizioni di Massimo Di Stefano, artista visivo italiano."
         canonicalPath="/archive/mostre/percorso-espositivo"
       />
       <Navbar />

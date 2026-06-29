@@ -23,8 +23,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   painting: {
     key: "painting",
     h1: "Painting",
-    seoTitle: "Painting & Pittura | Massimo Di Stefano",
-    seoDescription: "Galleria di opere originali. Explore my collection of original paintings and artworks.",
+    seoTitle: "Pittura contemporanea — Massimo Di Stefano artista visivo",
+    seoDescription: "Opere di pittura contemporanea di Massimo Di Stefano, artista visivo italiano. Galleria di dipinti originali, tecniche miste e ricerca pittorica.",
     introKey: "painting.intro",
     gradientFrom: "rgba(168,85,247,0.3)",
     gradientTo: "rgba(59,130,246,0.3)",
@@ -32,8 +32,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   photography: {
     key: "photography",
     h1: "Photography",
-    seoTitle: "Photography | Fotografia Artistica - Massimo Di Stefano",
-    seoDescription: "Uno sguardo attraverso l'obiettivo. A collection of my photographic works and perspectives.",
+    seoTitle: "Fotografia artistica — Massimo Di Stefano",
+    seoDescription: "Fotografia artistica di Massimo Di Stefano: sguardi, paesaggi e ritratti d'autore dell'artista visivo italiano.",
     introKey: "photography.intro",
     gradientFrom: "rgba(59,130,246,0.3)",
     gradientTo: "rgba(20,184,166,0.3)",
@@ -41,8 +41,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   "digital-art": {
     key: "digital-art",
     h1: "Digital Art",
-    seoTitle: "Digital Art | Arte Digitale - Massimo Di Stefano",
-    seoDescription: "Esplorazioni visive digitali. Discover my digital art creations and experimental designs.",
+    seoTitle: "Arte digitale — Massimo Di Stefano artista contemporaneo",
+    seoDescription: "Opere di arte digitale di Massimo Di Stefano, artista contemporaneo italiano. Composizioni, elaborazioni e sperimentazioni visive.",
     introKey: "digital-art.intro",
     gradientFrom: "rgba(236,72,153,0.3)",
     gradientTo: "rgba(168,85,247,0.3)",
@@ -50,8 +50,8 @@ const disciplines: Record<string, DisciplineConfig> = {
   "t-shirt": {
     key: "t-shirt",
     h1: "T-Shirt",
-    seoTitle: "T-Shirt | Wearable Art - Massimo Di Stefano",
-    seoDescription: "La mia arte stampata su t-shirt. Wear my unique designs and artistic t-shirts.",
+    seoTitle: "T-shirt d'artista — Wearable Art | Massimo Di Stefano",
+    seoDescription: "T-shirt d'artista di Massimo Di Stefano: wearable art con opere originali stampate in edizione.",
     introKey: "t-shirt.intro",
     gradientFrom: "rgba(249,115,22,0.3)",
     gradientTo: "rgba(239,68,68,0.3)",
