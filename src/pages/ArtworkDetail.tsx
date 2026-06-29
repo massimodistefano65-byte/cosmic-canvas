@@ -383,7 +383,7 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
+                >{artwork.technique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
