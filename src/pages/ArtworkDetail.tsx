@@ -209,25 +209,29 @@ const ArtworkDetail = () => {
     artist: {
       "@type": "Person",
       name: "Massimo Di Stefano",
-      url: "https://massimodistefano.com",
-      sameAs: "https://massimodistefano.com/bio",
+      url: "https://www.massimodistefano.com",
+      sameAs: "https://www.massimodistefano.com/bio",
+      jobTitle: "Artista Visivo",
     },
     dateCreated: artwork.year,
     artMedium: artwork.technique,
     artform: discLabel,
     width: artwork.dimensions,
     image: artwork.main
-      ? `https://massimodistefano.com${artwork.main}`
+      ? `https://www.massimodistefano.com${artwork.main}`
       : undefined,
-    url: `https://massimodistefano.com/${discipline}/${artworkId}`,
-    description: `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano.`,
+    url: `https://www.massimodistefano.com/${discipline}/${artworkId}`,
+    description: `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano, artista visivo.`,
   };
+
+  const seoTitle = `${artwork.title} (${artwork.year}) — ${seoDiscLabel} di Massimo Di Stefano`;
+  const seoDescription = `${artwork.title} (${artwork.year}) — ${artwork.technique}, ${artwork.dimensions}. Opera di Massimo Di Stefano, artista visivo italiano.`;
 
   return (
     <main className="min-h-screen md:h-screen md:overflow-hidden bg-background text-foreground flex flex-col">
       <SEOHead
-        title={`${artwork.title} — ${discLabel}`}
-        description={`${artwork.title} (${artwork.year}) di Massimo Di Stefano. ${artwork.technique}, ${artwork.dimensions}. ${discLabel}.`}
+        title={seoTitle}
+        description={seoDescription}
         canonicalPath={`/${discipline}/${artworkId}`}
         ogImage={artwork.main}
         jsonLd={jsonLd}
