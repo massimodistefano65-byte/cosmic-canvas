@@ -267,6 +267,7 @@ const ArtworkDetail = () => {
           onClose={() => setCertificateOpen(false)}
           archiveId={artwork.archiveId}
           artworkTitle={artwork.title}
+          dedication={artwork.dedication}
         />
       )}
 
