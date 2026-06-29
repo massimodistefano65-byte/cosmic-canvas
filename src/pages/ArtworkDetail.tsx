@@ -647,7 +647,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-foreground font-light">{isTshirt ? t("artwork.technique.tshirt") : artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -666,10 +666,21 @@ const ArtworkDetail = () => {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                     {t("artwork.price")}
                   </p>
-                  <p className="text-xs text-foreground font-light">
-                    <span>{artwork.price || "€ —"}</span>
-                    {isArchived && sealButton(13)}
-                  </p>
+                  {isArchived ? (
+                    <button
+                      type="button"
+                      onClick={() => setCertificateOpen(true)}
+                      aria-label="Apri Certificato di Autenticità Digitale"
+                      className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
+                    >
+                      <span>{artwork.price}</span>
+                      {sealIcon(13)}
+                    </button>
+                  ) : (
+                    <p className="text-xs text-foreground font-light">
+                      <span>{artwork.price || "€ —"}</span>
+                    </p>
+                  )}
                 </div>
               )}
               {hasMeaning && (
@@ -684,7 +695,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && (
+              {hasPurchase && !isSold && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"
