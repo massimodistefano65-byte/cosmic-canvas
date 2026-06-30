@@ -44,7 +44,8 @@ const ArtworkDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
-  const [enquiryOpen, setEnquiryOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const { has: inWishlist, add: addWishlist, remove: removeWishlist } = useWishlist();
   const [meaningOpen, setMeaningOpen] = useState(false);
   const [hasMeaning, setHasMeaning] = useState(false);
   const [meaningContent, setMeaningContent] = useState<string>("");
