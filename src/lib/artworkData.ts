@@ -8,6 +8,9 @@ export interface ArtworkFullData {
   id: string; title: string; year: string; dimensions: string; technique: string; price?: string;
   archiveId?: string; shopPlatform?: string; shopUrl?: string;
   dedication?: string;
+  colors?: string[];
+  shape?: string;
+  genre?: string;
   preview: string; main: string; full: string; images: { url: string; label: string }[];
   published: boolean;
 }

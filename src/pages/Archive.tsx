@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import ArchiveCard from "@/components/archive/ArchiveCard";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
-import { Image, Video, Download, FileText, Palette } from "lucide-react";
+import { Image, Video, Download, FileText, Palette, Heart } from "lucide-react";
 import { exhibitions, videos, downloads, criticisms, otherProjects } from "@/lib/archiveData";
 
 /**
@@ -30,6 +30,7 @@ const Archive = () => {
     { to: "/archive/download", title: "Download", icon: <Download size={64} strokeWidth={1} />, empty: !hasDownload },
     { to: "/archive/critiche", title: "Critiche", icon: <FileText size={64} strokeWidth={1} />, empty: !hasCritiche },
     { to: "/archive/progetti", title: "Altri Progetti", icon: <Palette size={64} strokeWidth={1} />, empty: !hasProgetti },
+    { to: "/archive/mia-selezione", title: "La mia selezione", icon: <Heart size={64} strokeWidth={1} />, empty: false },
   ];
 
   return (
