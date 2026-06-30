@@ -478,22 +478,61 @@ const ArtworkDetail = () => {
                 <span className="text-xs tabular-nums">{likeCount}</span>
               </button>
 
+              <button
+                onClick={() => {
+                  if (inWishlist(artwork.id)) removeWishlist(artwork.id);
+                  else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
+                }}
+                aria-label={inWishlist(artwork.id) ? "Rimuovi dalla selezione" : "Aggiungi alla selezione"}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  inWishlist(artwork.id)
+                    ? "text-amber-500 border-amber-500/40"
+                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                }`}
+              >
+                <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
+              </button>
+
               <TooltipProvider delayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
-                      onClick={() => setEnquiryOpen(true)}
+                      onClick={() => setInfoOpen(true)}
                       aria-label="Richiedi informazioni sull'opera"
                       className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                     >
-                      <Plus size={16} aria-hidden="true" />
+                      <Info size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="right" className="text-xs">
-                    Richiedi info / Enquire
+                    Informazioni / Richieste
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
+
+              <button
+                onClick={async () => {
+                  try {
+                    await generateArtworkPdf({
+                      title: artwork.title,
+                      year: artwork.year,
+                      dimensions: artwork.dimensions,
+                      technique: artwork.technique,
+                      price: artwork.price,
+                      discipline: discLabel,
+                      imageUrl: currentImageUrl || undefined,
+                    });
+                  } catch {
+                    // ignore
+                  }
+                }}
+                aria-label="Scarica scheda PDF"
+                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+              >
+                <Download size={16} aria-hidden="true" />
+              </button>
+
+              <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>
 
             {/* Thumbnails — larger */}
