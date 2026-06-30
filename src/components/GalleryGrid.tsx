@@ -56,7 +56,7 @@ const GalleryGrid = ({ items, discipline }: GalleryGridProps) => {
 
   return (
     <div
-      className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-10"
+      className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[260px] gap-5 md:gap-15"
       role="list"
       aria-label={`Galleria ${discipline}`}
     >
