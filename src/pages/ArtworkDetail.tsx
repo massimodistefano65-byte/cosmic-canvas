@@ -247,9 +247,9 @@ const ArtworkDetail = () => {
         imageUrl={fullResUrl}
         alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
       />
-      <EnquiryModal
-        isOpen={enquiryOpen}
-        onClose={() => setEnquiryOpen(false)}
+      <InfoRequestDialog
+        isOpen={infoOpen}
+        onClose={() => setInfoOpen(false)}
         artworkTitle={artwork.title}
         discipline={discipline || ""}
       />
