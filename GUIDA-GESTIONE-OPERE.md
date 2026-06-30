@@ -86,11 +86,16 @@ createArtwork({
   year: "2025",
   dimensions: "100 × 80 cm",
   technique: "Olio su tela",
-  price: "€ 1.500",              // opzionale
+  price: "€ 1.500",              // opzionale — scrivi "Collezione privata" per nascondere "Opzioni d'acquisto"
   details: 3,                     // numero di file detail (0 se nessuno)
   roomViews: 2,                   // numero di file room-view (0 se nessuno)
-  format: "jpg",                  // "jpg" (default) | "webp"
+  format: "webp",                 // "webp" (consigliato) | "jpg"
   published: true,                // true SOLO quando i file esistono fisicamente
+  // --- campi opzionali per filtri e certificato ---
+  colors: ["oro", "blu"],         // attiva i filtri colore in galleria
+  shape: "Verticale",             // attiva il filtro formato
+  genre: "Astratto",              // attiva il filtro genere
+  dedication: "Per Marco, con stima.\nMassimo", // dedica privata nel certificato (visibile solo con codice)
 }),
 ```
 
