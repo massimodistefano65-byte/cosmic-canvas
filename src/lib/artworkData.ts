@@ -1,44 +1,33 @@
-/**
- * ═══════════════════════════════════════════════════════════════════
- *  GESTIONE OPERE — GUIDA DEFINITIVA
- * ═══════════════════════════════════════════════════════════════════
- */
-
 export interface ArtworkFullData {
   id: string; title: string; year: string; dimensions: string; technique: string; price?: string;
   archiveId?: string; shopPlatform?: string; shopUrl?: string;
-  dedication?: string;
-  colors?: string[];
-  shape?: string;
-  genre?: string;
   preview: string; main: string; full: string; images: { url: string; label: string }[];
   published: boolean;
+  colors?: string[]; shape?: string; genre?: string; support?: string; dedication?: string;
 }
 
 interface CreateArtworkInput {
   slug: string; category: string; title: string; year: string; dimensions: string; technique: string;
   price?: string; archiveId?: string; shopPlatform?: string; shopUrl?: string;
-  dedication?: string;
   details?: number; roomViews?: number; format?: "jpg" | "webp"; published?: boolean;
+  colors?: string[]; shape?: string; genre?: string; support?: string; dedication?: string;
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
-  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, dedication, details = 0, roomViews = 0, format = "jpg", published = false } = input;
+  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false, colors = [], shape = "", genre = "", support = "", dedication = "" } = input;
   const dir = `/artworks/${category}/${slug}`;
   const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
   const ext = format;
   const images: { url: string; label: string }[] = [];
   for (let i = 1; i <= roomViews; i++) images.push({ url: `${base}-room-view-${i}.${ext}`, label: `Room View ${i}` });
   for (let i = 1; i <= details; i++) images.push({ url: `${base}-detail-${i}.${ext}`, label: `Dettaglio ${i}` });
-  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, dedication, preview: `${base}-preview.${ext}`, main: `${base}-1.${ext}`, full: `${base}-1.${ext}`, images, published };
+  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.${ext}`, main: `${base}-1.${ext}`, full: `${base}-1.${ext}`, images, published, colors, shape, genre, support, dedication };
 }
-
-type DisciplineData = Record<string, ArtworkFullData[]>;
 
 const painting = [
   createArtwork({ slug: "exotic-trip", category: "painting", title: "Exotic trip", year: "2014", dimensions: "120 x 60 cm", technique: "Mista su polistirene", price: "400", details: 8, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "ancient-traces", category: "painting", title: "Ancient traces", year: "2012", dimensions: "60 x 60 cm", technique: "Mista su polistirene", price: "250", details: 5, roomViews: 3, format: "webp", published: true }),
-  createArtwork({ slug: "acid-dream", category: "painting", title: "Acid dream", year: "2019", dimensions: "50 x 39 cm", technique: "mista su tela", price: "190", details: 5, roomViews: 4, format: "webp", published: true }),
+  createArtwork({ slug: "acid-dream", category: "painting", title: "Acid dream", year: "2019", dimensions: "50 x 39 cm", technique: "mista su tela", price: "190", details: 5, roomViews: 5, format: "webp", published: true }),
   createArtwork({ slug: "12-12-2012", category: "painting", title: "12 - 12 - 2012", year: "2012", dimensions: "52 x 56 cm", technique: "Mista su tavola", price: "500", details: 5, roomViews: 3, format: "webp", published: true }),
   createArtwork({ slug: "golden-dream", category: "painting", title: "Golden Dream", year: "2012", dimensions: "96 x 60 cm", technique: "Mista su legno", price: "Collezione privata", details: 5, roomViews: 3, format: "webp", published: true, archiveId: "MDS-P-V1HR" }),
   createArtwork({ slug: "bassa-marea", category: "painting", title: "Bassa marea", year: "2012", dimensions: "120 x 62 cm", technique: "Mista su polistirene", price: "800", details: 5, roomViews: 3, format: "webp", published: true }),
@@ -47,7 +36,7 @@ const painting = [
   createArtwork({ slug: "in-the-depths-of-the-soul", category: "painting", title: "In the depths of the soul", year: "2014", dimensions: "60 x 120 cm", technique: "mista su polistirene", price: "Collezione privata", details: 9, roomViews: 1, format: "webp", published: true, archiveId: "MDS-P-LA81" }),
   createArtwork({ slug: "occhio-della-mente", category: "painting", title: "L'occhio della mente", year: "2010", dimensions: "53 x 53 cm", technique: "Mista su legno", price: "300", details: 4, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "il-settimo-chakra", category: "painting", title: "Il settimo Chakra", year: "2019", dimensions: "60 x 60 cm", technique: "Mista su polistirene", price: "250", details: 5, roomViews: 3, format: "webp", published: true }),
-  createArtwork({ slug: "coscienza", category: "painting", title: "Coscienza", year: "2010", dimensions: "100 x 100 cm", technique: "Mista su tela", price: "Collezione privata", details: 5, roomViews: 1, format: "webp", published: true, archiveId: "MDS-P-G3R7" }),
+  createArtwork({ slug: "coscienza", category: "painting", title: "Coscienza", year: "2010", dimensions: "100 x 100 cm", technique: "Mista su tela", price: "Collezione privata", details: 5, roomViews: 1, format: "webp", published: true, archiveId: "MDS-P-G3R7", dedication: "A Stefania, con l’augurio che quest’opera possa essere una finestra aperta sulla serenità e sulla consapevolezza. Che la 'Coscienza' che abita questa tela porti nella tua casa e nella tua vita quell’armonia profonda che ci lega tutti in un unico, straordinario respiro.\n\nCon stima,\nMassimo Di Stefano" }),
   createArtwork({ slug: "abissi-mentali", category: "painting", title: "Abissi mentali", year: "2010", dimensions: "53 x 53 cm", technique: "Mista su legno", price: "250", details: 2, roomViews: 5, format: "webp", published: true }),
   createArtwork({ slug: "mutamento", category: "painting", title: "Mutamento", year: "2011", dimensions: "120 x 60 cm", technique: "Mista su polistirene", price: "400", details: 7, roomViews: 6, format: "webp", published: true }),
   createArtwork({ slug: "dancing-in-the-limbic-world", category: "painting", title: "Dancing in the limbic world", year: "2012", dimensions: "120 x 60 cm", technique: "Mista su polistirene", price: "Collezione privata", details: 2, roomViews: 2, format: "webp", published: true, archiveId: "MDS-P-Z1HQ" }),
@@ -157,7 +146,6 @@ const painting = [
   createArtwork({ slug: "falling-down", category: "painting", title: "Falling down", year: "2012", dimensions: "120 x 60 cm", technique: "mista su polistirene", price: "400", details: 0, roomViews: 0, format: "webp", published: false }),
   createArtwork({ slug: "sharp-blades", category: "painting", title: "Sharp blades", year: "2019", dimensions: "29 x 39 cm", technique: "Mista su cartoncino", price: "", details: 0, roomViews: 0, format: "webp", published: false }),
 ];
-
 const photography = [
   createArtwork({ slug: "and-the-rest-is-only-love", category: "photography", title: "And the rest is only love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "the-new-world", category: "photography", title: "The new world", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
@@ -182,7 +170,6 @@ const photography = [
   createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
 ];
-
 const digitalArt = [
   createArtwork({ slug: "anima-indomabile", category: "digital-art", title: "Anima indomabile", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "the-worst-side-of-me", category: "digital-art", title: "The worst side of me", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),
@@ -219,7 +206,6 @@ const digitalArt = [
   createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true }),
   createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale – Formato variabile", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true }),
 ];
-
 const tShirt = [
   createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful meditation", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 3, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax" }),
   createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29.90", details: 4, roomViews: 4, format: "webp", published: true, shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2" }),
@@ -237,7 +223,7 @@ const tShirt = [
   createArtwork({ slug: "my-mind-is-over", category: "t-shirt", title: "My mind is over", year: "2022", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "In arrivo", details: 6, roomViews: 5, format: "webp", published: true }),
 ];
 
-const data: DisciplineData = { painting, photography, "digital-art": digitalArt, "t-shirt": tShirt };
+const data = { painting, photography, "digital-art": digitalArt, "t-shirt": tShirt };
 
 export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] { return data[discipline] || []; }
 export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined { return data[discipline]?.find((a) => a.id === artworkId); }
