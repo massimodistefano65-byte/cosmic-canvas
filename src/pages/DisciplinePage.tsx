@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
+import GalleryFilters from "@/components/GalleryFilters";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -117,7 +118,29 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   if (!config) return null;
 
   const artworks = getArtworksByDiscipline(config.key);
-  const items: ArtworkItem[] = artworks.map((a) => ({
+
+  const [activeFilters, setActiveFilters] = useState<Record<string, string | null>>({});
+
+  const handleFilterChange = (cat: string, val: string | null) => {
+    if (cat === "reset") {
+      setActiveFilters({});
+    } else {
+      setActiveFilters((prev) => ({ ...prev, [cat]: val }));
+    }
+  };
+
+  const filteredArtworks = artworks.filter((a) => {
+    if (activeFilters.color && !a.colors?.includes(activeFilters.color)) return false;
+    if (activeFilters.shape && a.shape !== activeFilters.shape) return false;
+    if (activeFilters.genre && a.genre !== activeFilters.genre) return false;
+    return true;
+  });
+
+  const colorOptions = Array.from(new Set(artworks.flatMap((a) => a.colors || []))).map((c) => ({ key: c, label: c }));
+  const shapeOptions = Array.from(new Set(artworks.map((a) => a.shape).filter(Boolean) as string[])).map((s) => ({ key: s, label: s }));
+  const genreOptions = Array.from(new Set(artworks.map((a) => a.genre).filter(Boolean) as string[])).map((g) => ({ key: g, label: g }));
+
+  const items: ArtworkItem[] = filteredArtworks.map((a) => ({
     id: a.id,
     title: a.title,
     thumbnailUrl: a.preview,
@@ -183,6 +206,13 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
                 {t(config.introKey)}
               </p>
             </div>
+            <GalleryFilters
+              colors={colorOptions}
+              shapes={shapeOptions}
+              genres={genreOptions}
+              activeFilters={activeFilters}
+              onChange={handleFilterChange}
+            />
           </motion.div>
         </div>
 

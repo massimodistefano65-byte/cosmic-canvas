@@ -8,6 +8,7 @@ import { I18nProvider } from "@/lib/i18n";
 import Index from "./pages/Index";
 import Bio from "./pages/Bio";
 import Archive from "./pages/Archive";
+import MiaSelezione from "./pages/MiaSelezione";
 import MostreIndex from "./pages/archive/MostreIndex";
 import PercorsoEspositivo from "./pages/archive/PercorsoEspositivo";
 import VideoIndex from "./pages/archive/VideoIndex";
@@ -27,6 +28,7 @@ import AdminArtworksStatus from "./pages/AdminArtworksStatus";
 import AdminGestioneArchivio from "./pages/AdminGestioneArchivio";
 import Classifica from "./pages/Classifica";
 import CookieBanner from "./components/CookieBanner";
+import BackToTop from "./components/BackToTop";
 import { AudioProvider } from "./components/AudioProvider";
 
 const queryClient = new QueryClient();
@@ -56,6 +58,7 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
             <Route path="/archive" element={<Archive />} />
+            <Route path="/archive/mia-selezione" element={<MiaSelezione />} />
             <Route path="/archive/mostre" element={<MostreIndex />} />
             <Route path="/archive/mostre/percorso-espositivo" element={<PercorsoEspositivo />} />
             <Route path="/archive/video" element={<VideoIndex />} />
@@ -78,6 +81,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <BackToTop />
         </BrowserRouter>
         </AudioProvider>
       </TooltipProvider>

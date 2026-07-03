@@ -155,15 +155,13 @@ const CertificateDialog = ({ isOpen, onClose, archiveId, artworkTitle, dedicatio
                   </p>
                   <p
                     className="text-[#1A1A1A] text-lg md:text-xl leading-relaxed italic"
-                    style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400 }}
+                    style={{
+                      fontFamily: "'Cormorant Garamond', serif",
+                      fontWeight: 400,
+                      whiteSpace: "pre-wrap",
+                    }}
                   >
                     “{dedication}”
-                  </p>
-                  <p
-                    className="mt-5 text-xs tracking-[0.25em] uppercase text-[#1A1A1A]/55"
-                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    — Massimo Di Stefano
                   </p>
                 </div>
               )}
