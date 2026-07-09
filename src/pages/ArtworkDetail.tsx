@@ -419,7 +419,7 @@ const ArtworkDetail = () => {
                       style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
                       <span>{artwork.price}</span>
-                      {sealIcon(14)}
+                      {sealIcon(22)}
                     </button>
                   ) : (
                     <p className="text-[13px] text-foreground font-light"
