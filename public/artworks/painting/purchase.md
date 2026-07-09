@@ -8,4 +8,4 @@
 
 Ogni opera è spedita con certificato di autenticità firmato dall'artista. Il costo della spedizione viene comunicato su richiesta.
 
-*Per richiedere informazioni o un preventivo, utilizza il tasto **[+]** presente sulla pagina dell'opera.*
+*Per richiedere informazioni o un preventivo, utilizza l'icona **ⓘ** presente nella barra delle azioni della pagina dell'opera.*
