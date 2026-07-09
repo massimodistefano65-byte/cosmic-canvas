@@ -783,7 +783,7 @@ const ArtworkDetail = () => {
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={toggleLike}
-                aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                aria-label={liked ? "Rimuovi Mi piace" : "Mi piace"}
                 className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                   liked
                     ? "text-red-500 border-red-500/40"
