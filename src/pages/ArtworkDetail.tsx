@@ -798,7 +798,7 @@ const ArtworkDetail = () => {
                   if (inWishlist(artwork.id)) removeWishlist(artwork.id);
                   else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
                 }}
-                aria-label={inWishlist(artwork.id) ? "Rimuovi dalla selezione" : "Aggiungi alla selezione"}
+                aria-label={inWishlist(artwork.id) ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
                 className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
                   inWishlist(artwork.id)
                     ? "text-amber-500 border-amber-500/40"
