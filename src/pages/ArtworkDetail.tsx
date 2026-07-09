@@ -184,8 +184,8 @@ const ArtworkDetail = () => {
     <Stamp
       size={size}
       aria-hidden="true"
-      className="text-[#d4af7a] inline-block align-middle ml-2 animate-archive-pulse"
-      style={{ filter: "drop-shadow(0 0 4px rgba(212,175,122,0.55))" }}
+      className="text-[#d4af7a] inline-block align-middle ml-1 animate-archive-pulse"
+      style={{ filter: "drop-shadow(0 0 5px rgba(212,175,122,0.65))" }}
     />
   );
 
