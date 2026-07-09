@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
-import GalleryFilters from "@/components/GalleryFilters";
+import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange } from "@/components/FilterPanel";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { getArtworksByDiscipline } from "@/lib/artworkData";
 import { useI18n } from "@/lib/i18n";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
