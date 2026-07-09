@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
-import GalleryFilters from "@/components/GalleryFilters";
+import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange } from "@/components/FilterPanel";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { getArtworksByDiscipline } from "@/lib/artworkData";
 import { useI18n } from "@/lib/i18n";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
@@ -119,32 +119,38 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
 
   const artworks = getArtworksByDiscipline(config.key);
 
-  const [activeFilters, setActiveFilters] = useState<Record<string, string | null>>({});
+  const [filters, setFilters] = useState<FiltersState>(emptyFilters);
+  const [filterOpen, setFilterOpen] = useState(false);
 
-  const handleFilterChange = (cat: string, val: string | null) => {
-    if (cat === "reset") {
-      setActiveFilters({});
-    } else {
-      setActiveFilters((prev) => ({ ...prev, [cat]: val }));
-    }
-  };
+  const isTshirt = config.key === "t-shirt";
 
   const filteredArtworks = artworks.filter((a) => {
-    if (activeFilters.color && !a.colors?.includes(activeFilters.color)) return false;
-    if (activeFilters.shape && a.shape !== activeFilters.shape) return false;
-    if (activeFilters.genre && a.genre !== activeFilters.genre) return false;
+    if (filters.year && a.year !== filters.year) return false;
+    if (filters.shape) {
+      if (filters.shape === "Altro") {
+        if (a.shape === "Quadrato" || a.shape === "Rettangolare") return false;
+        if (!a.shape) return false;
+      } else if (a.shape !== filters.shape) return false;
+    }
+    if (filters.support && a.support !== filters.support) return false;
+    if (filters.genre && a.genre !== filters.genre) return false;
+    if (filters.price && !priceInRange(a.price, filters.price)) return false;
+    if (filters.colors.length > 0) {
+      if (!a.colors || !filters.colors.every((c) => a.colors!.includes(c))) return false;
+    }
     return true;
   });
 
-  const colorOptions = Array.from(new Set(artworks.flatMap((a) => a.colors || []))).map((c) => ({ key: c, label: c }));
-  const shapeOptions = Array.from(new Set(artworks.map((a) => a.shape).filter(Boolean) as string[])).map((s) => ({ key: s, label: s }));
-  const genreOptions = Array.from(new Set(artworks.map((a) => a.genre).filter(Boolean) as string[])).map((g) => ({ key: g, label: g }));
+  const supportOptions = Array.from(new Set(artworks.map((a) => a.support).filter(Boolean) as string[])).sort();
+  const genreOptions = Array.from(new Set(artworks.map((a) => a.genre).filter(Boolean) as string[])).sort();
 
   const items: ArtworkItem[] = filteredArtworks.map((a) => ({
     id: a.id,
     title: a.title,
     thumbnailUrl: a.preview,
   }));
+
+  const activeCount = countActive(filters);
 
   // Schema.org ItemList per la galleria
   const jsonLd = {
@@ -178,6 +184,15 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
         jsonLd={jsonLd}
       />
       <Navbar />
+      <FilterPanel
+        isOpen={filterOpen}
+        onClose={() => setFilterOpen(false)}
+        filters={filters}
+        onChange={setFilters}
+        onReset={() => setFilters(emptyFilters)}
+        supportOptions={supportOptions}
+        genreOptions={genreOptions}
+      />
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <Link
@@ -194,36 +209,68 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
           </Link>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1
-              className="mb-4"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white" }}
-            >
-              {config.h1}
-            </h1>
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <h1
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white", lineHeight: 1 }}
+              >
+                {config.h1}
+              </h1>
+              <button
+                onClick={() => !isTshirt && setFilterOpen(true)}
+                disabled={isTshirt}
+                aria-label={isTshirt ? "Filtri in arrivo" : "Apri filtri"}
+                title={isTshirt ? "Filtri in arrivo" : undefined}
+                className={`shrink-0 mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-[11px] tracking-[0.25em] uppercase ${
+                  isTshirt
+                    ? "border-border/30 text-muted-foreground/50 cursor-not-allowed opacity-60"
+                    : "border-border/40 text-foreground/80 hover:border-[#d4af7a] hover:text-[#d4af7a]"
+                }`}
+                style={{ fontFamily: "'Raleway', sans-serif" }}
+              >
+                <SlidersHorizontal size={13} aria-hidden="true" />
+                <span>
+                  Filtra
+                  {activeCount > 0 && (
+                    <span className="ml-1.5 text-[#d4af7a]">({activeCount})</span>
+                  )}
+                </span>
+              </button>
+            </div>
 
             <div className="prose prose-invert max-w-none mb-12">
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {t(config.introKey)}
               </p>
             </div>
-            <GalleryFilters
-              colors={colorOptions}
-              shapes={shapeOptions}
-              genres={genreOptions}
-              activeFilters={activeFilters}
-              onChange={handleFilterChange}
-            />
           </motion.div>
         </div>
 
         {/* Gallery full-width con padding minimo */}
         <div className="px-3 md:px-6">
-          <GalleryGrid
-            items={items}
-            discipline={config.key}
-            gradientFrom={config.gradientFrom}
-            gradientTo={config.gradientTo}
-          />
+          {items.length === 0 ? (
+            <div className="max-w-7xl mx-auto py-24 text-center">
+              <p
+                className="text-2xl text-muted-foreground/70 font-light"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Nessun risultato trovato
+              </p>
+              <button
+                onClick={() => setFilters(emptyFilters)}
+                className="mt-4 text-[11px] tracking-[0.2em] uppercase text-[#d4af7a] hover:underline"
+                style={{ fontFamily: "'Raleway', sans-serif" }}
+              >
+                Rimuovi filtri
+              </button>
+            </div>
+          ) : (
+            <GalleryGrid
+              items={items}
+              discipline={config.key}
+              gradientFrom={config.gradientFrom}
+              gradientTo={config.gradientTo}
+            />
+          )}
         </div>
       </div>
     </main>

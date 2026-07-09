@@ -184,8 +184,8 @@ const ArtworkDetail = () => {
     <Stamp
       size={size}
       aria-hidden="true"
-      className="text-[#d4af7a] inline-block align-middle ml-2 animate-archive-pulse"
-      style={{ filter: "drop-shadow(0 0 4px rgba(212,175,122,0.55))" }}
+      className="text-[#d4af7a] inline-block align-middle ml-1 animate-archive-pulse"
+      style={{ filter: "drop-shadow(0 0 5px rgba(212,175,122,0.65))" }}
     />
   );
 
@@ -419,7 +419,7 @@ const ArtworkDetail = () => {
                       style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
                       <span>{artwork.price}</span>
-                      {sealIcon(14)}
+                      {sealIcon(22)}
                     </button>
                   ) : (
                     <p className="text-[13px] text-foreground font-light"
@@ -464,76 +464,96 @@ const ArtworkDetail = () => {
             </div>
 
             {/* Action buttons — below metadata */}
-            <div className="flex items-center gap-3 pt-2">
-              <button
-                onClick={toggleLike}
-                aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
-                className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
-                  liked
-                    ? "text-red-500 border-red-500/40"
-                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
-                }`}
-              >
-                <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
-                <span className="text-xs tabular-nums">{likeCount}</span>
-              </button>
+            <TooltipProvider delayDuration={200}>
+              <div className="flex items-center gap-3 pt-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={toggleLike}
+                      aria-label={liked ? "Rimuovi Mi piace" : "Mi piace"}
+                      className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
+                        liked
+                          ? "text-red-500 border-red-500/40"
+                          : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                      }`}
+                    >
+                      <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+                      <span className="text-xs tabular-nums">{likeCount}</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Mi piace</TooltipContent>
+                </Tooltip>
 
-              <button
-                onClick={() => {
-                  if (inWishlist(artwork.id)) removeWishlist(artwork.id);
-                  else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
-                }}
-                aria-label={inWishlist(artwork.id) ? "Rimuovi dalla selezione" : "Aggiungi alla selezione"}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                  inWishlist(artwork.id)
-                    ? "text-amber-500 border-amber-500/40"
-                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
-                }`}
-              >
-                <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
-              </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        if (inWishlist(artwork.id)) removeWishlist(artwork.id);
+                        else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
+                      }}
+                      aria-label={inWishlist(artwork.id) ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                      className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                        inWishlist(artwork.id)
+                          ? "text-amber-500 border-amber-500/40"
+                          : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                      }`}
+                    >
+                      <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Aggiungi ai preferiti</TooltipContent>
+                </Tooltip>
 
-              <TooltipProvider delayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      aria-label="Richiedi informazioni sull'opera"
+                      aria-label="Richiedi informazioni"
                       className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                     >
                       <Info size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="right" className="text-xs">
-                    Informazioni / Richieste
-                  </TooltipContent>
+                  <TooltipContent side="top" className="text-xs">Richiedi informazioni</TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
 
-              <button
-                onClick={async () => {
-                  try {
-                    await generateArtworkPdf({
-                      title: artwork.title,
-                      year: artwork.year,
-                      dimensions: artwork.dimensions,
-                      technique: artwork.technique,
-                      price: artwork.price,
-                      discipline: discLabel,
-                      imageUrl: currentImageUrl || undefined,
-                    });
-                  } catch {
-                    // ignore
-                  }
-                }}
-                aria-label="Scarica scheda PDF"
-                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
-              >
-                <Download size={16} aria-hidden="true" />
-              </button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await generateArtworkPdf({
+                            title: artwork.title,
+                            year: artwork.year,
+                            dimensions: artwork.dimensions,
+                            technique: artwork.technique,
+                            price: artwork.price,
+                            discipline: discLabel,
+                            imageUrl: currentImageUrl || undefined,
+                          });
+                        } catch {
+                          // ignore
+                        }
+                      }}
+                      aria-label="Scarica scheda opera (PDF)"
+                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                    >
+                      <Download size={16} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Scarica scheda opera (PDF)</TooltipContent>
+                </Tooltip>
 
-              <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
-            </div>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex">
+                      <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Condividi</TooltipContent>
+                </Tooltip>
+              </div>
+            </TooltipProvider>
 
             {/* Thumbnails — larger */}
             {allImages.length > 1 && (
@@ -718,7 +738,7 @@ const ArtworkDetail = () => {
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
                       <span>{artwork.price}</span>
-                      {sealIcon(13)}
+                      {sealIcon(20)}
                     </button>
                   ) : (
                     <p className="text-xs text-foreground font-light">
@@ -763,7 +783,7 @@ const ArtworkDetail = () => {
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={toggleLike}
-                aria-label={liked ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
+                aria-label={liked ? "Rimuovi Mi piace" : "Mi piace"}
                 className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                   liked
                     ? "text-red-500 border-red-500/40"
@@ -778,7 +798,7 @@ const ArtworkDetail = () => {
                   if (inWishlist(artwork.id)) removeWishlist(artwork.id);
                   else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
                 }}
-                aria-label={inWishlist(artwork.id) ? "Rimuovi dalla selezione" : "Aggiungi alla selezione"}
+                aria-label={inWishlist(artwork.id) ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
                 className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
                   inWishlist(artwork.id)
                     ? "text-amber-500 border-amber-500/40"

@@ -1,164 +1,59 @@
-# Piano di rifinitura e funzionalità evolutive
+# Piano di intervento
 
-Layout desktop 6 colonne escluso (lo gestisci tu via merge).
+## PARTE 1 — Nuovo sistema filtri (Painting / Photography / Digital Art; predisposto per T-shirt)
 
----
+Elimino l'attuale `GalleryFilters.tsx` (barra orizzontale di chip) e lo sostituisco con un pannello popup elegante allineato al mockup allegato.
 
-## 1. CertificateDialog — dedica privata
+### 1.1 Pulsante "FILTRA"
+- Nuova posizione in `DisciplinePage.tsx`: sulla stessa riga del titolo `<h1>` (`flex items-center justify-between`), allineato a destra.
+- Etichetta `FILTRA` con icona `SlidersHorizontal` (Lucide), stile bordo sottile su sfondo trasparente coerente con gli altri bottoni del sito.
+- Contatore dinamico: quando ci sono N filtri attivi mostra `FILTRA (N)` in accento oro.
+- Su T-shirt il pulsante viene renderizzato ma disabilitato (opacità ridotta, tooltip "In arrivo") — logica pronta, dati non collegati.
 
-`src/components/CertificateDialog.tsx`:
-- Rimuovere il blocco firma `— Massimo Di Stefano`.
-- Aggiungere `whiteSpace: "pre-wrap"` al paragrafo della dedica per rispettare i `\n`.
-- Mantenere font Cormorant italic e cornice attuale.
+### 1.2 Pannello filtri (nuovo componente `FilterPanel.tsx`)
+- Overlay controllato tramite `Dialog` shadcn per riusare l'animazione fade+scale già presente nei popup avorio del sito (coerenza con `MeaningDialog`, `EnquiryModal`).
+- Sfondo avorio (`bg-[#f5f0e6]` come gli altri popup) con testo scuro, bordo oro sottile, larghezza `max-w-3xl`.
+- Sezioni (grid 2 colonne su desktop, 1 su mobile):
+  - **ANNO** — `<select>` nativo stilizzato: opzione "Tutti gli anni" + range dinamico `2000 → new Date().getFullYear()` (aggiornamento automatico).
+  - **FORMA** — chip: Quadrato, Rettangolare, Altro.
+  - **SUPPORTO** — chip: valori derivati dinamicamente dai `support` presenti nelle opere della disciplina corrente (Tela, Legno/Tavola, Carta, Polistirene, Metallo, Forex, Acetato…).
+  - **FASCIA DI PREZZO** — chip fissi: `0–500`, `500–1.000`, `1.000–3.000`, `Oltre 3.000`. Le opere "Collezione privata" vengono escluse dai filtri di prezzo.
+  - **GENERE** — chip: valori derivati dai `genre` presenti.
+  - **COLORI DOMINANTI** — griglia di cerchietti (18 colori richiesti). Ciascuno con tooltip nome al hover + micro-transform (`hover:scale-110 hover:-translate-y-0.5`). Stato attivo: bordo oro spesso + ombra sottile.
+- Chip: stato normale trasparente/bordo scuro sul fondo avorio; stato attivo `bg-white text-foreground border-white` (bianchi e restano bianchi come richiesto).
+- Footer: `RESET FILTRI` a sinistra (link testuale), `APPLICA` a destra (bottone bordato oro).
 
----
+### 1.3 Logica
+- Stato filtri centralizzato in `DisciplinePage.tsx` (già presente). Si applica solo al click su APPLICA; RESET svuota.
+- Fix del bug segnalato: la lista opzioni viene calcolata dai campi reali (`year`, `support`, `colors`, `shape`, `genre`, `price`) leggendo `getArtworksByDiscipline(config.key)` — quindi Anno e Supporto compariranno correttamente.
+- Se `filteredArtworks.length === 0` la griglia mostra il testo centrato **"Nessun risultato trovato"** (stile muted, tipografia Cormorant coerente).
 
-## 2. Pulizia console / asset statici (Aruba IIS)
+## PARTE 2 — Rifiniture UI
 
-- `public/web.config`: aggiungere MIME map per `.webmanifest` (`application/manifest+json`), `.json` (`application/json`), `.avif`, `.mp3`/`.ogg` (se serviranno per audio), header `Cache-Control` per `/images` e `/artworks`.
-- `index.html`: verificare che tutti i `<link rel="preload">` puntino a file realmente esistenti (rimuovere preload Hero JPG, vedi §3); rimuovere eventuali riferimenti a favicon/manifest non presenti.
-- `public/site.webmanifest`: validare che icone referenziate esistano in `public/`.
-- Verifica con Playwright headless della console e network panel post-fix.
+### 2.1 Popup "Opzioni d'acquisto"
+- In `public/artworks/*/purchase.md` (le 3 varianti Painting/Photography/Digital) sostituisco il testo che cita `+` con la nuova formulazione, includendo il glifo `ⓘ` in `**bold**`. Verifico che il renderer markdown supporti il grassetto (già in uso).
 
----
+### 2.2 Sigillo d'Oro (Collezione privata)
+- In `ArtworkDetail.tsx` riduco il gap tra il badge sigillo e il testo "Collezione privata" (da `gap-3`/`mt-*` correnti a `gap-1.5`, blocco flex compatto).
+- Aumento dimensione sigillo: da corrente (≈40px) a `w-14 h-14` desktop / `w-12 h-12` mobile, mantenendo drop-shadow oro.
 
-## 3. Hero — solo WebP
+### 2.3 Tooltip icone toolbar opera (solo desktop)
+- Uso `Tooltip` di shadcn già disponibile. Avvolgo ognuna delle 5 icone in `ArtworkDetail.tsx`:
+  - Cuore → "Mi piace"
+  - Segnalibro → "Aggiungi ai preferiti"
+  - ⓘ → "Richiedi informazioni"
+  - Download → "Scarica scheda opera (PDF)"
+  - Share → "Condividi"
+- Tooltip mostrati solo con hover mouse (comportamento nativo Radix, invisibile su touch).
 
-- `src/components/HeroSection.tsx`: sostituire `<picture><source/><img/></picture>` con un singolo `<img src="/images/hero-background.webp">`. Aggiornare anche il preload check (`new Image()`).
-- `index.html`: rimuovere ogni `<link rel="preload" as="image" href=".../hero-background.jpg">`; mantenere solo il preload WebP.
-- Nessun altro riferimento al JPG nel codice; il file `public/images/hero-background.jpg` potrai cancellarlo manualmente.
+### 2.4 Fluidità apertura popup e Lightbox
+- Verifico i `Dialog` shadcn: nel file `src/components/ui/dialog.tsx` porto la durata delle animazioni `data-[state=open]:duration-*` da default (~200ms) a `500ms` con easing dolce (`ease-out`) — modifica isolata alle classi Tailwind, senza toccare logica.
+- Stessa cosa per il Lightbox della galleria: `AnimatePresence` in `Lightbox.tsx` → aumento `transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}`.
+- Se la modifica destabilizza altri popup (verifica visiva Playwright), annullo l'intervento sulla dialog globale e limito il tuning al solo `MeaningDialog` / `EnquiryModal` / `CertificateDialog` / `Lightbox` (override locale). La stabilità ha priorità.
 
----
+## Dettagli tecnici
 
-## 4. Toolbar minimal nella pagina opera
-
-`src/pages/ArtworkDetail.tsx`: riorganizzare la riga esistente (like + "+") in una singola fila discreta, stessa dimensione icone (≈18px), stesso gap, hover sottile:
-
-```
-♥ like     ⓘ info     ☆ bookmark     ⤓ pdf     ⇪ share
-```
-
-- `Heart` (esistente, `useArtworkLike`)
-- `Info` (Lucide) → apre nuovo **InfoRequestDialog** (§5), sostituisce l'attuale "+"
-- `Bookmark` (Lucide) → wishlist (§6)
-- `Download` (Lucide) → genera PDF (§7)
-- `Share2` (Lucide) → apre **ShareMenu** (§8)
-
-Nessuna toolbar, nessun bordo: solo una `<div className="flex items-center gap-5">`.
-
----
-
-## 5. InfoRequestDialog (sostituisce EnquiryModal generico)
-
-Nuovo `src/components/InfoRequestDialog.tsx`:
-- Dialog elegante (stesso stile di CertificateDialog).
-- Step 1: lista radio tipizzata
-  - Richiesta acquisto
-  - Richiesta esposizione
-  - Richiesta collaborazione
-  - Richiesta stampa
-  - Richiesta licensing
-- Step 2: form (nome, email, messaggio) prepopolato con oggetto contestuale: `[{Tipo}] {Titolo opera} ({Anno})`.
-- Invio via Formspree (endpoint già in uso per Contatti).
-
----
-
-## 6. Wishlist / Preferiti
-
-- `src/hooks/useWishlist.ts`: hook con `localStorage` (`mds_wishlist` = array di `{discipline, artworkId, addedAt}`), API `toggle / has / list / clear`.
-- Toggle dall'icona Bookmark in ArtworkDetail (icona piena se salvato, oro `#d4af7a`).
-- Nuova pagina `src/pages/archive/MiaSelezione.tsx` mostrata come 6ª card discreta nell'Archivio (`Archive.tsx`) con label "La mia selezione" e contatore. Layout coerente con `GalleryGrid`.
-- Route `/archive/mia-selezione` registrata in `App.tsx`.
-- Aggiornare `scripts/generate-sitemap.ts` (escludere la route — è personale).
-
----
-
-## 7. PDF scheda opera (auto-generato)
-
-- Dipendenza: `jspdf`.
-- `src/lib/generateArtworkPdf.ts`: funzione che riceve `ArtworkFullData`, costruisce un A4 sobrio:
-  - Header tipografico Cormorant: titolo opera + anno
-  - Immagine centrata (caricata dal CDN, convertita a dataURL con canvas)
-  - Blocco metadati Raleway uppercase letter-spacing: tecnica, dimensioni, supporto, anno, codice archivio
-  - Eventuale `meaning.md` (fetch dello stesso file usato da `MeaningDialog`) reso come paragrafo serif giustificato
-  - Footer: `massimodistefano.art` + © anno corrente
-- File salvato come `{slug}-scheda.pdf`.
-- Niente "prezzo" sulla scheda (estetica archivio, non commerciale).
-
----
-
-## 8. Share menu
-
-- `src/components/ShareMenu.tsx`: piccolo popover (`@/components/ui/popover`) che si apre dall'icona `Share2`.
-- Voci: WhatsApp, Facebook, X, Telegram, Copia link (toast Sonner di conferma).
-- Instagram: omesso (no web share API affidabile); su mobile, opzionalmente, `navigator.share()` come fallback se disponibile.
-- URL condiviso: URL canonico opera + titolo come testo.
-
----
-
-## 9. Struttura filtri (scalabile, dati non ancora popolati)
-
-Predisposizione completa, attivazione progressiva:
-
-**Data layer** (`src/lib/artworkData.ts`):
-- Estensione `ArtworkFullData` (tutti opzionali):
-  ```
-  colors?: string[]
-  shape?: "rettangolare" | "quadrata" | "verticale" | "orizzontale" | "tondo"
-  genre?: string[]
-  ```
-- `technique`, `support`, `year` già presenti.
-
-**UI filtri** (`src/components/GalleryFilters.tsx`):
-- Posizione: tra sottotitolo disciplina e `GalleryGrid` in `DisciplinePage.tsx`.
-- Pattern minimal: una singola icona `SlidersHorizontal` che apre un `Popover` con 6 piccoli dropdown (`Select` multipli o checkbox).
-- Stato filtri in URL search params (`?colore=giallo,arancione&supporto=tela`) per condivisibilità e scroll restoration compatibile.
-- Logica combinabile (AND tra campi, OR dentro lo stesso campo).
-- Le tendine mostrano solo i valori effettivamente presenti nelle opere di quella disciplina (auto-derivati): finché non popoli i campi, i menu restano vuoti/nascosti automaticamente.
-
-**Guida** (`GUIDA-GESTIONE-OPERE.md`):
-- Nuova sezione "Metadati filtri" con elenco valori ammessi per `colors`, `shape`, `genre` ed esempio JSON.
-- Sezione "Dediche private" già presente: nota su `\n` e firma manuale.
-- Sezione "Hero" semplificata (solo WebP).
-
----
-
-## 10. Back to Top
-
-- `src/components/BackToTop.tsx`: piccolo cerchio `ArrowUp` Lucide (≈18px), posizione fixed bottom-6 right-6, z-50.
-- Appare quando `scrollY > 400` (on scroll listener throttled).
-- Click: `window.scrollTo({ top: 0, behavior: 'smooth' })`.
-- Stile minimale: sfondo `rgba(26,26,26,0.4)`, bordo sottile oro `#d4af7a`, colore icona `#FDFCF0`, opacità 0 → 1 con transition 300ms, backdrop-blur. Nessuna label testuale.
-- Inserito una volta in `App.tsx` (dopo routes) perché sia globale.
-
----
-
-## File toccati (riepilogo)
-
-Modifiche:
-- `src/components/CertificateDialog.tsx`
-- `src/components/HeroSection.tsx`
-- `src/pages/ArtworkDetail.tsx`
-- `src/pages/Archive.tsx`
-- `src/pages/DisciplinePage.tsx`
-- `src/lib/artworkData.ts`
-- `src/App.tsx`
-- `index.html`
-- `public/web.config`
-- `GUIDA-GESTIONE-OPERE.md`
-
-Nuovi:
-- `src/components/BackToTop.tsx`
-- `src/components/InfoRequestDialog.tsx`
-- `src/components/ShareMenu.tsx`
-- `src/components/GalleryFilters.tsx`
-- `src/hooks/useWishlist.ts`
-- `src/lib/generateArtworkPdf.ts`
-- `src/pages/archive/MiaSelezione.tsx`
-
-Dipendenze: `jspdf`.
-
-## Validazione finale
-
-- Playwright headless su `/`, una pagina opera e `/painting`: screenshot toolbar, console pulita, network senza 404 e senza doppio download Hero.
-- Verifica wishlist persistente su reload, filtri reattivi all'URL, PDF scaricato e apribile, BackToTop visibile dopo scroll su pagine lunghe.
+- **File nuovi:** `src/components/FilterPanel.tsx`.
+- **File modificati:** `src/components/GalleryFilters.tsx` (sostituito da wrapper minimale che espone il bottone + apre `FilterPanel`), `src/pages/DisciplinePage.tsx` (bottone in header, gestione empty state), `src/pages/ArtworkDetail.tsx` (Tooltip + sigillo), `public/artworks/*/purchase.md` (testo aggiornato), `src/components/Lightbox.tsx` (durata animazione), eventualmente `src/components/ui/dialog.tsx`.
+- **Nessuna modifica al data layer:** i campi (`year`, `support`, `colors`, `shape`, `genre`, `price`) sono già presenti in `artworkData.ts`.
+- **Validazione:** Playwright headless su `/painting`, apertura pannello filtri, selezione multipla, verifica screenshot + empty state; verifica tooltip su `/painting/coscienza`; verifica popup "Opzioni d'acquisto" e Certificate.
