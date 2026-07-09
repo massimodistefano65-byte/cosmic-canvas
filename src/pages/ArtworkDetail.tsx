@@ -718,7 +718,7 @@ const ArtworkDetail = () => {
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
                       <span>{artwork.price}</span>
-                      {sealIcon(13)}
+                      {sealIcon(20)}
                     </button>
                   ) : (
                     <p className="text-xs text-foreground font-light">
