@@ -256,7 +256,7 @@ export default function FilterPanel({
                             className={`w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
                               active
                                 ? "ring-2 ring-offset-2 ring-offset-[#FDFCF0] ring-[#d4af7a] shadow-md"
-                                : "ring-1 ring-[#1A1A1A]/15"
+                                : "ring-1 ring-[#1A1A1A]/50"
                             }`}
                             style={{
                               background: c.hex,
