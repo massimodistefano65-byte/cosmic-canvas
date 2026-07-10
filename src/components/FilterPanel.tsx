@@ -152,7 +152,7 @@ export default function FilterPanel({
             <select
               value={filters.year ?? ""}
               onChange={(e) => setField("year", e.target.value || null)}
-              className="w-full h-10 rounded-md border border-[#1A1A1A]/25 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#d4af7a]"
+              className="w-full h-10 rounded-md border border-[#1A1A1A]/70 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]"
             >
               <option value="">Tutti gli anni</option>
               {years.map((y) => (
