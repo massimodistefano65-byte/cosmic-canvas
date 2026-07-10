@@ -136,7 +136,7 @@ export default function FilterPanel({
           </DialogTitle>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
+            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/80 hover:text-[#1A1A1A]"
             aria-label="Chiudi"
           >
             <X size={22} />
