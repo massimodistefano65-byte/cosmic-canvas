@@ -1,59 +1,45 @@
-# Piano di intervento
+## Modifiche mirate
 
-## PARTE 1 — Nuovo sistema filtri (Painting / Photography / Digital Art; predisposto per T-shirt)
+### 1. Contrasto Pop-up Filtri (`FilterPanel.tsx`)
 
-Elimino l'attuale `GalleryFilters.tsx` (barra orizzontale di chip) e lo sostituisco con un pannello popup elegante allineato al mockup allegato.
+Uniformare tutti i testi/bordi al colore scuro nitido del titolo (`#1A1A1A` pieno, senza opacità ridotta).
 
-### 1.1 Pulsante "FILTRA"
-- Nuova posizione in `DisciplinePage.tsx`: sulla stessa riga del titolo `<h1>` (`flex items-center justify-between`), allineato a destra.
-- Etichetta `FILTRA` con icona `SlidersHorizontal` (Lucide), stile bordo sottile su sfondo trasparente coerente con gli altri bottoni del sito.
-- Contatore dinamico: quando ci sono N filtri attivi mostra `FILTRA (N)` in accento oro.
-- Su T-shirt il pulsante viene renderizzato ma disabilitato (opacità ridotta, tooltip "In arrivo") — logica pronta, dati non collegati.
+- **Etichette sezioni** (Anno, Forma, Supporto, Prezzo, Genere, Colori dominanti): da `text-[#1A1A1A]/60` → `text-[#1A1A1A]` con peso `font-medium`.
+- **Chip inattivi**: bordo da `border-[#1A1A1A]/25` → `border-[#1A1A1A]/70`; testo da `text-[#1A1A1A]/70` → `text-[#1A1A1A]`. Hover: bordo pieno `#1A1A1A`.
+- **Chip attivi**: mantenuti su sfondo scuro (`bg-[#1A1A1A] text-[#FDFCF0]`) invece del bianco attuale, così spiccano davvero sull'avorio.
+- **Select "Anno"**: bordo `border-[#1A1A1A]/70`, testo pieno.
+- **Bordi separatori header/footer**: da `border-[#D4BE96]/20` → `border-[#1A1A1A]/20` per definizione netta.
+- **Footer — "Rimuovi filtri"**: da `text-[#1A1A1A]/60` → `text-[#1A1A1A]` con underline sottile hover.
+- **Footer — "Applica"**: bordo `border-[#1A1A1A]`, testo `text-[#1A1A1A]`, hover `bg-[#1A1A1A] text-[#FDFCF0]` (versione scura del CTA invece dell'oro sbiadito).
+- **Icona X**: da `text-[#1A1A1A]/40` → `text-[#1A1A1A]/80`.
+- **Cerchietti colore inattivi**: ring da `ring-[#1A1A1A]/15` → `ring-[#1A1A1A]/50` per bordo visibile.
 
-### 1.2 Pannello filtri (nuovo componente `FilterPanel.tsx`)
-- Overlay controllato tramite `Dialog` shadcn per riusare l'animazione fade+scale già presente nei popup avorio del sito (coerenza con `MeaningDialog`, `EnquiryModal`).
-- Sfondo avorio (`bg-[#f5f0e6]` come gli altri popup) con testo scuro, bordo oro sottile, larghezza `max-w-3xl`.
-- Sezioni (grid 2 colonne su desktop, 1 su mobile):
-  - **ANNO** — `<select>` nativo stilizzato: opzione "Tutti gli anni" + range dinamico `2000 → new Date().getFullYear()` (aggiornamento automatico).
-  - **FORMA** — chip: Quadrato, Rettangolare, Altro.
-  - **SUPPORTO** — chip: valori derivati dinamicamente dai `support` presenti nelle opere della disciplina corrente (Tela, Legno/Tavola, Carta, Polistirene, Metallo, Forex, Acetato…).
-  - **FASCIA DI PREZZO** — chip fissi: `0–500`, `500–1.000`, `1.000–3.000`, `Oltre 3.000`. Le opere "Collezione privata" vengono escluse dai filtri di prezzo.
-  - **GENERE** — chip: valori derivati dai `genre` presenti.
-  - **COLORI DOMINANTI** — griglia di cerchietti (18 colori richiesti). Ciascuno con tooltip nome al hover + micro-transform (`hover:scale-110 hover:-translate-y-0.5`). Stato attivo: bordo oro spesso + ombra sottile.
-- Chip: stato normale trasparente/bordo scuro sul fondo avorio; stato attivo `bg-white text-foreground border-white` (bianchi e restano bianchi come richiesto).
-- Footer: `RESET FILTRI` a sinistra (link testuale), `APPLICA` a destra (bottone bordato oro).
+Nessun cambio di layout, spaziature o struttura — solo tonalità.
 
-### 1.3 Logica
-- Stato filtri centralizzato in `DisciplinePage.tsx` (già presente). Si applica solo al click su APPLICA; RESET svuota.
-- Fix del bug segnalato: la lista opzioni viene calcolata dai campi reali (`year`, `support`, `colors`, `shape`, `genre`, `price`) leggendo `getArtworksByDiscipline(config.key)` — quindi Anno e Supporto compariranno correttamente.
-- Se `filteredArtworks.length === 0` la griglia mostra il testo centrato **"Nessun risultato trovato"** (stile muted, tipografia Cormorant coerente).
+### 2. Fluidità Lightbox + cambio miniatura (`ArtworkDetail.tsx` + `Lightbox.tsx`)
 
-## PARTE 2 — Rifiniture UI
+**Perché ora sembra "di scatto":** il `<img>` principale cambia `src` istantaneamente quando l'utente clicca su una miniatura; non c'è nessuna transizione di opacità applicata al cambio immagine. Il Lightbox ha già la transizione a 0.55s sul mount, ma anche lì il cambio `src` interno (se presente) sarebbe brusco.
 
-### 2.1 Popup "Opzioni d'acquisto"
-- In `public/artworks/*/purchase.md` (le 3 varianti Painting/Photography/Digital) sostituisco il testo che cita `+` con la nuova formulazione, includendo il glifo `ⓘ` in `**bold**`. Verifico che il renderer markdown supporti il grassetto (già in uso).
+**Soluzioni:**
 
-### 2.2 Sigillo d'Oro (Collezione privata)
-- In `ArtworkDetail.tsx` riduco il gap tra il badge sigillo e il testo "Collezione privata" (da `gap-3`/`mt-*` correnti a `gap-1.5`, blocco flex compatto).
-- Aumento dimensione sigillo: da corrente (≈40px) a `w-14 h-14` desktop / `w-12 h-12` mobile, mantenendo drop-shadow oro.
+**a) Cambio miniatura in pagina opera** (`ArtworkDetail.tsx`, entrambe le viste desktop/mobile, righe ~309-324 e ~648-660):
+- Sostituire `<img>` statico con `<AnimatePresence mode="wait">` + `<motion.img key={selectedImage} ... initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5, ease:[0.22,1,0.36,1]}} />`.
+- Il `key={selectedImage}` forza il remount → framer-motion cross-fade tra immagini.
+- Preservare tutti gli attributi esistenti (`loading`, `decoding`, `fetchPriority`, `onError`, alt, className).
 
-### 2.3 Tooltip icone toolbar opera (solo desktop)
-- Uso `Tooltip` di shadcn già disponibile. Avvolgo ognuna delle 5 icone in `ArtworkDetail.tsx`:
-  - Cuore → "Mi piace"
-  - Segnalibro → "Aggiungi ai preferiti"
-  - ⓘ → "Richiedi informazioni"
-  - Download → "Scarica scheda opera (PDF)"
-  - Share → "Condividi"
-- Tooltip mostrati solo con hover mouse (comportamento nativo Radix, invisibile su touch).
+**b) Lightbox — cambio immagine interno** (`Lightbox.tsx`):
+- Attualmente `<motion.img>` anima solo al mount/unmount. Aggiungere `key={imageUrl}` così cambia con cross-fade quando (in futuro) si naviga tra immagini dentro il lightbox.
+- Durata già a 0.55s: OK.
 
-### 2.4 Fluidità apertura popup e Lightbox
-- Verifico i `Dialog` shadcn: nel file `src/components/ui/dialog.tsx` porto la durata delle animazioni `data-[state=open]:duration-*` da default (~200ms) a `500ms` con easing dolce (`ease-out`) — modifica isolata alle classi Tailwind, senza toccare logica.
-- Stessa cosa per il Lightbox della galleria: `AnimatePresence` in `Lightbox.tsx` → aumento `transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}`.
-- Se la modifica destabilizza altri popup (verifica visiva Playwright), annullo l'intervento sulla dialog globale e limito il tuning al solo `MeaningDialog` / `EnquiryModal` / `CertificateDialog` / `Lightbox` (override locale). La stabilità ha priorità.
+**c) Miniature strip** (righe ~567 e ~854):
+- Aggiungere `transition-all duration-500 ease-out` alla thumbnail attiva/inattiva se manca (verificare in fase di build).
 
-## Dettagli tecnici
+Nessun cambio al layout, alle dimensioni o alla logica di selezione.
 
-- **File nuovi:** `src/components/FilterPanel.tsx`.
-- **File modificati:** `src/components/GalleryFilters.tsx` (sostituito da wrapper minimale che espone il bottone + apre `FilterPanel`), `src/pages/DisciplinePage.tsx` (bottone in header, gestione empty state), `src/pages/ArtworkDetail.tsx` (Tooltip + sigillo), `public/artworks/*/purchase.md` (testo aggiornato), `src/components/Lightbox.tsx` (durata animazione), eventualmente `src/components/ui/dialog.tsx`.
-- **Nessuna modifica al data layer:** i campi (`year`, `support`, `colors`, `shape`, `genre`, `price`) sono già presenti in `artworkData.ts`.
-- **Validazione:** Playwright headless su `/painting`, apertura pannello filtri, selezione multipla, verifica screenshot + empty state; verifica tooltip su `/painting/coscienza`; verifica popup "Opzioni d'acquisto" e Certificate.
+### File toccati
+
+- `src/components/FilterPanel.tsx` — solo classi Tailwind (colori, opacità, hover states).
+- `src/pages/ArtworkDetail.tsx` — wrap immagine principale con `motion.img` + `AnimatePresence` (2 punti: desktop + mobile).
+- `src/components/Lightbox.tsx` — aggiungere `key={imageUrl}` a `motion.img`.
+
+Nessuna nuova dipendenza (`framer-motion` già usato).

@@ -108,14 +108,14 @@ export default function FilterPanel({
   const chipBase =
     "px-3 py-1.5 rounded-full border text-[11px] tracking-[0.15em] uppercase transition-all duration-300 whitespace-nowrap";
   const chipInactive =
-    "border-[#1A1A1A]/25 text-[#1A1A1A]/70 hover:border-[#1A1A1A]/50 hover:text-[#1A1A1A]";
+    "border-[#1A1A1A]/70 text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5";
   const chipActive =
-    "bg-white text-[#1A1A1A] border-white shadow-sm";
+    "bg-[#1A1A1A] text-[#FDFCF0] border-[#1A1A1A] shadow-sm";
 
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
       <p
-        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A]/60 mb-3"
+        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A] font-medium mb-3"
         style={{ fontFamily: "'Raleway', sans-serif" }}
       >
         {label}
@@ -127,7 +127,7 @@ export default function FilterPanel({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-3xl w-[95vw] max-h-[88vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl">
-        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-12 pt-8 pb-4 flex justify-between items-start border-b border-[#D4BE96]/20">
+        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-12 pt-8 pb-4 flex justify-between items-start border-b border-[#1A1A1A]/20">
           <DialogTitle
             className="text-2xl md:text-3xl text-[#1A1A1A] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -136,7 +136,7 @@ export default function FilterPanel({
           </DialogTitle>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
+            className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/80 hover:text-[#1A1A1A]"
             aria-label="Chiudi"
           >
             <X size={22} />
@@ -152,7 +152,7 @@ export default function FilterPanel({
             <select
               value={filters.year ?? ""}
               onChange={(e) => setField("year", e.target.value || null)}
-              className="w-full h-10 rounded-md border border-[#1A1A1A]/25 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#d4af7a]"
+              className="w-full h-10 rounded-md border border-[#1A1A1A]/70 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]"
             >
               <option value="">Tutti gli anni</option>
               {years.map((y) => (
@@ -256,7 +256,7 @@ export default function FilterPanel({
                             className={`w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
                               active
                                 ? "ring-2 ring-offset-2 ring-offset-[#FDFCF0] ring-[#d4af7a] shadow-md"
-                                : "ring-1 ring-[#1A1A1A]/15"
+                                : "ring-1 ring-[#1A1A1A]/50"
                             }`}
                             style={{
                               background: c.hex,
@@ -277,17 +277,17 @@ export default function FilterPanel({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-[#FDFCF0] border-t border-[#D4BE96]/20 px-8 md:px-12 py-4 flex items-center justify-between">
+        <div className="sticky bottom-0 bg-[#FDFCF0] border-t border-[#1A1A1A]/20 px-8 md:px-12 py-4 flex items-center justify-between">
           <button
             onClick={onReset}
-            className="text-[11px] tracking-[0.2em] uppercase text-[#1A1A1A]/60 hover:text-[#1A1A1A] transition-colors"
+            className="text-[11px] tracking-[0.2em] uppercase text-[#1A1A1A] hover:underline underline-offset-4 transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
             Rimuovi filtri
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2.5 rounded-md border border-[#d4af7a] text-[#1A1A1A] text-[11px] tracking-[0.25em] uppercase hover:bg-[#d4af7a]/10 transition-colors"
+            className="px-6 py-2.5 rounded-md border border-[#1A1A1A] text-[#1A1A1A] text-[11px] tracking-[0.25em] uppercase hover:bg-[#1A1A1A] hover:text-[#FDFCF0] transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
             Applica

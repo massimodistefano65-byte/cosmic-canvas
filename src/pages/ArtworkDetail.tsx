@@ -308,13 +308,17 @@ const ArtworkDetail = () => {
             >
               {currentImageUrl ? (
                 <>
-                  <img
+                  <motion.img
+                    key={currentImageUrl}
                     src={currentImageUrl}
                     alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                     className="max-w-full max-h-[82vh] object-contain rounded"
                     loading={selectedImage === 0 ? "eager" : "lazy"}
                     decoding="async"
                     fetchPriority={selectedImage === 0 ? "high" : "auto"}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     onError={(e) => {
                       const t = e.currentTarget;
                       t.style.display = "none";
@@ -647,13 +651,17 @@ const ArtworkDetail = () => {
             >
             {currentImageUrl ? (
               <>
-                <img
+                <motion.img
+                  key={currentImageUrl}
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                   className="w-full h-auto object-contain rounded"
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                   decoding="async"
                   fetchPriority={selectedImage === 0 ? "high" : "auto"}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   onError={(e) => {
                     const t = e.currentTarget;
                     t.style.display = "none";
