@@ -127,7 +127,7 @@ export default function FilterPanel({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-3xl w-[95vw] max-h-[88vh] overflow-y-auto bg-[#FDFCF0] border border-[#D4BE96]/40 p-0 gap-0 shadow-2xl rounded-xl">
-        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-12 pt-8 pb-4 flex justify-between items-start border-b border-[#D4BE96]/20">
+        <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-12 pt-8 pb-4 flex justify-between items-start border-b border-[#1A1A1A]/20">
           <DialogTitle
             className="text-2xl md:text-3xl text-[#1A1A1A] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
