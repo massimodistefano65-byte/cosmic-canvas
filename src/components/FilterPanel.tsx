@@ -108,9 +108,9 @@ export default function FilterPanel({
   const chipBase =
     "px-3 py-1.5 rounded-full border text-[11px] tracking-[0.15em] uppercase transition-all duration-300 whitespace-nowrap";
   const chipInactive =
-    "border-[#1A1A1A]/25 text-[#1A1A1A]/70 hover:border-[#1A1A1A]/50 hover:text-[#1A1A1A]";
+    "border-[#1A1A1A]/70 text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5";
   const chipActive =
-    "bg-white text-[#1A1A1A] border-white shadow-sm";
+    "bg-[#1A1A1A] text-[#FDFCF0] border-[#1A1A1A] shadow-sm";
 
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
