@@ -115,7 +115,7 @@ export default function FilterPanel({
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
       <p
-        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A]/60 mb-3"
+        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A] font-medium mb-3"
         style={{ fontFamily: "'Raleway', sans-serif" }}
       >
         {label}
