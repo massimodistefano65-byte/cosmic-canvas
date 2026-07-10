@@ -29,7 +29,7 @@ const Lightbox = ({ isOpen, onClose, imageUrl, alt }: LightboxProps) => {
 
           <div className="relative" onClick={(e) => e.stopPropagation()}>
             <motion.img
-              src={imageUrl}
+              key={imageUrl}
               alt={alt}
               className="max-w-[90vw] max-h-[90vh] object-contain"
               initial={{ scale: 0.9, opacity: 0 }}
