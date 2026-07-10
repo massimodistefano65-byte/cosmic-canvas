@@ -277,17 +277,17 @@ export default function FilterPanel({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-[#FDFCF0] border-t border-[#D4BE96]/20 px-8 md:px-12 py-4 flex items-center justify-between">
+        <div className="sticky bottom-0 bg-[#FDFCF0] border-t border-[#1A1A1A]/20 px-8 md:px-12 py-4 flex items-center justify-between">
           <button
             onClick={onReset}
-            className="text-[11px] tracking-[0.2em] uppercase text-[#1A1A1A]/60 hover:text-[#1A1A1A] transition-colors"
+            className="text-[11px] tracking-[0.2em] uppercase text-[#1A1A1A] hover:underline underline-offset-4 transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
             Rimuovi filtri
           </button>
           <button
             onClick={onClose}
-            className="px-6 py-2.5 rounded-md border border-[#d4af7a] text-[#1A1A1A] text-[11px] tracking-[0.25em] uppercase hover:bg-[#d4af7a]/10 transition-colors"
+            className="px-6 py-2.5 rounded-md border border-[#1A1A1A] text-[#1A1A1A] text-[11px] tracking-[0.25em] uppercase hover:bg-[#1A1A1A] hover:text-[#FDFCF0] transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
             Applica
