@@ -285,31 +285,31 @@ const ArtworkDetail = () => {
         >
           <div className="flex-shrink-0 w-16" />
 
-          {/* CENTER — Main artwork (maximized) */}
+          {/* CENTER — Main artwork */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <div className="relative inline-block group">
-              <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
+              {/* Subtle LED glow */}
+              <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
               <button
                 onClick={() => setLightboxOpen(true)}
-                className="relative block cursor-zoom-in grid place-items-center"
+                className="relative block cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
                 style={{ maxWidth: "1200px", maxHeight: "82vh" }}
                 aria-label={`Apri ${artwork.title} in lightbox`}
               >
-                <AnimatePresence>
+                <AnimatePresence initial={false}>
                   {currentImageUrl ? (
                     <motion.img
                       key={currentImageUrl}
                       src={currentImageUrl}
                       alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                      className="max-w-full max-h-[82vh] object-contain rounded"
+                      className="max-w-full max-h-[82vh] object-contain"
                       style={{ gridArea: "1 / 1" }}
                       loading={selectedImage === 0 ? "eager" : "lazy"}
                       decoding="async"
-                      fetchPriority={selectedImage === 0 ? "high" : "auto"}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.7, ease: "easeInOut" }}
+                      transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                       onError={(e) => {
                         const t = e.currentTarget;
                         t.style.display = "none";
@@ -320,7 +320,7 @@ const ArtworkDetail = () => {
                   ) : (
                     <motion.div
                       key="fallback"
-                      className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
+                      className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] flex items-center justify-center text-muted-foreground/50 text-xs"
                       style={{ background: getSlugGradient(artwork.id), gridArea: "1 / 1" }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -582,24 +582,24 @@ const ArtworkDetail = () => {
           className="px-4 pb-8"
         >
           <div className="relative w-full mb-6 group">
-            <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
+            <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
             <button
               onClick={() => setLightboxOpen(true)}
-              className="relative w-full cursor-zoom-in grid place-items-center"
+              className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
             >
-              <AnimatePresence>
+              <AnimatePresence initial={false}>
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-auto object-contain rounded"
+                  className="w-full h-auto object-contain"
                   style={{ gridArea: "1 / 1" }}
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                   decoding="async"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.7, ease: "easeInOut" }}
+                  transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                 />
               </AnimatePresence>
             </button>
