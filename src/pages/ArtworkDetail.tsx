@@ -285,22 +285,24 @@ const ArtworkDetail = () => {
         >
           <div className="flex-shrink-0 w-16" />
 
+          {/* CENTER — Main artwork (maximized) */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <div className="relative inline-block group">
               <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
               <button
                 onClick={() => setLightboxOpen(true)}
-                className="relative block cursor-zoom-in"
+                className="relative block cursor-zoom-in grid place-items-center"
                 style={{ maxWidth: "1200px", maxHeight: "82vh" }}
                 aria-label={`Apri ${artwork.title} in lightbox`}
               >
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                   {currentImageUrl ? (
                     <motion.img
                       key={currentImageUrl}
                       src={currentImageUrl}
                       alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                       className="max-w-full max-h-[82vh] object-contain rounded"
+                      style={{ gridArea: "1 / 1" }}
                       loading={selectedImage === 0 ? "eager" : "lazy"}
                       decoding="async"
                       fetchPriority={selectedImage === 0 ? "high" : "auto"}
@@ -319,7 +321,7 @@ const ArtworkDetail = () => {
                     <motion.div
                       key="fallback"
                       className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
-                      style={{ background: getSlugGradient(artwork.id) }}
+                      style={{ background: getSlugGradient(artwork.id), gridArea: "1 / 1" }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -332,6 +334,7 @@ const ArtworkDetail = () => {
             </div>
           </div>
 
+          {/* RIGHT — Info column */}
           <div
             className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pl-4 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-visible"
             style={{ width: "clamp(220px, 24vw, 310px)" }}
@@ -582,14 +585,15 @@ const ArtworkDetail = () => {
             <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
             <button
               onClick={() => setLightboxOpen(true)}
-              className="relative w-full cursor-zoom-in"
+              className="relative w-full cursor-zoom-in grid place-items-center"
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                   className="w-full h-auto object-contain rounded"
+                  style={{ gridArea: "1 / 1" }}
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                   decoding="async"
                   initial={{ opacity: 0 }}
