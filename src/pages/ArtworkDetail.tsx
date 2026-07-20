@@ -291,7 +291,7 @@ const ArtworkDetail = () => {
               <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
               <button
                 onClick={() => setLightboxOpen(true)}
-                className="relative grid place-items-center cursor-zoom-in"
+                className="relative block cursor-zoom-in grid place-items-center"
                 style={{ maxWidth: "1200px", maxHeight: "82vh" }}
                 aria-label={`Apri ${artwork.title} in lightbox`}
               >
@@ -447,3 +447,340 @@ const ArtworkDetail = () => {
                 </div>
               )}
             </div>
+
+            <TooltipProvider delayDuration={200}>
+              <div className="flex items-center gap-3 pt-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={toggleLike}
+                      className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
+                        liked
+                          ? "text-red-500 border-red-500/40"
+                          : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                      }`}
+                    >
+                      <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+                      <span className="text-xs tabular-nums">{likeCount}</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Mi piace</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        if (inWishlist(artwork.id)) removeWishlist(artwork.id);
+                        else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
+                      }}
+                      className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                        inWishlist(artwork.id)
+                          ? "text-amber-500 border-amber-500/40"
+                          : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                      }`}
+                    >
+                      <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Aggiungi ai preferiti</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setInfoOpen(true)}
+                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                    >
+                      <Info size={16} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Richiedi informazioni</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await generateArtworkPdf({
+                            title: artwork.title,
+                            year: artwork.year,
+                            dimensions: artwork.dimensions,
+                            technique: artwork.technique,
+                            price: artwork.price,
+                            discipline: discLabel,
+                            imageUrl: currentImageUrl || undefined,
+                          });
+                        } catch { /* ignore */ }
+                      }}
+                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                    >
+                      <Download size={16} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Scarica scheda opera (PDF)</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-flex">
+                      <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">Condividi</TooltipContent>
+                </Tooltip>
+              </div>
+            </TooltipProvider>
+
+            {allImages.length > 1 && (
+              <div className="flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
+                {allImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
+                      className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
+                        selectedImage === idx
+                          ? "border-accent"
+                          : "border-border/20 hover:border-accent/40"
+                      }`}
+                      style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
+                      onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
+                      onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </button>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ===== MOBILE LAYOUT (<md) ===== */}
+      <div className="md:hidden flex-1 pt-16 overflow-y-auto">
+        <div className="flex items-center px-4 py-3">
+          <Link
+            to={`/${discipline}`}
+            className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+          >
+            <ArrowLeft size={14} aria-hidden="true" />
+          </Link>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="px-4 pb-8"
+        >
+          <div className="relative w-full mb-6 group">
+            <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
+            <button
+              onClick={() => setLightboxOpen(true)}
+              className="relative w-full cursor-zoom-in grid place-items-center"
+            >
+              <AnimatePresence>
+                <motion.img
+                  key={currentImageUrl}
+                  src={currentImageUrl}
+                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                  className="w-full h-auto object-contain rounded"
+                  style={{ gridArea: "1 / 1" }}
+                  loading={selectedImage === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7, ease: "easeInOut" }}
+                />
+              </AnimatePresence>
+            </button>
+          </div>
+
+          <div className="space-y-4 mb-6">
+            <div>
+              <h1
+                className="text-2xl tracking-wide text-foreground leading-tight"
+                style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
+              >
+                {artwork.title}
+              </h1>
+              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-foreground">
+                {artwork.year}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {!isTshirt && (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
+                    {t("artwork.dimensions")}
+                  </p>
+                  <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
+                </div>
+              )}
+              <div className="border-t border-border/30 pt-3">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
+                  {t("artwork.technique")}
+                </p>
+                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
+              </div>
+              {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
+                <div className="border-t border-border/30 pt-4">
+                  <a
+                    href={artwork.shopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="animate-shop-pulse inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded border border-border/40 hover:border-foreground/40 bg-white/5 hover:bg-white/10 text-foreground text-[10px] tracking-[0.25em] uppercase transition-colors"
+                  >
+                    <span>{t("artwork.buyOn")} {artwork.shopPlatform}</span>
+                    <ExternalLink size={12} aria-hidden="true" />
+                  </a>
+                </div>
+              ) : (
+                <div className="border-t border-border/30 pt-3">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
+                    {t("artwork.price")}
+                  </p>
+                  {isArchived ? (
+                    <button
+                      type="button"
+                      onClick={() => setCertificateOpen(true)}
+                      className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
+                    >
+                      <span>{artwork.price}</span>
+                      {sealIcon(20)}
+                    </button>
+                  ) : (
+                    <p className="text-xs text-foreground font-light">
+                      <span>{artwork.price || "€ —"}</span>
+                    </p>
+                  )}
+                </div>
+              )}
+              {hasMeaning && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setMeaningOpen(true)}
+                    className="text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    style={{ filter: "brightness(1.25)" }}
+                  >
+                    {t("artwork.meaning")}
+                  </button>
+                </div>
+              )}
+              {hasPurchase && !isSold && (
+                <div className="border-t border-border/30 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => setPurchaseOpen(true)}
+                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                  >
+                    <motion.span
+                      className="inline-block"
+                      whileHover={{ x: [-2, 2, -2, 0] }}
+                      transition={{ duration: 0.4, type: "spring" }}
+                    >
+                      {purchaseLabel}
+                    </motion.span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                onClick={toggleLike}
+                className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
+                  liked
+                    ? "text-red-500 border-red-500/40"
+                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                }`}
+              >
+                <Heart size={16} fill={liked ? "currentColor" : "none"} aria-hidden="true" />
+                <span className="text-xs tabular-nums">{likeCount}</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (inWishlist(artwork.id)) removeWishlist(artwork.id);
+                  else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
+                }}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                  inWishlist(artwork.id)
+                    ? "text-amber-500 border-amber-500/40"
+                    : "text-muted-foreground/80 border-border/40 hover:border-foreground/30 hover:text-foreground"
+                }`}
+              >
+                <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
+              </button>
+              <button
+                onClick={() => setInfoOpen(true)}
+                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+              >
+                <Info size={16} aria-hidden="true" />
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await generateArtworkPdf({
+                      title: artwork.title,
+                      year: artwork.year,
+                      dimensions: artwork.dimensions,
+                      technique: artwork.technique,
+                      price: artwork.price,
+                      discipline: discLabel,
+                      imageUrl: currentImageUrl || undefined,
+                    });
+                  } catch { /* ignore */ }
+                }}
+                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+              >
+                <Download size={16} aria-hidden="true" />
+              </button>
+              <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
+            </div>
+          </div>
+
+          {allImages.length > 1 && (
+            <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
+              {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`flex-shrink-0 w-28 h-28 rounded overflow-hidden border transition-all duration-500 ${
+                      selectedImage === idx
+                        ? "border-accent"
+                        : "border-border/20 hover:border-accent/40"
+                    }`}
+                    style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
+                    onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
+                    onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.label}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                )
+              )}
+            </div>
+          )}
+        </motion.div>
+      </div>
+    </main>
+  );
+};
+
+export default ArtworkDetail;
