@@ -309,7 +309,7 @@ const ArtworkDetail = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                      transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                       onError={(e) => {
                         const t = e.currentTarget;
                         t.style.display = "none";
@@ -599,7 +599,7 @@ const ArtworkDetail = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                 />
               </AnimatePresence>
             </button>
