@@ -7,7 +7,7 @@ import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
 import SEOHead from "@/components/SEOHead";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Heart, Stamp, ExternalLink, Info, Bookmark, Download } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
@@ -30,8 +30,6 @@ const disciplineLabels: Record<string, string> = {
   "t-shirt": "T-Shirt",
 };
 
-// SEO label per disciplina — usata nei title delle opere singole.
-// Keyword semantiche forti per Google ("pittura contemporanea", "fotografia artistica", ecc.).
 const disciplineSeoLabel: Record<string, string> = {
   painting: "pittura contemporanea",
   photography: "fotografia artistica",
@@ -60,17 +58,14 @@ const ArtworkDetail = () => {
     ? t("artwork.purchaseOptions")
     : t("artwork.purchaseOptionsExt");
 
-
   useSectionAudio(discipline || "home");
 
   const artwork = getArtwork(discipline || "", artworkId || "");
 
-  // HEAD-check meaning.md to decide whether to show the label
   const meaningUrl = artwork
     ? `/artworks/${discipline}/${artwork.id}/meaning.md`
     : "";
-  // Use GET (not HEAD) and validate the content is real markdown — many SPA hosts
-  // (Aruba) fall back to index.html for missing files, which would falsely succeed.
+
   useEffect(() => {
     if (!meaningUrl) {
       setHasMeaning(false);
@@ -117,7 +112,6 @@ const ArtworkDetail = () => {
     };
   }, [meaningUrl]);
 
-  // HEAD-check purchase.md (per discipline, not per artwork)
   const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
   useEffect(() => {
     if (!purchaseUrl) {
@@ -179,7 +173,6 @@ const ArtworkDetail = () => {
   const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
   const isArchived = !!artwork.archiveId && isSold;
 
-  // Sigillo inline (icona oro) usato inline accanto al prezzo
   const sealIcon = (size: number) => (
     <Stamp
       size={size}
@@ -188,7 +181,6 @@ const ArtworkDetail = () => {
       style={{ filter: "drop-shadow(0 0 5px rgba(212,175,122,0.65))" }}
     />
   );
-
 
   const gradientMap: Record<string, [string, string]> = {
     painting: ["rgba(168,85,247,0.3)", "rgba(59,130,246,0.3)"],
@@ -277,7 +269,6 @@ const ArtworkDetail = () => {
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
-        {/* Back link — vertically centered on left */}
         <Link
           to={`/${discipline}`}
           className="absolute top-1/2 -translate-y-1/2 left-6 z-10 w-9 h-9 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
@@ -292,70 +283,62 @@ const ArtworkDetail = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-        {/* LEFT — spacer for symmetry */}
           <div className="flex-shrink-0 w-16" />
 
-          {/* CENTER — Main artwork (maximized) */}
+          {/* CENTER — Main artwork */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <div className="relative inline-block group">
-              {/* LED glow behind artwork */}
-              <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
-            <button
-              onClick={() => setLightboxOpen(true)}
-              className="relative block cursor-zoom-in"
-              style={{ maxWidth: "1200px", maxHeight: "82vh" }}
-              aria-label={`Apri ${artwork.title} in lightbox`}
-            >
-              {currentImageUrl ? (
-                <>
-                  <motion.img
-                    key={currentImageUrl}
-                    src={currentImageUrl}
-                    alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                    className="max-w-full max-h-[82vh] object-contain rounded"
-                    loading={selectedImage === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    fetchPriority={selectedImage === 0 ? "high" : "auto"}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    onError={(e) => {
-                      const t = e.currentTarget;
-                      t.style.display = "none";
-                      const fb = t.nextElementSibling as HTMLElement | null;
-                      if (fb) fb.style.display = "flex";
-                    }}
-                  />
-                  <div
-                    className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded items-center justify-center text-muted-foreground/50 text-xs"
-                    style={{
-                      background: getSlugGradient(artwork.id),
-                      display: "none",
-                    }}
-                  >
-                    {artwork.title}
-                  </div>
-                </>
-              ) : (
-                <div
-                  className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
-                  style={{
-                    background: getSlugGradient(artwork.id),
-                  }}
-                >
-                  {artwork.title}
-                </div>
-              )}
-            </button>
+              {/* Subtle LED glow */}
+              <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
+              <button
+                onClick={() => setLightboxOpen(true)}
+                className="relative block cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
+                style={{ maxWidth: "1200px", maxHeight: "82vh" }}
+                aria-label={`Apri ${artwork.title} in lightbox`}
+              >
+                <AnimatePresence initial={false}>
+                  {currentImageUrl ? (
+                    <motion.img
+                      key={currentImageUrl}
+                      src={currentImageUrl}
+                      alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                      className="max-w-full max-h-[82vh] object-contain"
+                      style={{ gridArea: "1 / 1" }}
+                      loading={selectedImage === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                      onError={(e) => {
+                        const t = e.currentTarget;
+                        t.style.display = "none";
+                        const fb = t.nextElementSibling as HTMLElement | null;
+                        if (fb) fb.style.display = "flex";
+                      }}
+                    />
+                  ) : (
+                    <motion.div
+                      key="fallback"
+                      className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] flex items-center justify-center text-muted-foreground/50 text-xs"
+                      style={{ background: getSlugGradient(artwork.id), gridArea: "1 / 1" }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {artwork.title}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
             </div>
           </div>
 
-          {/* RIGHT — Info column (refined) */}
+          {/* RIGHT — Info column */}
           <div
             className="flex-shrink-0 flex flex-col gap-8 pt-[12vh] pb-6 pl-4 pr-10 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-visible"
             style={{ width: "clamp(220px, 24vw, 310px)" }}
           >
-            {/* Title + year */}
             <div>
               <h1
                 className="text-2xl tracking-wide text-foreground leading-snug"
@@ -370,7 +353,6 @@ const ArtworkDetail = () => {
               </p>
             </div>
 
-            {/* Metadata */}
             <div className="space-y-4">
               {!isTshirt && (
                 <div className="border-t border-border/30 pt-3">
@@ -464,17 +446,14 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-
             </div>
 
-            {/* Action buttons — below metadata */}
             <TooltipProvider delayDuration={200}>
               <div className="flex items-center gap-3 pt-2">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={toggleLike}
-                      aria-label={liked ? "Rimuovi Mi piace" : "Mi piace"}
                       className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                         liked
                           ? "text-red-500 border-red-500/40"
@@ -495,7 +474,6 @@ const ArtworkDetail = () => {
                         if (inWishlist(artwork.id)) removeWishlist(artwork.id);
                         else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
                       }}
-                      aria-label={inWishlist(artwork.id) ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
                       className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
                         inWishlist(artwork.id)
                           ? "text-amber-500 border-amber-500/40"
@@ -512,7 +490,6 @@ const ArtworkDetail = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      aria-label="Richiedi informazioni"
                       className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                     >
                       <Info size={16} aria-hidden="true" />
@@ -535,11 +512,8 @@ const ArtworkDetail = () => {
                             discipline: discLabel,
                             imageUrl: currentImageUrl || undefined,
                           });
-                        } catch {
-                          // ignore
-                        }
+                        } catch { /* ignore */ }
                       }}
-                      aria-label="Scarica scheda opera (PDF)"
                       className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                     >
                       <Download size={16} aria-hidden="true" />
@@ -559,60 +533,28 @@ const ArtworkDetail = () => {
               </div>
             </TooltipProvider>
 
-            {/* Thumbnails — larger */}
             {allImages.length > 1 && (
               <div className="flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
                 {allImages.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setSelectedImage(idx)}
-                      aria-label={`Visualizza ${img.label}`}
                       className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
                         selectedImage === idx
                           ? "border-accent"
                           : "border-border/20 hover:border-accent/40"
                       }`}
-                      style={{
-                        boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)",
-                      }}
+                      style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
                       onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
                       onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
                     >
-                      {img.url ? (
-                        <>
-                          <img
-                            src={img.url}
-                            alt={img.label}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                            decoding="async"
-                            onError={(e) => {
-                              const t = e.currentTarget;
-                              t.style.display = "none";
-                              const fb = t.nextElementSibling as HTMLElement | null;
-                              if (fb) fb.style.display = "flex";
-                            }}
-                          />
-                          <div
-                            className="w-full h-full items-center justify-center text-[7px] text-muted-foreground/60"
-                            style={{
-                              background: getSlugGradient(artwork.id),
-                              display: "none",
-                            }}
-                          >
-                            {img.label}
-                          </div>
-                        </>
-                      ) : (
-                        <div
-                          className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
-                          style={{
-                            background: getSlugGradient(artwork.id),
-                          }}
-                        >
-                          {img.label}
-                        </div>
-                      )}
+                      <img
+                        src={img.url}
+                        alt={img.label}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </button>
                   )
                 )}
@@ -624,12 +566,10 @@ const ArtworkDetail = () => {
 
       {/* ===== MOBILE LAYOUT (<md) ===== */}
       <div className="md:hidden flex-1 pt-16 overflow-y-auto">
-        {/* Back link */}
         <div className="flex items-center px-4 py-3">
           <Link
             to={`/${discipline}`}
             className="w-8 h-8 rounded-full border border-border/40 flex items-center justify-center text-muted-foreground/80 hover:text-foreground hover:border-foreground/30 transition-all duration-300"
-            aria-label={`Back to ${discLabel}`}
           >
             <ArrowLeft size={14} aria-hidden="true" />
           </Link>
@@ -641,58 +581,30 @@ const ArtworkDetail = () => {
           transition={{ duration: 0.6 }}
           className="px-4 pb-8"
         >
-          {/* Main image */}
           <div className="relative w-full mb-6 group">
-            <div className="absolute -inset-[3px] rounded opacity-50 group-hover:opacity-80 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/50" />
+            <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
             <button
               onClick={() => setLightboxOpen(true)}
-              className="relative w-full cursor-zoom-in"
-              aria-label={`Apri ${artwork.title} in lightbox`}
+              className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
             >
-            {currentImageUrl ? (
-              <>
+              <AnimatePresence initial={false}>
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-auto object-contain rounded"
+                  className="w-full h-auto object-contain"
+                  style={{ gridArea: "1 / 1" }}
                   loading={selectedImage === 0 ? "eager" : "lazy"}
                   decoding="async"
-                  fetchPriority={selectedImage === 0 ? "high" : "auto"}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  onError={(e) => {
-                    const t = e.currentTarget;
-                    t.style.display = "none";
-                    const fb = t.nextElementSibling as HTMLElement | null;
-                    if (fb) fb.style.display = "flex";
-                  }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
                 />
-                <div
-                  className="w-full aspect-[4/5] rounded items-center justify-center text-muted-foreground/50 text-xs"
-                  style={{
-                    background: getSlugGradient(artwork.id),
-                    display: "none",
-                  }}
-                >
-                  {artwork.title}
-                </div>
-              </>
-            ) : (
-              <div
-                className="w-full aspect-[4/5] rounded flex items-center justify-center text-muted-foreground/50 text-xs"
-                style={{
-                  background: getSlugGradient(artwork.id),
-                }}
-              >
-                {artwork.title}
-              </div>
-            )}
+              </AnimatePresence>
             </button>
           </div>
 
-          {/* Info */}
           <div className="space-y-4 mb-6">
             <div>
               <h1
@@ -742,7 +654,6 @@ const ArtworkDetail = () => {
                     <button
                       type="button"
                       onClick={() => setCertificateOpen(true)}
-                      aria-label="Apri Certificato di Autenticità Digitale"
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
                       <span>{artwork.price}</span>
@@ -784,14 +695,11 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-
             </div>
 
-            {/* Action buttons — below metadata */}
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={toggleLike}
-                aria-label={liked ? "Rimuovi Mi piace" : "Mi piace"}
                 className={`h-9 px-3 rounded-full border flex items-center gap-1.5 transition-all duration-300 ${
                   liked
                     ? "text-red-500 border-red-500/40"
@@ -806,7 +714,6 @@ const ArtworkDetail = () => {
                   if (inWishlist(artwork.id)) removeWishlist(artwork.id);
                   else addWishlist({ id: artwork.id, title: artwork.title, thumbnailUrl: artwork.preview, discipline: discipline || "" });
                 }}
-                aria-label={inWishlist(artwork.id) ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
                 className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 ${
                   inWishlist(artwork.id)
                     ? "text-amber-500 border-amber-500/40"
@@ -815,15 +722,12 @@ const ArtworkDetail = () => {
               >
                 <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
               </button>
-
               <button
                 onClick={() => setInfoOpen(true)}
-                aria-label="Richiedi informazioni sull'opera"
                 className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Info size={16} aria-hidden="true" />
               </button>
-
               <button
                 onClick={async () => {
                   try {
@@ -836,74 +740,38 @@ const ArtworkDetail = () => {
                       discipline: discLabel,
                       imageUrl: currentImageUrl || undefined,
                     });
-                  } catch {
-                    // ignore
-                  }
+                  } catch { /* ignore */ }
                 }}
-                aria-label="Scarica scheda PDF"
                 className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Download size={16} aria-hidden="true" />
               </button>
-
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>
           </div>
 
-          {/* Thumbnails */}
           {allImages.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
-                    aria-label={`Visualizza ${img.label}`}
                     className={`flex-shrink-0 w-28 h-28 rounded overflow-hidden border transition-all duration-500 ${
                       selectedImage === idx
                         ? "border-accent"
                         : "border-border/20 hover:border-accent/40"
                     }`}
-                    style={{
-                      boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)",
-                    }}
+                    style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
                     onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
                     onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
                   >
-                    {img.url ? (
-                      <>
-                        <img
-                          src={img.url}
-                          alt={img.label}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(e) => {
-                            const t = e.currentTarget;
-                            t.style.display = "none";
-                            const fb = t.nextElementSibling as HTMLElement | null;
-                            if (fb) fb.style.display = "flex";
-                          }}
-                        />
-                        <div
-                          className="w-full h-full items-center justify-center text-[7px] text-muted-foreground/60"
-                          style={{
-                            background: getSlugGradient(artwork.id),
-                            display: "none",
-                          }}
-                        >
-                          {img.label}
-                        </div>
-                      </>
-                    ) : (
-                      <div
-                        className="w-full h-full flex items-center justify-center text-[7px] text-muted-foreground/60"
-                        style={{
-                          background: getSlugGradient(artwork.id),
-                        }}
-                      >
-                        {img.label}
-                      </div>
-                    )}
+                    <img
+                      src={img.url}
+                      alt={img.label}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </button>
                 )
               )}
