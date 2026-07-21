@@ -288,7 +288,6 @@ const ArtworkDetail = () => {
           {/* CENTER — Main artwork */}
           <div className="flex-1 flex items-center justify-center min-w-0 h-full py-6 px-10">
             <div className="relative inline-block group">
-              {/* Subtle LED glow */}
               <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
               <button
                 onClick={() => setLightboxOpen(true)}
@@ -325,6 +324,7 @@ const ArtworkDetail = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
+                      transition={{ duration: 1.2 }}
                     >
                       {artwork.title}
                     </motion.div>
@@ -581,8 +581,9 @@ const ArtworkDetail = () => {
           transition={{ duration: 0.6 }}
           className="px-4 pb-8"
         >
-          <div className="relative w-full mb-6 group">
-            <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[8px] pointer-events-none bg-white/20" />
+          {/* 1. FOTO GRANDE */}
+          <div className="relative w-full mb-4 group">
+            <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/20" />
             <button
               onClick={() => setLightboxOpen(true)}
               className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
@@ -605,19 +606,48 @@ const ArtworkDetail = () => {
             </button>
           </div>
 
-          <div className="space-y-4 mb-6">
-            <div>
-              <h1
-                className="text-2xl tracking-wide text-foreground leading-tight"
-                style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
-              >
-                {artwork.title}
-              </h1>
-              <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-foreground">
-                {artwork.year}
-              </p>
-            </div>
+          {/* 2. TITOLO E ANNO */}
+          <div className="mb-6">
+            <h1
+              className="text-2xl tracking-wide text-foreground leading-tight"
+              style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
+            >
+              {artwork.title}
+            </h1>
+            <p className="text-[11px] tracking-[0.25em] uppercase mt-2 text-foreground">
+              {artwork.year}
+            </p>
+          </div>
 
+          {/* 3. MINIATURE */}
+          {allImages.length > 1 && (
+            <div className="flex gap-4 overflow-x-auto pb-4 mb-8 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
+              {allImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedImage(idx)}
+                    className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-500 ${
+                      selectedImage === idx
+                        ? "border-accent"
+                        : "border-border/20 hover:border-accent/40"
+                    }`}
+                    style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
+                  >
+                    <img
+                      src={img.url}
+                      alt={img.label}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                )
+              )}
+            </div>
+          )}
+
+          {/* 4. DATI TECNICI E AZIONI */}
+          <div className="space-y-4 mb-6">
             <div className="space-y-3">
               {!isTshirt && (
                 <div className="border-t border-border/30 pt-3">
@@ -749,34 +779,6 @@ const ArtworkDetail = () => {
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>
           </div>
-
-          {allImages.length > 1 && (
-            <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
-              {allImages.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`flex-shrink-0 w-28 h-28 rounded overflow-hidden border transition-all duration-500 ${
-                      selectedImage === idx
-                        ? "border-accent"
-                        : "border-border/20 hover:border-accent/40"
-                    }`}
-                    style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
-                    onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
-                    onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
-                  >
-                    <img
-                      src={img.url}
-                      alt={img.label}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </button>
-                )
-              )}
-            </div>
-          )}
         </motion.div>
       </div>
     </main>
