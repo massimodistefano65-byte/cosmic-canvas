@@ -37,6 +37,37 @@ const disciplineSeoLabel: Record<string, string> = {
   "t-shirt": "t-shirt d'artista",
 };
 
+/**
+ * Carica il primo file markdown disponibile tra i candidati passati.
+ * Filtra i falsi positivi dovuti al fallback SPA (index.html servito con 200).
+ */
+async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
+  for (const url of urls) {
+    if (!url) continue;
+    try {
+      const r = await fetch(url, { cache: "no-cache" });
+      if (!r.ok) continue;
+      const ctype = (r.headers.get("content-type") || "").toLowerCase();
+      if (ctype.includes("text/html")) continue;
+      const text = await r.text();
+      const head = text.trimStart().slice(0, 200).toLowerCase();
+      if (
+        head.startsWith("<!doctype") ||
+        head.startsWith("<html") ||
+        head.includes("<head") ||
+        head.includes("<script")
+      ) {
+        continue;
+      }
+      if (!text.trim()) continue;
+      return text;
+    } catch {
+      // prova il candidato successivo
+    }
+  }
+  return null;
+}
+
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
