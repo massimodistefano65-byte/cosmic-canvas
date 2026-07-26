@@ -211,7 +211,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
   };
 
   const ensureSpace = (needed: number) => {
-    if (y + needed > PH - 34) {
+    if (y + needed > PH - 78) {
       doc.addPage();
       paintBackground();
       y = M + 4;
