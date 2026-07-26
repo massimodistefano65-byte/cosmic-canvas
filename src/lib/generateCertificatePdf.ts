@@ -21,9 +21,9 @@ const GOLD: [number, number, number] = [212, 175, 122];
 const L = {
   it: {
     header: "Archivio Storico Massimo Di Stefano",
-    title: "Certificato di Autenticita Digitale",
+    title: "Certificato di Autenticità Digitale",
     guarantee:
-      "Si certifica che l'opera qui descritta e registrata ufficialmente nell'Archivio Storico Massimo Di Stefano. L'autenticita e la provenienza dell'originale sono garantite dall'artista.",
+      "Si certifica che l'opera qui descritta è registrata ufficialmente nell'Archivio Storico Massimo Di Stefano. L'autenticità e la provenienza dell'originale sono garantite dall'artista.",
     year: "Anno",
     technique: "Tecnica",
     dimensions: "Dimensioni",
@@ -31,7 +31,7 @@ const L = {
     dedication: "Dedica privata dell'artista",
     archiveCode: "Codice Archivio",
     scan: "Scansiona per verificare l'opera online",
-    signature: "Massimo Di Stefano - Artista Visivo",
+    signature: "Massimo Di Stefano · Artista Visivo",
     issued: "Documento generato il",
     file: "certificato",
   },
@@ -47,7 +47,7 @@ const L = {
     dedication: "Private dedication from the artist",
     archiveCode: "Archive Code",
     scan: "Scan to verify this artwork online",
-    signature: "Massimo Di Stefano - Visual Artist",
+    signature: "Massimo Di Stefano · Visual Artist",
     issued: "Document generated on",
     file: "certificate",
   },
@@ -101,7 +101,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const PW = 210;
   const PH = 297;
-  const M = 22;
+  const M = 19;
   const CW = PW - M * 2;
 
   const paintBackground = () => {
@@ -155,7 +155,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
     const img = await tryLoad(data.imageUrl);
     if (img) {
       const maxW = CW - 30;
-      const maxH = 78;
+      const maxH = 66;
       const aspect = img.width / img.height;
       let w = maxW;
       let h = w / aspect;
@@ -168,7 +168,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
       doc.setLineWidth(0.3);
       doc.rect(x - 1.5, y - 1.5, w + 3, h + 3);
       doc.addImage(img, "JPEG", x, y, w, h);
-      y += h + 12;
+      y += h + 10;
     }
   }
 
@@ -196,11 +196,11 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
 
   // ---- Guarantee --------------------------------------------------------
   doc.setFont("times", "normal");
-  doc.setFontSize(11);
+  doc.setFontSize(10.5);
   doc.setTextColor(45, 42, 38);
   const guaranteeLines = doc.splitTextToSize(clean(t.guarantee), CW - 10);
   doc.text(guaranteeLines, PW / 2, y, { align: "center", lineHeightFactor: 1.5 });
-  y += guaranteeLines.length * 5.6 + 8;
+  y += guaranteeLines.length * 5.4 + 7;
 
   const sectionLabel = (label: string) => {
     doc.setFont("helvetica", "normal");
@@ -230,9 +230,9 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
       const lines = doc.splitTextToSize(para.replace(/\n/g, " ").trim(), CW);
       ensureSpace(lines.length * 5.4 + 6);
       doc.text(lines, M, y, { lineHeightFactor: 1.45, maxWidth: CW });
-      y += lines.length * 5.4 + 4;
+      y += lines.length * 5.4 + 3.5;
     }
-    y += 5;
+    y += 4;
   }
 
   // ---- Dedication -------------------------------------------------------
