@@ -132,7 +132,30 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // Archive
   "archive.description": { it: "Esplora la collezione completa di opere, video, materiali e progetti creativi.", en: "Explore the complete collection of works, videos, materials and creative projects." },
+
+  // Certificate of authenticity
+  "cert.title": { it: "Certificato di Autenticità Digitale", en: "Digital Certificate of Authenticity" },
+  "cert.intro1": { it: "Quest'opera è registrata ufficialmente nell'", en: "This artwork is officially registered in the " },
+  "cert.archiveName": { it: "Archivio Storico Massimo Di Stefano", en: "Massimo Di Stefano Historical Archive" },
+  "cert.intro2": { it: ". L'autenticità e la provenienza sono garantite dall'artista.", en: ". Authenticity and provenance are guaranteed by the artist." },
+  "cert.archiveCode": { it: "Codice Archivio", en: "Archive Code" },
+  "cert.verifiedTitle": { it: "AUTENTICITÀ VERIFICATA.", en: "AUTHENTICITY VERIFIED." },
+  "cert.verifiedBody": { it: "Si conferma ufficialmente che l'opera in tuo possesso è l'originale catalogato nell'Archivio Ufficiale.", en: "We officially confirm that the artwork in your possession is the original catalogued in the Official Archive." },
+  "cert.dedicationLabel": { it: "Dedica Privata dell'Artista", en: "Private Dedication from the Artist" },
+  "cert.ownerPrompt": { it: "Sei il proprietario dell'opera? Inserisci il codice segreto per la validazione ufficiale.", en: "Are you the owner of this artwork? Enter your secret code for official validation." },
+  "cert.codePlaceholder": { it: "Codice segreto", en: "Secret code" },
+  "cert.verify": { it: "Verifica", en: "Verify" },
+  "cert.errorConnection": { it: "Errore di connessione. Riprova tra qualche istante.", en: "Connection error. Please try again in a moment." },
+  "cert.errorInvalid": { it: "Codice non valido. Verifica di aver inserito il codice corretto fornito al momento dell'acquisto.", en: "Invalid code. Please check that you entered the correct code provided at the time of purchase." },
+  "cert.download": { it: "Scarica Certificato di Autenticità Ufficiale", en: "Download Official Certificate of Authenticity" },
+  "cert.close": { it: "Chiudi", en: "Close" },
+  "cert.privateCollection": { it: "Collezione privata", en: "Private collection" },
+
+  // Audio
+  "audio.play": { it: "Play Music", en: "Play Music" },
+  "audio.mute": { it: "Mute", en: "Mute" },
 };
+
 
 const I18nContext = createContext<I18nContextType>({
   lang: "it",
