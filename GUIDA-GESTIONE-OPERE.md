@@ -86,6 +86,7 @@ createArtwork({
   year: "2025",
   dimensions: "100 × 80 cm",
   technique: "Olio su tela",
+  techniqueEn: "Oil on canvas",   // traduzione inglese della tecnica (usata con lingua EN e nel certificato)
   price: "€ 1.500",              // opzionale — scrivi "Collezione privata" per nascondere "Opzioni d'acquisto"
   details: 3,                     // numero di file detail (0 se nessuno)
   roomViews: 2,                   // numero di file room-view (0 se nessuno)
@@ -97,6 +98,7 @@ createArtwork({
   genre: "Astratto",              // attiva il filtro genere
   dedication: "Per Marco, con stima.\nMassimo", // dedica privata nel certificato (visibile solo con codice)
 }),
+
 ```
 
 > ⚠️ **`published: true`** — imposta a `true` SOLO quando hai caricato i file. Le opere `published` entrano nella sitemap.xml e vengono indicizzate da Google.
@@ -361,17 +363,42 @@ Ogni opera può avere un testo opzionale che si apre in un pop-up elegante quand
 - Se il file `meaning.md` **esiste** → l'etichetta "Significato dell'opera" appare nella pagina dell'opera (stile uniforme alle altre etichette: PREZZO, TECNICA, DIMENSIONI).
 - Se il file **non esiste** → l'etichetta non viene mostrata. Nessun errore.
 - Per **rimuovere** il significato di un'opera: cancella il file `meaning.md`.
+- **Versione inglese**: crea `meaning-en.md` nella stessa cartella. Con lingua EN il sito usa quel file; se manca, mostra automaticamente `meaning.md`.
+- Lo stesso vale per le opzioni d'acquisto: `purchase-en.md` accanto a `purchase.md`.
 
 ---
 
+## 🏅 9-bis. Certificato di Autenticità in PDF
+
+Dopo che il collezionista inserisce il **Codice Segreto** nel pop-up del sigillo d'oro, compare il pulsante **"Scarica il Certificato (PDF)"**. Il PDF A4 avorio viene generato al volo con: logo dell'Archivio, immagine dell'opera, titolo, anno, tecnica (IT/EN), dimensioni, testo del *Significato dell'opera*, dedica privata, codice archivio, QR Code verso la pagina dell'opera e firma dell'artista.
+
+### Asset richiesti (caricali una sola volta)
+
+| File | Percorso | Note |
+|---|---|---|
+| Logo Archivio | `public/images/archive-logo.png` | PNG con sfondo trasparente, ~600 px di lato |
+| Firma artista | `public/images/firma.png` | PNG trasparente, firma nera, ~800 × 300 px |
+
+Se uno dei due file manca, il certificato viene comunque generato senza quell'elemento (nessun errore).
+
+### Cosa devi fare tu
+
+1. Compila `techniqueEn` nell'opera (per il certificato in inglese).
+2. Scrivi la `dedication` nell'opera (facoltativa).
+3. Crea `meaning.md` / `meaning-en.md` se vuoi il testo poetico nel certificato.
+4. Committa su GitHub: nessun'altra configurazione necessaria.
+
+---
+
+
 ## 🎵 10. Atmosfera sonora (musica per sezione)
 
-Ogni sezione del sito può avere una propria musica ambient con crossfade morbido tra una sezione e l'altra. Un'icona discreta in basso a destra (altoparlante) permette all'utente di accendere/spegnere l'audio.
+Ogni sezione del sito può avere una propria musica ambient con crossfade morbido tra una sezione e l'altra. Un'icona discreta a destra nel menu in alto (altoparlante) permette all'utente di accendere/spegnere l'audio.
 
 ### Comportamento
 
 - **Spento di default**: rispetta le policy dei browser sull'autoplay.
-- **Attivazione**: l'utente clicca l'icona altoparlante in basso a destra. La scelta viene ricordata (localStorage).
+- **Attivazione**: l'utente clicca l'icona altoparlante nella barra del menu in alto a destra. La scelta viene ricordata (localStorage).
 - **Crossfade automatico**: passando da una sezione all'altra, la musica precedente fa fade-out e la nuova fa fade-in (1.5s).
 - **Volume ambient**: 35%, discreto.
 
@@ -418,8 +445,10 @@ Ogni sezione del sito può avere una propria musica ambient con crossfade morbid
 | Articoli blog | `src/lib/blogData.ts` |
 | Testi homepage / discipline | `src/lib/i18n.tsx` |
 | SEO discipline | `src/pages/DisciplinePage.tsx` |
-| Hero image | `public/images/hero-background.jpg` |
-| Cover Home | `public/images/cover-home-*.jpg` |
+| Hero image | `public/images/hero-background.webp` |
+| Logo Archivio (certificato) | `public/images/archive-logo.png` |
+| Firma artista (certificato) | `public/images/firma.png` |
+| Cover Home | `public/images/cover-home-*.webp` |
 | Sitemap | `public/sitemap.xml` (rigenera con script) |
 
 ---

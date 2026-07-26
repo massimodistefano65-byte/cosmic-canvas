@@ -224,3 +224,17 @@ a img,
 .archive-prose em { font-style: italic; }
 .archive-prose strong { font-weight: 600; }
 .archive-prose hr { margin: 1.5em 0; border-color: rgba(212, 190, 150, 0.3); }
+
+/* Dissolvenza in entrata delle pagine interne (solo opacity, nessun transform) */
+@keyframes page-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.page-fade-in {
+  animation: page-fade-in 420ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-in { animation: none; }
+}

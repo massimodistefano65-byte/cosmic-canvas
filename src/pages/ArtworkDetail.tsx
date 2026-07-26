@@ -37,6 +37,37 @@ const disciplineSeoLabel: Record<string, string> = {
   "t-shirt": "t-shirt d'artista",
 };
 
+/**
+ * Carica il primo file markdown disponibile tra i candidati passati.
+ * Filtra i falsi positivi dovuti al fallback SPA (index.html servito con 200).
+ */
+async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
+  for (const url of urls) {
+    if (!url) continue;
+    try {
+      const r = await fetch(url, { cache: "no-cache" });
+      if (!r.ok) continue;
+      const ctype = (r.headers.get("content-type") || "").toLowerCase();
+      if (ctype.includes("text/html")) continue;
+      const text = await r.text();
+      const head = text.trimStart().slice(0, 200).toLowerCase();
+      if (
+        head.startsWith("<!doctype") ||
+        head.startsWith("<html") ||
+        head.includes("<head") ||
+        head.includes("<script")
+      ) {
+        continue;
+      }
+      if (!text.trim()) continue;
+      return text;
+    } catch {
+      // prova il candidato successivo
+    }
+  }
+  return null;
+}
+
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -51,7 +82,8 @@ const ArtworkDetail = () => {
   const [hasPurchase, setHasPurchase] = useState(false);
   const [purchaseContent, setPurchaseContent] = useState<string>("");
   const [certificateOpen, setCertificateOpen] = useState(false);
-  const { t } = useI18n();
+  const [dedicationMd, setDedicationMd] = useState<string>("");
+  const { t, lang } = useI18n();
 
   const isTshirt = discipline === "t-shirt";
   const purchaseLabel = discipline === "painting"
@@ -63,7 +95,15 @@ const ArtworkDetail = () => {
   const artwork = getArtwork(discipline || "", artworkId || "");
 
   const meaningUrl = artwork
-    ? `/artworks/${discipline}/${artwork.id}/meaning.md`
+    ? lang === "en"
+      ? `/artworks/${discipline}/${artwork.id}/meaning-en.md|/artworks/${discipline}/${artwork.id}/meaning.md`
+      : `/artworks/${discipline}/${artwork.id}/meaning.md`
+    : "";
+
+  const dedicationUrl = artwork
+    ? lang === "en"
+      ? `/artworks/${discipline}/${artwork.id}/dedication-en.md|/artworks/${discipline}/${artwork.id}/dedication.md`
+      : `/artworks/${discipline}/${artwork.id}/dedication.md`
     : "";
 
   useEffect(() => {
@@ -73,24 +113,7 @@ const ArtworkDetail = () => {
       return;
     }
     let cancelled = false;
-    fetch(meaningUrl, { cache: "no-cache" })
-      .then(async (r) => {
-        if (!r.ok) return null;
-        const ctype = (r.headers.get("content-type") || "").toLowerCase();
-        if (ctype.includes("text/html")) return null;
-        const text = await r.text();
-        const head = text.trimStart().slice(0, 200).toLowerCase();
-        if (
-          head.startsWith("<!doctype") ||
-          head.startsWith("<html") ||
-          head.includes("<head") ||
-          head.includes("<script")
-        ) {
-          return null;
-        }
-        if (!text.trim()) return null;
-        return text;
-      })
+    fetchFirstMarkdown(meaningUrl.split("|"))
       .then((text) => {
         if (cancelled) return;
         if (text) {
@@ -111,6 +134,25 @@ const ArtworkDetail = () => {
       cancelled = true;
     };
   }, [meaningUrl]);
+
+  useEffect(() => {
+    if (!dedicationUrl) {
+      setDedicationMd("");
+      return;
+    }
+    let cancelled = false;
+    fetchFirstMarkdown(dedicationUrl.split("|"))
+      .then((text) => {
+        if (!cancelled) setDedicationMd(text || "");
+      })
+      .catch(() => {
+        if (!cancelled) setDedicationMd("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [dedicationUrl]);
+
 
   const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
   useEffect(() => {
@@ -171,6 +213,11 @@ const ArtworkDetail = () => {
   const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
   const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
+  const displayTechnique = lang === "en" && artwork.techniqueEn?.trim()
+    ? artwork.techniqueEn.trim()
+    : artwork.technique;
+  const displayPrice = isSold ? t("cert.privateCollection") : artwork.price;
+  const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
   const isArchived = !!artwork.archiveId && isSold;
 
   const sealIcon = (size: number) => (
@@ -263,7 +310,13 @@ const ArtworkDetail = () => {
           onClose={() => setCertificateOpen(false)}
           archiveId={artwork.archiveId}
           artworkTitle={artwork.title}
-          dedication={artwork.dedication}
+          dedication={effectiveDedication}
+          year={artwork.year}
+          technique={displayTechnique}
+          dimensions={artwork.dimensions}
+          imageUrl={artwork.main}
+          meaning={meaningContent}
+          artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
         />
       )}
 
@@ -374,7 +427,7 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.technique}</p>
+                >{displayTechnique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -404,14 +457,14 @@ const ArtworkDetail = () => {
                       className="group w-full text-left text-[13px] font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                       style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
-                      <span>{artwork.price}</span>
+                      <span>{displayPrice}</span>
                       {sealIcon(22)}
                     </button>
                   ) : (
                     <p className="text-[13px] text-foreground font-light"
                        style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
-                      <span>{artwork.price || "€ —"}</span>
+                      <span>{displayPrice || "€ —"}</span>
                     </p>
                   )}
                 </div>
@@ -507,7 +560,7 @@ const ArtworkDetail = () => {
                             title: artwork.title,
                             year: artwork.year,
                             dimensions: artwork.dimensions,
-                            technique: artwork.technique,
+                            technique: displayTechnique,
                             price: artwork.price,
                             discipline: discLabel,
                             imageUrl: currentImageUrl || undefined,
@@ -661,7 +714,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{displayTechnique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -686,12 +739,12 @@ const ArtworkDetail = () => {
                       onClick={() => setCertificateOpen(true)}
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
-                      <span>{artwork.price}</span>
+                      <span>{displayPrice}</span>
                       {sealIcon(20)}
                     </button>
                   ) : (
                     <p className="text-xs text-foreground font-light">
-                      <span>{artwork.price || "€ —"}</span>
+                      <span>{displayPrice || "€ —"}</span>
                     </p>
                   )}
                 </div>
@@ -765,7 +818,7 @@ const ArtworkDetail = () => {
                       title: artwork.title,
                       year: artwork.year,
                       dimensions: artwork.dimensions,
-                      technique: artwork.technique,
+                      technique: displayTechnique,
                       price: artwork.price,
                       discipline: discLabel,
                       imageUrl: currentImageUrl || undefined,
