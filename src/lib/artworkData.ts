@@ -1,5 +1,5 @@
 export interface ArtworkFullData {
-  id: string; title: string; year: string; dimensions: string; technique: string; price?: string;
+  id: string; title: string; year: string; dimensions: string; technique: string; techniqueEn?: string; price?: string;
   archiveId?: string; shopPlatform?: string; shopUrl?: string;
   preview: string; main: string; full: string; images: { url: string; label: string }[];
   published: boolean;
@@ -7,21 +7,21 @@ export interface ArtworkFullData {
 }
 
 interface CreateArtworkInput {
-  slug: string; category: string; title: string; year: string; dimensions: string; technique: string;
+  slug: string; category: string; title: string; year: string; dimensions: string; technique: string; techniqueEn?: string;
   price?: string; archiveId?: string; shopPlatform?: string; shopUrl?: string;
   details?: number; roomViews?: number; format?: "jpg" | "webp"; published?: boolean;
   colors?: string[]; shape?: string; genre?: string; support?: string; dedication?: string;
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
-  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false, colors = [], shape = "", genre = "", support = "", dedication = "" } = input;
+  const { slug, category, title, year, dimensions, technique, techniqueEn = "", price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false, colors = [], shape = "", genre = "", support = "", dedication = "" } = input;
   const dir = `/artworks/${category}/${slug}`;
   const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
   const ext = format;
   const images: { url: string; label: string }[] = [];
   for (let i = 1; i <= roomViews; i++) images.push({ url: `${base}-room-view-${i}.${ext}`, label: `Room View ${i}` });
   for (let i = 1; i <= details; i++) images.push({ url: `${base}-detail-${i}.${ext}`, label: `Dettaglio ${i}` });
-  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.${ext}`, main: `${base}-1.${ext}`, full: `${base}-1.${ext}`, images, published, colors, shape, genre, support, dedication };
+  return { id: slug, title, year, dimensions, technique, techniqueEn, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.${ext}`, main: `${base}-1.${ext}`, full: `${base}-1.${ext}`, images, published, colors, shape, genre, support, dedication };
 }
 
 const painting = [
