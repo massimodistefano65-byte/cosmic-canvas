@@ -213,6 +213,11 @@ const ArtworkDetail = () => {
   const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
   const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
+  const displayTechnique = lang === "en" && artwork.techniqueEn?.trim()
+    ? artwork.techniqueEn.trim()
+    : artwork.technique;
+  const displayPrice = isSold ? t("cert.privateCollection") : artwork.price;
+  const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
   const isArchived = !!artwork.archiveId && isSold;
 
   const sealIcon = (size: number) => (
@@ -305,7 +310,13 @@ const ArtworkDetail = () => {
           onClose={() => setCertificateOpen(false)}
           archiveId={artwork.archiveId}
           artworkTitle={artwork.title}
-          dedication={artwork.dedication}
+          dedication={effectiveDedication}
+          year={artwork.year}
+          technique={displayTechnique}
+          dimensions={artwork.dimensions}
+          imageUrl={artwork.main}
+          meaning={meaningContent}
+          artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
         />
       )}
 
@@ -416,7 +427,7 @@ const ArtworkDetail = () => {
                 </p>
                 <p className="text-[13px] text-foreground font-light"
                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                >{artwork.technique}</p>
+                >{displayTechnique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -446,14 +457,14 @@ const ArtworkDetail = () => {
                       className="group w-full text-left text-[13px] font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                       style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
-                      <span>{artwork.price}</span>
+                      <span>{displayPrice}</span>
                       {sealIcon(22)}
                     </button>
                   ) : (
                     <p className="text-[13px] text-foreground font-light"
                        style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
-                      <span>{artwork.price || "€ —"}</span>
+                      <span>{displayPrice || "€ —"}</span>
                     </p>
                   )}
                 </div>
@@ -549,7 +560,7 @@ const ArtworkDetail = () => {
                             title: artwork.title,
                             year: artwork.year,
                             dimensions: artwork.dimensions,
-                            technique: artwork.technique,
+                            technique: displayTechnique,
                             price: artwork.price,
                             discipline: discLabel,
                             imageUrl: currentImageUrl || undefined,
@@ -703,7 +714,7 @@ const ArtworkDetail = () => {
                 <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                   {t("artwork.technique")}
                 </p>
-                <p className="text-xs text-foreground font-light">{artwork.technique}</p>
+                <p className="text-xs text-foreground font-light">{displayTechnique}</p>
               </div>
               {isTshirt && artwork.shopPlatform && artwork.shopUrl ? (
                 <div className="border-t border-border/30 pt-4">
@@ -728,12 +739,12 @@ const ArtworkDetail = () => {
                       onClick={() => setCertificateOpen(true)}
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
-                      <span>{artwork.price}</span>
+                      <span>{displayPrice}</span>
                       {sealIcon(20)}
                     </button>
                   ) : (
                     <p className="text-xs text-foreground font-light">
-                      <span>{artwork.price || "€ —"}</span>
+                      <span>{displayPrice || "€ —"}</span>
                     </p>
                   )}
                 </div>
@@ -807,7 +818,7 @@ const ArtworkDetail = () => {
                       title: artwork.title,
                       year: artwork.year,
                       dimensions: artwork.dimensions,
-                      technique: artwork.technique,
+                      technique: displayTechnique,
                       price: artwork.price,
                       discipline: discLabel,
                       imageUrl: currentImageUrl || undefined,
