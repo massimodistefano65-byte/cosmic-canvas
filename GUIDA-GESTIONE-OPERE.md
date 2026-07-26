@@ -86,6 +86,7 @@ createArtwork({
   year: "2025",
   dimensions: "100 × 80 cm",
   technique: "Olio su tela",
+  techniqueEn: "Oil on canvas",   // traduzione inglese della tecnica (usata con lingua EN e nel certificato)
   price: "€ 1.500",              // opzionale — scrivi "Collezione privata" per nascondere "Opzioni d'acquisto"
   details: 3,                     // numero di file detail (0 se nessuno)
   roomViews: 2,                   // numero di file room-view (0 se nessuno)
@@ -97,6 +98,7 @@ createArtwork({
   genre: "Astratto",              // attiva il filtro genere
   dedication: "Per Marco, con stima.\nMassimo", // dedica privata nel certificato (visibile solo con codice)
 }),
+
 ```
 
 > ⚠️ **`published: true`** — imposta a `true` SOLO quando hai caricato i file. Le opere `published` entrano nella sitemap.xml e vengono indicizzate da Google.
