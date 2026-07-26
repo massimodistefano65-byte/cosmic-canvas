@@ -393,12 +393,12 @@ Se uno dei due file manca, il certificato viene comunque generato senza quell'el
 
 ## 🎵 10. Atmosfera sonora (musica per sezione)
 
-Ogni sezione del sito può avere una propria musica ambient con crossfade morbido tra una sezione e l'altra. Un'icona discreta in basso a destra (altoparlante) permette all'utente di accendere/spegnere l'audio.
+Ogni sezione del sito può avere una propria musica ambient con crossfade morbido tra una sezione e l'altra. Un'icona discreta a destra nel menu in alto (altoparlante) permette all'utente di accendere/spegnere l'audio.
 
 ### Comportamento
 
 - **Spento di default**: rispetta le policy dei browser sull'autoplay.
-- **Attivazione**: l'utente clicca l'icona altoparlante in basso a destra. La scelta viene ricordata (localStorage).
+- **Attivazione**: l'utente clicca l'icona altoparlante nella barra del menu in alto a destra. La scelta viene ricordata (localStorage).
 - **Crossfade automatico**: passando da una sezione all'altra, la musica precedente fa fade-out e la nuova fa fade-in (1.5s).
 - **Volume ambient**: 35%, discreto.
 
@@ -445,8 +445,10 @@ Ogni sezione del sito può avere una propria musica ambient con crossfade morbid
 | Articoli blog | `src/lib/blogData.ts` |
 | Testi homepage / discipline | `src/lib/i18n.tsx` |
 | SEO discipline | `src/pages/DisciplinePage.tsx` |
-| Hero image | `public/images/hero-background.jpg` |
-| Cover Home | `public/images/cover-home-*.jpg` |
+| Hero image | `public/images/hero-background.webp` |
+| Logo Archivio (certificato) | `public/images/archive-logo.png` |
+| Firma artista (certificato) | `public/images/firma.png` |
+| Cover Home | `public/images/cover-home-*.webp` |
 | Sitemap | `public/sitemap.xml` (rigenera con script) |
 
 ---
