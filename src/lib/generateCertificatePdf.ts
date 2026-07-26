@@ -238,14 +238,17 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
   // ---- Dedication -------------------------------------------------------
   const dedicationText = data.dedication?.trim() ? clean(data.dedication.trim()) : "";
   if (dedicationText) {
-    ensureSpace(34);
-    sectionLabel(t.dedication);
     doc.setFont("times", "italic");
     doc.setFontSize(11);
     doc.setTextColor(45, 42, 38);
     const dedLines = doc.splitTextToSize(dedicationText, CW - 16);
-    ensureSpace(dedLines.length * 5.4 + 14);
     const boxH = dedLines.length * 5.4 + 10;
+    // etichetta e riquadro devono restare sulla stessa pagina
+    ensureSpace(boxH + 12);
+    sectionLabel(t.dedication);
+    doc.setFont("times", "italic");
+    doc.setFontSize(11);
+    doc.setTextColor(45, 42, 38);
     doc.setDrawColor(...GOLD);
     doc.setLineWidth(0.3);
     doc.rect(M, y - 4, CW, boxH);
