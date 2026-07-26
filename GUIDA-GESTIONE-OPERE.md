@@ -363,8 +363,33 @@ Ogni opera può avere un testo opzionale che si apre in un pop-up elegante quand
 - Se il file `meaning.md` **esiste** → l'etichetta "Significato dell'opera" appare nella pagina dell'opera (stile uniforme alle altre etichette: PREZZO, TECNICA, DIMENSIONI).
 - Se il file **non esiste** → l'etichetta non viene mostrata. Nessun errore.
 - Per **rimuovere** il significato di un'opera: cancella il file `meaning.md`.
+- **Versione inglese**: crea `meaning-en.md` nella stessa cartella. Con lingua EN il sito usa quel file; se manca, mostra automaticamente `meaning.md`.
+- Lo stesso vale per le opzioni d'acquisto: `purchase-en.md` accanto a `purchase.md`.
 
 ---
+
+## 🏅 9-bis. Certificato di Autenticità in PDF
+
+Dopo che il collezionista inserisce il **Codice Segreto** nel pop-up del sigillo d'oro, compare il pulsante **"Scarica il Certificato (PDF)"**. Il PDF A4 avorio viene generato al volo con: logo dell'Archivio, immagine dell'opera, titolo, anno, tecnica (IT/EN), dimensioni, testo del *Significato dell'opera*, dedica privata, codice archivio, QR Code verso la pagina dell'opera e firma dell'artista.
+
+### Asset richiesti (caricali una sola volta)
+
+| File | Percorso | Note |
+|---|---|---|
+| Logo Archivio | `public/images/archive-logo.png` | PNG con sfondo trasparente, ~600 px di lato |
+| Firma artista | `public/images/firma.png` | PNG trasparente, firma nera, ~800 × 300 px |
+
+Se uno dei due file manca, il certificato viene comunque generato senza quell'elemento (nessun errore).
+
+### Cosa devi fare tu
+
+1. Compila `techniqueEn` nell'opera (per il certificato in inglese).
+2. Scrivi la `dedication` nell'opera (facoltativa).
+3. Crea `meaning.md` / `meaning-en.md` se vuoi il testo poetico nel certificato.
+4. Committa su GitHub: nessun'altra configurazione necessaria.
+
+---
+
 
 ## 🎵 10. Atmosfera sonora (musica per sezione)
 
