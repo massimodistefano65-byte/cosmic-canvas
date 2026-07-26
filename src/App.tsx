@@ -30,6 +30,7 @@ import Classifica from "./pages/Classifica";
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { AudioProvider } from "./components/AudioProvider";
+import PageFade from "./components/PageFade";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,7 @@ const App = () => {
         <AudioProvider>
         <BrowserRouter>
           <CookieBanner />
+          <PageFade>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
@@ -81,6 +83,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </PageFade>
           <BackToTop />
         </BrowserRouter>
         </AudioProvider>
