@@ -51,7 +51,8 @@ const ArtworkDetail = () => {
   const [hasPurchase, setHasPurchase] = useState(false);
   const [purchaseContent, setPurchaseContent] = useState<string>("");
   const [certificateOpen, setCertificateOpen] = useState(false);
-  const { t } = useI18n();
+  const [dedicationMd, setDedicationMd] = useState<string>("");
+  const { t, lang } = useI18n();
 
   const isTshirt = discipline === "t-shirt";
   const purchaseLabel = discipline === "painting"
@@ -63,7 +64,15 @@ const ArtworkDetail = () => {
   const artwork = getArtwork(discipline || "", artworkId || "");
 
   const meaningUrl = artwork
-    ? `/artworks/${discipline}/${artwork.id}/meaning.md`
+    ? lang === "en"
+      ? `/artworks/${discipline}/${artwork.id}/meaning-en.md|/artworks/${discipline}/${artwork.id}/meaning.md`
+      : `/artworks/${discipline}/${artwork.id}/meaning.md`
+    : "";
+
+  const dedicationUrl = artwork
+    ? lang === "en"
+      ? `/artworks/${discipline}/${artwork.id}/dedication-en.md|/artworks/${discipline}/${artwork.id}/dedication.md`
+      : `/artworks/${discipline}/${artwork.id}/dedication.md`
     : "";
 
   useEffect(() => {
