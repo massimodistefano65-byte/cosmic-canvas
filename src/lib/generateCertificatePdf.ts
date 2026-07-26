@@ -155,7 +155,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
     const img = await tryLoad(data.imageUrl);
     if (img) {
       const maxW = CW - 30;
-      const maxH = 66;
+      const maxH = 56;
       const aspect = img.width / img.height;
       let w = maxW;
       let h = w / aspect;
@@ -168,7 +168,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
       doc.setLineWidth(0.3);
       doc.rect(x - 1.5, y - 1.5, w + 3, h + 3);
       doc.addImage(img, "JPEG", x, y, w, h);
-      y += h + 10;
+      y += h + 9;
     }
   }
 
@@ -200,7 +200,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
   doc.setTextColor(45, 42, 38);
   const guaranteeLines = doc.splitTextToSize(clean(t.guarantee), CW - 10);
   doc.text(guaranteeLines, PW / 2, y, { align: "center", lineHeightFactor: 1.5 });
-  y += guaranteeLines.length * 5.4 + 7;
+  y += guaranteeLines.length * 5.4 + 6;
 
   const sectionLabel = (label: string) => {
     doc.setFont("helvetica", "normal");
@@ -211,7 +211,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
   };
 
   const ensureSpace = (needed: number) => {
-    if (y + needed > PH - 45) {
+    if (y + needed > PH - 34) {
       doc.addPage();
       paintBackground();
       y = M + 4;
@@ -255,7 +255,7 @@ export async function generateCertificatePdf(data: CertificatePdfData): Promise<
 
   // ---- Archive code + QR + signature (footer block) ---------------------
   ensureSpace(60);
-  const footerY = Math.max(y + 4, PH - 72);
+  const footerY = Math.max(y + 6, PH - 72);
 
   rule(footerY - 6);
 
