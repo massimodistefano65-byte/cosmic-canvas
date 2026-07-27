@@ -8,22 +8,23 @@ export default function PaginaBio() {
 
   return (
     <main className="min-h-screen bg-background text-foreground antialiased font-sans">
-      <SEOHead 
-        title="Biografia — Massimo Di Stefano, artista visivo italiano" 
-        description="Biografia ufficiale di Massimo Di Stefano, artista visivo italiano. Percorso artistico, ricerca, pittura, fotografia e arte digitale." 
+      <SEOHead
+        title="Massimo Di Stefano — Artista Visivo e Pittore Cosmico Visionario | Biografia"
+        description="Biografia ufficiale di Massimo Di Stefano, Artista Visivo e Pittore Cosmico Visionario. Percorso artistico, ricerca, pittura, fotografia e arte digitale."
         canonicalPath="/bio"
       />
-      
+
       {/* NAVBAR: Libera come in Archive per centrarsi automaticamente */}
       <Navbar />
 
       <div className="pt-24 pb-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
+
           {/* HEADER: CLONATO DA ARCHIVE */}
           <div className="mb-20 text-center">
             <h1 className="mb-4 text-4xl font-light tracking-wider text-white md:text-6xl uppercase">
-              Massimo Di Stefano
+              <span className="block md:inline">Massimo Di Stefano</span>
+              <span className="sr-only"> — Artista Visivo e Pittore Cosmico Visionario</span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground tracking-wide">
               {t("bio.header.tagline")}

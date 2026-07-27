@@ -29,13 +29,13 @@ const useScrollToAnchor = () => {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Massimo Di Stefano — Artista Visivo",
-  description: "Sito ufficiale di Massimo Di Stefano, artista visivo italiano. Pittura contemporanea, fotografia artistica, arte digitale.",
+  name: "Massimo Di Stefano — Artista Visivo e Pittore Cosmico Visionario",
+  description: "Sito ufficiale di Massimo Di Stefano, Artista Visivo e Pittore Cosmico Visionario. Pittura contemporanea, fotografia artistica, arte digitale.",
   url: "https://www.massimodistefano.com",
   author: {
     "@type": "Person",
     name: "Massimo Di Stefano",
-    jobTitle: "Artista Visivo",
+    jobTitle: "Artista Visivo e Pittore Cosmico Visionario",
   },
 };
 
@@ -82,8 +82,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Massimo Di Stefano — Artista Visivo | Pittura, Fotografia, Arte Digitale"
-        description="Sito ufficiale di Massimo Di Stefano, artista visivo italiano. Pittura contemporanea, fotografia artistica, arte digitale e progetti d'autore."
+        title="Massimo Di Stefano — Artista Visivo e Pittore Cosmico Visionario"
+        description="Sito ufficiale di Massimo Di Stefano, Artista Visivo e Pittore Cosmico Visionario. Pittura contemporanea, fotografia artistica, arte digitale e progetti d'autore."
         canonicalPath="/"
         jsonLd={jsonLd}
       />
