@@ -56,12 +56,11 @@ export function useArtworkLike(discipline: string | undefined, artworkId: string
     setCount((c) => c + (wasLiked ? -1 : 1));
 
     if (wasLiked) {
-      const { error } = await supabase
-        .from("artwork_likes")
-        .delete()
-        .eq("discipline", discipline)
-        .eq("artwork_id", artworkId)
-        .eq("device_id", deviceId);
+      const { error } = await supabase.rpc("unlike_artwork", {
+        _discipline: discipline,
+        _artwork_id: artworkId,
+        _device_id: deviceId,
+      });
       if (error) fetchState();
     } else {
       const { error } = await supabase
