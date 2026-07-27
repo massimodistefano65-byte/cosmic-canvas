@@ -68,6 +68,7 @@ const HeroSection = () => {
           >
             <span className="block md:inline" style={{ fontWeight: 300, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Massimo </span>
             <span className="block md:inline" style={{ fontWeight: 600, fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>Di Stefano</span>
+            <span className="sr-only"> — ARTISTA VISIVO E PITTORE COSMICO VISIONARIO</span>
           </motion.h1>
 
           {/* Gold Line */}
