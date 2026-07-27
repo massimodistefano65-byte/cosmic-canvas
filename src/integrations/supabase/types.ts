@@ -78,6 +78,10 @@ export type Database = {
         Args: { _archive_id: string; _code: string }
         Returns: string
       }
+      unlike_artwork: {
+        Args: { _artwork_id: string; _device_id: string; _discipline: string }
+        Returns: boolean
+      }
       verify_archive_code: {
         Args: { _archive_id: string; _code: string }
         Returns: boolean
