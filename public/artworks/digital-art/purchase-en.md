@@ -1,12 +1,12 @@
 | Option | Price |
 | :--- | :--- |
-| **Canvas Print:**<br>*Available mounted on a wooden frame or canvas only (rolled). Custom sizes available upon request* | Price **on request** |
-| **Forex Panel:**<br>*5 mm rigid support with a glossy finish. Custom sizes available upon request* | Price **on request** |
-| **Fine Art Paper:**<br>*HD print on 300 gsm cardstock. Available as print only or with frame and glass* | Price **on request** |
-| **Original File:**<br>*Exclusive usage license for the high-resolution file* | Price **on request** |
+| **Canvas print:**<br>*Available mounted on a wooden stretcher or as rolled canvas only. Dimensions chosen by the client* | Price **on request** |
+| **Forex panel:**<br>*Rigid 5 mm support with glossy finish. Dimensions chosen by the client* | Price **on request** |
+| **Fine Art paper:**<br>*HD print on 300 gsm card. Available as a sheet only or framed with glass* | Price **on request** |
+| **Original file:**<br>*Exclusive usage licence for the high-resolution file* | Price **on request** |
 
 ---
 
-Each print is accompanied by a certificate of authenticity signed by the artist. As these are digital works, dimensions are fully customizable to suit your needs.
+Every print comes with a certificate of authenticity signed by the artist. As these are digital works, dimensions are fully customisable to your needs.
 
-*To receive a personalized quote or advice on the best support for your space, please use the **ⓘ** icon in the action bar on the artwork page.*
+*For a personalised quotation or advice on the best support for your space, use the **ⓘ** icon in the action bar on the artwork page.*

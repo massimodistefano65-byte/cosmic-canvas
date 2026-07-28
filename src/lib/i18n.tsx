@@ -154,6 +154,118 @@ const translations: Record<string, Record<Lang, string>> = {
   // Audio
   "audio.play": { it: "Play Music", en: "Play Music" },
   "audio.mute": { it: "Mute", en: "Mute" },
+
+  // Artwork action bar tooltips
+  "artwork.tt.like": { it: "Mi piace", en: "Like" },
+  "artwork.tt.wishlist": { it: "Aggiungi ai preferiti", en: "Add to favourites" },
+  "artwork.tt.info": { it: "Richiedi informazioni", en: "Request information" },
+  "artwork.tt.pdf": { it: "Scarica scheda opera (PDF)", en: "Download artwork sheet (PDF)" },
+  "artwork.tt.share": { it: "Condividi", en: "Share" },
+  "artwork.notFound": { it: "Opera non trovata.", en: "Artwork not found." },
+  "artwork.priceOnRequest": { it: "Prezzo su richiesta", en: "Price on request" },
+
+  // Info request dialog
+  "info.title": { it: "Informazioni / Richieste", en: "Information / Enquiries" },
+  "info.desc": { it: "Seleziona il tipo di richiesta e descrivi il tuo interesse.", en: "Select the type of enquiry and describe your interest." },
+  "info.namePh": { it: "Nome", en: "Name" },
+  "info.emailPh": { it: "Email", en: "Email" },
+  "info.messagePh": { it: "Messaggio...", en: "Message..." },
+  "info.send": { it: "Invia richiesta", en: "Send request" },
+  "info.sending": { it: "Invio...", en: "Sending..." },
+  "info.sent": { it: "Richiesta inviata ✓", en: "Request sent ✓" },
+  "info.sentSub": { it: "Riceverai una risposta al più presto.", en: "You will receive a reply as soon as possible." },
+  "info.type.purchase": { it: "Acquisto", en: "Purchase" },
+  "info.type.exhibition": { it: "Esposizione", en: "Exhibition" },
+  "info.type.collaboration": { it: "Collaborazione", en: "Collaboration" },
+  "info.type.print": { it: "Stampa", en: "Print" },
+  "info.type.licensing": { it: "Licensing", en: "Licensing" },
+
+  // Filter panel
+  "filter.title": { it: "Filtra le opere", en: "Filter artworks" },
+  "filter.close": { it: "Chiudi", en: "Close" },
+  "filter.year": { it: "Anno", en: "Year" },
+  "filter.allYears": { it: "Tutti gli anni", en: "All years" },
+  "filter.shape": { it: "Forma", en: "Shape" },
+  "filter.support": { it: "Supporto", en: "Support" },
+  "filter.price": { it: "Fascia di prezzo", en: "Price range" },
+  "filter.genre": { it: "Genere", en: "Genre" },
+  "filter.colors": { it: "Colori dominanti", en: "Dominant colours" },
+  "filter.reset": { it: "Rimuovi filtri", en: "Clear filters" },
+  "filter.apply": { it: "Applica", en: "Apply" },
+  "filter.price.0-500": { it: "€ 0–500", en: "€ 0–500" },
+  "filter.price.500-1000": { it: "€ 500–1.000", en: "€ 500–1,000" },
+  "filter.price.1000-3000": { it: "€ 1.000–3.000", en: "€ 1,000–3,000" },
+  "filter.price.3000+": { it: "Oltre € 3.000", en: "Over € 3,000" },
+
+  // Shapes
+  "shape.Quadrato": { it: "Quadrato", en: "Square" },
+  "shape.Rettangolare": { it: "Rettangolare", en: "Rectangular" },
+  "shape.Altro": { it: "Altro", en: "Other" },
+
+  // Genres
+  "genre.Astratto": { it: "Astratto", en: "Abstract" },
+  "genre.Figurativo": { it: "Figurativo", en: "Figurative" },
+
+  // Supports
+  "support.Tela": { it: "Tela", en: "Canvas" },
+  "support.Tavola": { it: "Tavola", en: "Wood panel" },
+  "support.Polistirene": { it: "Polistirene", en: "Polystyrene" },
+  "support.Carta": { it: "Carta", en: "Paper" },
+  "support.Forex": { it: "Forex", en: "Forex" },
+  "support.Acetato": { it: "Acetato", en: "Acetate" },
+  "support.Faesite": { it: "Faesite", en: "Hardboard" },
+
+  // Colours
+  "color.Nero": { it: "Nero", en: "Black" },
+  "color.Bianco": { it: "Bianco", en: "White" },
+  "color.Grigio": { it: "Grigio", en: "Grey" },
+  "color.Oro": { it: "Oro", en: "Gold" },
+  "color.Argento": { it: "Argento", en: "Silver" },
+  "color.Bronzo": { it: "Bronzo", en: "Bronze" },
+  "color.Rosso": { it: "Rosso", en: "Red" },
+  "color.Blu": { it: "Blu", en: "Blue" },
+  "color.Verde": { it: "Verde", en: "Green" },
+  "color.Giallo": { it: "Giallo", en: "Yellow" },
+  "color.Arancione": { it: "Arancione", en: "Orange" },
+  "color.Viola": { it: "Viola", en: "Purple" },
+  "color.Rosa": { it: "Rosa", en: "Pink" },
+  "color.Marrone": { it: "Marrone", en: "Brown" },
+  "color.Ocra": { it: "Ocra", en: "Ochre" },
+  "color.Beige": { it: "Beige", en: "Beige" },
+  "color.Turchese": { it: "Turchese", en: "Turquoise" },
+  "color.Azzurro": { it: "Azzurro", en: "Light blue" },
+
+  // Newsletter (contact block)
+  "nl.label": { it: "Newsletter", en: "Newsletter" },
+  "nl.emailPh": { it: "La tua email", en: "Your email" },
+  "nl.cta": { it: "Segui il mio percorso creativo", en: "Follow my creative journey" },
+  "nl.thanks": { it: "Grazie! Iscrizione registrata.", en: "Thank you! Subscription registered." },
+  "nl.error": { it: "Errore, riprova.", en: "Error, please retry." },
+
+  // Archive hub
+  "archive.subtitle": { it: "Mostre, video, critiche e materiali documentali del percorso artistico.", en: "Exhibitions, videos, critical texts and documentary materials of the artistic journey." },
+  "archive.comingSoon": { it: "Contenuto in arrivo", en: "Coming soon" },
+  "archive.card.mostre": { it: "Mostre", en: "Exhibitions" },
+  "archive.card.video": { it: "Video", en: "Videos" },
+  "archive.card.download": { it: "Download", en: "Downloads" },
+  "archive.card.critiche": { it: "Critiche", en: "Critical texts" },
+  "archive.card.progetti": { it: "Altri Progetti", en: "Other Projects" },
+  "archive.card.selezione": { it: "La mia selezione", en: "My selection" },
+  "archive.mostre.title": { it: "Mostre", en: "Exhibitions" },
+  "archive.percorso": { it: "Percorso Espositivo", en: "Exhibition Path" },
+
+  // Social tooltips
+  "social.linktree": { it: "Tutti i link", en: "All links" },
+  "social.facebook": { it: "Seguimi su Facebook", en: "Follow me on Facebook" },
+  "social.x": { it: "Seguimi su X", en: "Follow me on X" },
+  "social.instagram": { it: "Seguimi su Instagram", en: "Follow me on Instagram" },
+
+  // AI summary (Bio)
+  "bio.ai.title": { it: "Chi è Massimo Di Stefano", en: "About Massimo Di Stefano" },
+  "bio.ai.body": {
+    it: "Massimo Di Stefano è un artista visivo italiano (nato nel 1965, vive e lavora a Sant'Egidio, Perugia). La sua ricerca si sviluppa su tre linguaggi — pittura materica, fotografia e arte digitale — attorno alla tensione tra materia e spirito e a una visione cosmica e visionaria. Agronomo e garden designer di formazione, dal 2008 si dedica a tempo pieno all'arte. Nel 2015 una sua macrofotografia è stata selezionata per l'Exposure Award al Museo del Louvre di Parigi.",
+    en: "Massimo Di Stefano is an Italian visual artist (born 1965, lives and works in Sant'Egidio, Perugia). His research develops across three languages — matter painting, photography and digital art — around the tension between matter and spirit and a cosmic, visionary vision. Trained as an agronomist and garden designer, he has devoted himself full-time to art since 2008. In 2015 one of his macro-photographs was selected for the Exposure Award at the Louvre Museum in Paris.",
+  },
 };
 
 
