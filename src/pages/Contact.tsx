@@ -7,6 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useI18n } from "@/lib/i18n";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
 
@@ -144,18 +150,26 @@ const Contact = () => {
             <div className="flex flex-col gap-8">
               {/* Social in riga orizzontale */}
               <div className="flex flex-row gap-4 justify-center md:justify-start">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/30 border border-border/40 text-foreground hover:border-accent hover:bg-secondary/50 transition-all hover:-translate-y-1"
-                    aria-label={social.name}
-                  >
-                    {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
-                  </a>
-                ))}
+                <TooltipProvider delayDuration={150}>
+                  {socialLinks.map((social) => (
+                    <Tooltip key={social.name}>
+                      <TooltipTrigger asChild>
+                        <a
+                          href={social.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/30 border border-border/40 text-foreground hover:border-accent hover:bg-secondary/50 transition-all hover:-translate-y-1"
+                          aria-label={social.name}
+                        >
+                          {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
+                        </a>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="text-xs">
+                        {t(`social.${social.name.toLowerCase()}`)}
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </TooltipProvider>
               </div>
 
               {/* Newsletter compatta */}
