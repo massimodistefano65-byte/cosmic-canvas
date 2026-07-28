@@ -204,7 +204,7 @@ const ArtworkDetail = () => {
   if (!artwork) {
     return (
       <div className="h-screen bg-background text-foreground flex items-center justify-center">
-        <p>Opera non trovata.</p>
+        <p>{t("artwork.notFound")}</p>
       </div>
     );
   }
@@ -213,10 +213,15 @@ const ArtworkDetail = () => {
   const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
   const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
-  const displayTechnique = lang === "en" && artwork.techniqueEn?.trim()
+  const isEn = lang === "en";
+  const displayTechnique = isEn && artwork.techniqueEn?.trim()
     ? artwork.techniqueEn.trim()
     : artwork.technique;
-  const displayPrice = isSold ? t("cert.privateCollection") : artwork.price;
+  const displayDimensions = isEn && artwork.dimensionsEn?.trim()
+    ? artwork.dimensionsEn.trim()
+    : artwork.dimensions;
+  const rawPrice = isEn && artwork.priceEn?.trim() ? artwork.priceEn.trim() : (artwork.price ?? "");
+  const displayPrice = isSold ? t("cert.privateCollection") : rawPrice;
   const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
   const isArchived = !!artwork.archiveId && isSold;
 
