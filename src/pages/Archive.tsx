@@ -3,6 +3,7 @@ import SEOHead from "@/components/SEOHead";
 import ArchiveCard from "@/components/archive/ArchiveCard";
 import { useSectionAudio } from "@/hooks/useSectionAudio";
 import { Image, Video, Download, FileText, Palette, Heart } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import { exhibitions, videos, downloads, criticisms, otherProjects } from "@/lib/archiveData";
 
 /**
@@ -11,6 +12,7 @@ import { exhibitions, videos, downloads, criticisms, otherProjects } from "@/lib
  */
 const Archive = () => {
   useSectionAudio("archive");
+  const { t } = useI18n();
 
   const hasMostre = exhibitions.length > 0; // "Percorso Espositivo" è sempre presente come timeline
   const hasVideo = videos.length > 0;
@@ -25,12 +27,12 @@ const Archive = () => {
     icon: React.ReactNode;
     empty: boolean;
   }> = [
-    { to: "/archive/mostre", title: "Mostre", icon: <Image size={64} strokeWidth={1} />, empty: false }, // contiene sempre Percorso Espositivo
-    { to: "/archive/video", title: "Video", icon: <Video size={64} strokeWidth={1} />, empty: !hasVideo },
-    { to: "/archive/download", title: "Download", icon: <Download size={64} strokeWidth={1} />, empty: !hasDownload },
-    { to: "/archive/critiche", title: "Critiche", icon: <FileText size={64} strokeWidth={1} />, empty: !hasCritiche },
-    { to: "/archive/progetti", title: "Altri Progetti", icon: <Palette size={64} strokeWidth={1} />, empty: !hasProgetti },
-    { to: "/archive/mia-selezione", title: "La mia selezione", icon: <Heart size={64} strokeWidth={1} />, empty: false },
+    { to: "/archive/mostre", title: t("archive.card.mostre"), icon: <Image size={64} strokeWidth={1} />, empty: false }, // contiene sempre Percorso Espositivo
+    { to: "/archive/video", title: t("archive.card.video"), icon: <Video size={64} strokeWidth={1} />, empty: !hasVideo },
+    { to: "/archive/download", title: t("archive.card.download"), icon: <Download size={64} strokeWidth={1} />, empty: !hasDownload },
+    { to: "/archive/critiche", title: t("archive.card.critiche"), icon: <FileText size={64} strokeWidth={1} />, empty: !hasCritiche },
+    { to: "/archive/progetti", title: t("archive.card.progetti"), icon: <Palette size={64} strokeWidth={1} />, empty: !hasProgetti },
+    { to: "/archive/mia-selezione", title: t("archive.card.selezione"), icon: <Heart size={64} strokeWidth={1} />, empty: false },
   ];
 
   return (
@@ -55,7 +57,7 @@ const Archive = () => {
               className="mx-auto max-w-2xl text-base text-muted-foreground md:text-lg"
               style={{ fontFamily: "'Raleway', sans-serif" }}
             >
-              Mostre, video, critiche e materiali documentali del percorso artistico.
+              {t("archive.subtitle")}
             </p>
           </div>
 
@@ -66,7 +68,7 @@ const Archive = () => {
                 to={c.to}
                 title={c.title}
                 icon={c.icon}
-                emptyLabel={c.empty ? "Contenuto in arrivo" : undefined}
+                emptyLabel={c.empty ? t("archive.comingSoon") : undefined}
               />
             ))}
           </div>
