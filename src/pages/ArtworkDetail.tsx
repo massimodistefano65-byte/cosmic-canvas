@@ -154,7 +154,11 @@ const ArtworkDetail = () => {
   }, [dedicationUrl]);
 
 
-  const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
+  const purchaseUrl = discipline
+    ? lang === "en"
+      ? `/artworks/${discipline}/purchase-en.md|/artworks/${discipline}/purchase.md`
+      : `/artworks/${discipline}/purchase.md`
+    : "";
   useEffect(() => {
     if (!purchaseUrl) {
       setHasPurchase(false);
@@ -162,24 +166,7 @@ const ArtworkDetail = () => {
       return;
     }
     let cancelled = false;
-    fetch(purchaseUrl, { cache: "no-cache" })
-      .then(async (r) => {
-        if (!r.ok) return null;
-        const ctype = (r.headers.get("content-type") || "").toLowerCase();
-        if (ctype.includes("text/html")) return null;
-        const text = await r.text();
-        const head = text.trimStart().slice(0, 200).toLowerCase();
-        if (
-          head.startsWith("<!doctype") ||
-          head.startsWith("<html") ||
-          head.includes("<head") ||
-          head.includes("<script")
-        ) {
-          return null;
-        }
-        if (!text.trim()) return null;
-        return text;
-      })
+    fetchFirstMarkdown(purchaseUrl.split("|"))
       .then((text) => {
         if (cancelled) return;
         if (text) {
@@ -204,7 +191,7 @@ const ArtworkDetail = () => {
   if (!artwork) {
     return (
       <div className="h-screen bg-background text-foreground flex items-center justify-center">
-        <p>Opera non trovata.</p>
+        <p>{t("artwork.notFound")}</p>
       </div>
     );
   }
@@ -213,10 +200,15 @@ const ArtworkDetail = () => {
   const seoDiscLabel = disciplineSeoLabel[discipline || ""] || discLabel;
 
   const isSold = (artwork.price ?? "").trim().toLowerCase() === "collezione privata";
-  const displayTechnique = lang === "en" && artwork.techniqueEn?.trim()
+  const isEn = lang === "en";
+  const displayTechnique = isEn && artwork.techniqueEn?.trim()
     ? artwork.techniqueEn.trim()
     : artwork.technique;
-  const displayPrice = isSold ? t("cert.privateCollection") : artwork.price;
+  const displayDimensions = isEn && artwork.dimensionsEn?.trim()
+    ? artwork.dimensionsEn.trim()
+    : artwork.dimensions;
+  const rawPrice = isEn && artwork.priceEn?.trim() ? artwork.priceEn.trim() : (artwork.price ?? "");
+  const displayPrice = isSold ? t("cert.privateCollection") : rawPrice;
   const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
   const isArchived = !!artwork.archiveId && isSold;
 
@@ -313,7 +305,7 @@ const ArtworkDetail = () => {
           dedication={effectiveDedication}
           year={artwork.year}
           technique={displayTechnique}
-          dimensions={artwork.dimensions}
+          dimensions={displayDimensions}
           imageUrl={artwork.main}
           meaning={meaningContent}
           artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
@@ -416,7 +408,7 @@ const ArtworkDetail = () => {
                   </p>
                   <p className="text-[13px] text-foreground font-light"
                      style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >{artwork.dimensions}</p>
+                  >{displayDimensions}</p>
                 </div>
               )}
               <div className="border-t border-border/30 pt-3">
@@ -517,7 +509,7 @@ const ArtworkDetail = () => {
                       <span className="text-xs tabular-nums">{likeCount}</span>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Mi piace</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.like")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -536,7 +528,7 @@ const ArtworkDetail = () => {
                       <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Aggiungi ai preferiti</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.wishlist")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -548,7 +540,7 @@ const ArtworkDetail = () => {
                       <Info size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Richiedi informazioni</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.info")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -559,9 +551,9 @@ const ArtworkDetail = () => {
                           await generateArtworkPdf({
                             title: artwork.title,
                             year: artwork.year,
-                            dimensions: artwork.dimensions,
+                            dimensions: displayDimensions,
                             technique: displayTechnique,
-                            price: artwork.price,
+                            price: displayPrice,
                             discipline: discLabel,
                             imageUrl: currentImageUrl || undefined,
                           });
@@ -572,7 +564,7 @@ const ArtworkDetail = () => {
                       <Download size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Scarica scheda opera (PDF)</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.pdf")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -581,7 +573,7 @@ const ArtworkDetail = () => {
                       <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
                     </span>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Condividi</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
                 </Tooltip>
               </div>
             </TooltipProvider>
@@ -707,7 +699,7 @@ const ArtworkDetail = () => {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                     {t("artwork.dimensions")}
                   </p>
-                  <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
+                  <p className="text-xs text-foreground font-light">{displayDimensions}</p>
                 </div>
               )}
               <div className="border-t border-border/30 pt-3">
@@ -817,9 +809,9 @@ const ArtworkDetail = () => {
                     await generateArtworkPdf({
                       title: artwork.title,
                       year: artwork.year,
-                      dimensions: artwork.dimensions,
+                      dimensions: displayDimensions,
                       technique: displayTechnique,
-                      price: artwork.price,
+                      price: displayPrice,
                       discipline: discLabel,
                       imageUrl: currentImageUrl || undefined,
                     });

@@ -3,6 +3,37 @@ import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Massimo Di Stefano",
+  alternateName: "Massimo Di Stefano artista",
+  jobTitle: "Artista Visivo e Pittore Cosmico Visionario",
+  description:
+    "Massimo Di Stefano è un artista visivo italiano. La sua ricerca si sviluppa attraverso pittura materica, fotografia e arte digitale, attorno alla tensione tra materia e spirito e a una visione cosmica e visionaria.",
+  url: "https://www.massimodistefano.com/bio",
+  mainEntityOfPage: "https://www.massimodistefano.com/bio",
+  image: "https://www.massimodistefano.com/images/bio/massimo-di-stefano-portrait-1.jpg",
+  nationality: { "@type": "Country", name: "Italia" },
+  birthPlace: { "@type": "Place", name: "Italia" },
+  workLocation: { "@type": "Place", name: "Sant'Egidio, Perugia, Italia" },
+  knowsAbout: [
+    "Pittura materica",
+    "Arte contemporanea",
+    "Fotografia artistica",
+    "Arte digitale",
+    "Arte cosmica e visionaria",
+    "Garden design",
+  ],
+  award: "Exposure Award — Museo del Louvre, Parigi (2015)",
+  sameAs: [
+    "https://www.facebook.com/massimodistefanoarte",
+    "https://www.instagram.com/massimodistefano65/",
+    "https://x.com/disty65",
+    "https://linktr.ee/radmax",
+  ],
+};
+
 export default function PaginaBio() {
   const { t } = useI18n();
 
@@ -12,6 +43,7 @@ export default function PaginaBio() {
         title="Massimo Di Stefano — Artista Visivo e Pittore Cosmico Visionario | Biografia"
         description="Biografia ufficiale di Massimo Di Stefano, Artista Visivo e Pittore Cosmico Visionario. Percorso artistico, ricerca, pittura, fotografia e arte digitale."
         canonicalPath="/bio"
+        jsonLd={personJsonLd}
       />
 
       {/* NAVBAR: Libera come in Archive per centrarsi automaticamente */}
@@ -135,8 +167,21 @@ export default function PaginaBio() {
 
           </div>
 
+          {/* AI SUMMARY — riquadro minimale per motori di ricerca e assistenti AI */}
+          <section
+            className="mt-24 mx-auto max-w-3xl rounded-md border border-white/10 px-6 py-5"
+            aria-label={t("bio.ai.title")}
+          >
+            <h2 className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              {t("bio.ai.title")}
+            </h2>
+            <p className="text-sm leading-relaxed text-muted-foreground font-light">
+              {t("bio.ai.body")}
+            </p>
+          </section>
+
           {/* FOOTER */}
-          <footer className="mt-32 pt-16 border-t border-white/10 text-center">
+          <footer className="mt-24 pt-16 border-t border-white/10 text-center">
             <p className="text-muted-foreground max-w-3xl mx-auto leading-loose text-lg font-light italic">
               {t("bio.footer")}
             </p>

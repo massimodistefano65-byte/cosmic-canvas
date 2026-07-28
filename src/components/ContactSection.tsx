@@ -5,6 +5,12 @@ import { Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useI18n } from "@/lib/i18n";
 
 const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
@@ -62,7 +68,7 @@ const ContactSection = () => {
       setNlSent(true);
       setNewsletterEmail("");
     } catch {
-      setNlError("Errore, riprova.");
+      setNlError(t("nl.error"));
     } finally {
       setNlSending(false);
     }
@@ -110,7 +116,7 @@ const ContactSection = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-secondary/30 border-border/40 h-10"
+                  className="bg-[#FDFCF0] text-[#1A1A1A] border-[#1A1A1A]/30 placeholder:text-[#1A1A1A]/50 focus-visible:ring-[#d4af7a] focus-visible:ring-offset-0 h-10"
                 />
                 <Input
                   type="email"
@@ -118,17 +124,17 @@ const ContactSection = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-secondary/30 border-border/40 h-10"
+                  className="bg-[#FDFCF0] text-[#1A1A1A] border-[#1A1A1A]/30 placeholder:text-[#1A1A1A]/50 focus-visible:ring-[#d4af7a] focus-visible:ring-offset-0 h-10"
                 />
                 <Textarea
                   placeholder={t("contact.message")}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
-                  className="bg-secondary/30 border-border/40 resize-none"
+                  className="bg-[#FDFCF0] text-[#1A1A1A] border-[#1A1A1A]/30 placeholder:text-[#1A1A1A]/50 focus-visible:ring-[#d4af7a] focus-visible:ring-offset-0 resize-none"
                   rows={3}
                 />
-                <Button type="submit" disabled={sending} className="w-full bg-accent hover:scale-[1.02] transition-transform h-10">
+                <Button type="submit" disabled={sending} className="w-full h-10 bg-[#FDFCF0] text-[#1A1A1A] border border-[#1A1A1A]/30 hover:bg-[#f3efdc] hover:scale-[1.02] transition-all">
                   {sending ? t("contact.sending") : t("contact.send")}
                 </Button>
               </form>
@@ -139,38 +145,46 @@ const ContactSection = () => {
           <div className="flex flex-col gap-8">
             {/* Social in riga orizzontale */}
             <div className="flex flex-row gap-4 justify-center md:justify-start">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/30 border border-border/40 text-foreground hover:border-accent hover:bg-secondary/50 transition-all hover:-translate-y-1"
-                  aria-label={social.name}
-                >
-                  {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
-                </a>
-              ))}
+              <TooltipProvider delayDuration={150}>
+                {socialLinks.map((social) => (
+                  <Tooltip key={social.name}>
+                    <TooltipTrigger asChild>
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-12 h-12 rounded-lg bg-secondary/30 border border-border/40 text-foreground hover:border-accent hover:bg-secondary/50 transition-all hover:-translate-y-1"
+                        aria-label={social.name}
+                      >
+                        {typeof social.icon === "string" ? social.icon : <social.icon size={20} />}
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-xs">
+                      {t(`social.${social.name.toLowerCase()}`)}
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
             </div>
 
             {/* Newsletter compatta */}
             <div className="bg-secondary/20 p-5 rounded-lg border border-border/30">
-              <p className="text-[10px] uppercase tracking-[0.2em] mb-3 text-foreground/70 text-center md:text-left">Newsletter</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] mb-3 text-foreground/70 text-center md:text-left">{t("nl.label")}</p>
               {nlSent ? (
-                <p className="text-accent text-xs text-center py-2">Grazie! Iscrizione registrata.</p>
+                <p className="text-accent text-xs text-center py-2">{t("nl.thanks")}</p>
               ) : (
                 <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
                   <Input
                     type="email"
-                    placeholder="La tua email"
+                    placeholder={t("nl.emailPh")}
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     required
                     maxLength={255}
-                    className="bg-black/40 border-border/40 flex-1 h-10"
+                    className="bg-[#FDFCF0] text-[#1A1A1A] border-[#1A1A1A]/30 placeholder:text-[#1A1A1A]/50 focus-visible:ring-[#d4af7a] focus-visible:ring-offset-0 flex-1 h-10"
                   />
-                  <Button type="submit" disabled={nlSending} className="bg-white text-black hover:bg-accent hover:text-white transition-all hover:scale-105 px-6 h-10 text-xs font-bold whitespace-nowrap">
-                    {nlSending ? "..." : "Segui il mio percorso creativo"}
+                  <Button type="submit" disabled={nlSending} className="bg-[#FDFCF0] text-[#1A1A1A] border border-[#1A1A1A]/30 hover:bg-[#f3efdc] transition-all hover:scale-105 px-6 h-10 text-xs font-bold whitespace-nowrap">
+                    {nlSending ? "..." : t("nl.cta")}
                   </Button>
                 </form>
               )}

@@ -1,93 +1,34 @@
-## 1. La "Fabbrica dei Certificati" (PDF ufficiale)
+## Obiettivo
+Completare l'esperienza bilingue IT/EN, uniformare lo stile dei contatti, aggiungere tooltip social, gestire i campi dinamici EN e inserire una AI Summary minimale orientata ai motori di ricerca.
 
-**Nuova dipendenza:** `qrcode` (generazione QR come dataURL). `jspdf` è già presente.
+## 1. Internazionalizzazione integrale (IT/EN)
 
-**Nuovo file `src/lib/generateCertificatePdf.ts`** — motore data-driven, A4 verticale, sfondo avorio `#FDFCF0`:
+Aggiungo le chiavi mancanti in `src/lib/i18n.tsx` e le collego ai componenti:
 
-```text
-┌──────────────────────────────────────┐
-│        [logo-archivio.png]           │
-│  CERTIFICATO DI AUTENTICITÀ DIGITALE │
-│  ─────────── filetto oro ─────────── │
-│         [foto opera, centrata]       │
-│                                      │
-│   « Titolo »            (Cormorant)  │
-│   Anno · Tecnica · Dimensioni        │
-│                                      │
-│   SIGNIFICATO DELL'OPERA             │
-│   testo dal .md, giustificato        │
-│                                      │
-│   DEDICA PRIVATA (se presente)       │
-│   testo corsivo in cornice sottile   │
-│                                      │
-│  CODICE ARCHIVIO   [QR]              │
-│  MDS-P-XXXX        → URL opera       │
-│                                      │
-│      [firma-massimo.png]             │
-│      Massimo Di Stefano              │
-└──────────────────────────────────────┘
-```
+- **Opzioni d'acquisto** (`ArtworkDetail.tsx`): etichetta del tasto tradotta; in EN carico `purchase-en.md` con fallback su `purchase.md`.
+- **Modulo Richiesta Informazioni** (`InfoRequestDialog.tsx`): titolo, sottotitolo, label Nome/Email/Messaggio, tasto Invia, opzioni del menù (Acquisto/Esposizione/Collaborazione/Stampa/Licensing), messaggi di successo ed errore.
+- **Filtri** (`FilterPanel.tsx`): Anno, Colore, Forma, Genere, Supporto, Prezzo, nomi colori, chip, Applica/Reset.
+- **Newsletter** (`NewsletterSection.tsx`, `ContactSection.tsx`): placeholder email e testo del pulsante.
+- **Archivio** (`Archive.tsx`, `MostreIndex.tsx`): sottotitolo e titoli delle card. Gli URL restano invariati per non rompere sitemap e link esistenti.
+- **Tooltip barra azioni** (`ArtworkDetail.tsx`): Mi piace / Preferiti / Info / PDF / Condividi tradotti.
 
-- Font: jsPDF built-in Times/Helvetica (i font custom appesantirebbero il bundle); nessun carattere non-ASCII problematico — il testo italiano con accenti viene reso correttamente registrando un TTF Unicode leggero solo se necessario in fase di verifica.
-- Asset caricati da `/images/logo-archivio.png` e `/images/firma-massimo.png` (già presenti).
-- Immagine opera: `artwork.main`, ridimensionata proporzionalmente entro un riquadro fisso.
-- QR: punta a `https://<origin>/{discipline}/{slug}`.
-- Paginazione automatica su seconda pagina se il "Significato" è lungo.
-- Nome file: `certificato-{archiveId}-{slug}.pdf`.
+## 2. Dati dinamici EN nella pagina opera
 
-**Interfaccia (`CertificateDialog.tsx`):**
-- Icona `Download` (lucide) nella testata accanto alla X, stesso colore del testo, tooltip "Scarica Certificato di Autenticità Ufficiale" / "Download Official Certificate of Authenticity".
-- Visibile **solo dopo la verifica** (`status === "verified"`), con spinner durante la generazione.
-- Il dialog riceve i nuovi props necessari (dati opera, meaning, discipline/slug) da `ArtworkDetail.tsx`, che già li possiede.
+In `ArtworkDetail.tsx` (e dove serve nella scheda tecnica) leggo `priceEn` e `dimensionsEn` quando la lingua è EN, con fallback ai campi italiani se il valore è vuoto. Aggiungo i due campi al tipo in `src/lib/artworkData.ts` se non già presenti, così lo script di popolamento resta compatibile. Stessa logica applicata al PDF opera e al certificato, per coerenza linguistica.
 
-**Automatismo:** nessun intervento sul codice per nuove opere — basta aggiungere `archiveId` in `artworkData.ts` e il certificato è disponibile.
+## 3. Restyling grafico sezione contatti
 
-## 2. Bilinguismo completo (IT/EN)
+In `ContactSection.tsx` e `Contact.tsx` applico a input, textarea, select e pulsanti lo stile dei pop-up avorio (`#FDFCF0`, testo `#1A1A1A`, bordi sottili, focus oro), mantenendo intatta la logica Formspree.
 
-- **Testi di sistema**: tutte le stringhe fisse di `CertificateDialog`, `MeaningDialog` e del PDF passano da `useI18n()` (nuove chiavi in `src/lib/i18n.tsx`), incluso il titolo "Digital Certificate of Authenticity" e il paragrafo di garanzia dell'Archivio.
-- **Contenuti .md**: il fetch prova prima `meaning-en.md` → fallback `meaning.md`; e `dedication-en.md` → fallback `dedication.md`. Il filtro anti-HTML (falsi positivi Aruba) resta attivo su entrambi.
-- **Tecnica inglese**: nuovo campo opzionale `techniqueEn` in `ArtworkFullData` / `createArtwork`. Se la lingua è EN e il campo è valorizzato, viene mostrato al posto della tecnica italiana (in pagina opera, PDF e tooltip). Il campo va poi popolato dall'Excel (colonna "TECNICA INGLESE") con lo script di patch già documentato.
-- **Prezzo**: "Collezione privata" → "Private collection" in EN.
-- **Etichette**: Anno/Tecnica/Dimensioni → Year/Technique/Dimensions.
-- **Titoli opere**: invariati in entrambe le lingue.
+## 4. Tooltip icone social
 
-## 3. Controllo audio (Navbar)
+Tooltip su Linktree, X, Facebook, Instagram in fondo alla Home e nella pagina Contatti, usando il componente tooltip già in uso.
 
-`AudioToggle.tsx` passa da testo a icona:
-- `Volume2` quando ON, `VolumeX` quando OFF — bianco luminoso come le altre voci.
-- Stesso effetto bounce (`whileHover` spring) degli altri elementi.
-- Desktop: tooltip discreto "Play Music" / "Mute" (in EN: stessi termini).
-- ON: leggera animazione di "respiro" (scala/opacità pulsante lentissima) sull'icona.
-- Mobile: solo icona accanto al menu hamburger, nessun testo.
+## 5. AI Summary Card (minimale, orientata ai motori)
 
-## 4. Transizioni di pagina — approccio a rischio zero
+- **Principalmente nei metadati**: arricchisco il JSON-LD `Person` della pagina Bio con `description`, `jobTitle`, `knowsAbout`, `nationality`, `sameAs` (social) e `alumniOf`/`worksFor` se applicabile — così assistenti AI e motori leggono un profilo strutturato completo.
+- **Riquadro visibile minimale**: in fondo alla pagina Bio, un blocco discreto (bordo sottile, nessuna immagine, 3-4 righe) intitolato "Chi è Massimo Di Stefano / About Massimo Di Stefano" con un riassunto professionale sintetico, bilingue. Nessun impatto sul layout esistente, nessun elemento pesante.
 
-Data la tua condizione tassativa, procedo **solo** con la soluzione più conservativa possibile:
+## Note tecniche
 
-- Un wrapper CSS **puramente opacity-based** (`animation: fade-in-page 420ms ease-out`), **nessun `transform`**, **nessuna animazione di uscita**, **nessun `AnimatePresence`**, nessun montaggio ritardato.
-- Applicato **solo** alle pagine interne. **La Home è esclusa** — fullPage.js non viene toccato in alcun modo.
-- L'animazione non altera altezza né `scrollHeight`, quindi lo `scroll restoration` di `DisciplinePage` (basato su `isRestoring` + posizione salvata) continua a funzionare identico: il ripristino avviene sul layout reale, non su un elemento animato in posizione.
-- Se in fase di verifica in preview rilevo anche solo un micro-scatto sulle gallerie o un ritardo nel ripristino della posizione, **rimuovo la transizione** e te lo comunico, lasciando il cambio pagina istantaneo.
-
-## 5. Documentazione
-
-`GUIDA-GESTIONE-OPERE.md` aggiornata con:
-- Come funziona la "Fabbrica dei Certificati" e da quali campi Excel attinge.
-- Gestione degli asset `/public/images/logo-archivio.png` e `firma-massimo.png` (come sostituirli).
-- Nuova colonna "TECNICA INGLESE" → campo `techniqueEn`.
-- Convenzione file `meaning-en.md` e `dedication-en.md`.
-
-## File toccati
-
-- `package.json` — dipendenza `qrcode`
-- `src/lib/generateCertificatePdf.ts` — nuovo
-- `src/components/CertificateDialog.tsx`
-- `src/components/MeaningDialog.tsx`
-- `src/components/AudioToggle.tsx`
-- `src/pages/ArtworkDetail.tsx` — fetch bilingue .md, props al dialog, `techniqueEn`
-- `src/lib/artworkData.ts` — campo `techniqueEn`
-- `src/lib/i18n.tsx` — nuove chiavi
-- `src/index.css` + wrapper transizione (escluso Home)
-- `GUIDA-GESTIONE-OPERE.md`
-
-Verifica finale: build + typecheck, controllo visivo del PDF pagina per pagina (IT ed EN), test scroll restoration e Home fullPage.
+Nessuna modifica a fullPage.js, scroll restoration, rotte o database. Tutti i markdown EN mancanti hanno fallback italiano.
