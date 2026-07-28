@@ -147,7 +147,3 @@ export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, disci
     </Dialog>
   );
 }
-      </DialogContent>
-    </Dialog>
-  );
-}
