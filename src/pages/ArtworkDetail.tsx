@@ -305,7 +305,7 @@ const ArtworkDetail = () => {
           dedication={effectiveDedication}
           year={artwork.year}
           technique={displayTechnique}
-          dimensions={artwork.dimensions}
+          dimensions={displayDimensions}
           imageUrl={artwork.main}
           meaning={meaningContent}
           artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
@@ -408,7 +408,7 @@ const ArtworkDetail = () => {
                   </p>
                   <p className="text-[13px] text-foreground font-light"
                      style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >{artwork.dimensions}</p>
+                  >{displayDimensions}</p>
                 </div>
               )}
               <div className="border-t border-border/30 pt-3">
@@ -509,7 +509,7 @@ const ArtworkDetail = () => {
                       <span className="text-xs tabular-nums">{likeCount}</span>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Mi piace</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.like")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -528,7 +528,7 @@ const ArtworkDetail = () => {
                       <Bookmark size={16} fill={inWishlist(artwork.id) ? "currentColor" : "none"} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Aggiungi ai preferiti</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.wishlist")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -540,7 +540,7 @@ const ArtworkDetail = () => {
                       <Info size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Richiedi informazioni</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.info")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -551,9 +551,9 @@ const ArtworkDetail = () => {
                           await generateArtworkPdf({
                             title: artwork.title,
                             year: artwork.year,
-                            dimensions: artwork.dimensions,
+                            dimensions: displayDimensions,
                             technique: displayTechnique,
-                            price: artwork.price,
+                            price: displayPrice,
                             discipline: discLabel,
                             imageUrl: currentImageUrl || undefined,
                           });
@@ -564,7 +564,7 @@ const ArtworkDetail = () => {
                       <Download size={16} aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Scarica scheda opera (PDF)</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.pdf")}</TooltipContent>
                 </Tooltip>
 
                 <Tooltip>
@@ -573,7 +573,7 @@ const ArtworkDetail = () => {
                       <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
                     </span>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">Condividi</TooltipContent>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
                 </Tooltip>
               </div>
             </TooltipProvider>
@@ -699,7 +699,7 @@ const ArtworkDetail = () => {
                   <p className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 mb-1">
                     {t("artwork.dimensions")}
                   </p>
-                  <p className="text-xs text-foreground font-light">{artwork.dimensions}</p>
+                  <p className="text-xs text-foreground font-light">{displayDimensions}</p>
                 </div>
               )}
               <div className="border-t border-border/30 pt-3">
@@ -809,9 +809,9 @@ const ArtworkDetail = () => {
                     await generateArtworkPdf({
                       title: artwork.title,
                       year: artwork.year,
-                      dimensions: artwork.dimensions,
+                      dimensions: displayDimensions,
                       technique: displayTechnique,
-                      price: artwork.price,
+                      price: displayPrice,
                       discipline: discLabel,
                       imageUrl: currentImageUrl || undefined,
                     });
