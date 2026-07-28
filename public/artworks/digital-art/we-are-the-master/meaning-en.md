@@ -1,0 +1,10 @@
+*This work originates from my long practice of meditation and my interest in Eastern philosophy. The central concept is that the "True Master" is not an external entity, but resides within each of us. It represents the awakening of the Inner Master, a state of consciousness often associated with the third Chakra and the inner "Void".*
+
+**The meaning of the artwork**
+*When we awaken this inner power, we acquire the ability to self-guide. We no longer need to seek answers outside or struggle to distinguish good from evil; we simply "know" because we have become the masters of our own path. In the painting, the figure you see emerging from the crowd is the personification of this spiritual awakening.*
+
+*It is a work that aims to subvert the idea of an external authority: I wanted to evoke the unity and connection between all of us, reminding us that the light and the guidance we seek are already within us. With this work, I wanted to express a concept that I feel very deeply: the search for an external guide is often an illusion. We are used to looking for masters, references, truths outside of ourselves, when in reality true knowledge and true transformation start from within.*
+
+*The figures emerge from the darkness as presences on a journey, still immersed in a dimension of not full awareness. The light that passes through them represents exactly this: a subtle consciousness, an energetic and spiritual connection that unites every individual to something greater, but which at the same time is already present within each of us.*
+
+*The contrast between light and darkness is fundamental. Black is not only absence or negativity, but also the original place from which everything is born: the mystery, the unknown, the potential. For me, this work speaks of inner responsibility. Of the moment in which one understands that there is no master separate from us, but that each person can become their own guide, if they manage to listen to that inner light that often remains hidden under the noise of daily life.*

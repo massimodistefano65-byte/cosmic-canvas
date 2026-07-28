@@ -1,5 +1,7 @@
 Le prove più profonde dell'esistenza non si manifestano sempre con il rumore della tempesta, ma con il lento e incessante attrito dell'essere contro la vita.
 
+
+
 **Descrizione dell'opera**
 
 *Il tormento del vivere* racconta quella tensione silenziosa che accompagna il cammino umano: il confronto continuo tra il desiderio di elevarsi e il peso dell'esperienza terrena. Non vi è una rappresentazione narrativa, ma una materia che sembra consumarsi e rigenerarsi nello stesso istante.
@@ -9,6 +11,8 @@ Dal fondo emergono stratificazioni, velature e abrasioni che ricordano superfici
 L'opera suggerisce che il tormento non sia soltanto dolore, ma anche il prezzo della consapevolezza. Ogni piega della superficie sembra custodire il segno del tempo, delle esperienze vissute e delle continue metamorfosi interiori. È proprio in questa tensione che nasce la possibilità di un'evoluzione spirituale: attraversare il conflitto senza esserne annientati.
 
 L'astrazione lascia allo spettatore la libertà di riconoscere il proprio vissuto, trasformando il quadro in uno spazio di riflessione personale più che in una semplice immagine da osservare.
+
+
 
 **Tecniche e materiali**
 
