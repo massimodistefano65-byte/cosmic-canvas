@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import { useMemo } from "react";
+import { useI18n } from "@/lib/i18n";
 import {
   Tooltip,
   TooltipContent,
@@ -59,12 +60,7 @@ const COLOR_PALETTE: { name: string; hex: string; border?: string }[] = [
   { name: "Azzurro", hex: "#7ab8d9" },
 ];
 
-const PRICE_RANGES = [
-  { key: "0-500", label: "€ 0–500" },
-  { key: "500-1000", label: "€ 500–1.000" },
-  { key: "1000-3000", label: "€ 1.000–3.000" },
-  { key: "3000+", label: "Oltre € 3.000" },
-];
+const PRICE_RANGES = ["0-500", "500-1000", "1000-3000", "3000+"];
 
 const SHAPE_OPTIONS = ["Quadrato", "Rettangolare", "Altro"];
 
@@ -87,6 +83,13 @@ export default function FilterPanel({
   supportOptions,
   genreOptions,
 }: Props) {
+  const { t } = useI18n();
+  /** Traduce un valore di dato (colore, forma, genere, supporto); fallback al valore italiano. */
+  const tv = (prefix: string, value: string) => {
+    const key = `${prefix}.${value}`;
+    const out = t(key);
+    return out === key ? value : out;
+  };
   const currentYear = new Date().getFullYear();
   const years = useMemo(() => {
     const out: number[] = [];
@@ -132,12 +135,12 @@ export default function FilterPanel({
             className="text-2xl md:text-3xl text-[#1A1A1A] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Filtra le opere
+            {t("filter.title")}
           </DialogTitle>
           <button
             onClick={onClose}
             className="p-2 hover:bg-black/5 rounded-full transition-colors text-[#1A1A1A]/80 hover:text-[#1A1A1A]"
-            aria-label="Chiudi"
+            aria-label={t("filter.close")}
           >
             <X size={22} />
           </button>
@@ -148,13 +151,13 @@ export default function FilterPanel({
           style={{ fontFamily: "'Raleway', sans-serif" }}
         >
           {/* ANNO */}
-          <Section label="Anno">
+          <Section label={t("filter.year")}>
             <select
               value={filters.year ?? ""}
               onChange={(e) => setField("year", e.target.value || null)}
               className="w-full h-10 rounded-md border border-[#1A1A1A]/70 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]"
             >
-              <option value="">Tutti gli anni</option>
+              <option value="">{t("filter.allYears")}</option>
               {years.map((y) => (
                 <option key={y} value={String(y)}>
                   {y}
@@ -164,7 +167,7 @@ export default function FilterPanel({
           </Section>
 
           {/* FORMA */}
-          <Section label="Forma">
+          <Section label={t("filter.shape")}>
             <div className="flex flex-wrap gap-2">
               {SHAPE_OPTIONS.map((s) => {
                 const active = filters.shape === s;
@@ -183,7 +186,7 @@ export default function FilterPanel({
 
           {/* SUPPORTO */}
           {supportOptions.length > 0 && (
-            <Section label="Supporto">
+            <Section label={t("filter.support")}>
               <div className="flex flex-wrap gap-2">
                 {supportOptions.map((s) => {
                   const active = filters.support === s;
@@ -202,7 +205,7 @@ export default function FilterPanel({
           )}
 
           {/* FASCIA DI PREZZO */}
-          <Section label="Fascia di prezzo">
+          <Section label={t("filter.price")}>
             <div className="flex flex-wrap gap-2">
               {PRICE_RANGES.map((p) => {
                 const active = filters.price === p.key;
@@ -221,7 +224,7 @@ export default function FilterPanel({
 
           {/* GENERE */}
           {genreOptions.length > 0 && (
-            <Section label="Genere">
+            <Section label={t("filter.genre")}>
               <div className="flex flex-wrap gap-2">
                 {genreOptions.map((g) => {
                   const active = filters.genre === g;
@@ -241,7 +244,7 @@ export default function FilterPanel({
 
           {/* COLORI DOMINANTI — full width */}
           <div className="md:col-span-2">
-            <Section label="Colori dominanti">
+            <Section label={t("filter.colors")}>
               <TooltipProvider delayDuration={100}>
                 <div className="flex flex-wrap gap-3">
                   {COLOR_PALETTE.map((c) => {
