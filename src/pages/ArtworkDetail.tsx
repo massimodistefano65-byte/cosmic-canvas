@@ -154,7 +154,11 @@ const ArtworkDetail = () => {
   }, [dedicationUrl]);
 
 
-  const purchaseUrl = discipline ? `/artworks/${discipline}/purchase.md` : "";
+  const purchaseUrl = discipline
+    ? lang === "en"
+      ? `/artworks/${discipline}/purchase-en.md|/artworks/${discipline}/purchase.md`
+      : `/artworks/${discipline}/purchase.md`
+    : "";
   useEffect(() => {
     if (!purchaseUrl) {
       setHasPurchase(false);
@@ -162,24 +166,7 @@ const ArtworkDetail = () => {
       return;
     }
     let cancelled = false;
-    fetch(purchaseUrl, { cache: "no-cache" })
-      .then(async (r) => {
-        if (!r.ok) return null;
-        const ctype = (r.headers.get("content-type") || "").toLowerCase();
-        if (ctype.includes("text/html")) return null;
-        const text = await r.text();
-        const head = text.trimStart().slice(0, 200).toLowerCase();
-        if (
-          head.startsWith("<!doctype") ||
-          head.startsWith("<html") ||
-          head.includes("<head") ||
-          head.includes("<script")
-        ) {
-          return null;
-        }
-        if (!text.trim()) return null;
-        return text;
-      })
+    fetchFirstMarkdown(purchaseUrl.split("|"))
       .then((text) => {
         if (cancelled) return;
         if (text) {
