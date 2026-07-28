@@ -177,7 +177,7 @@ export default function FilterPanel({
                     onClick={() => setField("shape", active ? null : s)}
                     className={`${chipBase} ${active ? chipActive : chipInactive}`}
                   >
-                    {s}
+                    {tv("shape", s)}
                   </button>
                 );
               })}
@@ -196,7 +196,7 @@ export default function FilterPanel({
                       onClick={() => setField("support", active ? null : s)}
                       className={`${chipBase} ${active ? chipActive : chipInactive}`}
                     >
-                      {s}
+                      {tv("support", s)}
                     </button>
                   );
                 })}
@@ -208,14 +208,14 @@ export default function FilterPanel({
           <Section label={t("filter.price")}>
             <div className="flex flex-wrap gap-2">
               {PRICE_RANGES.map((p) => {
-                const active = filters.price === p.key;
+                const active = filters.price === p;
                 return (
                   <button
-                    key={p.key}
-                    onClick={() => setField("price", active ? null : p.key)}
+                    key={p}
+                    onClick={() => setField("price", active ? null : p)}
                     className={`${chipBase} ${active ? chipActive : chipInactive}`}
                   >
-                    {p.label}
+                    {t(`filter.price.${p}`)}
                   </button>
                 );
               })}
@@ -234,7 +234,7 @@ export default function FilterPanel({
                       onClick={() => setField("genre", active ? null : g)}
                       className={`${chipBase} ${active ? chipActive : chipInactive}`}
                     >
-                      {g}
+                      {tv("genre", g)}
                     </button>
                   );
                 })}
@@ -254,7 +254,7 @@ export default function FilterPanel({
                         <TooltipTrigger asChild>
                           <button
                             onClick={() => toggleColor(c.name)}
-                            aria-label={c.name}
+                            aria-label={tv("color", c.name)}
                             aria-pressed={active}
                             className={`w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${
                               active
@@ -268,7 +268,7 @@ export default function FilterPanel({
                           />
                         </TooltipTrigger>
                         <TooltipContent side="top" className="text-xs">
-                          {c.name}
+                          {tv("color", c.name)}
                         </TooltipContent>
                       </Tooltip>
                     );
@@ -286,14 +286,14 @@ export default function FilterPanel({
             className="text-[11px] tracking-[0.2em] uppercase text-[#1A1A1A] hover:underline underline-offset-4 transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
-            Rimuovi filtri
+            {t("filter.reset")}
           </button>
           <button
             onClick={onClose}
             className="px-6 py-2.5 rounded-md border border-[#1A1A1A] text-[#1A1A1A] text-[11px] tracking-[0.25em] uppercase hover:bg-[#1A1A1A] hover:text-[#FDFCF0] transition-colors"
             style={{ fontFamily: "'Raleway', sans-serif" }}
           >
-            Applica
+            {t("filter.apply")}
           </button>
         </div>
       </DialogContent>
