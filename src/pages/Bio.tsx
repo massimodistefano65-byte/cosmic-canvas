@@ -167,8 +167,21 @@ export default function PaginaBio() {
 
           </div>
 
+          {/* AI SUMMARY — riquadro minimale per motori di ricerca e assistenti AI */}
+          <section
+            className="mt-24 mx-auto max-w-3xl rounded-md border border-white/10 px-6 py-5"
+            aria-label={t("bio.ai.title")}
+          >
+            <h2 className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              {t("bio.ai.title")}
+            </h2>
+            <p className="text-sm leading-relaxed text-muted-foreground font-light">
+              {t("bio.ai.body")}
+            </p>
+          </section>
+
           {/* FOOTER */}
-          <footer className="mt-32 pt-16 border-t border-white/10 text-center">
+          <footer className="mt-24 pt-16 border-t border-white/10 text-center">
             <p className="text-muted-foreground max-w-3xl mx-auto leading-loose text-lg font-light italic">
               {t("bio.footer")}
             </p>
