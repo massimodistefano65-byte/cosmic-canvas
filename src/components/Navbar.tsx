@@ -45,23 +45,18 @@ const Navbar = () => {
   }, [isTouchDevice]);
 
   const navItems = [
-    { label: t("nav.home"), href: "/", scroll: false },
-    { label: t("nav.bio"), href: "/bio", scroll: false },
+    { label: t("nav.home"), href: "/", scroll: "home" as string | false },
+    { label: t("nav.bio"), href: "/bio", scroll: false as string | false },
     { label: t("nav.painting"), href: "/", scroll: "painting" },
     { label: t("nav.photography"), href: "/", scroll: "photography" },
     { label: t("nav.digitalArt"), href: "/", scroll: "digital-art" },
     { label: t("nav.tshirt"), href: "/", scroll: "t-shirt" },
-    { label: t("nav.archive"), href: "/archive", scroll: false },
-    { label: t("nav.contacts"), href: "/contact", scroll: false },
+    { label: t("nav.archive"), href: "/archive", scroll: false as string | false },
+    { label: t("nav.contacts"), href: "/contact", scroll: false as string | false },
   ];
 
   const handleNavClick = (item: (typeof navItems)[0]) => {
     setIsOpen(false);
-
-    if (item.label === t("nav.home")) {
-      window.location.href = "/";
-      return;
-    }
 
     if (!item.scroll) {
       navigate(item.href);
@@ -69,9 +64,11 @@ const Navbar = () => {
     }
 
     if (location.pathname === "/") {
-      const element = document.getElementById(item.scroll as string);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+      const api = (window as any).fullpage_api;
+      if (api) {
+        api.moveTo(item.scroll as string);
+      } else {
+        document.getElementById(item.scroll as string)?.scrollIntoView({ behavior: "smooth" });
       }
     } else {
       navigate("/?scrollTo=" + item.scroll);

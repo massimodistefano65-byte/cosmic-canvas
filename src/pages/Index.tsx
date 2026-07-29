@@ -16,11 +16,8 @@ const useScrollToAnchor = () => {
     const scrollTo = params.get("scrollTo");
     if (scrollTo) {
       setTimeout(() => {
-        const el = document.getElementById(scrollTo);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 200);
+        (window as any).fullpage_api?.moveTo(scrollTo);
+      }, 300);
       window.history.replaceState({}, "", "/");
     }
   }, [location]);
