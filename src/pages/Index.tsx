@@ -89,6 +89,7 @@ const Index = () => {
       />
       <Navbar />
       <ReactFullpage
+        anchors={["home", "painting", "photography", "digital-art", "t-shirt", "contact"]}
         scrollingSpeed={2000}
         easingcss3="cubic-bezier(0.36, 0, 0.64, 1)"
         fitToSectionDelay={600}
