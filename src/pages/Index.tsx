@@ -16,8 +16,11 @@ const useScrollToAnchor = () => {
     const scrollTo = params.get("scrollTo");
     if (scrollTo) {
       setTimeout(() => {
-        (window as any).fullpage_api?.moveTo(scrollTo);
-      }, 300);
+        const el = document.getElementById(scrollTo);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 200);
       window.history.replaceState({}, "", "/");
     }
   }, [location]);
@@ -86,7 +89,6 @@ const Index = () => {
       />
       <Navbar />
       <ReactFullpage
-        anchors={["home", "painting", "photography", "digital-art", "t-shirt", "contact"]}
         scrollingSpeed={2000}
         easingcss3="cubic-bezier(0.36, 0, 0.64, 1)"
         fitToSectionDelay={600}

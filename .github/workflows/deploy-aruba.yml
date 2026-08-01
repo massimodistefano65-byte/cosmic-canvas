@@ -29,8 +29,7 @@ jobs:
           set net:timeout 60
           set net:max-retries 3
           set net:reconnect-interval-base 5
-          set ftp:use-chmod no
-          set ftp:use-site-utime no
+          set mirror:no-chmod yes
           mirror --reverse --verbose --no-perms ./dist/ /massimodistefano.com/
           bye
           EOF

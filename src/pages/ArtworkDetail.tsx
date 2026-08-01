@@ -478,8 +478,8 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="animate-shop-pulse text-[9px] tracking-[0.25em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity"
-                    style={{ fontFamily: "'Raleway', sans-serif", filter: "brightness(1.25)" }}
+                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    style={{ fontFamily: "'Raleway', sans-serif" }}
                   >
                     <motion.span
                       className="inline-block"
@@ -535,7 +535,7 @@ const ArtworkDetail = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      className="animate-shop-pulse w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
                     >
                       <Info size={16} aria-hidden="true" />
                     </button>
@@ -758,8 +758,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="animate-shop-pulse text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity"
-                    style={{ filter: "brightness(1.25)" }}
+                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
                   >
                     <motion.span
                       className="inline-block"
@@ -800,7 +799,7 @@ const ArtworkDetail = () => {
               </button>
               <button
                 onClick={() => setInfoOpen(true)}
-                className="animate-shop-pulse w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Info size={16} aria-hidden="true" />
               </button>
