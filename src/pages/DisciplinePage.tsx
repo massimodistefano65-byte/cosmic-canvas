@@ -218,8 +218,8 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               <button
                 onClick={() => !isTshirt && setFilterOpen(true)}
                 disabled={isTshirt}
-                aria-label={isTshirt ? "Filtri in arrivo" : "Apri filtri"}
-                title={isTshirt ? "Filtri in arrivo" : undefined}
+                aria-label={isTshirt ? t("filter.soon") : t("filter.open")}
+                title={isTshirt ? t("filter.soon") : undefined}
                 className={`shrink-0 mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-md border transition-colors text-[11px] tracking-[0.25em] uppercase ${
                   isTshirt
                     ? "border-border/30 text-muted-foreground/50 cursor-not-allowed opacity-60"
@@ -229,7 +229,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
               >
                 <SlidersHorizontal size={13} aria-hidden="true" />
                 <span>
-                  Filtra
+                  {t("filter.open")}
                   {activeCount > 0 && (
                     <span className="ml-1.5 text-[#d4af7a]">({activeCount})</span>
                   )}
