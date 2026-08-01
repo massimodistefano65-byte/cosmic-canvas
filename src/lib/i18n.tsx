@@ -182,6 +182,7 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // Filter panel
   "filter.title": { it: "Filtra le opere", en: "Filter artworks" },
+  "filter.open": { it: "Filtra", en: "Filter" },
   "filter.close": { it: "Chiudi", en: "Close" },
   "filter.year": { it: "Anno", en: "Year" },
   "filter.allYears": { it: "Tutti gli anni", en: "All years" },
@@ -192,6 +193,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "filter.colors": { it: "Colori dominanti", en: "Dominant colours" },
   "filter.reset": { it: "Rimuovi filtri", en: "Clear filters" },
   "filter.apply": { it: "Applica", en: "Apply" },
+  "filter.noResults": { it: "Nessun risultato trovato", en: "No results found" },
   "filter.price.0-500": { it: "€ 0–500", en: "€ 0–500" },
   "filter.price.500-1000": { it: "€ 500–1.000", en: "€ 500–1,000" },
   "filter.price.1000-3000": { it: "€ 1.000–3.000", en: "€ 1,000–3,000" },
