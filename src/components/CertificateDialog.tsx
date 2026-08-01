@@ -13,7 +13,7 @@ import {
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  archiveId: string;
+  archiveId?: string;
   artworkTitle: string;
   dedication?: string;
   year?: string;
@@ -42,16 +42,17 @@ const CertificateDialog = ({
   artworkUrl,
 }: Props) => {
   const [code, setCode] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
+  const needsArchive = !!archiveId;
+  const [status, setStatus] = useState<Status>(needsArchive ? "idle" : "verified");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [downloading, setDownloading] = useState(false);
   const { t, lang } = useI18n();
 
   // Check persistent verification on open
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !needsArchive) return;
     try {
-      if (localStorage.getItem(storageKey(archiveId)) === "1") {
+      if (localStorage.getItem(storageKey(archiveId || "")) === "1") {
         setStatus("verified");
       } else {
         setStatus("idle");
@@ -61,7 +62,7 @@ const CertificateDialog = ({
     } catch {
       setStatus("idle");
     }
-  }, [isOpen, archiveId]);
+  }, [isOpen, archiveId, needsArchive]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
