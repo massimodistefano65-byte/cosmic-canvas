@@ -296,7 +296,7 @@ const ArtworkDetail = () => {
         artworkTitle={purchaseLabel}
         content={purchaseContent}
       />
-      {isArchived && artwork.archiveId && (
+      {isArchived && (
         <CertificateDialog
           isOpen={certificateOpen}
           onClose={() => setCertificateOpen(false)}
