@@ -210,7 +210,7 @@ const ArtworkDetail = () => {
   const rawPrice = isEn && artwork.priceEn?.trim() ? artwork.priceEn.trim() : (artwork.price ?? "");
   const displayPrice = isSold ? t("cert.privateCollection") : rawPrice;
   const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
-  const isArchived = !!artwork.archiveId && isSold;
+  const isArchived = isSold;
 
   const sealIcon = (size: number) => (
     <Stamp
@@ -296,7 +296,7 @@ const ArtworkDetail = () => {
         artworkTitle={purchaseLabel}
         content={purchaseContent}
       />
-      {isArchived && artwork.archiveId && (
+      {isArchived && (
         <CertificateDialog
           isOpen={certificateOpen}
           onClose={() => setCertificateOpen(false)}
@@ -466,7 +466,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setMeaningOpen(true)}
-                    className="text-[9px] tracking-[0.25em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    className="text-[9px] tracking-[0.25em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity"
                     style={{ fontFamily: "'Raleway', sans-serif", filter: "brightness(1.25)" }}
                   >
                     {t("artwork.meaning")}
@@ -478,7 +478,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[9px] tracking-[0.25em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    className="text-[9px] tracking-[0.25em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
                     style={{ fontFamily: "'Raleway', sans-serif" }}
                   >
                     <motion.span
@@ -535,7 +535,7 @@ const ArtworkDetail = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                      className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-pulse"
                     >
                       <Info size={16} aria-hidden="true" />
                     </button>
@@ -746,7 +746,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setMeaningOpen(true)}
-                    className="text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    className="text-[10px] tracking-[0.2em] uppercase text-white cursor-pointer hover:opacity-70 transition-opacity"
                     style={{ filter: "brightness(1.25)" }}
                   >
                     {t("artwork.meaning")}
@@ -758,7 +758,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[10px] tracking-[0.2em] uppercase text-foreground/70 cursor-pointer hover:opacity-70 transition-opacity"
+                    className="text-[10px] tracking-[0.2em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
                   >
                     <motion.span
                       className="inline-block"
@@ -799,7 +799,7 @@ const ArtworkDetail = () => {
               </button>
               <button
                 onClick={() => setInfoOpen(true)}
-                className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
+                className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-pulse"
               >
                 <Info size={16} aria-hidden="true" />
               </button>
