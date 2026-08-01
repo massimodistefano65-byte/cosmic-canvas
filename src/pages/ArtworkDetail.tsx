@@ -210,7 +210,7 @@ const ArtworkDetail = () => {
   const rawPrice = isEn && artwork.priceEn?.trim() ? artwork.priceEn.trim() : (artwork.price ?? "");
   const displayPrice = isSold ? t("cert.privateCollection") : rawPrice;
   const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
-  const isArchived = !!artwork.archiveId && isSold;
+  const isArchived = isSold;
 
   const sealIcon = (size: number) => (
     <Stamp
