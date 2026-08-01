@@ -253,14 +253,14 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
                 className="text-2xl text-muted-foreground/70 font-light"
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
-                Nessun risultato trovato
+                {t("filter.noResults")}
               </p>
               <button
                 onClick={() => setFilters(emptyFilters)}
                 className="mt-4 text-[11px] tracking-[0.2em] uppercase text-[#d4af7a] hover:underline"
                 style={{ fontFamily: "'Raleway', sans-serif" }}
               >
-                Rimuovi filtri
+                {t("filter.reset")}
               </button>
             </div>
           ) : (
