@@ -189,19 +189,22 @@ const CertificateDialog = ({
           </p>
 
           {/* Blocco codice archivio */}
-          <div className="mt-8 flex flex-col items-center">
-            <p className="text-[10px] tracking-[0.35em] uppercase text-[#1A1A1A]/55">
-              {t("cert.archiveCode")}
-            </p>
-            <p
-              className="mt-2 text-2xl md:text-3xl text-[#1A1A1A] tracking-[0.15em]"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
-            >
-              {archiveId}
-            </p>
-          </div>
-
-          <hr className="border-[#D4BE96]/25 my-10" />
+          {needsArchive && (
+            <>
+              <div className="mt-8 flex flex-col items-center">
+                <p className="text-[10px] tracking-[0.35em] uppercase text-[#1A1A1A]/55">
+                  {t("cert.archiveCode")}
+                </p>
+                <p
+                  className="mt-2 text-2xl md:text-3xl text-[#1A1A1A] tracking-[0.15em]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+                >
+                  {archiveId}
+                </p>
+              </div>
+              <hr className="border-[#D4BE96]/25 my-10" />
+            </>
+          )}
 
           {/* Livello 2 — verifica o conferma */}
           {status === "verified" ? (
