@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const COOKIE_CONSENT_KEY = "cookie_consent";
-const GA_ID = "G-01V76NQB3Y";
+const GA_ID = "G-VYHCCLVYMVM";
 
 type ConsentValue = "accepted" | "rejected" | null;
 
