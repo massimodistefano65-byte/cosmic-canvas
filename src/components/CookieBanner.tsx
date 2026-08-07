@@ -28,7 +28,7 @@ const CookieBanner = () => {
     const gtag = (window as any).gtag;
 
     // Set default consent to denied
-    gtag?.("consent", "default", { analytics_storage: "denied" });
+   // gtag?.("consent", "default", { analytics_storage: "denied" });
 
     if (stored) {
       updateGAConsent(stored);
