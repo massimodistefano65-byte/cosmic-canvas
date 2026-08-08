@@ -106,7 +106,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center justify-center w-full gap-1">
+          <div className="hidden lg:flex items-center justify-center w-full gap-1">
             {navItems.map((item) => (
               <NavLink key={item.label} item={item} />
             ))}
@@ -117,7 +117,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-3">
+          <div className="lg:hidden flex items-center gap-3">
             <LanguageToggle />
             <AudioToggle />
             <button
@@ -137,7 +137,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="md:hidden pb-4 space-y-2"
+            className="lg:hidden pb-4 space-y-2"
             role="menu"
           >
             {navItems.map((item) => (

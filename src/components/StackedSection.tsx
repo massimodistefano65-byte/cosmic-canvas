@@ -27,20 +27,36 @@ const StackedSection = ({
   const [imageVisible, setImageVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Lazy load cover image when section is near viewport
+  // Lazy load cover image: observer + fullPage section change + timed fallback
   useEffect(() => {
-    if (!coverImage || !sectionRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setImageVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    if (!coverImage) return;
+
+    let observer: IntersectionObserver | null = null;
+    if (sectionRef.current && typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setImageVisible(true);
+            observer?.disconnect();
+          }
+        },
+        { rootMargin: "200px" }
+      );
+      observer.observe(sectionRef.current);
+    }
+
+    const onSectionChange = () => setImageVisible(true);
+    window.addEventListener("fullpage-section", onSectionChange);
+
+    // Fallback: fullPage.js translates sections out of the viewport, so on some
+    // devices (iPad) the observer never fires. Load shortly after first paint.
+    const fallback = window.setTimeout(() => setImageVisible(true), 800);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("fullpage-section", onSectionChange);
+      window.clearTimeout(fallback);
+    };
   }, [coverImage]);
 
   return (
@@ -145,7 +161,7 @@ const StackedSection = ({
       </motion.div>
 
       {/* Scroll Indicator (same as Hero) */}
-      <div className="absolute bottom-20 md:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+      <div className="absolute bottom-20 md:bottom-16 lg:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
         <motion.button
           onClick={() => {
             const api = (window as unknown as { fullpage_api?: { moveSectionDown: () => void } }).fullpage_api;
