@@ -120,8 +120,14 @@ const StackedSection = ({
         </motion.button>
       </motion.div>
 
-      {/* Scroll Indicator (same as Hero) */}
-      <div className="absolute bottom-20 md:bottom-16 lg:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+      {/* Scroll Indicator (same as Hero). Anchored from the top using the smaller
+          of section height and visible viewport height, so it stays visible on
+          tablets even when fullPage sizes the section taller than the screen. */}
+      <div
+        className="absolute inset-x-0 z-20 flex justify-center pointer-events-none"
+        style={{ top: "min(calc(100% - 5.5rem), calc(100svh - 5.5rem))" }}
+      >
+
         <motion.button
           onClick={() => {
             const api = (window as unknown as { fullpage_api?: { moveSectionDown: () => void } }).fullpage_api;
