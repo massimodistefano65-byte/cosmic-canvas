@@ -1,29 +1,28 @@
-Piano di verifiche e rifiniture post-revert
+# Fix visualizzazione su iPad (tablet)
 
-1. Verifiche di stabilità (nessuna modifica al codice se tutto confermato)
-   - Confermare che `src/App.tsx` continui a usare `BrowserRouter` senza hash/anchor routing.
-   - Confermare che la Homepage non generi URL frammentati (`/#painting`, `/#digital-art`, ecc.).
-   - Confermare che `.github/workflows/deploy-aruba.yml` sia tornato alla configurazione originale (`lftp` mirror standard, no flag aggiuntivi) e che il deploy sia stabile.
-   - Audit rapido delle funzioni già approvate: audio, filtri, significato, certificato, transizioni, tooltip, i18n, contatti, AI summary.
-   - Verificare che `src/pages/Bio.tsx` contenga ancora il JSON-LD Person completo (AI Summary per motori di ricerca) e che sia integro.
+Tre anomalie, tutte legate al breakpoint tablet e al lazy-load delle cover.
 
-2. Modifiche alla pagina dettaglio opera (`src/pages/ArtworkDetail.tsx`)
-   - Pulsante "Richiesta informazioni" (purchasing info): cambiare colore a bianco nitido/brightness-125 per coerenza con le etichette Titolo/Tecnica/Dimensioni; aggiungere animazione breathing lenta.
-   - Pulsante "Significato dell'opera": rimuovere qualsiasi animazione pulsing/breathing; deve restare statico.
-   - Icona Info (ⓘ) nella toolbar azioni: aggiungere animazione breathing evidente per attirare l'attenzione.
-   - Tasto "Download" del certificato: ripristinare la visibilità su tutte le opere vendute, non solo su quelle con dedica. Rivedere la condizione di render in modo che si attivi per ogni opera con stato "Collezione privata" (o equivalente).
+## 1. Navbar: usare il menu hamburger anche su iPad
 
-3. Internazionalizzazione filtri
-   - Tradurre il testo del pulsante "FILTRA" in inglese quando `lang === 'en'` in tutte le sezioni galleria (`DisciplinePage` e `FilterPanel`).
-   - Aggiungere la chiave `filters.filter` in `src/lib/i18n.tsx` se mancante e collegarla al bottone con icona `SlidersHorizontal`.
+Oggi la navbar passa da mobile a desktop a 768px (`md:`). L'iPad in verticale è largo 768–834px, quindi mostra la barra desktop con 8 voci + lingua + audio: le voci si comprimono, "Contacts" viene tagliato e i pulsanti IT/EN e audio finiscono fuori campo.
 
-4. Dettagli tecnici
-   - Per le animazioni breathing si userà un keyframe CSS custom o la classe `animate-pulse` di Tailwind, eventualmente regolata su durata 2.5-3s per renderla più morbida.
-   - Il bianco nitido sarà ottenuto con `text-white` o `text-white brightness-125` usando token esistenti, senza introdurre nuovi colori hardcoded.
-   - Per il download certificato, la logica di visibilità verrà allineata al campo `price` o a un flag di stato venduto, garantendo che il tasto appaia su ogni opera venduta indipendentemente dalla presenza di una dedica privata.
+- Alzare la soglia del menu esteso da `md:` a `lg:` (1024px) in `Navbar.tsx`: sotto 1024px si vede l'hamburger con lingua e audio accanto, come su smartphone.
+- Nel menu a tendina mobile/tablet restano tutte le voci, incluse Home e Contacts.
+- Il menu resta sempre visibile su dispositivi touch (auto-hide solo con mouse), come già previsto.
 
-5. Output atteso
-   - Homepage con URL pulito, nessun fragment.
-   - Deploy Aruba stabile con workflow originale.
-   - Dettaglio opera coerente: Info che respira, Richiesta informazioni bianca e pulsante, Significato fermo, Download visibile su tutte le opere vendute.
-   - Filtri completamente bilingue (IT/EN).
+## 2. Cover delle sezioni Home non caricate
+
+Le immagini delle card (Painting, Photography, Digital Art, T-Shirt) vengono caricate solo quando l'IntersectionObserver rileva la sezione. Con fullPage.js le sezioni sono traslate fuori dal viewport e su iPad l'osservatore non scatta mai: resta il gradiente placeholder.
+
+- In `StackedSection.tsx` rimuovere la dipendenza dall'IntersectionObserver come unica condizione: caricare la cover anche quando la sezione diventa attiva (evento `fullpage-section` già emesso dalla Home) e in ogni caso con un fallback dopo il primo render.
+- Le immagini restano WebP con fallback JPEG, quindi le prestazioni non peggiorano in modo sensibile.
+
+## 3. Freccia di scorrimento tagliata
+
+La freccia è a `bottom-20` sotto 768px e `bottom-8` sopra: su iPad usa il valore desktop, troppo basso rispetto alla barra del browser.
+
+- Introdurre un valore intermedio per il tablet (freccia più alta, circa `bottom-16` fino a 1024px, `bottom-8` da desktop) e mantenere l'area di tocco di 48px, sia nelle card Home sia nella Hero, per coerenza.
+
+## Note tecniche
+
+File toccati: `src/components/Navbar.tsx`, `src/components/StackedSection.tsx`, `src/components/HeroSection.tsx` (solo posizione freccia). Nessuna modifica a contenuti, routing, audio o dati delle opere. Verifica finale con screenshot a 820x1180 (iPad verticale) e 1180x820 (orizzontale).
