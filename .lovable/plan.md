@@ -13,6 +13,15 @@
 3. Rendere il caricamento indipendente da `IntersectionObserver` e dall'evento fullPage: le quattro cover sono leggere e possono essere montate subito, eliminando il ramo fragile specifico di Safari/iPad.
 4. Verificare la Home in formato iPad verticale e orizzontale, controllando tutte e quattro le sezioni e l'assenza di errori di caricamento.
 
+## Freccia di scorrimento su iPad
+
+Le frecce delle card usano già le stesse classi in tutte le sezioni, quindi la sparizione nelle ultime tre sezioni dipende dall'altezza effettiva della sezione su iPad (barre del browser e calcolo `100vh`/`100%` di fullPage), non da valori diversi per sezione. Intervento:
+
+1. Ancorare la freccia a un offset sicuro calcolato sull'altezza reale della sezione, invece che a un `bottom` fisso pensato per il desktop, così l'elemento resta dentro l'area visibile su tablet.
+2. Uniformare l'altezza della freccia tra Hero e le quattro card, così da avere la stessa posizione percepita in tutta la Home.
+3. Mantenere l'area di tocco di 48px e l'animazione di rimbalzo esistenti.
+4. Verificare su iPad verticale e orizzontale che la freccia sia visibile e cliccabile in tutte e cinque le sezioni.
+
 ## Ambito
 
-Solo caricamento e visualizzazione delle quattro cover Home. Nessuna modifica a Hero, navbar, frecce, contenuti, routing o audio.
+Caricamento e visualizzazione delle quattro cover Home e posizione della freccia di scorrimento. Nessuna modifica a contenuti, navbar, routing o audio.
