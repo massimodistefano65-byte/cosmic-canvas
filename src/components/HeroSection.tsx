@@ -103,8 +103,11 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-20 md:bottom-16 lg:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+      {/* Scroll Indicator — same anchoring as the Home cards */}
+      <div
+        className="absolute inset-x-0 z-20 flex justify-center pointer-events-none"
+        style={{ top: "min(calc(100% - 5.5rem), calc(100svh - 5.5rem))" }}
+      >
         <motion.button
           onClick={scrollToSection}
           className="pointer-events-auto w-12 h-12 flex items-center justify-center hover:text-accent transition-colors text-muted-foreground"
