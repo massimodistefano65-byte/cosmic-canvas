@@ -104,7 +104,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-20 md:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+      <div className="absolute bottom-20 md:bottom-16 lg:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
         <motion.button
           onClick={scrollToSection}
           className="pointer-events-auto w-12 h-12 flex items-center justify-center hover:text-accent transition-colors text-muted-foreground"
