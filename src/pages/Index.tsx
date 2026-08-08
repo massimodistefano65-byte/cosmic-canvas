@@ -51,7 +51,7 @@ const Index = () => {
       subtitle: t("section.painting.subtitle"),
       gradient: "linear-gradient(135deg, rgb(30, 10, 80), rgb(60, 20, 100))",
       route: "/painting",
-      coverImage: "/images/cover-home-painting.jpg",
+      coverImage: "/images/cover-home-painting.webp",
     },
     {
       id: "photography",
@@ -59,7 +59,7 @@ const Index = () => {
       subtitle: t("section.photography.subtitle"),
       gradient: "linear-gradient(135deg, rgb(20, 60, 120), rgb(15, 40, 90))",
       route: "/photography",
-      coverImage: "/images/cover-home-photography.jpg",
+      coverImage: "/images/cover-home-photography.webp",
     },
     {
       id: "digital-art",
@@ -67,7 +67,7 @@ const Index = () => {
       subtitle: t("section.digital-art.subtitle"),
       gradient: "linear-gradient(135deg, rgb(60, 30, 100), rgb(40, 15, 70))",
       route: "/digital-art",
-      coverImage: "/images/cover-home-digital-art.jpg",
+      coverImage: "/images/cover-home-digital-art.webp",
     },
     {
       id: "t-shirt",
@@ -75,7 +75,7 @@ const Index = () => {
       subtitle: t("section.t-shirt.subtitle"),
       gradient: "linear-gradient(135deg, rgb(80, 40, 120), rgb(50, 20, 80))",
       route: "/t-shirt",
-      coverImage: "/images/cover-home-t-shirt.jpg",
+      coverImage: "/images/cover-home-t-shirt.webp",
     },
   ];
 

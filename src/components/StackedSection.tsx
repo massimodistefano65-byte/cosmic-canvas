@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
@@ -24,44 +24,9 @@ const StackedSection = ({
 }: StackedSectionProps) => {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
-  const [imageVisible, setImageVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Lazy load cover image: observer + fullPage section change + timed fallback
-  useEffect(() => {
-    if (!coverImage) return;
-
-    let observer: IntersectionObserver | null = null;
-    if (sectionRef.current && typeof IntersectionObserver !== "undefined") {
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setImageVisible(true);
-            observer?.disconnect();
-          }
-        },
-        { rootMargin: "200px" }
-      );
-      observer.observe(sectionRef.current);
-    }
-
-    const onSectionChange = () => setImageVisible(true);
-    window.addEventListener("fullpage-section", onSectionChange);
-
-    // Fallback: fullPage.js translates sections out of the viewport, so on some
-    // devices (iPad) the observer never fires. Load shortly after first paint.
-    const fallback = window.setTimeout(() => setImageVisible(true), 800);
-
-    return () => {
-      observer?.disconnect();
-      window.removeEventListener("fullpage-section", onSectionChange);
-      window.clearTimeout(fallback);
-    };
-  }, [coverImage]);
 
   return (
     <div
-      ref={sectionRef}
       className="relative w-full h-full flex items-center justify-center overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -69,31 +34,26 @@ const StackedSection = ({
       {/* Fallback Gradient */}
       <div className="absolute inset-0" style={{ background: gradient }} />
 
-      {/* Cover Image with parallax (oversized for parallax effect) + hover zoom */}
-      {coverImage && imageVisible && (() => {
-        const coverWebp = coverImage.replace(/\.jpe?g$/i, ".webp");
-        const bgValue = coverWebp !== coverImage
-          ? `image-set(url("${coverWebp}") type("image/webp"), url("${coverImage}") type("image/jpeg"))`
-          : `url("${coverImage}")`;
-        return (
-          <div className="absolute inset-0 overflow-hidden">
-            <div
-              style={{
-                position: "absolute",
-                top: "-25%",
-                left: 0,
-                right: 0,
-                height: "150%",
-                backgroundImage: bgValue,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                transform: hovered ? "scale(1.04)" : "scale(1)",
-                transition: "transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-              }}
-            />
-          </div>
-        );
-      })()}
+      {/* Cover image (native <img> for maximum Safari/iPad reliability),
+          oversized for the parallax effect + hover zoom */}
+      {coverImage && (
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={coverImage}
+            alt={`${title} — opera di Massimo Di Stefano`}
+            className="absolute left-0 w-full object-cover"
+            style={{
+              top: "-25%",
+              height: "150%",
+              transform: hovered ? "scale(1.04)" : "scale(1)",
+              transition: "transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            }}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+
 
       {/* Gradient overlay – softer, with side vignette */}
       <div
@@ -160,8 +120,14 @@ const StackedSection = ({
         </motion.button>
       </motion.div>
 
-      {/* Scroll Indicator (same as Hero) */}
-      <div className="absolute bottom-20 md:bottom-16 lg:bottom-8 inset-x-0 z-20 flex justify-center pointer-events-none">
+      {/* Scroll Indicator (same as Hero). Anchored from the top using the smaller
+          of section height and visible viewport height, so it stays visible on
+          tablets even when fullPage sizes the section taller than the screen. */}
+      <div
+        className="absolute inset-x-0 z-20 flex justify-center pointer-events-none"
+        style={{ top: "min(calc(100% - 5.5rem), calc(100svh - 5.5rem))" }}
+      >
+
         <motion.button
           onClick={() => {
             const api = (window as unknown as { fullpage_api?: { moveSectionDown: () => void } }).fullpage_api;
