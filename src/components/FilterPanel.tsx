@@ -163,13 +163,28 @@ export default function FilterPanel({
           className="px-8 md:px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8"
           style={{ fontFamily: "'Raleway', sans-serif" }}
         >
+          {/* RICERCA PER TITOLO — full width */}
+          <div className="md:col-span-2">
+            <Section label={t("filter.search")}>
+              <input
+                type="text"
+                value={filters.query}
+                onChange={(e) => setField("query", e.target.value)}
+                placeholder={t("filter.searchPlaceholder")}
+                aria-label={t("filter.search")}
+                className="w-full h-10 rounded-md border border-[#2b2820]/70 bg-transparent px-3 text-sm text-[#2b2820] placeholder:text-[#4a473e]/60 focus:outline-none focus:border-[#2b2820]"
+              />
+            </Section>
+          </div>
+
           {/* ANNO */}
           <Section label={t("filter.year")}>
             <select
               value={filters.year ?? ""}
               onChange={(e) => setField("year", e.target.value || null)}
-              className="w-full h-10 rounded-md border border-[#1A1A1A]/70 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]"
+              className="w-full h-10 rounded-md border border-[#2b2820]/70 bg-transparent px-3 text-sm text-[#2b2820] focus:outline-none focus:border-[#2b2820]"
             >
+
               <option value="">{t("filter.allYears")}</option>
               {years.map((y) => (
                 <option key={y} value={String(y)}>
