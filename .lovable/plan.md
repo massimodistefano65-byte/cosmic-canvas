@@ -17,9 +17,12 @@ I titoli delle sezioni Bio che contengono ":" verranno spezzati automaticamente:
 ## 3. Sezione "Geografie dell'anima"
 
 Tre schede avorio affiancate (Pittura, Fotografia, Arte Digitale), ognuna con, dall'alto: immagine rettangolare con angoli arrotondati, titolo, testo breve.
-Altezze sfalsate su desktop: la scheda centrale abbassata rispetto alle due laterali; su mobile/tablet le schede si impilano normalmente.
+Altezze sfalsate su desktop (la scheda centrale abbassata) e spaziatura ampia tra le schede, così lo sfondo nero resta ben visibile tra un blocco e l'altro. Su mobile/tablet le schede si impilano con lo stesso distacco.
 
-**Decisione da confermare (immagini):** non esistono file dedicati per queste tre schede. Proposta: riusare le cover già presenti nel sito — `cover-home-painting.webp`, `cover-home-photography.webp`, `cover-home-digital-art.webp`. Se preferisci immagini nuove, indicami i file e li sostituisco.
+Immagini: si usano placeholder temporanei, con percorsi già predisposti (`/images/bio/geografie-painting.webp`, `geografie-photography.webp`, `geografie-digital-art.webp`). Caricando i file con quei nomi le foto definitive compaiono senza altre modifiche al codice.
+
+Le 4 foto principali della Bio (Ritratto, Al lavoro, T-shirt, Cosmic) non vengono toccate.
+
 
 ## 4. Box "Chi è Massimo Di Stefano" (AI Summary)
 
@@ -48,7 +51,8 @@ Nuovo campo di testo "Titolo / Title" in cima al pop-up dei filtri, nello stile 
 
 ## 7. Guida di manutenzione
 
-Aggiornamento di `GUIDA-GESTIONE-OPERE.md`: sezioni nuove/riviste su audio per sezione, file `meaning.md` / `meaning-en.md` e `dedication*.md`, certificati e opere vendute, filtri (inclusa la nuova ricerca per titolo), immagini WebP e cover Home, contenuti Archivio, i18n (dove aggiungere le traduzioni, campi `priceEn`/`dimensionsEn`), immagini Bio, workflow GitHub + deploy Aruba.
+Aggiornamento di `GUIDA-GESTIONE-OPERE.md`, con una nuova sezione dedicata alla Bio che spiega passo per passo come sostituire i 3 placeholder delle "Geografie dell'anima": cartella `public/images/bio/`, nomi file esatti, formato/proporzione consigliata (4:3, WebP), e commit via GitHub. Inoltre: revisione delle sezioni su audio per sezione, file `meaning*.md` e `dedication*.md`, certificati e opere vendute, filtri (inclusa la nuova ricerca per titolo), immagini WebP e cover Home, contenuti Archivio, i18n e campi `priceEn`/`dimensionsEn`, workflow GitHub + deploy Aruba.
+
 
 ## Note tecniche
 
