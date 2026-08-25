@@ -123,16 +123,17 @@ export default function FilterPanel({
   const chipBase =
     "px-3 py-1.5 rounded-full border text-[11px] tracking-[0.15em] uppercase transition-all duration-300 whitespace-nowrap";
   const chipInactive =
-    "border-[#1A1A1A]/70 text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5";
+    "border-[#2b2820]/70 text-[#2b2820] hover:border-[#2b2820] hover:bg-[#2b2820]/5";
   const chipActive =
-    "bg-[#1A1A1A] text-[#FDFCF0] border-[#1A1A1A] shadow-sm";
+    "bg-[#2b2820] text-[#FDFCF0] border-[#2b2820] shadow-sm";
 
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
       <p
-        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A] font-medium mb-3"
+        className="text-[10px] tracking-[0.25em] uppercase text-[#2b2820] font-semibold mb-3"
         style={{ fontFamily: "'Raleway', sans-serif" }}
       >
+
         {label}
       </p>
       {children}
