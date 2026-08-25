@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export interface FiltersState {
+  query: string;
   year: string | null;
   shape: string | null;
   support: string | null;
@@ -19,6 +20,7 @@ export interface FiltersState {
 }
 
 export const emptyFilters: FiltersState = {
+  query: "",
   year: null,
   shape: null,
   support: null,
@@ -27,8 +29,17 @@ export const emptyFilters: FiltersState = {
   colors: [],
 };
 
+/** Ricerca per titolo: case-insensitive, corrispondenza parziale su tutte le parole digitate. */
+export function matchesQuery(title: string, query: string) {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  const haystack = title.toLowerCase();
+  return q.split(/\s+/).every((word) => haystack.includes(word));
+}
+
 export function countActive(f: FiltersState) {
   let n = 0;
+  if (f.query.trim()) n++;
   if (f.year) n++;
   if (f.shape) n++;
   if (f.support) n++;
@@ -37,6 +48,7 @@ export function countActive(f: FiltersState) {
   n += f.colors.length;
   return n;
 }
+
 
 // Palette per ogni nome colore (18 colori richiesti)
 const COLOR_PALETTE: { name: string; hex: string; border?: string }[] = [
