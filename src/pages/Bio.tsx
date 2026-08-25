@@ -78,7 +78,7 @@ export default function PaginaBio() {
                 </div>
               </div>
               <div className="md:col-span-5 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
-                <img src="/images/bio/massimo-di-stefano-portrait-1.webp" className="w-full h-full object-cover" alt="Massimo Di Stefano" />
+                <img src="/images/bio/massimo-di-stefano-portrait-1.jpg" className="w-full h-full object-cover" alt="Massimo Di Stefano" />
               </div>
             </section>
 
