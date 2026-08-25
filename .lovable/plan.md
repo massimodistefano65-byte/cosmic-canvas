@@ -51,7 +51,8 @@ Nuovo campo di testo "Titolo / Title" in cima al pop-up dei filtri, nello stile 
 
 ## 7. Guida di manutenzione
 
-Aggiornamento di `GUIDA-GESTIONE-OPERE.md`: sezioni nuove/riviste su audio per sezione, file `meaning.md` / `meaning-en.md` e `dedication*.md`, certificati e opere vendute, filtri (inclusa la nuova ricerca per titolo), immagini WebP e cover Home, contenuti Archivio, i18n (dove aggiungere le traduzioni, campi `priceEn`/`dimensionsEn`), immagini Bio, workflow GitHub + deploy Aruba.
+Aggiornamento di `GUIDA-GESTIONE-OPERE.md`, con una nuova sezione dedicata alla Bio che spiega passo per passo come sostituire i 3 placeholder delle "Geografie dell'anima": cartella `public/images/bio/`, nomi file esatti, formato/proporzione consigliata (4:3, WebP), e commit via GitHub. Inoltre: revisione delle sezioni su audio per sezione, file `meaning*.md` e `dedication*.md`, certificati e opere vendute, filtri (inclusa la nuova ricerca per titolo), immagini WebP e cover Home, contenuti Archivio, i18n e campi `priceEn`/`dimensionsEn`, workflow GitHub + deploy Aruba.
+
 
 ## Note tecniche
 
