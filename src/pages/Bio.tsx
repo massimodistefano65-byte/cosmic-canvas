@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from "@/components/Navbar";
 import SEOHead from "@/components/SEOHead";
 import { useI18n } from "@/lib/i18n";
+import { motion } from "framer-motion";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -46,13 +47,12 @@ export default function PaginaBio() {
         jsonLd={personJsonLd}
       />
 
-      {/* NAVBAR: Libera come in Archive per centrarsi automaticamente */}
       <Navbar />
 
       <div className="pt-24 pb-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          {/* HEADER: CLONATO DA ARCHIVE */}
+          {/* HEADER */}
           <div className="mb-20 text-center">
             <h1 className="mb-4 text-4xl font-light tracking-wider text-white md:text-6xl uppercase">
               <span className="block md:inline">Massimo Di Stefano</span>
@@ -66,7 +66,7 @@ export default function PaginaBio() {
           {/* CONTENUTO A ZIGZAG */}
           <div className="mx-auto max-w-5xl space-y-24 md:space-y-40">
             
-            {/* SEZIONE 1 */}
+            {/* SEZIONE 1 - RITRATTO */}
             <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
               <div className="md:col-span-7 space-y-6">
                 <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
@@ -82,7 +82,7 @@ export default function PaginaBio() {
               </div>
             </section>
 
-            {/* SEZIONE 2 (ZIG-ZAG) */}
+            {/* SEZIONE 2 - AL LAVORO */}
             <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
               <div className="md:col-span-5 md:order-1 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
                 <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover" alt="Lavoro materico" />
@@ -119,7 +119,7 @@ export default function PaginaBio() {
               </div>
             </section>
 
-            {/* SEZIONE 4: T-SHIRT */}
+            {/* SEZIONE 4: T-SHIRT (FOTO 3) */}
             <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
               <div className="md:col-span-7 space-y-6">
                 <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
@@ -131,14 +131,14 @@ export default function PaginaBio() {
                 </div>
               </div>
               <div className="md:col-span-5 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
-                <img src="/images/bio/massimo-di-stefano-at-work-1.webp" className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700" alt="T-shirt" />
+                <img src="/images/bio/massimo-di-stefano-tshirt-1.webp" className="w-full h-full object-cover" alt="T-shirt d'artista - Massimo Di Stefano" />
               </div>
             </section>
 
-            {/* SEZIONE 5: VISIONE COSMICA */}
+            {/* SEZIONE 5: VISIONE COSMICA (FOTO 4) */}
             <section className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-              <div className="md:col-span-5 md:order-1 aspect-[4/5] bg-zinc-900/40 rounded-lg border border-white/5 flex items-center justify-center">
-                 <span className="text-xs uppercase tracking-[0.6em] text-zinc-600">Cosmic Research</span>
+              <div className="md:col-span-5 md:order-1 aspect-[4/5] rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/images/bio/massimo-di-stefano-cosmic-1.webp" className="w-full h-full object-cover" alt="Ricerca Cosmica - Massimo Di Stefano" />
               </div>
               <div className="md:col-span-7 md:order-2 space-y-6">
                 <h2 className="text-2xl md:text-3xl font-semibold text-white border-b border-border/30 pb-3">
@@ -167,7 +167,7 @@ export default function PaginaBio() {
 
           </div>
 
-          {/* AI SUMMARY — riquadro minimale per motori di ricerca e assistenti AI */}
+          {/* AI SUMMARY */}
           <section
             className="mt-24 mx-auto max-w-3xl rounded-md border border-white/10 px-6 py-5"
             aria-label={t("bio.ai.title")}
