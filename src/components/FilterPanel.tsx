@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export interface FiltersState {
+  query: string;
   year: string | null;
   shape: string | null;
   support: string | null;
@@ -19,6 +20,7 @@ export interface FiltersState {
 }
 
 export const emptyFilters: FiltersState = {
+  query: "",
   year: null,
   shape: null,
   support: null,
@@ -27,8 +29,17 @@ export const emptyFilters: FiltersState = {
   colors: [],
 };
 
+/** Ricerca per titolo: case-insensitive, corrispondenza parziale su tutte le parole digitate. */
+export function matchesQuery(title: string, query: string) {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  const haystack = title.toLowerCase();
+  return q.split(/\s+/).every((word) => haystack.includes(word));
+}
+
 export function countActive(f: FiltersState) {
   let n = 0;
+  if (f.query.trim()) n++;
   if (f.year) n++;
   if (f.shape) n++;
   if (f.support) n++;
@@ -37,6 +48,7 @@ export function countActive(f: FiltersState) {
   n += f.colors.length;
   return n;
 }
+
 
 // Palette per ogni nome colore (18 colori richiesti)
 const COLOR_PALETTE: { name: string; hex: string; border?: string }[] = [
@@ -111,16 +123,17 @@ export default function FilterPanel({
   const chipBase =
     "px-3 py-1.5 rounded-full border text-[11px] tracking-[0.15em] uppercase transition-all duration-300 whitespace-nowrap";
   const chipInactive =
-    "border-[#1A1A1A]/70 text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5";
+    "border-[#2b2820]/70 text-[#2b2820] hover:border-[#2b2820] hover:bg-[#2b2820]/5";
   const chipActive =
-    "bg-[#1A1A1A] text-[#FDFCF0] border-[#1A1A1A] shadow-sm";
+    "bg-[#2b2820] text-[#FDFCF0] border-[#2b2820] shadow-sm";
 
   const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
       <p
-        className="text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A] font-medium mb-3"
+        className="text-[10px] tracking-[0.25em] uppercase text-[#2b2820] font-semibold mb-3"
         style={{ fontFamily: "'Raleway', sans-serif" }}
       >
+
         {label}
       </p>
       {children}
@@ -150,13 +163,28 @@ export default function FilterPanel({
           className="px-8 md:px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8"
           style={{ fontFamily: "'Raleway', sans-serif" }}
         >
+          {/* RICERCA PER TITOLO — full width */}
+          <div className="md:col-span-2">
+            <Section label={t("filter.search")}>
+              <input
+                type="text"
+                value={filters.query}
+                onChange={(e) => setField("query", e.target.value)}
+                placeholder={t("filter.searchPlaceholder")}
+                aria-label={t("filter.search")}
+                className="w-full h-10 rounded-md border border-[#2b2820]/70 bg-transparent px-3 text-sm text-[#2b2820] placeholder:text-[#4a473e]/60 focus:outline-none focus:border-[#2b2820]"
+              />
+            </Section>
+          </div>
+
           {/* ANNO */}
           <Section label={t("filter.year")}>
             <select
               value={filters.year ?? ""}
               onChange={(e) => setField("year", e.target.value || null)}
-              className="w-full h-10 rounded-md border border-[#1A1A1A]/70 bg-transparent px-3 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A]"
+              className="w-full h-10 rounded-md border border-[#2b2820]/70 bg-transparent px-3 text-sm text-[#2b2820] focus:outline-none focus:border-[#2b2820]"
             >
+
               <option value="">{t("filter.allYears")}</option>
               {years.map((y) => (
                 <option key={y} value={String(y)}>
