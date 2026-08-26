@@ -23,6 +23,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+/** Cerchio Zen (Ensō) — icona lineare essenziale, stesso stile delle altre icone */
+const EnsoIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <path d="M16.5 4.6a9 9 0 1 0 3.4 5.2" />
+  </svg>
+);
+
 const disciplineLabels: Record<string, string> = {
   painting: "Painting",
   photography: "Photography",
