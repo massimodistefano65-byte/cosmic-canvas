@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
-import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange } from "@/components/FilterPanel";
+import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange, matchesQuery } from "@/components/FilterPanel";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
