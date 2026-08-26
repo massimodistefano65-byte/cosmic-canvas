@@ -125,6 +125,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const isTshirt = config.key === "t-shirt";
 
   const filteredArtworks = artworks.filter((a) => {
+    if (!matchesQuery(a.title, filters.query)) return false;
     if (filters.year && a.year !== filters.year) return false;
     if (filters.shape) {
       if (filters.shape === "Altro") {
