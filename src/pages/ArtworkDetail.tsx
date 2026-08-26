@@ -23,6 +23,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+/** Cerchio Zen (Ensō) — icona lineare essenziale, stesso stile delle altre icone */
+const EnsoIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    <path d="M16.5 4.6a9 9 0 1 0 3.4 5.2" />
+  </svg>
+);
+
 const disciplineLabels: Record<string, string> = {
   painting: "Painting",
   photography: "Photography",
@@ -820,6 +836,13 @@ const ArtworkDetail = () => {
                 className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Download size={16} aria-hidden="true" />
+              </button>
+              <button
+                onClick={() => setZenOpen(true)}
+                aria-label={t("artwork.tt.zen")}
+                className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+              >
+                <EnsoIcon />
               </button>
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>

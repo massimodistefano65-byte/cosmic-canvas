@@ -238,3 +238,18 @@ a img,
 @media (prefers-reduced-motion: reduce) {
   .page-fade-in { animation: none; }
 }
+
+/* ===== Modalità Meditazione: effetto "respiro" (solo transform, GPU) ===== */
+@keyframes zen-breath {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.zen-breath {
+  animation: zen-breath 16s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zen-breath { animation: none; }
+}
