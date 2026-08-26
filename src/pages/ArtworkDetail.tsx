@@ -821,6 +821,13 @@ const ArtworkDetail = () => {
               >
                 <Download size={16} aria-hidden="true" />
               </button>
+              <button
+                onClick={() => setZenOpen(true)}
+                aria-label={t("artwork.tt.zen")}
+                className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+              >
+                <EnsoIcon />
+              </button>
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>
           </div>
