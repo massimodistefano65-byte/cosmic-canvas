@@ -678,3 +678,89 @@ Poi commit di `public/sitemap.xml`.
 - Mantieni `slug` URL-friendly (minuscolo, trattini, niente caratteri speciali).
 - Le card vuote (senza media) mostrano automaticamente "Contenuto in arrivo": è il comportamento desiderato in fase di lavorazione.
 
+
+---
+
+## 🧑‍🎨 Pagina Bio — schede avorio e "Geografie dell'anima"
+
+La pagina Bio usa schede avorio (`#FDFCF0`) su sfondo nero. Titoli `#2b2820`, paragrafi `#4a473e`.
+I titoli che contengono ":" vanno automaticamente a capo dopo i due punti (vale in IT e in EN): non serve fare nulla.
+
+### Sostituire le 3 immagini di "Geografie dell'anima"
+
+1. Prepara 3 immagini in formato **WebP**, proporzione **4:3** (consigliato 1200×900 px, peso < 250 KB).
+2. Rinominale **esattamente** così:
+   - `geografie-painting.webp`
+   - `geografie-photography.webp`
+   - `geografie-digital-art.webp`
+3. Caricale nella cartella `public/images/bio/` (su GitHub: *Add file → Upload files*, scrivendo il percorso `public/images/bio/` nella barra del nome se la cartella non esiste ancora).
+4. Commit sul branch di lavoro → merge in `main`. Il deploy Aruba parte automaticamente.
+
+Finché i file non esistono, le schede mostrano un placeholder: nessun errore, nessuna modifica al codice necessaria dopo il caricamento.
+
+**Non toccare** le 4 foto principali della Bio (Ritratto, Al lavoro, T-shirt, Cosmic): sono già corrette e collegate.
+
+### Box "Chi è Massimo Di Stefano" (AI Summary)
+
+È un riquadro di sintesi in fondo alla Bio, utile per SEO e AI. Il testo si modifica in `src/pages/Bio.tsx`, sezione AI summary. Mantieni un tono professionale, non poetico.
+
+---
+
+## 🔎 Ricerca per titolo nei filtri
+
+Nel pop-up **FILTRA / FILTER** il primo campo è **Titolo / Title**.
+
+- Legge i titoli direttamente da `src/lib/artworkData.ts`: aggiungendo un'opera la ricerca è subito aggiornata, senza altri interventi.
+- Ricerca **case-insensitive** e **parziale** (es. "amore", "golden").
+- Si combina in AND con tutti gli altri filtri (colore, forma, anno, supporto, genere, prezzo).
+- Conta nel badge numerico del pulsante FILTER e si azzera con "Rimuovi filtri".
+
+Traduzioni della label: chiavi `filter.search` e `filter.searchPlaceholder` in `src/lib/i18n.tsx`.
+
+---
+
+## 🌐 Campi bilingui delle opere (`priceEn`, `dimensionsEn`)
+
+In `src/lib/artworkData.ts` ogni opera può avere:
+
+```ts
+price: "€ 1.200",
+priceEn: "€ 1,200",
+dimensions: "70 × 100 cm",
+dimensionsEn: "27.5 × 39.4 in",
+```
+
+Se i campi `*En` mancano, il sito mostra automaticamente quelli italiani.
+
+Per i testi lunghi valgono i file Markdown affiancati:
+
+- `meaning.md` (IT) + `meaning-en.md` (EN)
+- `dedication.md` (IT) + `dedication-en.md` (EN) — dedica privata, visibile solo con il codice
+- `purchase.md` (IT) + `purchase-en.md` (EN) — per disciplina, in `public/artworks/<disciplina>/`
+
+Regola: se il file `-en.md` non esiste, viene mostrata la versione italiana. Il pulsante "Significato dell'opera" appare **solo** se il file esiste davvero.
+
+---
+
+## 🎨 Colori dei pannelli avorio (regola fissa)
+
+Tutti i pop-up avorio del sito (Significato, Opzioni d'acquisto, Filtri, Certificato) usano:
+
+| Elemento | Colore |
+| --- | --- |
+| Sfondo scheda | `#FDFCF0` |
+| Bordo | `#D4BE96` con opacità |
+| Titoli / etichette | `#2b2820` |
+| Paragrafi / testi secondari | `#4a473e` |
+
+Non usare grigi con opacità sui testi su avorio: riducono troppo la leggibilità.
+
+---
+
+## 🚀 Workflow di pubblicazione (riepilogo)
+
+1. Branch di lavoro su GitHub (mai commit diretti su `main` quando Lovable sta lavorando).
+2. Carica/modifica i file (immagini in `public/`, dati in `src/lib/`).
+3. Merge in `main`.
+4. Il workflow `.github/workflows/deploy-aruba.yml` builda e carica su Aruba via `lftp` (passivo, senza `--delete`).
+5. Se non vedi le modifiche online: hard refresh (`Ctrl+Shift+R` / `Cmd+Shift+R`).

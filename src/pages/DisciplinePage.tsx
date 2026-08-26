@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import GalleryGrid, { ArtworkItem } from "@/components/GalleryGrid";
-import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange } from "@/components/FilterPanel";
+import FilterPanel, { FiltersState, emptyFilters, countActive, priceInRange, matchesQuery } from "@/components/FilterPanel";
 import SEOHead from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -125,6 +125,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
   const isTshirt = config.key === "t-shirt";
 
   const filteredArtworks = artworks.filter((a) => {
+    if (!matchesQuery(a.title, filters.query)) return false;
     if (filters.year && a.year !== filters.year) return false;
     if (filters.shape) {
       if (filters.shape === "Altro") {
