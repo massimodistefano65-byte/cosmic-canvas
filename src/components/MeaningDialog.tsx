@@ -30,10 +30,10 @@ const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
 
           currentTable.push(
             <div key={`row-${index}`} className="grid grid-cols-1 md:grid-cols-[1fr_160px] border border-[#D4BE96]/30 rounded-xl overflow-hidden bg-white/60 shadow-sm mb-4 hover:border-[#D4BE96]/60 transition-colors">
-              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/15 text-[#1A1A1A] text-sm md:text-base leading-relaxed">
+              <div className="p-5 border-b md:border-b-0 md:border-r border-[#D4BE96]/15 text-[#4a473e] text-sm md:text-base leading-relaxed">
                 <ReactMarkdown>{cellText}</ReactMarkdown>
               </div>
-              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#1A1A1A] text-base">
+              <div className="p-5 bg-[#1A1A1A]/5 flex items-center justify-center md:justify-start font-medium text-[#2b2820] text-base">
                 <ReactMarkdown>{priceText}</ReactMarkdown>
               </div>
             </div>
@@ -51,7 +51,7 @@ const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
           // Pulizia <br> anche nel testo normale
           const cleanLine = line.replace(/<br\s*\/?>/gi, '  \n');
           processedElements.push(
-            <div key={`text-${index}`} className="text-[#1A1A1A] opacity-80 leading-relaxed my-3 text-base md:text-lg">
+            <div key={`text-${index}`} className="text-[#4a473e] leading-relaxed my-3 text-base md:text-lg">
               <ReactMarkdown>{cleanLine}</ReactMarkdown>
             </div>
           );
@@ -75,7 +75,7 @@ const MeaningDialog = ({ isOpen, onClose, artworkTitle, content }: Props) => {
       >
         <div className="sticky top-0 bg-[#FDFCF0] z-10 px-8 md:px-16 pt-10 pb-4 flex justify-between items-start">
           <DialogTitle
-            className="text-3xl md:text-5xl text-[#1A1A1A] font-light leading-tight"
+            className="text-3xl md:text-5xl text-[#2b2820] font-light leading-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {artworkTitle}

@@ -130,7 +130,7 @@ const CertificateDialog = ({
           <div className="flex items-center gap-3">
             <ShieldCheck className="text-[#1A1A1A]/60" size={28} aria-hidden="true" />
             <DialogTitle
-              className="text-2xl md:text-4xl text-[#1A1A1A] font-light leading-tight"
+              className="text-2xl md:text-4xl text-[#2b2820] font-light leading-tight"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               {t("cert.title")}
@@ -174,7 +174,7 @@ const CertificateDialog = ({
           <hr className="border-[#D4BE96]/30 mb-8" />
 
           {/* Statuto archivio */}
-          <p className="text-[#1A1A1A]/85 leading-relaxed text-base md:text-lg text-center max-w-2xl mx-auto">
+          <p className="text-[#4a473e] leading-relaxed text-base md:text-lg text-center max-w-2xl mx-auto">
             {t("cert.intro1")}
             <span className="italic">{t("cert.archiveName")}</span>
             {t("cert.intro2")}
@@ -240,7 +240,7 @@ const CertificateDialog = ({
             </div>
           ) : (
             <div>
-              <p className="text-center text-[#1A1A1A]/70 text-sm md:text-base mb-4">
+              <p className="text-center text-[#4a473e] text-sm md:text-base mb-4">
                 {t("cert.ownerPrompt")}
               </p>
 
