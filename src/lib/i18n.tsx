@@ -182,6 +182,8 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // Filter panel
   "filter.title": { it: "Filtra le opere", en: "Filter artworks" },
+  "filter.search": { it: "Titolo", en: "Title" },
+  "filter.searchPlaceholder": { it: "Cerca per titolo…", en: "Search by title…" },
   "filter.open": { it: "Filtra", en: "Filter" },
   "filter.soon": { it: "Filtri in arrivo", en: "Filters coming soon" },
   "filter.close": { it: "Chiudi", en: "Close" },
