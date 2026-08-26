@@ -161,6 +161,10 @@ const translations: Record<string, Record<Lang, string>> = {
   "artwork.tt.info": { it: "Richiedi informazioni", en: "Request information" },
   "artwork.tt.pdf": { it: "Scarica scheda opera (PDF)", en: "Download artwork sheet (PDF)" },
   "artwork.tt.share": { it: "Condividi", en: "Share" },
+  "artwork.tt.zen": {
+    it: "Modalità Meditazione — solo l'opera, senza distrazioni",
+    en: "Meditation Mode — just the artwork, no distractions",
+  },
   "artwork.notFound": { it: "Opera non trovata.", en: "Artwork not found." },
   "artwork.priceOnRequest": { it: "Prezzo su richiesta", en: "Price on request" },
 
