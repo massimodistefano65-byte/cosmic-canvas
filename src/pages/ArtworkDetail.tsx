@@ -329,6 +329,12 @@ const ArtworkDetail = () => {
           artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
         />
       )}
+      <MeditationMode
+        isOpen={zenOpen}
+        onClose={() => setZenOpen(false)}
+        imageUrl={fullResUrl}
+        alt={artwork.title}
+      />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
