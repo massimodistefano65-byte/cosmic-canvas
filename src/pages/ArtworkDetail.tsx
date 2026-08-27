@@ -6,6 +6,7 @@ import InfoRequestDialog from "@/components/InfoRequestDialog";
 import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
+import MeditationMode from "@/components/MeditationMode";
 import SEOHead from "@/components/SEOHead";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Heart, Stamp, ExternalLink, Info, Bookmark, Download } from "lucide-react";
@@ -99,6 +100,7 @@ const ArtworkDetail = () => {
   const [purchaseContent, setPurchaseContent] = useState<string>("");
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [dedicationMd, setDedicationMd] = useState<string>("");
+  const [zenOpen, setZenOpen] = useState(false);
   const { t, lang } = useI18n();
 
   const isTshirt = discipline === "t-shirt";
@@ -327,6 +329,12 @@ const ArtworkDetail = () => {
           artworkUrl={`https://www.massimodistefano.com/${discipline}/${artworkId}`}
         />
       )}
+      <MeditationMode
+        isOpen={zenOpen}
+        onClose={() => setZenOpen(false)}
+        imageUrl={fullResUrl}
+        alt={artwork.title}
+      />
 
       {/* ===== DESKTOP LAYOUT (md+) ===== */}
       <div className="hidden md:flex flex-1 pt-16 min-h-0 relative">
@@ -590,6 +598,19 @@ const ArtworkDetail = () => {
                     </span>
                   </TooltipTrigger>
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setZenOpen(true)}
+                      aria-label={t("artwork.tt.zen")}
+                      className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                    >
+                      <EnsoIcon />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
                 </Tooltip>
               </div>
             </TooltipProvider>
