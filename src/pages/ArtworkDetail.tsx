@@ -599,6 +599,19 @@ const ArtworkDetail = () => {
                   </TooltipTrigger>
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
                 </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => setZenOpen(true)}
+                      aria-label={t("artwork.tt.zen")}
+                      className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                    >
+                      <EnsoIcon />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
+                </Tooltip>
               </div>
             </TooltipProvider>
 
