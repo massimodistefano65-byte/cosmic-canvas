@@ -6,6 +6,7 @@ import InfoRequestDialog from "@/components/InfoRequestDialog";
 import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
+import MeditationMode from "@/components/MeditationMode";
 import SEOHead from "@/components/SEOHead";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Heart, Stamp, ExternalLink, Info, Bookmark, Download } from "lucide-react";
