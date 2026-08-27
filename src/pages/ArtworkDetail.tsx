@@ -100,6 +100,7 @@ const ArtworkDetail = () => {
   const [purchaseContent, setPurchaseContent] = useState<string>("");
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [dedicationMd, setDedicationMd] = useState<string>("");
+  const [zenOpen, setZenOpen] = useState(false);
   const { t, lang } = useI18n();
 
   const isTshirt = discipline === "t-shirt";
