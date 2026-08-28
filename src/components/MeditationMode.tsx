@@ -167,16 +167,30 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       style={{ opacity: veilVisible ? 1 : 0, touchAction: "none" }}
     >
       <div
-        className="flex items-center justify-center max-w-full max-h-full zen-breath transition-opacity duration-[800ms] ease-in-out"
+        className="flex items-center justify-center zen-breath transition-opacity duration-[800ms] ease-in-out"
         style={{ opacity: imgVisible ? 1 : 0, willChange: "transform, opacity" }}
       >
         <img
           src={imageUrl}
           alt={alt}
           draggable={false}
-          className="max-w-full max-h-full object-contain"
+          onLoad={(e) => {
+            const img = e.currentTarget;
+            if (img.naturalWidth && img.naturalHeight) {
+              setNatural({ w: img.naturalWidth, h: img.naturalHeight });
+            }
+          }}
+          className="object-contain"
+          style={{
+            // margine di sicurezza: al picco del respiro (1.03) l'opera resta interamente visibile
+            maxWidth: natural ? `min(92vw, ${natural.w}px)` : "92vw",
+            maxHeight: natural ? `min(92svh, ${natural.h}px)` : "92svh",
+            width: "auto",
+            height: "auto",
+          }}
         />
       </div>
+
     </div>,
     document.body
   );
