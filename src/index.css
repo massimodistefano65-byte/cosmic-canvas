@@ -239,6 +239,16 @@ a img,
   .page-fade-in { animation: none; }
 }
 
+/* ===== Pulsazione unica condivisa (timbro, ⓘ, Zen) ===== */
+@keyframes seal-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+.seal-pulse {
+  animation: seal-pulse 3.5s ease-in-out infinite;
+}
+
 /* ===== Modalità Meditazione: effetto "respiro" (solo transform, GPU) ===== */
 @keyframes zen-breath {
   0%   { transform: scale(1); }
@@ -252,4 +262,6 @@ a img,
 
 @media (prefers-reduced-motion: reduce) {
   .zen-breath { animation: none; }
+  .seal-pulse { animation: none; }
 }
+
