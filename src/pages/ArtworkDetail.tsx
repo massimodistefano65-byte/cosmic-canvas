@@ -27,8 +27,8 @@ import {
 /** Modalità Meditazione — icona "espandi": quattro angoli aperti verso l'esterno */
 const ExpandIcon = () => (
   <svg
-    width="15"
-    height="15"
+    width="16"
+    height="16"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -36,6 +36,7 @@ const ExpandIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
     aria-hidden="true"
+    className="seal-pulse"
   >
     <path d="M4 9V4h5" />
     <path d="M20 9V4h-5" />
@@ -43,6 +44,7 @@ const ExpandIcon = () => (
     <path d="M20 15v5h-5" />
   </svg>
 );
+
 
 const disciplineLabels: Record<string, string> = {
   painting: "Painting",
@@ -238,7 +240,7 @@ const ArtworkDetail = () => {
     <Stamp
       size={size}
       aria-hidden="true"
-      className="text-[#d4af7a] inline-block align-middle ml-1 animate-archive-pulse"
+      className="text-[#d4af7a] inline-block align-middle ml-1 seal-pulse"
       style={{ filter: "drop-shadow(0 0 5px rgba(212,175,122,0.65))" }}
     />
   );
@@ -507,7 +509,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[9px] tracking-[0.25em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-archive-pulse"
+                    className="text-[9px] tracking-[0.25em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity seal-pulse"
                     style={{ fontFamily: "'Raleway', sans-serif" }}
                   >
                     <motion.span
@@ -564,9 +566,9 @@ const ArtworkDetail = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                      className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center"
                     >
-                      <Info size={16} aria-hidden="true" />
+                      <Info size={16} aria-hidden="true" className="seal-pulse" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.info")}</TooltipContent>
@@ -610,7 +612,7 @@ const ArtworkDetail = () => {
                     <button
                       onClick={() => setZenOpen(true)}
                       aria-label={t("artwork.tt.zen")}
-                      className="w-9 h-9 rounded-full aspect-square shrink-0 border-2 border-[#d4af7a]/70 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                      className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
                     >
                       <ExpandIcon />
                     </button>
@@ -801,7 +803,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[10px] tracking-[0.2em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-archive-pulse"
+                    className="text-[10px] tracking-[0.2em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity seal-pulse"
                   >
                     <motion.span
                       className="inline-block"
@@ -842,9 +844,9 @@ const ArtworkDetail = () => {
               </button>
               <button
                 onClick={() => setInfoOpen(true)}
-                className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center"
               >
-                <Info size={16} aria-hidden="true" />
+                <Info size={16} aria-hidden="true" className="seal-pulse" />
               </button>
               <button
                 onClick={async () => {
@@ -867,7 +869,7 @@ const ArtworkDetail = () => {
               <button
                 onClick={() => setZenOpen(true)}
                 aria-label={t("artwork.tt.zen")}
-                className="w-9 h-9 rounded-full aspect-square shrink-0 border-2 border-[#d4af7a]/70 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
               >
                 <ExpandIcon />
               </button>
