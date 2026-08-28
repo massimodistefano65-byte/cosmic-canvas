@@ -247,7 +247,7 @@ a img,
 }
 
 .zen-breath {
-  animation: zen-breath 16s ease-in-out infinite;
+  animation: zen-breath 10s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
