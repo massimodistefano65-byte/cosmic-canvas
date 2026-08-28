@@ -27,8 +27,8 @@ import {
 /** Modalità Meditazione — icona "espandi": quattro angoli aperti verso l'esterno */
 const ExpandIcon = () => (
   <svg
-    width="15"
-    height="15"
+    width="16"
+    height="16"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -36,6 +36,7 @@ const ExpandIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
     aria-hidden="true"
+    className="seal-pulse"
   >
     <path d="M4 9V4h5" />
     <path d="M20 9V4h-5" />
@@ -43,6 +44,7 @@ const ExpandIcon = () => (
     <path d="M20 15v5h-5" />
   </svg>
 );
+
 
 const disciplineLabels: Record<string, string> = {
   painting: "Painting",
