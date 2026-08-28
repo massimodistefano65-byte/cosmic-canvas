@@ -24,19 +24,23 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-/** Cerchio Zen (Ensō) — icona lineare essenziale, stesso stile delle altre icone */
-const EnsoIcon = () => (
+/** Modalità Meditazione — icona "espandi": quattro angoli aperti verso l'esterno */
+const ExpandIcon = () => (
   <svg
-    width="16"
-    height="16"
+    width="15"
+    height="15"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.6"
+    strokeWidth="2"
     strokeLinecap="round"
+    strokeLinejoin="round"
     aria-hidden="true"
   >
-    <path d="M16.5 4.6a9 9 0 1 0 3.4 5.2" />
+    <path d="M4 9V4h5" />
+    <path d="M20 9V4h-5" />
+    <path d="M4 15v5h5" />
+    <path d="M20 15v5h-5" />
   </svg>
 );
 
@@ -470,6 +474,7 @@ const ArtworkDetail = () => {
                       type="button"
                       onClick={() => setCertificateOpen(true)}
                       aria-label="Apri Certificato di Autenticità Digitale"
+                      title={t("artwork.tt.seal")}
                       className="group w-full text-left text-[13px] font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                       style={{ fontFamily: "'Raleway', sans-serif" }}
                     >
@@ -502,7 +507,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[9px] tracking-[0.25em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    className="text-[9px] tracking-[0.25em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-archive-pulse"
                     style={{ fontFamily: "'Raleway', sans-serif" }}
                   >
                     <motion.span
@@ -559,7 +564,7 @@ const ArtworkDetail = () => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => setInfoOpen(true)}
-                      className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-pulse"
+                      className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
                     >
                       <Info size={16} aria-hidden="true" />
                     </button>
@@ -605,9 +610,9 @@ const ArtworkDetail = () => {
                     <button
                       onClick={() => setZenOpen(true)}
                       aria-label={t("artwork.tt.zen")}
-                      className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                      className="w-9 h-9 rounded-full aspect-square shrink-0 border-2 border-[#d4af7a]/70 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center animate-archive-pulse"
                     >
-                      <EnsoIcon />
+                      <ExpandIcon />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
@@ -766,6 +771,7 @@ const ArtworkDetail = () => {
                     <button
                       type="button"
                       onClick={() => setCertificateOpen(true)}
+                      title={t("artwork.tt.seal")}
                       className="w-full text-left text-xs font-light flex items-center justify-between cursor-pointer transition-colors text-[#d4af7a] hover:text-[#e6c592]"
                     >
                       <span>{displayPrice}</span>
@@ -795,7 +801,7 @@ const ArtworkDetail = () => {
                   <button
                     type="button"
                     onClick={() => setPurchaseOpen(true)}
-                    className="text-[10px] tracking-[0.2em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-pulse"
+                    className="text-[10px] tracking-[0.2em] uppercase text-white brightness-125 cursor-pointer hover:opacity-70 transition-opacity animate-archive-pulse"
                   >
                     <motion.span
                       className="inline-block"
@@ -836,7 +842,7 @@ const ArtworkDetail = () => {
               </button>
               <button
                 onClick={() => setInfoOpen(true)}
-                className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-pulse"
+                className="w-9 h-9 rounded-full border border-border/40 text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
               >
                 <Info size={16} aria-hidden="true" />
               </button>
@@ -861,9 +867,9 @@ const ArtworkDetail = () => {
               <button
                 onClick={() => setZenOpen(true)}
                 aria-label={t("artwork.tt.zen")}
-                className="w-9 h-9 rounded-full border border-[#d4af7a]/40 text-[#d4af7a] hover:border-[#d4af7a]/70 transition-all duration-300 flex items-center justify-center animate-archive-pulse"
+                className="w-9 h-9 rounded-full aspect-square shrink-0 border-2 border-[#d4af7a]/70 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center animate-archive-pulse"
               >
-                <EnsoIcon />
+                <ExpandIcon />
               </button>
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>

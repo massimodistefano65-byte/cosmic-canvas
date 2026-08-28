@@ -162,9 +162,10 @@ const translations: Record<string, Record<Lang, string>> = {
   "artwork.tt.pdf": { it: "Scarica scheda opera (PDF)", en: "Download artwork sheet (PDF)" },
   "artwork.tt.share": { it: "Condividi", en: "Share" },
   "artwork.tt.zen": {
-    it: "Modalità Meditazione — solo l'opera, senza distrazioni",
-    en: "Meditation Mode — just the artwork, no distractions",
+    it: "Modalità Meditazione — l'opera a schermo intero",
+    en: "Meditation Mode — the artwork fullscreen",
   },
+  "artwork.tt.seal": { it: "Certificato di autenticità", en: "Certificate of authenticity" },
   "artwork.notFound": { it: "Opera non trovata.", en: "Artwork not found." },
   "artwork.priceOnRequest": { it: "Prezzo su richiesta", en: "Price on request" },
 
