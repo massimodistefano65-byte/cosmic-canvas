@@ -24,9 +24,10 @@ type FsDocument = Document & {
  */
 const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
+  const [veilVisible, setVeilVisible] = useState(false);
+  const [imgVisible, setImgVisible] = useState(false);
   const closingRef = useRef(false);
-  const mouseRef = useRef({ x: 0, y: 0, travelled: 0, armed: false });
+  const mouseRef = useRef({ x: 0, y: 0, travelled: 0, armed: false, last: 0 });
 
   const exitFullscreen = useCallback(() => {
     const d = document as FsDocument;
@@ -44,9 +45,13 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
   const requestClose = useCallback(() => {
     if (closingRef.current) return;
     closingRef.current = true;
-    setVisible(false);
-    exitFullscreen();
-    window.setTimeout(() => onClose(), 600);
+    // uscita simmetrica: prima svanisce l'opera, poi il velo nero
+    setImgVisible(false);
+    window.setTimeout(() => setVeilVisible(false), 500);
+    window.setTimeout(() => {
+      exitFullscreen();
+      onClose();
+    }, 1000);
   }, [exitFullscreen, onClose]);
 
   // Apertura: fullscreen (se possibile) + fade-in + blocco scroll
@@ -69,16 +74,19 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       }
     }
 
-    const raf = requestAnimationFrame(() => setVisible(true));
+    const raf = requestAnimationFrame(() => setVeilVisible(true));
+    // l'opera emerge dal nero con un leggero ritardo
+    const imgTimer = window.setTimeout(() => setImgVisible(true), 300);
     // periodo di grazia: evita chiusure immediate dovute al click di apertura
     const arm = window.setTimeout(() => {
       mouseRef.current.armed = true;
-    }, 1200);
+    }, 1500);
 
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(imgTimer);
       clearTimeout(arm);
-      mouseRef.current = { x: 0, y: 0, travelled: 0, armed: false };
+      mouseRef.current = { x: 0, y: 0, travelled: 0, armed: false, last: 0 };
       document.body.style.overflow = prevOverflow;
       exitFullscreen();
     };
@@ -94,15 +102,20 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
     const onMouseMove = (e: MouseEvent) => {
       const m = mouseRef.current;
       if (!m.armed) return;
+      const now = Date.now();
       if (m.x === 0 && m.y === 0) {
         m.x = e.clientX;
         m.y = e.clientY;
+        m.last = now;
         return;
       }
+      // reset dopo una pausa: solo un gesto ampio e continuo chiude
+      if (now - m.last > 1200) m.travelled = 0;
+      m.last = now;
       m.travelled += Math.abs(e.clientX - m.x) + Math.abs(e.clientY - m.y);
       m.x = e.clientX;
       m.y = e.clientY;
-      if (m.travelled > 40) requestClose();
+      if (m.travelled > 100) requestClose();
     };
     const onFsChange = () => {
       const d = document as FsDocument;
@@ -133,16 +146,20 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       aria-label={alt}
       onClick={requestClose}
       onTouchEnd={requestClose}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-700 ease-out cursor-none"
-      style={{ opacity: visible ? 1 : 0, touchAction: "none" }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-[600ms] ease-in-out cursor-none"
+      style={{ opacity: veilVisible ? 1 : 0, touchAction: "none" }}
     >
-      <img
-        src={imageUrl}
-        alt={alt}
-        draggable={false}
-        className="max-w-full max-h-full object-contain zen-breath"
-        style={{ willChange: "transform" }}
-      />
+      <div
+        className="flex items-center justify-center max-w-full max-h-full zen-breath transition-opacity duration-[800ms] ease-in-out"
+        style={{ opacity: imgVisible ? 1 : 0, willChange: "transform, opacity" }}
+      >
+        <img
+          src={imageUrl}
+          alt={alt}
+          draggable={false}
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
     </div>,
     document.body
   );
