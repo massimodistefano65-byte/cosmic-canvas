@@ -1,9 +1,22 @@
 Between connection and disorientation, the mind constructs landscapes that no longer belong to either reality or dreams.
-Description of the work
+
+
+
+
+**Description of the work**
+
+
 Acid Dream leads the observer into a dimension where thought seems to lose its linearity to transform into an infinite network of connections. Threads, paths, and ramifications intertwine without a starting point or an arrival point, giving life to an organic structure that simultaneously recalls neurons, roots, maps, and constellations.
 The work constantly oscillates between order and chaos. Each line appears free, yet at the same time part of an invisible balance that holds the entire composition together. The eye seeks a center, a stable reference, but is continuously invited to change direction, as happens during those moments when consciousness explores unknown territories and every detail seems to acquire a new meaning.
 The title Acid Dream does not simply recall a visionary dream, but a perceptual condition in which reality fragments and recomposes itself into unexpected forms. It is the representation of a mind crossed by infinite possibilities, where every connection generates another connection and where the boundary between the inner and outer world becomes increasingly thin.
 Rather than recounting a state of alteration, the work suggests the very complexity of consciousness: a living, changing organism, impossible to enclose within a definitive structure.
-Techniques and materials
+
+
+
+
+**Techniques and materials**
+
+
 The work is created on canvas through a dense weaving of hot glue, used as a plastic element to build the entire three-dimensional structure of the surface. Subsequently, the chromatic intervention with acrylics enhances reliefs, depths, and interweavings, bringing out an extremely complex texture that continuously changes depending on the light and the point of observation.
 The work is offered complete with a frame with plexiglass protection, for a final dimension of 52 × 72 cm, while the canvas measures 39 × 50 cm.
+
