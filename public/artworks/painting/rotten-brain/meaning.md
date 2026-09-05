@@ -1,5 +1,8 @@
-
 *"A volte la mente non smette di funzionare: semplicemente non riesce più a mettere ordine in ciò che produce."*
+
+
+
+
 
 **Descrizione dell'opera**
 
@@ -17,6 +20,9 @@ L'opera si inserisce quindi nella mia ricerca sull'interiorità e sulla compless
 
 *Rotten Brain* rappresenta così uno di quei momenti in cui anche pensare può diventare faticoso. Un momento nel quale la mente continua a produrre forme, connessioni e impulsi, ma perde temporaneamente la capacità di organizzarli.
 
+
+
 **Tecnica e materiali**
 
 Opera realizzata nel 2020 mediante tecnica mista su polistirene. La superficie è stata lavorata attraverso il calore, creando una struttura tridimensionale composta da bassorilievi, altorilievi e profonde solcature. La successiva applicazione dei colori bronzo, turchese, nero e ocra accentua la complessità materica e il carattere organico della composizione.
+

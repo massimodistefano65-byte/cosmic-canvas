@@ -1,3 +1,7 @@
+**T-Shirt All-Over Print "*La foresta dei sogni*" — Massimo Di Stefano Art**
+
+
+
 **Every design originates from an original artwork by the Italian visual artist Massimo Di Stefano and from his ongoing research in digital art. His creations transform visions, emotions and inner suggestions into artworks designed to be experienced through clothing.**
 
 
@@ -8,7 +12,23 @@ Rather than depicting a real forest, this design suggests a place of consciousne
 
 
 
-**Print note**
+**Product Details**
 
-The artwork is reproduced in **Ultra HD** using **All-Over Print (AOP)** sublimation technology, enhancing every chromatic detail of the original artwork across the entire surface of the garment.
+
+
+**• Ultra HD All-Over Print (AOP)**
+
+**• High-definition sublimation printing**
+
+**• Material: 100% polyester**
+
+**• Lightweight performance fabric (140 g/m²)**
+
+**• Breathable and moisture-wicking**
+
+**• Classic unisex fit**
+
+**• Printed care label**
+
+**• Assembled from globally sourced parts**
 
