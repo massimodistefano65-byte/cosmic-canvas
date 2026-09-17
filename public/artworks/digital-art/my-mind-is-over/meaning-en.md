@@ -1,6 +1,12 @@
 *When the mind transcends its own limits, the outside world is transformed into a labyrinth of signs, sounds and possibilities.*
 
+
+
+
+
 **Description of the work**
+
+
 
 “My Mind Is Over” presents an urban space transformed by an altered and intensified perception. The image appears to depict a real place, but its structure is permeated by distortions, flashes of light and lines that profoundly alter its legibility.
 
@@ -18,8 +24,15 @@ Yet the work does not convey confusion alone. Within the complexity of the signs
 
 ‘My Mind Is Over’ thus represents a critical threshold of consciousness: the moment when thought transcends its own boundaries and perception transforms into a continuous flow. The mind seems to be at its limit, but it is precisely from that limit that a new, more intense and less controllable vision of reality emerges.
 
+
+
+
+
 **Technique and materials**
+
+
 
 This work is created using **Digital Art**, through the digital manipulation and superimposition of urban images, motion effects, perspective distortions, lines of light and chromatic interventions.
 
 Digital processing transforms real space into an unstable perceptual surface, in which radial movement and graphic interference reveal the mind’s overload and the proliferation of stimuli.
+

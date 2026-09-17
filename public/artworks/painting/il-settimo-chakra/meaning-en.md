@@ -1,10 +1,22 @@
-Every inner path leads to a point where matter seems to dissolve to leave room for pure consciousness.
+A vibrational journey towards ecstasy and transcendence, where matter fractures to become a channel for pure spiritual consciousness.
 
-**The meaning of the artwork**
-*The Seventh Chakra* is born from my spiritual research, developed over the years through meditation and the study of inner processes related to the awakening of the Kundalini. Rather than representing a symbol, the work seeks to evoke a state of consciousness: that opening in which the individual perceives belonging to something infinitely larger than themselves.
-The composition seems to radiate from a luminous center, like an energy that passes through matter without being held back by it. The forms do not delimit a space, but suggest a continuous expansion, a movement that leads beyond the limits of ordinary perception.
-Light becomes the protagonist, not as a simple visual element, but as a metaphor for awareness. The work invites the viewer to slow down, to observe without immediately seeking a rational meaning, letting a more intuitive and deep perception emerge.
-In this vision, the seventh chakra does not represent a definitive goal, but an ever-present possibility: that of recognizing, even if only for an instant, the unity between the material and spiritual dimensions.
 
-**Technique and material**
-The work is created on a polystyrene panel through a personal technique based exclusively on the subtraction of matter by means of heat. The surface is engraved and modeled without adding reliefs, transforming a perfectly flat sheet into a three-dimensional structure rich in depth and luminous vibrations. The chromatic intervention with acrylics and sprays enhances the engravings and amplifies the sensation of expanding energy.
+
+## Meaning of the work
+
+The work stems from the intimate experience of deep meditation and takes the form of a visual exploration of the state of ecstasy: that condition of total openness and union with the whole which every spiritual seeker yearns to experience. *The seventh chakra* (Sahasrara), the crown centre situated at the top of the head, represents the ultimate meeting point between individual consciousness and the infinite, the supreme threshold through which the ascending life force of Kundalini energy blossoms into revelation.
+
+Di Stefano does not intend to offer a didactic or doctrinal representation of the spiritual symbol, but rather to translate the tension and joy of enlightenment into visual form. The work mirrors an inner process: the breaking down of mental patterns and the dissolution of the self in the face of the vastness of the cosmos. The presence of a fiery matrix emerging from the depths of the surface evokes the sensation of a sudden awakening, an inner activation that burns away the resistance of matter to make way for grace and a profound understanding of existence.
+
+Through this work, the artist invites the viewer not only to look, but to tune into a frequency of contemplation and silence, transforming the painting into an instrument of visual meditation, a bridge between the density of earthly experience and the lightness of the spirit.
+
+
+
+## Technique and materials
+
+The work is created on a polystyrene sheet which Di Stefano skilfully shapes through the direct application of heat, carving out radial grooves and honeycomb-like areas with high plastic relief. The complex layering of colours features alternating bronze tones and turquoise patinas with an oxidised appearance, punctuated by the intensity of the vermilion red applied within the incisions. The work is framed and ready for display.
+
+
+
+## 
+
