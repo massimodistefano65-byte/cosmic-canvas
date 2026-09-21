@@ -1,4 +1,4 @@
-Cristallizzazioni
+
 
 Esistono pensieri, paure e strutture interiori che col tempo si irrigidiscono dentro di noi.
 Come materia che si solidifica, impedendo il movimento e la trasformazione.
