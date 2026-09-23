@@ -85,6 +85,18 @@ interface Props {
   supportOptions: string[];
   genreOptions: string[];
 }
+const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div>
+    <p
+      className="text-[10px] tracking-[0.25em] uppercase text-[#2b2820] font-semibold mb-3"
+      style={{ fontFamily: "'Raleway', sans-serif" }}
+    >
+      {label}
+    </p>
+    {children}
+  </div>
+);
+
 
 export default function FilterPanel({
   isOpen,
@@ -127,18 +139,6 @@ export default function FilterPanel({
   const chipActive =
     "bg-[#2b2820] text-[#FDFCF0] border-[#2b2820] shadow-sm";
 
-  const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div>
-      <p
-        className="text-[10px] tracking-[0.25em] uppercase text-[#2b2820] font-semibold mb-3"
-        style={{ fontFamily: "'Raleway', sans-serif" }}
-      >
-
-        {label}
-      </p>
-      {children}
-    </div>
-  );
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
