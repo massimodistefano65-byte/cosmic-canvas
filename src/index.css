@@ -261,7 +261,7 @@ a img,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .zen-breath { animation: none; }
-  .seal-pulse { animation: none; }
+  /* Queste due animazioni lente sono funzioni esplicitamente richieste
+     e restano coerenti tra desktop e mobile. */
 }
 
