@@ -45,6 +45,20 @@ const ExpandIcon = () => (
   </svg>
 );
 
+const preloadImage = async (src: string) => {
+  if (!src) return;
+  const image = new Image();
+  image.src = src;
+  try {
+    await image.decode();
+  } catch {
+    await new Promise<void>((resolve) => {
+      image.onload = () => resolve();
+      image.onerror = () => resolve();
+    });
+  }
+};
+
 
 const disciplineLabels: Record<string, string> = {
   painting: "Painting",
@@ -94,6 +108,7 @@ async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
+  const [mobileImageChanging, setMobileImageChanging] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -260,6 +275,16 @@ const ArtworkDetail = () => {
 
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
+
+  const selectMobileImage = async (index: number) => {
+    if (index === selectedImage || mobileImageChanging) return;
+    const nextUrl = allImages[index]?.url;
+    if (!nextUrl) return;
+    setMobileImageChanging(true);
+    await preloadImage(nextUrl);
+    setSelectedImage(index);
+    requestAnimationFrame(() => setMobileImageChanging(false));
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -607,24 +632,25 @@ const ArtworkDetail = () => {
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
                 </Tooltip>
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => setZenOpen(true)}
-                      aria-label={t("artwork.tt.zen")}
-                      className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
-                    >
-                      <ExpandIcon />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
-                </Tooltip>
               </div>
             </TooltipProvider>
 
-            {allImages.length > 1 && (
-              <div className="flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
-                {allImages.map((img, idx) => (
+            <div className="relative flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        onClick={() => setZenOpen(true)}
+                        aria-label={t("artwork.tt.zen")}
+                        className="sticky top-2 z-10 self-end w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 bg-background text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+                      >
+                        <ExpandIcon />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="left" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                {allImages.length > 1 && allImages.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setSelectedImage(idx)}
@@ -648,7 +674,6 @@ const ArtworkDetail = () => {
                   )
                 )}
               </div>
-            )}
           </div>
         </motion.div>
       </div>
@@ -677,7 +702,7 @@ const ArtworkDetail = () => {
               onClick={() => setLightboxOpen(true)}
               className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
             >
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="wait">
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
@@ -689,7 +714,7 @@ const ArtworkDetail = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                 />
               </AnimatePresence>
             </button>
@@ -708,13 +733,25 @@ const ArtworkDetail = () => {
             </p>
           </div>
 
+          <div className="mb-5 flex justify-end">
+            <button
+              onClick={() => setZenOpen(true)}
+              aria-label={t("artwork.tt.zen")}
+              title={t("artwork.tt.zen")}
+              className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+            >
+              <ExpandIcon />
+            </button>
+          </div>
+
           {/* 3. MINIATURE */}
           {allImages.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-4 mb-8 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedImage(idx)}
+                    onClick={() => void selectMobileImage(idx)}
+                    disabled={mobileImageChanging}
                     className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-500 ${
                       selectedImage === idx
                         ? "border-accent"
@@ -865,13 +902,6 @@ const ArtworkDetail = () => {
                 className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Download size={16} aria-hidden="true" />
-              </button>
-              <button
-                onClick={() => setZenOpen(true)}
-                aria-label={t("artwork.tt.zen")}
-                className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
-              >
-                <ExpandIcon />
               </button>
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>

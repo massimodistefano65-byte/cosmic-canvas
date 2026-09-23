@@ -46,11 +46,11 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
   const requestClose = useCallback(() => {
     if (closingRef.current) return;
     closingRef.current = true;
-    // uscita simmetrica: opera → uscita fullscreen → velo
+    // uscita simmetrica: opera → nero → uscita fullscreen → interfaccia
     setImgVisible(false);
-    window.setTimeout(() => exitFullscreen(), 550);
-    window.setTimeout(() => setVeilVisible(false), 650);
-    window.setTimeout(() => onClose(), 1300);
+    window.setTimeout(() => exitFullscreen(), 850);
+    window.setTimeout(() => setVeilVisible(false), 900);
+    window.setTimeout(() => onClose(), 1550);
   }, [exitFullscreen, onClose]);
 
   // Apertura: velo nero → fullscreen → opera
@@ -82,16 +82,16 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
         } catch {
           /* fullscreen simulato: l'overlay è già fixed inset-0 */
         }
-      }, 620)
+      }, 760)
     );
 
     // l'opera emerge dal nero
-    timers.push(window.setTimeout(() => setImgVisible(true), 780));
+    timers.push(window.setTimeout(() => setImgVisible(true), 980));
     // periodo di grazia: evita chiusure immediate dovute al click di apertura
     timers.push(
       window.setTimeout(() => {
         mouseRef.current.armed = true;
-      }, 2200)
+      }, 2400)
     );
 
     return () => {
@@ -163,11 +163,11 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       aria-label={alt}
       onClick={requestClose}
       onTouchEnd={requestClose}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-[600ms] ease-in-out cursor-none"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-[750ms] ease-in-out cursor-none"
       style={{ opacity: veilVisible ? 1 : 0, touchAction: "none" }}
     >
       <div
-        className="flex items-center justify-center zen-breath transition-opacity duration-[800ms] ease-in-out"
+        className="flex items-center justify-center zen-breath transition-opacity duration-[900ms] ease-in-out"
         style={{ opacity: imgVisible ? 1 : 0, willChange: "transform, opacity" }}
       >
         <img
