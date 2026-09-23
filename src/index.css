@@ -260,8 +260,4 @@ a img,
   animation: zen-breath 10s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  /* Queste due animazioni lente sono funzioni esplicitamente richieste
-     e restano coerenti tra desktop e mobile. */
-}
 

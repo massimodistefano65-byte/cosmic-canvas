@@ -635,8 +635,7 @@ const ArtworkDetail = () => {
               </div>
             </TooltipProvider>
 
-            {allImages.length > 1 && (
-              <div className="relative flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
+            <div className="relative flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
                 <TooltipProvider delayDuration={200}>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -651,7 +650,7 @@ const ArtworkDetail = () => {
                     <TooltipContent side="left" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                {allImages.map((img, idx) => (
+                {allImages.length > 1 && allImages.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setSelectedImage(idx)}
@@ -675,7 +674,6 @@ const ArtworkDetail = () => {
                   )
                 )}
               </div>
-            )}
           </div>
         </motion.div>
       </div>
