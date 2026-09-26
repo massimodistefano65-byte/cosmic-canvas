@@ -280,7 +280,11 @@ const ArtworkDetail = () => {
 
   const selectMobileImage = async (index: number) => {
     // riporta sempre la foto grande in vista, intera
-    mobilePhotoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const el = mobilePhotoRef.current;
+    if (el) {
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
+      requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
+    }
     if (index === selectedImage || mobileImageChanging) return;
     const nextUrl = allImages[index]?.url;
     if (!nextUrl) return;
