@@ -346,7 +346,7 @@ const ArtworkDetail = () => {
       <Lightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        imageUrl={fullResUrl}
+        imageUrl={zenImageUrl || fullResUrl}
         alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
       />
       <InfoRequestDialog
@@ -385,7 +385,7 @@ const ArtworkDetail = () => {
       <MeditationMode
         isOpen={zenOpen}
         onClose={() => setZenOpen(false)}
-        imageUrl={fullResUrl}
+        imageUrl={zenImageUrl || fullResUrl}
         alt={artwork.title}
       />
 
