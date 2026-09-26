@@ -126,6 +126,12 @@ const ArtworkDetail = () => {
   const mobilePhotoRef = useRef<HTMLDivElement | null>(null);
   const { t, lang } = useI18n();
 
+  // Apertura scheda opera: sempre in cima, foto grande subito visibile
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [discipline, artworkId]);
+
+
   const isTshirt = discipline === "t-shirt";
   const purchaseLabel = discipline === "painting"
     ? t("artwork.purchaseOptions")
