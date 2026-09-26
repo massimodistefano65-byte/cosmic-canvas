@@ -122,6 +122,8 @@ const ArtworkDetail = () => {
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [dedicationMd, setDedicationMd] = useState<string>("");
   const [zenOpen, setZenOpen] = useState(false);
+  const [zenImageUrl, setZenImageUrl] = useState("");
+  const mobilePhotoRef = useRef<HTMLDivElement | null>(null);
   const { t, lang } = useI18n();
 
   const isTshirt = discipline === "t-shirt";
@@ -277,6 +279,8 @@ const ArtworkDetail = () => {
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
   const selectMobileImage = async (index: number) => {
+    // riporta sempre la foto grande in vista, intera
+    mobilePhotoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     if (index === selectedImage || mobileImageChanging) return;
     const nextUrl = allImages[index]?.url;
     if (!nextUrl) return;
@@ -285,6 +289,24 @@ const ArtworkDetail = () => {
     setSelectedImage(index);
     requestAnimationFrame(() => setMobileImageChanging(false));
   };
+
+  const zenUrlFor = (idx: number) =>
+    idx === 0 && artwork.full ? artwork.full : allImages[idx]?.url || "";
+
+  const renderZenButton = (idx: number) => (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={() => { setZenImageUrl(zenUrlFor(idx)); setZenOpen(true); }}
+          aria-label={t("artwork.tt.zen")}
+          className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 bg-background text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+        >
+          <ExpandIcon />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="left" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
+    </Tooltip>
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -636,44 +658,37 @@ const ArtworkDetail = () => {
             </TooltipProvider>
 
             <div className="relative flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
-                <TooltipProvider delayDuration={200}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
+              <TooltipProvider delayDuration={200}>
+                {allImages.length <= 1 ? (
+                  <div className="flex justify-end">{renderZenButton(0)}</div>
+                ) : (
+                  allImages.map((img, idx) => (
+                    <div key={idx} className="flex items-start justify-end gap-3">
+                      {renderZenButton(idx)}
                       <button
-                        onClick={() => setZenOpen(true)}
-                        aria-label={t("artwork.tt.zen")}
-                        className="sticky top-2 z-10 self-end w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 bg-background text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+                        onClick={() => setSelectedImage(idx)}
+                        className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
+                          selectedImage === idx
+                            ? "border-accent"
+                            : "border-border/20 hover:border-accent/40"
+                        }`}
+                        style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
+                        onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
+                        onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
                       >
-                        <ExpandIcon />
+                        <img
+                          src={img.url}
+                          alt={img.label}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </button>
-                    </TooltipTrigger>
-                    <TooltipContent side="left" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                {allImages.length > 1 && allImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImage(idx)}
-                      className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
-                        selectedImage === idx
-                          ? "border-accent"
-                          : "border-border/20 hover:border-accent/40"
-                      }`}
-                      style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
-                      onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
-                      onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
-                    >
-                      <img
-                        src={img.url}
-                        alt={img.label}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </button>
-                  )
+                    </div>
+                  ))
                 )}
-              </div>
+              </TooltipProvider>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -696,20 +711,20 @@ const ArtworkDetail = () => {
           className="px-4 pb-8"
         >
           {/* 1. FOTO GRANDE */}
-          <div className="relative w-full mb-4 group">
+          <div ref={mobilePhotoRef} className="relative w-full mb-4 group scroll-mt-20">
             <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/20" />
             <button
               onClick={() => setLightboxOpen(true)}
-              className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
+              className="relative w-full h-[62svh] cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
             >
-              <AnimatePresence initial={false} mode="wait">
+              <AnimatePresence initial={false}>
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
                   alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-full object-contain"
                   style={{ gridArea: "1 / 1" }}
-                  loading={selectedImage === 0 ? "eager" : "lazy"}
+                  loading="eager"
                   decoding="async"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -733,16 +748,6 @@ const ArtworkDetail = () => {
             </p>
           </div>
 
-          <div className="mb-5 flex justify-end">
-            <button
-              onClick={() => setZenOpen(true)}
-              aria-label={t("artwork.tt.zen")}
-              title={t("artwork.tt.zen")}
-              className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
-            >
-              <ExpandIcon />
-            </button>
-          </div>
 
           {/* 3. MINIATURE */}
           {allImages.length > 1 && (
