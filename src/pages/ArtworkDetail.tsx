@@ -727,7 +727,7 @@ const ArtworkDetail = () => {
               onClick={() => setLightboxOpen(true)}
               className="relative w-full h-[62svh] cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
             >
-              <AnimatePresence initial={false}>
+              <AnimatePresence initial={false} mode="wait">
                 <motion.img
                   key={currentImageUrl}
                   src={currentImageUrl}
