@@ -128,10 +128,33 @@ const ArtworkDetail = () => {
   const mobilePhotoRef = useRef<HTMLDivElement | null>(null);
   const { t, lang } = useI18n();
 
+  // Carosello mobile: scorrimento laterale fluido, senza dissolvenze né salti
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    containScroll: "trimSnaps",
+    duration: 28,
+  });
+
+  const onEmblaSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedImage(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onEmblaSelect);
+    onEmblaSelect();
+    return () => {
+      emblaApi.off("select", onEmblaSelect);
+    };
+  }, [emblaApi, onEmblaSelect]);
+
   // Apertura scheda opera: sempre in cima, foto grande subito visibile
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [discipline, artworkId]);
+    if (emblaApi) emblaApi.scrollTo(0, true);
+  }, [discipline, artworkId, emblaApi]);
+
 
 
   const isTshirt = discipline === "t-shirt";
