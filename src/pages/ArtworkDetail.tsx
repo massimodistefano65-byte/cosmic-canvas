@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
