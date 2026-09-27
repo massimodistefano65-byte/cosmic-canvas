@@ -793,8 +793,8 @@ const ArtworkDetail = () => {
               {allImages.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => void selectMobileImage(idx)}
-                    disabled={mobileImageChanging}
+                    onClick={() => selectMobileImage(idx)}
+
                     className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-500 ${
                       selectedImage === idx
                         ? "border-accent"
