@@ -68,7 +68,8 @@ export default function ShareMenu({ url, title }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 6, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-full right-0 mb-2 w-44 rounded-lg border border-border/40 bg-background/95 backdrop-blur-xl shadow-xl p-2"
+            className="absolute bottom-full right-0 mb-2 w-44 rounded-lg border border-[#D4BE96]/50 bg-[#FDFCF0] shadow-2xl p-2"
+            style={{ fontFamily: "'Raleway', sans-serif" }}
           >
             {shareOptions.map((opt) => (
               <a
@@ -76,18 +77,19 @@ export default function ShareMenu({ url, title }: Props) {
                 href={opt.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block px-3 py-2 text-xs tracking-wider uppercase text-foreground/80 hover:text-foreground hover:bg-white/5 rounded transition-colors"
+                className="block px-3 py-2 text-xs tracking-wider uppercase text-[#2b2820] hover:bg-[#D4BE96]/20 rounded transition-colors"
               >
                 {opt.name}
               </a>
             ))}
             <button
               onClick={copyLink}
-              className="w-full text-left px-3 py-2 text-xs tracking-wider uppercase text-foreground/80 hover:text-foreground hover:bg-white/5 rounded transition-colors flex items-center gap-2"
+              className="w-full text-left px-3 py-2 text-xs tracking-wider uppercase text-[#2b2820] hover:bg-[#D4BE96]/20 rounded transition-colors flex items-center gap-2"
             >
-              {copied ? <Check size={12} /> : <Copy size={12} />}
+              {copied ? <Check size={12} className="text-[#7a8a6a]" /> : <Copy size={12} className="text-[#b08d4f]" />}
               {copied ? "Copiato" : "Copia link"}
             </button>
+
           </motion.div>
         )}
       </AnimatePresence>
