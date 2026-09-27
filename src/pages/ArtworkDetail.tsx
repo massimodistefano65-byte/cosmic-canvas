@@ -723,27 +723,32 @@ const ArtworkDetail = () => {
           {/* 1. FOTO GRANDE */}
           <div ref={mobilePhotoRef} className="relative w-full mb-4 group scroll-mt-20">
             <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/20" />
-            <button
-              onClick={() => setLightboxOpen(true)}
-              className="relative w-full h-[62svh] cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
-            >
-              <AnimatePresence initial={false} mode="wait">
-                <motion.img
-                  key={currentImageUrl}
-                  src={currentImageUrl}
-                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-full object-contain"
-                  style={{ gridArea: "1 / 1" }}
-                  loading="eager"
-                  decoding="async"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                />
-              </AnimatePresence>
-            </button>
+            <div className="relative w-full h-[62svh] bg-black rounded overflow-hidden">
+              <div className="embla h-full overflow-hidden" ref={emblaRef}>
+                <div className="flex h-full touch-pan-y">
+                  {allImages.map((img, idx) => (
+                    <div key={idx} className="flex-[0_0_100%] min-w-0 h-full">
+                      <button
+                        type="button"
+                        onClick={() => setLightboxOpen(true)}
+                        className="w-full h-full cursor-zoom-in grid place-items-center"
+                      >
+                        <img
+                          src={img.url}
+                          alt={`${artwork.title} di Massimo Di Stefano — ${img.label || "opera"}`}
+                          className="w-full h-full object-contain"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          draggable={false}
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
+
 
           {/* 2. TITOLO E ANNO */}
           <div className="mb-6">
