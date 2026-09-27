@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
@@ -108,7 +110,6 @@ async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [mobileImageChanging, setMobileImageChanging] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -126,10 +127,33 @@ const ArtworkDetail = () => {
   const mobilePhotoRef = useRef<HTMLDivElement | null>(null);
   const { t, lang } = useI18n();
 
+  // Carosello mobile: scorrimento laterale fluido, senza dissolvenze né salti
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    containScroll: "trimSnaps",
+    duration: 28,
+  });
+
+  const onEmblaSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedImage(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onEmblaSelect);
+    onEmblaSelect();
+    return () => {
+      emblaApi.off("select", onEmblaSelect);
+    };
+  }, [emblaApi, onEmblaSelect]);
+
   // Apertura scheda opera: sempre in cima, foto grande subito visibile
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [discipline, artworkId]);
+    if (emblaApi) emblaApi.scrollTo(0, true);
+  }, [discipline, artworkId, emblaApi]);
+
 
 
   const isTshirt = discipline === "t-shirt";
@@ -284,21 +308,19 @@ const ArtworkDetail = () => {
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
-  const selectMobileImage = async (index: number) => {
-    // riporta sempre la foto grande in vista, intera
+  const scrollPhotoIntoView = () => {
     const el = mobilePhotoRef.current;
-    if (el) {
-      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
-      requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
-    }
-    if (index === selectedImage || mobileImageChanging) return;
-    const nextUrl = allImages[index]?.url;
-    if (!nextUrl) return;
-    setMobileImageChanging(true);
-    await preloadImage(nextUrl);
-    setSelectedImage(index);
-    requestAnimationFrame(() => setMobileImageChanging(false));
+    if (!el) return;
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
+    requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
   };
+
+  const selectMobileImage = (index: number) => {
+    scrollPhotoIntoView();
+    if (emblaApi) emblaApi.scrollTo(index);
+    else setSelectedImage(index);
+  };
+
 
   const zenUrlFor = (idx: number) =>
     idx === 0 && artwork.full ? artwork.full : allImages[idx]?.url || "";
@@ -723,27 +745,32 @@ const ArtworkDetail = () => {
           {/* 1. FOTO GRANDE */}
           <div ref={mobilePhotoRef} className="relative w-full mb-4 group scroll-mt-20">
             <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/20" />
-            <button
-              onClick={() => setLightboxOpen(true)}
-              className="relative w-full h-[62svh] cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
-            >
-              <AnimatePresence initial={false} mode="wait">
-                <motion.img
-                  key={currentImageUrl}
-                  src={currentImageUrl}
-                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-full object-contain"
-                  style={{ gridArea: "1 / 1" }}
-                  loading="eager"
-                  decoding="async"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                />
-              </AnimatePresence>
-            </button>
+            <div className="relative w-full h-[62svh] bg-black rounded overflow-hidden">
+              <div className="embla h-full overflow-hidden" ref={emblaRef}>
+                <div className="flex h-full touch-pan-y">
+                  {allImages.map((img, idx) => (
+                    <div key={idx} className="flex-[0_0_100%] min-w-0 h-full">
+                      <button
+                        type="button"
+                        onClick={() => setLightboxOpen(true)}
+                        className="w-full h-full cursor-zoom-in grid place-items-center"
+                      >
+                        <img
+                          src={img.url}
+                          alt={`${artwork.title} di Massimo Di Stefano — ${img.label || "opera"}`}
+                          className="w-full h-full object-contain"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          draggable={false}
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
+
 
           {/* 2. TITOLO E ANNO */}
           <div className="mb-6">
@@ -765,8 +792,8 @@ const ArtworkDetail = () => {
               {allImages.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => void selectMobileImage(idx)}
-                    disabled={mobileImageChanging}
+                    onClick={() => selectMobileImage(idx)}
+
                     className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-500 ${
                       selectedImage === idx
                         ? "border-accent"
