@@ -284,21 +284,19 @@ const ArtworkDetail = () => {
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
-  const selectMobileImage = async (index: number) => {
-    // riporta sempre la foto grande in vista, intera
+  const scrollPhotoIntoView = () => {
     const el = mobilePhotoRef.current;
-    if (el) {
-      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
-      requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
-    }
-    if (index === selectedImage || mobileImageChanging) return;
-    const nextUrl = allImages[index]?.url;
-    if (!nextUrl) return;
-    setMobileImageChanging(true);
-    await preloadImage(nextUrl);
-    setSelectedImage(index);
-    requestAnimationFrame(() => setMobileImageChanging(false));
+    if (!el) return;
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
+    requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
   };
+
+  const selectMobileImage = (index: number) => {
+    scrollPhotoIntoView();
+    if (emblaApi) emblaApi.scrollTo(index);
+    else setSelectedImage(index);
+  };
+
 
   const zenUrlFor = (idx: number) =>
     idx === 0 && artwork.full ? artwork.full : allImages[idx]?.url || "";
