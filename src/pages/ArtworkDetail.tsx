@@ -110,7 +110,6 @@ async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [mobileImageChanging, setMobileImageChanging] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
   const [infoOpen, setInfoOpen] = useState(false);
