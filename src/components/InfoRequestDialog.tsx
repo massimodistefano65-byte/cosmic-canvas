@@ -78,8 +78,8 @@ export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, disci
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-lg bg-[#FDFCF0] border border-[#D4BE96]/40 shadow-2xl rounded-xl p-0 gap-0">
-        <div className="px-8 pt-8 pb-2 flex justify-between items-start gap-4">
+      <DialogContent className="sm:max-w-lg bg-[#FDFCF0] border border-[#D4BE96]/40 shadow-2xl rounded-xl p-0 gap-0 [&>button]:right-6 [&>button]:top-6 [&>button]:text-[#1A1A1A]/50 [&>button]:hover:text-[#1A1A1A] [&>button>svg]:h-5 [&>button>svg]:w-5">
+        <div className="px-8 pt-8 pb-2 pr-14">
           <DialogHeader className="space-y-0">
             <DialogTitle
               className="text-2xl md:text-3xl font-light leading-tight text-[#2b2820] text-left"
@@ -88,15 +88,8 @@ export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, disci
               {t("info.title")} <span className="text-[#b08d4f]">{artworkTitle}</span>
             </DialogTitle>
           </DialogHeader>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Chiudi"
-            className="p-2 -mt-1 -mr-2 rounded-full text-[#1A1A1A]/40 hover:text-[#1A1A1A] hover:bg-black/5 transition-colors"
-          >
-            <X size={22} />
-          </button>
         </div>
+
 
         <div className="px-8 pb-8" style={{ fontFamily: "'Raleway', sans-serif" }}>
           <p className="text-xs leading-relaxed text-[#4a473e]/80">
