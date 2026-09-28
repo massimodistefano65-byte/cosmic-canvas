@@ -260,8 +260,4 @@ a img,
   animation: zen-breath 10s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .zen-breath { animation: none; }
-  .seal-pulse { animation: none; }
-}
 

@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+
 import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
@@ -44,6 +46,20 @@ const ExpandIcon = () => (
     <path d="M20 15v5h-5" />
   </svg>
 );
+
+const preloadImage = async (src: string) => {
+  if (!src) return;
+  const image = new Image();
+  image.src = src;
+  try {
+    await image.decode();
+  } catch {
+    await new Promise<void>((resolve) => {
+      image.onload = () => resolve();
+      image.onerror = () => resolve();
+    });
+  }
+};
 
 
 const disciplineLabels: Record<string, string> = {
@@ -107,7 +123,38 @@ const ArtworkDetail = () => {
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [dedicationMd, setDedicationMd] = useState<string>("");
   const [zenOpen, setZenOpen] = useState(false);
+  const [zenImageUrl, setZenImageUrl] = useState("");
+  const mobilePhotoRef = useRef<HTMLDivElement | null>(null);
   const { t, lang } = useI18n();
+
+  // Carosello mobile: scorrimento laterale fluido, senza dissolvenze né salti
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "center",
+    containScroll: "trimSnaps",
+    duration: 28,
+  });
+
+  const onEmblaSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedImage(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onEmblaSelect);
+    onEmblaSelect();
+    return () => {
+      emblaApi.off("select", onEmblaSelect);
+    };
+  }, [emblaApi, onEmblaSelect]);
+
+  // Apertura scheda opera: sempre in cima, foto grande subito visibile
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (emblaApi) emblaApi.scrollTo(0, true);
+  }, [discipline, artworkId, emblaApi]);
+
+
 
   const isTshirt = discipline === "t-shirt";
   const purchaseLabel = discipline === "painting"
@@ -261,6 +308,38 @@ const ArtworkDetail = () => {
   const currentImageUrl = allImages[selectedImage]?.url || "";
   const fullResUrl = selectedImage === 0 && artwork.full ? artwork.full : currentImageUrl;
 
+  const scrollPhotoIntoView = () => {
+    const el = mobilePhotoRef.current;
+    if (!el) return;
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 72);
+    requestAnimationFrame(() => window.scrollTo({ top, behavior: "smooth" }));
+  };
+
+  const selectMobileImage = (index: number) => {
+    scrollPhotoIntoView();
+    if (emblaApi) emblaApi.scrollTo(index);
+    else setSelectedImage(index);
+  };
+
+
+  const zenUrlFor = (idx: number) =>
+    idx === 0 && artwork.full ? artwork.full : allImages[idx]?.url || "";
+
+  const renderZenButton = (idx: number) => (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={() => { setZenImageUrl(zenUrlFor(idx)); setZenOpen(true); }}
+          aria-label={t("artwork.tt.zen")}
+          className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 bg-background text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+        >
+          <ExpandIcon />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="left" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
+    </Tooltip>
+  );
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
@@ -299,7 +378,7 @@ const ArtworkDetail = () => {
       <Lightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        imageUrl={fullResUrl}
+        imageUrl={zenImageUrl || fullResUrl}
         alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
       />
       <InfoRequestDialog
@@ -338,7 +417,7 @@ const ArtworkDetail = () => {
       <MeditationMode
         isOpen={zenOpen}
         onClose={() => setZenOpen(false)}
-        imageUrl={fullResUrl}
+        imageUrl={zenImageUrl || fullResUrl}
         alt={artwork.title}
       />
 
@@ -607,48 +686,41 @@ const ArtworkDetail = () => {
                   <TooltipContent side="top" className="text-xs">{t("artwork.tt.share")}</TooltipContent>
                 </Tooltip>
 
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
-                      onClick={() => setZenOpen(true)}
-                      aria-label={t("artwork.tt.zen")}
-                      className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
-                    >
-                      <ExpandIcon />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="text-xs">{t("artwork.tt.zen")}</TooltipContent>
-                </Tooltip>
               </div>
             </TooltipProvider>
 
-            {allImages.length > 1 && (
-              <div className="flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
-                {allImages.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImage(idx)}
-                      className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
-                        selectedImage === idx
-                          ? "border-accent"
-                          : "border-border/20 hover:border-accent/40"
-                      }`}
-                      style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
-                      onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
-                      onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
-                    >
-                      <img
-                        src={img.url}
-                        alt={img.label}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </button>
-                  )
+            <div className="relative flex flex-col gap-5 pt-2" role="group" aria-label="Immagini dell'opera">
+              <TooltipProvider delayDuration={200}>
+                {allImages.length <= 1 ? (
+                  <div className="flex justify-end">{renderZenButton(0)}</div>
+                ) : (
+                  allImages.map((img, idx) => (
+                    <div key={idx} className="flex items-start justify-end gap-3">
+                      {renderZenButton(idx)}
+                      <button
+                        onClick={() => setSelectedImage(idx)}
+                        className={`w-36 h-36 rounded overflow-hidden border transition-all duration-500 ${
+                          selectedImage === idx
+                            ? "border-accent"
+                            : "border-border/20 hover:border-accent/40"
+                        }`}
+                        style={{ boxShadow: "0 0 8px 2px rgba(255,255,255,0.35)" }}
+                        onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 12px 3px rgba(255,255,255,0.55)"}
+                        onMouseLeave={(e) => e.currentTarget.style.boxShadow = "0 0 8px 2px rgba(255,255,255,0.35)"}
+                      >
+                        <img
+                          src={img.url}
+                          alt={img.label}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </button>
+                    </div>
+                  ))
                 )}
-              </div>
-            )}
+              </TooltipProvider>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -671,29 +743,34 @@ const ArtworkDetail = () => {
           className="px-4 pb-8"
         >
           {/* 1. FOTO GRANDE */}
-          <div className="relative w-full mb-4 group">
+          <div ref={mobilePhotoRef} className="relative w-full mb-4 group scroll-mt-20">
             <div className="absolute -inset-[3px] rounded opacity-30 group-hover:opacity-50 transition-opacity duration-700 blur-[6px] pointer-events-none bg-white/20" />
-            <button
-              onClick={() => setLightboxOpen(true)}
-              className="relative w-full cursor-zoom-in grid place-items-center bg-black rounded overflow-hidden"
-            >
-              <AnimatePresence initial={false}>
-                <motion.img
-                  key={currentImageUrl}
-                  src={currentImageUrl}
-                  alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                  className="w-full h-auto object-contain"
-                  style={{ gridArea: "1 / 1" }}
-                  loading={selectedImage === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-                />
-              </AnimatePresence>
-            </button>
+            <div className="relative w-full h-[62svh] bg-black rounded overflow-hidden">
+              <div className="embla h-full overflow-hidden" ref={emblaRef}>
+                <div className="flex h-full touch-pan-y">
+                  {allImages.map((img, idx) => (
+                    <div key={idx} className="flex-[0_0_100%] min-w-0 h-full">
+                      <button
+                        type="button"
+                        onClick={() => setLightboxOpen(true)}
+                        className="w-full h-full cursor-zoom-in grid place-items-center"
+                      >
+                        <img
+                          src={img.url}
+                          alt={`${artwork.title} di Massimo Di Stefano — ${img.label || "opera"}`}
+                          className="w-full h-full object-contain"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                          decoding="async"
+                          draggable={false}
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
+
 
           {/* 2. TITOLO E ANNO */}
           <div className="mb-6">
@@ -708,13 +785,15 @@ const ArtworkDetail = () => {
             </p>
           </div>
 
+
           {/* 3. MINIATURE */}
           {allImages.length > 1 && (
             <div className="flex gap-4 overflow-x-auto pb-4 mb-8 -mx-4 px-4" role="group" aria-label="Immagini dell'opera">
               {allImages.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setSelectedImage(idx)}
+                    onClick={() => selectMobileImage(idx)}
+
                     className={`flex-shrink-0 w-24 h-24 rounded overflow-hidden border transition-all duration-500 ${
                       selectedImage === idx
                         ? "border-accent"
@@ -865,13 +944,6 @@ const ArtworkDetail = () => {
                 className="w-9 h-9 rounded-full border border-border/40 text-muted-foreground/80 hover:border-foreground/30 hover:text-foreground transition-all duration-300 flex items-center justify-center"
               >
                 <Download size={16} aria-hidden="true" />
-              </button>
-              <button
-                onClick={() => setZenOpen(true)}
-                aria-label={t("artwork.tt.zen")}
-                className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
-              >
-                <ExpandIcon />
               </button>
               <ShareMenu url={`/${discipline}/${artworkId}`} title={artwork.title} />
             </div>
