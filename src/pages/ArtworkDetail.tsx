@@ -378,7 +378,7 @@ const ArtworkDetail = () => {
       <Lightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        imageUrl={zenImageUrl || fullResUrl}
+        imageUrl={fullResUrl}
         alt={`${artwork.title} - ${allImages[selectedImage]?.label || ""}`}
       />
       <InfoRequestDialog
@@ -416,7 +416,7 @@ const ArtworkDetail = () => {
       )}
       <MeditationMode
         isOpen={zenOpen}
-        onClose={() => setZenOpen(false)}
+        onClose={() => { setZenOpen(false); setZenImageUrl(""); }}
         imageUrl={zenImageUrl || fullResUrl}
         alt={artwork.title}
       />
@@ -753,12 +753,12 @@ const ArtworkDetail = () => {
                       <button
                         type="button"
                         onClick={() => setLightboxOpen(true)}
-                        className="w-full h-full cursor-zoom-in grid place-items-center"
+                        className="w-full h-full cursor-zoom-in flex items-center justify-center overflow-hidden"
                       >
                         <img
                           src={img.url}
                           alt={`${artwork.title} di Massimo Di Stefano — ${img.label || "opera"}`}
-                          className="w-full h-full object-contain"
+                          className="max-w-full max-h-full w-auto h-auto object-contain block"
                           loading={idx === 0 ? "eager" : "lazy"}
                           decoding="async"
                           draggable={false}
