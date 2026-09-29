@@ -3,8 +3,8 @@ export interface ArtworkFullData {
   archiveId?: string; shopPlatform?: string; shopUrl?: string;
   preview: string; main: string; full: string; images: { url: string; label: string }[];
   published: boolean;
-  colors?: string[]; shape?: string; genre?: string; support?: string; 
-  dedication?: string; dedicationEn?: string; techniqueEn?: string; 
+  colors?: string[]; shape?: string; genre?: string; support?: string;
+  dedication?: string; dedicationEn?: string; techniqueEn?: string;
   priceEn?: string; dimensionsEn?: string;
 }
 
@@ -151,6 +151,7 @@ const painting = [
   createArtwork({ slug: "falling-down", category: "painting", title: "Falling down", year: "", dimensions: "120 x 60 cm", technique: "Mista su polistirene", price: "400", details: 0, roomViews: 0, format: "webp", published: false, priceEn: "400", dimensionsEn: "120 x 60 cm", techniqueEn: "Mixed media on polystyrene" }),
   createArtwork({ slug: "sharp-blades", category: "painting", title: "Sharp blades", year: "", dimensions: "52 x 42 cm", technique: "Mista su cartoncino", price: "", details: 0, roomViews: 0, format: "webp", published: false, priceEn: "", dimensionsEn: "52 x 42 cm", techniqueEn: "Mixed media on cardstock" }),
 ];
+
 const photography = [
   createArtwork({ slug: "and-the-rest-is-only-love", category: "photography", title: "And the rest is only love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Arancione', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital photography" }),
   createArtwork({ slug: "the-new-world", category: "photography", title: "The new world", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Bianco', 'Ocra', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
@@ -175,6 +176,7 @@ const photography = [
   createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Viola', 'Rosa', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
   createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Bianco', 'Nero', 'Ocra'], genre: "Figurativo", techniqueEn: "Digital photography" }),
 ];
+
 const digitalArt = [
   createArtwork({ slug: "anima-indomabile", category: "digital-art", title: "Anima indomabile", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Bianco', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
   createArtwork({ slug: "the-worst-side-of-me", category: "digital-art", title: "The worst side of me", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
@@ -223,6 +225,7 @@ const digitalArt = [
   createArtwork({ slug: "battito-primordiale", category: "digital-art", title: "Battito primordiale", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 7, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Celeste', 'Nero', 'Rosso', 'Bianco'], genre: "Astratto", techniqueEn: "Digital processing" }),
   createArtwork({ slug: "the-awakening-sound", category: "digital-art", title: "The awakening sound", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 4, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
 ];
+
 const tShirt = [
   createArtwork({ slug: "wonderful-meditation", category: "t-shirt", title: "Wonderful meditation", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29,9", details: 4, roomViews: 3, format: "webp", published: true, priceEn: "29,9", dimensionsEn: "Variable format", shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax", colors: ['Viola', 'Bianco', 'Nero', 'Ocra'], genre: "Astratto", techniqueEn: "Sublimation printing" }),
   createArtwork({ slug: "the-hidden-side-of-a-thought", category: "t-shirt", title: "The Hidden Side of a Thought", year: "2023", dimensions: "Formato variabile", technique: "Stampa Sublimatica", price: "29,9", details: 4, roomViews: 4, format: "webp", published: true, priceEn: "29,9", dimensionsEn: "Variable format", shopPlatform: "Hoplix", shopUrl: "https://hoplix.shop/radmax2", colors: ['Rosso', 'Turchese', 'Blu', 'Bianco', 'Arancione'], genre: "Astratto", techniqueEn: "Sublimation printing" }),
@@ -253,5 +256,10 @@ const tShirt = [
 
 const data = { painting, photography, "digital-art": digitalArt, "t-shirt": tShirt };
 
-export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] { return data[discipline] || []; }
-export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined { return data[discipline]?.find((a) => a.id === artworkId); }
+export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] {
+  return data[discipline] || [];
+}
+
+export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined {
+  return data[discipline]?.find((a) => a.id === artworkId);
+}
