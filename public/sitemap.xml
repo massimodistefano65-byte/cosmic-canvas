@@ -50,6 +50,7 @@
   <url><loc>https://www.massimodistefano.com/painting/the-storm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/il-tormento-del-vivere</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/incubo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/tumulto-energetico</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/you-and-me</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/stato-confusionale</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/la-collina-delle-rivelazioni</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -57,6 +58,34 @@
   <url><loc>https://www.massimodistefano.com/painting/funny-soul</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/lacerazione-sublime</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/painting/evolvenza</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/ghosts</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/respiro-profondo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/evoluzione</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/cellular-reorganization</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/serie-energia-energia-rossa</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/estasi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/indiano</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/inside-the-heart</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/genesi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/una-nuova-alba</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/rotten-brain</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/unforgettable-dream</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/dentro-i-confini</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/esperienza-onirica</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/notte-di-attesa</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/connessioni-neuronali</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/cosmic-vortex</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/ricordi-che-bruciano</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/turn-off-your-mind</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/another-word</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/metropolis</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/fluid-mind</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/rain</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/red</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/mazzamuriello</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/anima-nuda</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/initium-vitae</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/painting/energia-rossa</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/photography/and-the-rest-is-only-love</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/photography/the-new-world</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/photography/dalla-soffitta-in-giu</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -83,53 +112,62 @@
   <url><loc>https://www.massimodistefano.com/digital-art/the-worst-side-of-me</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/we-are-the-master</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/espansione-cosmica</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/awakening-in-kyoto</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/the-new-dream</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/tomorrow-morning</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/forgotten-hopes</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/my-mind-is-over</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/autumn-surprise</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/plasmadonius</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/abissi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/digital-art/in-memory-of-david-bowie-10-01-2016</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/when-the-soul-is-joined</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/in-memory-of-david-bowie</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/la-visione-delle-4-am</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/the-last-vision</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/captured-soul</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/close-to-the-soul</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/blind-in-the-storm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/neuronal-expansion</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/flowers</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/tambarash</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/euu-14</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/il-canto-delle-sirene</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/pomeriggio-da-sola</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/kontinuum</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/incubo-dei-condizionamenti</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/near-death-experience</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/digital-art/il-sottile-strato-che-ci-separa-dal-tutto</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/il-sottile-strato</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/endless-tears</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/cat-dream</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/il-sogno-ricorrente</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/il-segreto-svelato</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/awareness-in-winter</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/flash-in-the-evening</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/unita-del-tutto</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/evening-abstract</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/digital-art/battito-primordiale</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/the-begin-of-my-life</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/dream-6</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/fuori-dagli-schemi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/fragment-of-tears</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/extasi-1</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/digital-art/messed-up-mind</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/deep-dive</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/battito-primordiale</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/digital-art/the-awakening-sound</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/wonderful-meditation</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/the-hidden-side-of-a-thought</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/time-is-an-illusion</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/la-foresta-dei-sogni</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/messed-up-mind</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/extasi-1</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/t-shirt/immersione-profonda</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/t-shirt/the-awakening-sound</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/t-shirt/deep-dive</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/awakening-in-kyoto</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/autumn-surprise</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/anima-indomabile</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/blind-in-the-storm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/cat-dream</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/t-shirt/when-the-soul-is-joined-to-the-spirit</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.massimodistefano.com/t-shirt/the-awakening-sound</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.massimodistefano.com/t-shirt/when-the-soul-is-joined</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/t-shirt/my-mind-is-over</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.massimodistefano.com/archive/critiche/critica-andrea-domenico-taricco</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://www.massimodistefano.com/archive/critiche/critica-oxan-clounout</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
