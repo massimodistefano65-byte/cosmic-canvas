@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,27 +6,27 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { I18nProvider } from "@/lib/i18n";
 import Index from "./pages/Index";
-import Bio from "./pages/Bio";
-import Archive from "./pages/Archive";
-import MiaSelezione from "./pages/MiaSelezione";
-import MostreIndex from "./pages/archive/MostreIndex";
-import PercorsoEspositivo from "./pages/archive/PercorsoEspositivo";
-import VideoIndex from "./pages/archive/VideoIndex";
-import DownloadIndex from "./pages/archive/DownloadIndex";
-import CritichePagina from "./pages/archive/CritichePagina";
-import ProgettiIndex from "./pages/archive/ProgettiIndex";
-import Painting from "./pages/Painting";
-import Photography from "./pages/Photography";
-import DigitalArt from "./pages/DigitalArt";
-import TShirt from "./pages/TShirt";
-import ArtworkDetail from "./pages/ArtworkDetail";
+const Bio = lazy(() => import("./pages/Bio"));
+const Archive = lazy(() => import("./pages/Archive"));
+const MiaSelezione = lazy(() => import("./pages/MiaSelezione"));
+const MostreIndex = lazy(() => import("./pages/archive/MostreIndex"));
+const PercorsoEspositivo = lazy(() => import("./pages/archive/PercorsoEspositivo"));
+const VideoIndex = lazy(() => import("./pages/archive/VideoIndex"));
+const DownloadIndex = lazy(() => import("./pages/archive/DownloadIndex"));
+const CritichePagina = lazy(() => import("./pages/archive/CritichePagina"));
+const ProgettiIndex = lazy(() => import("./pages/archive/ProgettiIndex"));
+const Painting = lazy(() => import("./pages/Painting"));
+const Photography = lazy(() => import("./pages/Photography"));
+const DigitalArt = lazy(() => import("./pages/DigitalArt"));
+const TShirt = lazy(() => import("./pages/TShirt"));
+const ArtworkDetail = lazy(() => import("./pages/ArtworkDetail"));
 import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import CookiePolicy from "./pages/CookiePolicy";
-import Contact from "./pages/Contact";
-import AdminArtworksStatus from "./pages/AdminArtworksStatus";
-import AdminGestioneArchivio from "./pages/AdminGestioneArchivio";
-import Classifica from "./pages/Classifica";
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const Contact = lazy(() => import("./pages/Contact"));
+const AdminArtworksStatus = lazy(() => import("./pages/AdminArtworksStatus"));
+const AdminGestioneArchivio = lazy(() => import("./pages/AdminGestioneArchivio"));
+const Classifica = lazy(() => import("./pages/Classifica"));
 import CookieBanner from "./components/CookieBanner";
 import BackToTop from "./components/BackToTop";
 import { AudioProvider } from "./components/AudioProvider";
@@ -56,6 +56,7 @@ const App = () => {
         <BrowserRouter>
           <CookieBanner />
           <PageFade>
+          <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bio" element={<Bio />} />
@@ -83,6 +84,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
           </PageFade>
           <BackToTop />
         </BrowserRouter>

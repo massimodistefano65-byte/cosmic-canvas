@@ -136,6 +136,8 @@ const ArtworkDetail = () => {
 
   const onEmblaSelect = useCallback(() => {
     if (!emblaApi) return;
+    // Solo su telefono: su PC il carosello nascosto non deve toccare la foto
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
     setSelectedImage(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
@@ -431,12 +433,7 @@ const ArtworkDetail = () => {
           <ArrowLeft size={15} aria-hidden="true" />
         </Link>
 
-        <motion.div
-          className="flex w-full h-full items-center min-h-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="flex w-full h-full items-center min-h-0">
           <div className="flex-shrink-0 w-16" />
 
           {/* CENTER — Main artwork */}
@@ -722,7 +719,7 @@ const ArtworkDetail = () => {
               </TooltipProvider>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* ===== MOBILE LAYOUT (<md) ===== */}
