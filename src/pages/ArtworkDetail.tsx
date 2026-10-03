@@ -128,10 +128,13 @@ const ArtworkDetail = () => {
   const { t, lang } = useI18n();
 
   // Carosello mobile: scorrimento laterale fluido, senza dissolvenze né salti
+  // Su PC il carosello resta spento (active: false): si attiva solo sotto i 768px
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     containScroll: "trimSnaps",
     duration: 28,
+    active: false,
+    breakpoints: { "(max-width: 767px)": { active: true } },
   });
 
   const onEmblaSelect = useCallback(() => {
@@ -153,7 +156,12 @@ const ArtworkDetail = () => {
   // Apertura scheda opera: sempre in cima, foto grande subito visibile
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (emblaApi) emblaApi.scrollTo(0, true);
+  }, [discipline, artworkId]);
+
+  useEffect(() => {
+    if (emblaApi && window.matchMedia("(max-width: 767px)").matches) {
+      emblaApi.scrollTo(0, true);
+    }
   }, [discipline, artworkId, emblaApi]);
 
 
