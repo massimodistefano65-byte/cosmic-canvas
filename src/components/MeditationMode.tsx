@@ -68,22 +68,8 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       timers.push(raf2);
     });
 
-    // il fullscreen nativo parte quando il velo copre già la pagina
-    timers.push(
-      window.setTimeout(() => {
-        const el = containerRef.current as FsElement | null;
-        if (!el) return;
-        try {
-          if (el.requestFullscreen) {
-            void Promise.resolve(el.requestFullscreen()).catch(() => {});
-          } else if (el.webkitRequestFullscreen) {
-            void Promise.resolve(el.webkitRequestFullscreen()).catch(() => {});
-          }
-        } catch {
-          /* fullscreen simulato: l'overlay è già fixed inset-0 */
-        }
-      }, 760)
-    );
+    // Nessun fullscreen nativo: l'overlay fixed inset-0 copre già tutta la finestra
+    // (evita il reset video a schermo nero di Windows/Chrome).
 
     // l'opera emerge dal nero
     timers.push(window.setTimeout(() => setImgVisible(true), 980));
