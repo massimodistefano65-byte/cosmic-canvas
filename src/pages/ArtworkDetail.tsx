@@ -11,6 +11,7 @@ import ShareMenu from "@/components/ShareMenu";
 import MeditationMode from "@/components/MeditationMode";
 import SEOHead from "@/components/SEOHead";
 import { motion, AnimatePresence } from "framer-motion";
+import CrossFadeImage from "@/components/CrossFadeImage";
 import { ArrowLeft, Heart, Stamp, ExternalLink, Info, Bookmark, Download } from "lucide-react";
 import { getArtwork } from "@/lib/artworkData";
 import { getSlugGradient } from "@/lib/slugGradient";
@@ -110,6 +111,7 @@ async function fetchFirstMarkdown(urls: string[]): Promise<string | null> {
 const ArtworkDetail = () => {
   const { discipline, artworkId } = useParams<{ discipline: string; artworkId: string }>();
   const [selectedImage, setSelectedImage] = useState(0);
+  const [mainImgError, setMainImgError] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const { liked, count: likeCount, toggle: toggleLike } = useArtworkLike(discipline, artworkId);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -454,41 +456,23 @@ const ArtworkDetail = () => {
                 style={{ maxWidth: "1200px", maxHeight: "82vh" }}
                 aria-label={`Apri ${artwork.title} in lightbox`}
               >
-                <AnimatePresence initial={false}>
-                  {currentImageUrl ? (
-                    <motion.img
-                      key={currentImageUrl}
-                      src={currentImageUrl}
-                      alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
-                      className="max-w-full max-h-[82vh] object-contain"
-                      style={{ gridArea: "1 / 1" }}
-                      loading={selectedImage === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
-                      onError={(e) => {
-                        const t = e.currentTarget;
-                        t.style.display = "none";
-                        const fb = t.nextElementSibling as HTMLElement | null;
-                        if (fb) fb.style.display = "flex";
-                      }}
-                    />
-                  ) : (
-                    <motion.div
-                      key="fallback"
-                      className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] flex items-center justify-center text-muted-foreground/50 text-xs"
-                      style={{ background: getSlugGradient(artwork.id), gridArea: "1 / 1" }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 1.2 }}
-                    >
-                      {artwork.title}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {currentImageUrl && !mainImgError ? (
+                  <CrossFadeImage
+                    src={currentImageUrl}
+                    alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
+                    className="max-w-full max-h-[82vh] object-contain"
+                    duration={1200}
+                    eager
+                    onError={() => setMainImgError(true)}
+                  />
+                ) : (
+                  <div
+                    className="w-[60vw] max-w-[1200px] aspect-[4/5] max-h-[82vh] flex items-center justify-center text-muted-foreground/50 text-xs"
+                    style={{ background: getSlugGradient(artwork.id), gridArea: "1 / 1" }}
+                  >
+                    {artwork.title}
+                  </div>
+                )}
               </button>
             </div>
           </div>
