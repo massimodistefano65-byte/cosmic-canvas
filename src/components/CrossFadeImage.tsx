@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Cross-Fade puro: due "lastre" fisse che si alternano.
+ * Cross-Fade puro con dissolvenza simultanea.
  * - La nuova foto viene pre-caricata e decodificata PRIMA di iniziare.
- * - La vecchia resta ferma al 100% sotto; la nuova sfuma sopra lentamente.
- * - Solo a copertura completata la vecchia si spegne (nessun nero, nessun salto).
+ * - La nuova sfuma sopra lentamente (0 -> 1) e, NELLO STESSO ISTANTE,
+ *   la vecchia sfuma via (1 -> 0) con la stessa durata: niente bordi
+ *   della vecchia immagine che restano fermi a piena opacità.
+ * - Solo a dissolvenza completata la vecchia viene rilasciata dal DOM.
  * Nessun nodo viene rimosso dal DOM durante la dissolvenza.
  */
 interface Props {
@@ -16,7 +18,7 @@ interface Props {
   onError?: () => void;
 }
 
-type Slot = { url: string; visible: boolean; shown: boolean };
+type Slot = { url: string; visible: boolean; shown: boolean; fading?: boolean };
 
 const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }: Props) => {
   const [slots, setSlots] = useState<[Slot, Slot]>([
@@ -41,11 +43,11 @@ const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }
       timers.current = [];
       const next = frontRef.current === 0 ? 1 : 0;
       const old = frontRef.current;
-      // nuova lastra in cima, trasparente
+      // nuova lastra in cima, trasparente; la vecchia inizia SUBITO a svanire
       setSlots((s) => {
         const c: [Slot, Slot] = [{ ...s[0] }, { ...s[1] }];
         c[next] = { url: src, visible: false, shown: true };
-        c[old] = { ...c[old], visible: true, shown: true };
+        c[old] = { ...c[old], visible: true, shown: true, fading: true };
         return c;
       });
       frontRef.current = next;
@@ -60,7 +62,7 @@ const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }
           })
         )
       );
-      // a copertura completata la vecchia si spegne dolcemente (solo bordi eventuali)
+      // a dissolvenza completata la vecchia viene rilasciata in silenzio
       timers.current.push(
         window.setTimeout(() => {
           setSlots((s) => {
@@ -72,7 +74,7 @@ const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }
         window.setTimeout(() => {
           setSlots((s) => {
             const c: [Slot, Slot] = [{ ...s[0] }, { ...s[1] }];
-            if (frontRef.current !== old) c[old].shown = false;
+            if (frontRef.current !== old) c[old] = { url: "", visible: false, shown: false };
             return c;
           });
         }, duration + 700)
@@ -88,7 +90,7 @@ const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }
   return (
     <>
       {slots.map((s, i) =>
-        s.url ? (
+        s.url && s.shown ? (
           <img
             key={i}
             src={s.url}
@@ -101,10 +103,10 @@ const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }
             style={{
               gridArea: "1 / 1",
               zIndex: i === front ? 2 : 1,
-              opacity: s.visible ? 1 : 0,
-              display: s.shown ? undefined : "none",
-              transition: `opacity ${i === front ? duration : 600}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+              opacity: s.visible && !s.fading ? 1 : 0,
+              transition: `opacity ${i === front || s.fading ? duration : 600}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               willChange: "opacity",
+              pointerEvents: i === front ? undefined : "none",
             }}
           />
         ) : null
