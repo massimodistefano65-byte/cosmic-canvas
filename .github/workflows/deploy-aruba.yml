@@ -32,5 +32,6 @@ jobs:
           set net:reconnect-interval-base 5
           set mirror:no-chmod yes
           mirror --reverse --verbose --no-perms --ignore-time --parallel=3 --exclude-glob web.config ./dist/ /massimodistefano.com/
+          put -O /massimodistefano.com/ ./dist/index.html
           bye
           EOF
