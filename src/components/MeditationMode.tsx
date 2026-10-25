@@ -49,7 +49,7 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
     // uscita simmetrica: opera → nero → uscita fullscreen → interfaccia
     setImgVisible(false);
     window.setTimeout(() => exitFullscreen(), 850);
-    window.setTimeout(() => setVeilVisible(false), 900);
+    window.setTimeout(() => setVeilVisible(false), 1300);
     window.setTimeout(() => onClose(), 1550);
   }, [exitFullscreen, onClose]);
 
