@@ -149,11 +149,11 @@ const MeditationMode = ({ isOpen, onClose, imageUrl, alt }: MeditationModeProps)
       aria-label={alt}
       onClick={requestClose}
       onTouchEnd={requestClose}
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-[750ms] ease-in-out cursor-none"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-[1100ms] ease-in-out cursor-none"
       style={{ opacity: veilVisible ? 1 : 0, touchAction: "none" }}
     >
       <div
-        className="flex items-center justify-center zen-breath transition-opacity duration-[900ms] ease-in-out"
+        className="flex items-center justify-center zen-breath transition-opacity duration-[1300ms] ease-in-out"
         style={{ opacity: imgVisible ? 1 : 0, willChange: "transform, opacity" }}
       >
         <img
