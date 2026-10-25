@@ -209,7 +209,7 @@ const DisciplinePage = ({ disciplineKey }: Props) => {
             <span>{t("discipline.back")}</span>
           </Link>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="flex items-start justify-between gap-4 mb-4">
               <h1
                 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontSize: "4rem", color: "white", lineHeight: 1 }}

@@ -20,7 +20,7 @@ interface Props {
 
 type Slot = { url: string; visible: boolean; shown: boolean; fading?: boolean };
 
-const CrossFadeImage = ({ src, alt, className, duration = 1200, eager, onError }: Props) => {
+const CrossFadeImage = ({ src, alt, className, duration = 1600, eager, onError }: Props) => {
   const [slots, setSlots] = useState<[Slot, Slot]>([
     { url: src, visible: true, shown: true },
     { url: "", visible: false, shown: false },
