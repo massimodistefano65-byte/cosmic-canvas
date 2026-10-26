@@ -20,15 +20,45 @@ interface Props {
 
 type Slot = { url: string; visible: boolean; shown: boolean; fading?: boolean };
 
+// Emersione dal nero della PRIMA foto (arrivo dalla galleria).
+// Valore precedente: nessuna dissolvenza (foto a piena luce appena scaricata).
+const INTRO_MS = 2000;
+
 const CrossFadeImage = ({ src, alt, className, duration = 1600, eager, onError }: Props) => {
   const [slots, setSlots] = useState<[Slot, Slot]>([
-    { url: src, visible: true, shown: true },
+    { url: src, visible: false, shown: true },
     { url: "", visible: false, shown: false },
   ]);
   const [front, setFront] = useState(0);
+  const [intro, setIntro] = useState(true);
   const frontRef = useRef(0);
   const currentRef = useRef(src);
   const timers = useRef<number[]>([]);
+
+  // Prima foto: resta nel nero finché non è decodificata, poi emerge lentamente
+  useEffect(() => {
+    let cancelled = false;
+    const pre = new Image();
+    pre.src = src;
+    const ready = pre.decode ? pre.decode().catch(() => {}) : Promise.resolve();
+    ready.then(() => {
+      if (cancelled) return;
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          setSlots((s) => {
+            const c: [Slot, Slot] = [{ ...s[0] }, { ...s[1] }];
+            c[0].visible = true;
+            return c;
+          })
+        )
+      );
+      window.setTimeout(() => !cancelled && setIntro(false), INTRO_MS + 100);
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!src || src === currentRef.current) return;
