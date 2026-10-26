@@ -134,7 +134,9 @@ const CrossFadeImage = ({ src, alt, className, duration = 1600, eager, onError }
               gridArea: "1 / 1",
               zIndex: i === front ? 2 : 1,
               opacity: s.visible && !s.fading ? 1 : 0,
-              transition: `opacity ${i === front || s.fading ? duration : 600}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+              transition: intro && i === 0 && !s.fading
+                ? `opacity ${INTRO_MS}ms cubic-bezier(0.33, 0, 0.25, 1)`
+                : `opacity ${i === front || s.fading ? duration : 600}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               willChange: "opacity",
               pointerEvents: i === front ? undefined : "none",
             }}
