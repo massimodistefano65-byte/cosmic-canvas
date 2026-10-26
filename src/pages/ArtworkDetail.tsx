@@ -461,7 +461,7 @@ const ArtworkDetail = () => {
                     src={currentImageUrl}
                     alt={`${artwork.title} di Massimo Di Stefano — ${allImages[selectedImage]?.label || "opera"}`}
                     className="max-w-full max-h-[82vh] object-contain"
-                    duration={1200}
+                    duration={1600}
                     eager
                     onError={() => setMainImgError(true)}
                   />
