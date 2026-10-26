@@ -30,8 +30,8 @@ import {
 /** Modalità Meditazione — icona "espandi": quattro angoli aperti verso l'esterno */
 const ExpandIcon = () => (
   <svg
-    width="16"
-    height="16"
+    width="12"
+    height="12"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -343,7 +343,7 @@ const ArtworkDetail = () => {
         <button
           onClick={() => { setZenImageUrl(zenUrlFor(idx)); setZenOpen(true); }}
           aria-label={t("artwork.tt.zen")}
-          className="w-9 h-9 rounded-full aspect-square shrink-0 border border-[#d4af7a]/50 bg-background text-[#d4af7a] hover:border-[#d4af7a] transition-all duration-300 flex items-center justify-center"
+          className="w-6 h-6 rounded-full aspect-square shrink-0 border border-border/40 bg-background text-white brightness-125 hover:border-foreground/30 transition-all duration-300 flex items-center justify-center"
         >
           <ExpandIcon />
         </button>
