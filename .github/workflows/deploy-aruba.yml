@@ -1,8 +1,10 @@
 name: Deploy to Aruba
 
 on:
-  push:
-    branches: [main]
+  # Deploy automatico DISATTIVATO temporaneamente (lavori configuratore acquisto).
+  # Per riattivarlo, rimettere:
+  #   push:
+  #     branches: [main]
   workflow_dispatch:
 
 jobs:
