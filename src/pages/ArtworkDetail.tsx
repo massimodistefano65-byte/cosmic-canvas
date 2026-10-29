@@ -405,11 +405,13 @@ const ArtworkDetail = () => {
         artworkTitle={artwork.title}
         content={meaningContent}
       />
-      <MeaningDialog
+      <PurchaseOptionsDialog
         isOpen={purchaseOpen}
         onClose={() => setPurchaseOpen(false)}
-        artworkTitle={purchaseLabel}
-        content={purchaseContent}
+        artworkTitle={artwork.title}
+        discipline={discipline || ""}
+        shape={artwork.shape}
+        price={displayPrice}
       />
       {isArchived && (
         <CertificateDialog
