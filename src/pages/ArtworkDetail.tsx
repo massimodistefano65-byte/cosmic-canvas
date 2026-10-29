@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import InfoRequestDialog from "@/components/InfoRequestDialog";
+import PurchaseOptionsDialog from "@/components/PurchaseOptionsDialog";
 import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
