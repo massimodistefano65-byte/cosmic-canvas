@@ -5,6 +5,7 @@ import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import InfoRequestDialog from "@/components/InfoRequestDialog";
+import PurchaseOptionsDialog from "@/components/PurchaseOptionsDialog";
 import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
@@ -405,11 +406,13 @@ const ArtworkDetail = () => {
         artworkTitle={artwork.title}
         content={meaningContent}
       />
-      <MeaningDialog
+      <PurchaseOptionsDialog
         isOpen={purchaseOpen}
         onClose={() => setPurchaseOpen(false)}
-        artworkTitle={purchaseLabel}
-        content={purchaseContent}
+        artworkTitle={artwork.title}
+        discipline={discipline || ""}
+        shape={artwork.shape}
+        price={displayPrice}
       />
       {isArchived && (
         <CertificateDialog
