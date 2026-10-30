@@ -413,6 +413,7 @@ const ArtworkDetail = () => {
         discipline={discipline || ""}
         shape={artwork.shape}
         price={displayPrice}
+        slug={artwork.id}
       />
       {isArchived && (
         <CertificateDialog
