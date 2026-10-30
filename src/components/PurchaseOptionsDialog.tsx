@@ -89,18 +89,18 @@ export default function PurchaseOptionsDialog({ isOpen, onClose, artworkTitle, d
 
   const chip = (active: boolean) =>
     `px-3 py-2 rounded border text-[12px] text-left transition-colors duration-300 ${
-      active ? "border-accent text-foreground bg-accent/10" : "border-border/40 text-foreground/80 hover:border-foreground/40"}`;
-  const label = "text-[9px] tracking-[0.25em] uppercase text-foreground/70 mb-2";
+      active ? "border-[#2b2820] bg-[#2b2820] text-[#FDFCF0]" : "border-[#D4BE96] text-[#4a473e] hover:border-[#2b2820]"}`;
+  const label = "text-[9px] tracking-[0.25em] uppercase text-[#4a473e]/80 mb-2";
 
   return (
     <Dialog open={isOpen} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-background border-border/40">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto border-[#D4BE96] text-[#4a473e]" style={{ background: "#FDFCF0" }}>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-light" style={head}>{artworkTitle}</DialogTitle>
+          <DialogTitle className="text-2xl font-light text-[#2b2820]" style={head}>{artworkTitle}</DialogTitle>
         </DialogHeader>
 
         {sent ? (
-          <p className="py-8 text-center text-sm text-foreground/90" style={font}>
+          <p className="py-8 text-center text-sm text-[#2b2820]" style={font}>
             {en ? "Thank you! Your request has been sent. You will receive a quote including shipping by email."
                 : "Grazie! La richiesta è stata inviata. Riceverai via email il preventivo con la spedizione."}
           </p>
@@ -157,30 +157,31 @@ export default function PurchaseOptionsDialog({ isOpen, onClose, artworkTitle, d
               </>
             )}
 
-            <div className="flex items-baseline justify-between border-y border-border/30 py-3">
-              <span className="text-[12px] text-foreground/80">{summary}</span>
-              <span className="text-xl text-accent" style={head}>{total}</span>
+            <div className="flex items-baseline justify-between border-y border-[#D4BE96]/60 py-3">
+              <span className="text-[12px] text-[#4a473e]">{summary}</span>
+              <span className="text-xl text-[#2b2820]" style={head}>{total}</span>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-2">
-              <Input placeholder={en ? "Name *" : "Nome *"} value={name} onChange={(e) => setName(e.target.value)} />
-              <Input type="email" placeholder="Email *" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Input placeholder={en ? "City" : "Città"} value={city} onChange={(e) => setCity(e.target.value)} />
-              <Input placeholder={en ? "Postal code" : "CAP"} value={zip} onChange={(e) => setZip(e.target.value)} />
-              <Input className="sm:col-span-2" placeholder={en ? "Country *" : "Nazione *"} value={country} onChange={(e) => setCountry(e.target.value)} />
+              <Input className="bg-white/60 border-[#D4BE96] text-[#2b2820]" placeholder={en ? "Name *" : "Nome *"} value={name} onChange={(e) => setName(e.target.value)} />
+              <Input className="bg-white/60 border-[#D4BE96] text-[#2b2820]" type="email" placeholder="Email *" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input className="bg-white/60 border-[#D4BE96] text-[#2b2820]" placeholder={en ? "City" : "Città"} value={city} onChange={(e) => setCity(e.target.value)} />
+              <Input className="bg-white/60 border-[#D4BE96] text-[#2b2820]" placeholder={en ? "Postal code" : "CAP"} value={zip} onChange={(e) => setZip(e.target.value)} />
+              <Input className="sm:col-span-2 bg-white/60 border-[#D4BE96] text-[#2b2820]" placeholder={en ? "Country *" : "Nazione *"} value={country} onChange={(e) => setCountry(e.target.value)} />
             </div>
-            <Textarea rows={2} placeholder={en ? "Notes (optional)" : "Note (facoltative)"} value={notes} onChange={(e) => setNotes(e.target.value)} />
+            <Textarea className="bg-white/60 border-[#D4BE96] text-[#2b2820]" rows={2} placeholder={en ? "Notes (optional)" : "Note (facoltative)"} value={notes} onChange={(e) => setNotes(e.target.value)} />
 
-            <div className="text-[11px] text-foreground/70 leading-relaxed space-y-1">
+            <div className="text-[11px] text-[#4a473e]/80 leading-relaxed space-y-1">
               <p>{en ? "1. You receive a quote by email, including insured shipping."
                      : "1. Ricevi via email il preventivo con spedizione assicurata."}</p>
               <p>{en ? "2. Payment: " : "2. Pagamento: "}{PAYMENT_METHODS.join(" · ")}</p>
               <p>{en ? "3. Shipping with Certificate of Authenticity." : "3. Spedizione con Certificato di Autenticità."}</p>
             </div>
 
+            <p className="text-[10px] text-[#4a473e]/70">{en ? "Your data is used only to prepare the quote." : "I tuoi dati sono usati solo per preparare il preventivo."}</p>
             {error && <p className="text-[12px] text-destructive">{error}</p>}
             <button type="submit" disabled={sending}
-              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded border border-accent/50 hover:bg-accent/10 text-foreground text-[11px] tracking-[0.3em] uppercase transition-colors disabled:opacity-50">
+              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded bg-[#2b2820] text-[#FDFCF0] hover:opacity-90 text-[11px] tracking-[0.3em] uppercase transition-colors disabled:opacity-50">
               <Send size={13} aria-hidden="true" />
               {sending ? (en ? "Sending…" : "Invio…") : (en ? "Request quote" : "Richiedi preventivo")}
             </button>

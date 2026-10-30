@@ -64,7 +64,7 @@ export const SUPPORTS: Support[] = [
     priceMultiplier: 1.8, disciplines: ["photography", "digital-art"], finishes: [noFinish],
   },
   {
-    id: "file", label: "File digitale alta risoluzione", labelEn: "High-resolution digital file",
+    id: "file", label: "File Digitale ad Alta Risoluzione — Licenza d'uso personale", labelEn: "High-Resolution Digital File — Personal use licence",
     priceMultiplier: 0, fixedPrice: 50, disciplines: ["photography", "digital-art"], finishes: [],
   },
 ];
