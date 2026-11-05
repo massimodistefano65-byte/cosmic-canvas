@@ -6,6 +6,7 @@ export interface ArtworkFullData {
   colors?: string[]; shape?: string; genre?: string; support?: string;
   dedication?: string; dedicationEn?: string; techniqueEn?: string;
   priceEn?: string; dimensionsEn?: string;
+  isConfigurable?: boolean;
 }
 
 interface CreateArtworkInput {
@@ -15,16 +16,17 @@ interface CreateArtworkInput {
   colors?: string[]; shape?: string; genre?: string; support?: string;
   dedication?: string; dedicationEn?: string; techniqueEn?: string;
   priceEn?: string; dimensionsEn?: string;
+  isConfigurable?: boolean;
 }
 
 function createArtwork(input: CreateArtworkInput): ArtworkFullData {
-  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false, colors = [], shape = "", genre = "", support = "", dedication = "", dedicationEn = "", techniqueEn = "", priceEn = "", dimensionsEn = "" } = input;
+  const { slug, category, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, details = 0, roomViews = 0, format = "jpg", published = false, colors = [], shape = "", genre = "", support = "", dedication = "", dedicationEn = "", techniqueEn = "", priceEn = "", dimensionsEn = "", isConfigurable = false } = input;
   const dir = `/artworks/${category}/${slug}`;
   const base = `${dir}/massimo-di-stefano-${slug}-${category}`;
   const images: { url: string; label: string }[] = [];
   for (let i = 1; i <= roomViews; i++) images.push({ url: `${base}-room-view-${i}.webp`, label: `Room View ${i}` });
   for (let i = 1; i <= details; i++) images.push({ url: `${base}-detail-${i}.webp`, label: `Dettaglio ${i}` });
-  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.webp`, main: `${base}-1.webp`, full: `${base}-1.webp`, images, published, colors, shape, genre, support, dedication, dedicationEn, techniqueEn, priceEn: priceEn || price, dimensionsEn: dimensionsEn || dimensions };
+  return { id: slug, title, year, dimensions, technique, price, archiveId, shopPlatform, shopUrl, preview: `${base}-preview.webp`, main: `${base}-1.webp`, full: `${base}-1.webp`, images, published, colors, shape, genre, support, dedication, dedicationEn, techniqueEn, priceEn: priceEn || price, dimensionsEn: dimensionsEn || dimensions, isConfigurable };
 }
 
 const painting = [
@@ -153,77 +155,77 @@ const painting = [
 ];
 
 const photography = [
-  createArtwork({ slug: "and-the-rest-is-only-love", category: "photography", title: "And the rest is only love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Arancione', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "the-new-world", category: "photography", title: "The new world", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Bianco', 'Ocra', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "dalla-soffitta-in-giu", category: "photography", title: "Dalla soffitta in giù", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "drive-2", category: "photography", title: "Drive 2", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Bianco', 'Verde', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "i-am-the-life", category: "photography", title: "I am the life", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Nero', 'Giallo', 'Verde'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "assisi", category: "photography", title: "Assisi", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "una-vita-a-meta", category: "photography", title: "Una vita a metà", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Bianco', 'Blu'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "sogno-infranto", category: "photography", title: "Sogno infranto", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "stato-di-beatitudine-terrestre", category: "photography", title: "Stato di beatitudine terrestre", year: "2013", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "senza-tempo", category: "photography", title: "Senza tempo", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Bianco', 'Grigio', 'Marrone'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "one-summer-day", category: "photography", title: "One Summer Day", year: "2017", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Arancione', 'Blu', 'Giallo'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "ascese-e-discese", category: "photography", title: "Ascese e discese", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Verde'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "lost-in-color", category: "photography", title: "Lost in Color", year: "2013", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Viola', 'Verde', 'Blu'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "up-and-down-through-memories", category: "photography", title: "Up and down through memories", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "the-right-time-to-Love", category: "photography", title: "The Right Time to Love", year: "2014", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "spiando-il-mondo", category: "photography", title: "Spiando il mondo", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "frammento-di-luce", category: "photography", title: "Frammento di luce", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Giallo', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "verso-il-nuovo-giorno", category: "photography", title: "Verso il nuovo giorno", year: "2014", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Rosa'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "my-heart-beats-for-another-love", category: "photography", title: "My heart beats for another love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Blu', 'Ocra'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "lunedi-mattina-al-caffe", category: "photography", title: "Lunedì mattina al Caffè", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Giallo', 'Rosso', 'Blu', 'Sepia', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Viola', 'Rosa', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
-  createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Bianco', 'Nero', 'Ocra'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "and-the-rest-is-only-love", category: "photography", title: "And the rest is only love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Arancione', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "the-new-world", category: "photography", title: "The new world", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Bianco', 'Ocra', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "dalla-soffitta-in-giu", category: "photography", title: "Dalla soffitta in giù", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "drive-2", category: "photography", title: "Drive 2", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Bianco', 'Verde', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "i-am-the-life", category: "photography", title: "I am the life", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Nero', 'Giallo', 'Verde'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "assisi", category: "photography", title: "Assisi", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "una-vita-a-meta", category: "photography", title: "Una vita a metà", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Bianco', 'Blu'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "sogno-infranto", category: "photography", title: "Sogno infranto", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "stato-di-beatitudine-terrestre", category: "photography", title: "Stato di beatitudine terrestre", year: "2013", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "senza-tempo", category: "photography", title: "Senza tempo", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Bianco', 'Grigio', 'Marrone'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "one-summer-day", category: "photography", title: "One Summer Day", year: "2017", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Verde', 'Arancione', 'Blu', 'Giallo'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "ascese-e-discese", category: "photography", title: "Ascese e discese", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Verde'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "lost-in-color", category: "photography", title: "Lost in Color", year: "2013", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Viola', 'Verde', 'Blu'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "up-and-down-through-memories", category: "photography", title: "Up and down through memories", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "the-right-time-to-Love", category: "photography", title: "The Right Time to Love", year: "2014", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "spiando-il-mondo", category: "photography", title: "Spiando il mondo", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "frammento-di-luce", category: "photography", title: "Frammento di luce", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Giallo', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "verso-il-nuovo-giorno", category: "photography", title: "Verso il nuovo giorno", year: "2014", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Nero', 'Rosa'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "my-heart-beats-for-another-love", category: "photography", title: "My heart beats for another love", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Blu', 'Ocra'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "lunedi-mattina-al-caffe", category: "photography", title: "Lunedì mattina al Caffè", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Giallo', 'Rosso', 'Blu', 'Sepia', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "miracle", category: "photography", title: "Miracle", year: "2015", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Viola', 'Rosa', 'Nero'], genre: "Figurativo", techniqueEn: "Digital photography" }),
+  createArtwork({ slug: "istante-della-luce", category: "photography", title: "L’istante della luce", year: "2016", dimensions: "Formato variabile", technique: "Fotografia Digitale", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Bianco', 'Nero', 'Ocra'], genre: "Figurativo", techniqueEn: "Digital photography" }),
 ];
 
 const digitalArt = [
-  createArtwork({ slug: "anima-indomabile", category: "digital-art", title: "Anima indomabile", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Bianco', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "the-worst-side-of-me", category: "digital-art", title: "The worst side of me", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "we-are-the-master", category: "digital-art", title: "We are the Master", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "espansione-cosmica", category: "digital-art", title: "Espansione Cosmica", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Nero', 'Rosso', 'Giallo', 'Arancione'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "awakening-in-kyoto", category: "digital-art", title: "Awakening in Kyoto", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Multi', 'Bianco', 'Blu', 'Verde', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "the-new-dream", category: "digital-art", title: "The new dream", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "tomorrow-morning", category: "digital-art", title: "Tomorrow morning", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "forgotten-hopes", category: "digital-art", title: "Forgotten hopes", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Rosso', 'Blu', 'Verde'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "my-mind-is-over", category: "digital-art", title: "My mind is over", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Multi', 'Turchese', 'Fuksia'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "autumn-surprise", category: "digital-art", title: "Autumn surprise", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Giallo', 'Oro', 'Verde', 'Nero', 'Ocra'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "plasmadonius", category: "digital-art", title: "Plasmadonius", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "abissi", category: "digital-art", title: "Abissi", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "when-the-soul-is-joined", category: "digital-art", title: "When the soul is joined to the Spirit", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio', 'Viola', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "in-memory-of-david-bowie", category: "digital-art", title: "In memory of David Bowie 10-01-2016", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Nero', 'Bianco', 'Blu', 'Marrone'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "la-visione-delle-4-am", category: "digital-art", title: "La visione delle 4 AM", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "the-last-vision", category: "digital-art", title: "The Last Vision", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "captured-soul", category: "digital-art", title: "Captured soul 2", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "close-to-the-soul", category: "digital-art", title: "Close to the soul", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Blu'], techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "blind-in-the-storm", category: "digital-art", title: "Blind in the storm", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio', 'Nero', 'Rosso'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "neuronal-expansion", category: "digital-art", title: "Neuronal expansion", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "flowers", category: "digital-art", title: "Flowers", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Nero', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "tambarash", category: "digital-art", title: "Tambarash", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "euu-14", category: "digital-art", title: "EUU 14 Esperienza Ultra Umana", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "il-canto-delle-sirene", category: "digital-art", title: "Il Canto delle sirene", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 8, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Verde', 'Blu', 'Verde', 'Rosso'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "pomeriggio-da-sola", category: "digital-art", title: "Pomeriggio da sola", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "kontinuum", category: "digital-art", title: "Kontinuum", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "incubo-dei-condizionamenti", category: "digital-art", title: "L'incubo dei condizionamenti", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "near-death-experience", category: "digital-art", title: "Near Death Experience", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "il-sottile-strato", category: "digital-art", title: "Il sottile strato che ci separa dal tutto", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Nero', 'Bianco'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "endless-tears", category: "digital-art", title: "Endless tears", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "cat-dream", category: "digital-art", title: "Cat dream", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Viola', 'Verde', 'Giallo'], genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "il-sogno-ricorrente", category: "digital-art", title: "Il sogno ricorrente", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Nero', 'Rosso', 'Giallo', 'Viola', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "il-segreto-svelato", category: "digital-art", title: "Il segreto svelato", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "awareness-in-winter", category: "digital-art", title: "Awareness in winter", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "flash-in-the-evening", category: "digital-art", title: "Flash in the evening", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "unita-del-tutto", category: "digital-art", title: "L'unità del tutto", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "evening-abstract", category: "digital-art", title: "Evening abstract", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "the-begin-of-my-life", category: "digital-art", title: "The begin of my life", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "fragment-of-tears", category: "digital-art", title: "Fragment of tears", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 1, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Grigio', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "extasi-1", category: "digital-art", title: "Extasi 1", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Bianco', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "messed-up-mind", category: "digital-art", title: "Messed up mind", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "deep-dive", category: "digital-art", title: "Deep dive", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Celeste', 'Blu', 'Oro', 'Rosso', 'Turchese'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "battito-primordiale", category: "digital-art", title: "Battito primordiale", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 7, roomViews: 3, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Celeste', 'Nero', 'Rosso', 'Bianco'], genre: "Astratto", techniqueEn: "Digital processing" }),
-  createArtwork({ slug: "the-awakening-sound", category: "digital-art", title: "The awakening sound", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 4, format: "webp", published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "anima-indomabile", category: "digital-art", title: "Anima indomabile", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Bianco', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "the-worst-side-of-me", category: "digital-art", title: "The worst side of me", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "we-are-the-master", category: "digital-art", title: "We are the Master", year: "2018", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "espansione-cosmica", category: "digital-art", title: "Espansione Cosmica", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Blu', 'Nero', 'Rosso', 'Giallo', 'Arancione'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "awakening-in-kyoto", category: "digital-art", title: "Awakening in Kyoto", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Multi', 'Bianco', 'Blu', 'Verde', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "the-new-dream", category: "digital-art", title: "The new dream", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "tomorrow-morning", category: "digital-art", title: "Tomorrow morning", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "forgotten-hopes", category: "digital-art", title: "Forgotten hopes", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Rosso', 'Blu', 'Verde'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "my-mind-is-over", category: "digital-art", title: "My mind is over", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Multi', 'Turchese', 'Fuksia'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "autumn-surprise", category: "digital-art", title: "Autumn surprise", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Giallo', 'Oro', 'Verde', 'Nero', 'Ocra'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "plasmadonius", category: "digital-art", title: "Plasmadonius", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "abissi", category: "digital-art", title: "Abissi", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "when-the-soul-is-joined", category: "digital-art", title: "When the soul is joined to the Spirit", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio', 'Viola', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "in-memory-of-david-bowie", category: "digital-art", title: "In memory of David Bowie 10-01-2016", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Nero', 'Bianco', 'Blu', 'Marrone'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "la-visione-delle-4-am", category: "digital-art", title: "La visione delle 4 AM", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "the-last-vision", category: "digital-art", title: "The Last Vision", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 3, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "captured-soul", category: "digital-art", title: "Captured soul 2", year: "2023", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "close-to-the-soul", category: "digital-art", title: "Close to the soul", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Blu'], techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "blind-in-the-storm", category: "digital-art", title: "Blind in the storm", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio', 'Nero', 'Rosso'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "neuronal-expansion", category: "digital-art", title: "Neuronal expansion", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "flowers", category: "digital-art", title: "Flowers", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Nero', 'Bianco'], genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "tambarash", category: "digital-art", title: "Tambarash", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "euu-14", category: "digital-art", title: "EUU 14 Esperienza Ultra Umana", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "il-canto-delle-sirene", category: "digital-art", title: "Il Canto delle sirene", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 8, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Verde', 'Blu', 'Verde', 'Rosso'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "pomeriggio-da-sola", category: "digital-art", title: "Pomeriggio da sola", year: "2021", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "kontinuum", category: "digital-art", title: "Kontinuum", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "incubo-dei-condizionamenti", category: "digital-art", title: "L'incubo dei condizionamenti", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "near-death-experience", category: "digital-art", title: "Near Death Experience", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "il-sottile-strato", category: "digital-art", title: "Il sottile strato che ci separa dal tutto", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Grigio', 'Nero', 'Bianco'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "endless-tears", category: "digital-art", title: "Endless tears", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "cat-dream", category: "digital-art", title: "Cat dream", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Viola', 'Verde', 'Giallo'], genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "il-sogno-ricorrente", category: "digital-art", title: "Il sogno ricorrente", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Multi', 'Nero', 'Rosso', 'Giallo', 'Viola', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "il-segreto-svelato", category: "digital-art", title: "Il segreto svelato", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "awareness-in-winter", category: "digital-art", title: "Awareness in winter", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "flash-in-the-evening", category: "digital-art", title: "Flash in the evening", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "unita-del-tutto", category: "digital-art", title: "L'unità del tutto", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "evening-abstract", category: "digital-art", title: "Evening abstract", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "the-begin-of-my-life", category: "digital-art", title: "The begin of my life", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Figurativo", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "dream-6", category: "digital-art", title: "Dream 6", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "fuori-dagli-schemi", category: "digital-art", title: "Fuori dagli schemi", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 0, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero', 'Grigio'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "fragment-of-tears", category: "digital-art", title: "Fragment of tears", year: "2015", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 1, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Grigio', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "extasi-1", category: "digital-art", title: "Extasi 1", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Rosso', 'Nero', 'Bianco', 'Blu'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "messed-up-mind", category: "digital-art", title: "Messed up mind", year: "2013", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "deep-dive", category: "digital-art", title: "Deep dive", year: "2019", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 1, roomViews: 2, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Celeste', 'Blu', 'Oro', 'Rosso', 'Turchese'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "battito-primordiale", category: "digital-art", title: "Battito primordiale", year: "2014", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 7, roomViews: 3, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Celeste', 'Nero', 'Rosso', 'Bianco'], genre: "Astratto", techniqueEn: "Digital processing" }),
+  createArtwork({ slug: "the-awakening-sound", category: "digital-art", title: "The awakening sound", year: "2016", dimensions: "Formato variabile", technique: "Elaborazione Digitale ", price: "Prezzo su richiesta", details: 2, roomViews: 4, format: "webp", isConfigurable: true, published: true, priceEn: "Price on request", dimensionsEn: "Variable format", colors: ['Bianco', 'Grigio', 'Nero'], genre: "Astratto", techniqueEn: "Digital processing" }),
 ];
 
 const tShirt = [
@@ -263,3 +265,231 @@ export function getArtworksByDiscipline(discipline: string): ArtworkFullData[] {
 export function getArtwork(discipline: string, artworkId: string): ArtworkFullData | undefined {
   return data[discipline]?.find((a) => a.id === artworkId);
 }
+
+// Tabelle esportate da Excel per il Configuratore (Dati pubblici senza fornitori)
+export const formatsAndPrices: Record<string, string>[] = [
+  {
+    "ID FORMATO": "Q-30x30",
+    "FORMA": "quadrato",
+    "LARGHEZZA": "30",
+    "ALTEZZA": "30",
+    "PREZZO CARTA": "35",
+    "TELA ROTOLO": "50",
+    "TELA TELAIO": "75",
+    "FOREX": "55",
+    "INCORNICIATO": "110",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "Q-40x40",
+    "FORMA": "quadrato",
+    "LARGHEZZA": "40",
+    "ALTEZZA": "40",
+    "PREZZO CARTA": "45",
+    "TELA ROTOLO": "65",
+    "TELA TELAIO": "95",
+    "FOREX": "75",
+    "INCORNICIATO": "135",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "Q-50x50",
+    "FORMA": "quadrato",
+    "LARGHEZZA": "50",
+    "ALTEZZA": "50",
+    "PREZZO CARTA": "60",
+    "TELA ROTOLO": "85",
+    "TELA TELAIO": "130",
+    "FOREX": "95",
+    "INCORNICIATO": "170",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "Q-70x70",
+    "FORMA": "quadrato",
+    "LARGHEZZA": "70",
+    "ALTEZZA": "70",
+    "PREZZO CARTA": "95",
+    "TELA ROTOLO": "135",
+    "TELA TELAIO": "190",
+    "FOREX": "140",
+    "INCORNICIATO": "250",
+    "PROFONDITA CORNICE": "3.5 cm",
+    "PROFILO FRONTALE": "2 cm"
+  },
+  {
+    "ID FORMATO": "Q-100x100",
+    "FORMA": "quadrato",
+    "LARGHEZZA": "100",
+    "ALTEZZA": "100",
+    "PREZZO CARTA": "140",
+    "TELA ROTOLO": "195",
+    "TELA TELAIO": "290",
+    "FOREX": "210",
+    "INCORNICIATO": "380",
+    "PROFONDITA CORNICE": "4 cm",
+    "PROFILO FRONTALE": "2 cm"
+  },
+  {
+    "ID FORMATO": "R-32x45",
+    "FORMA": "rettangolare",
+    "LARGHEZZA": "32",
+    "ALTEZZA": "45",
+    "PREZZO CARTA": "40",
+    "TELA ROTOLO": "60",
+    "TELA TELAIO": "85",
+    "FOREX": "65",
+    "INCORNICIATO": "120",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "R-40x50",
+    "FORMA": "rettangolare",
+    "LARGHEZZA": "40",
+    "ALTEZZA": "50",
+    "PREZZO CARTA": "50",
+    "TELA ROTOLO": "75",
+    "TELA TELAIO": "110",
+    "FOREX": "80",
+    "INCORNICIATO": "145",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "R-50x70",
+    "FORMA": "rettangolare",
+    "LARGHEZZA": "50",
+    "ALTEZZA": "70",
+    "PREZZO CARTA": "70",
+    "TELA ROTOLO": "100",
+    "TELA TELAIO": "150",
+    "FOREX": "110",
+    "INCORNICIATO": "195",
+    "PROFONDITA CORNICE": "3 cm",
+    "PROFILO FRONTALE": "1.5 cm"
+  },
+  {
+    "ID FORMATO": "R-70x100",
+    "FORMA": "rettangolare",
+    "LARGHEZZA": "70",
+    "ALTEZZA": "100",
+    "PREZZO CARTA": "110",
+    "TELA ROTOLO": "160",
+    "TELA TELAIO": "230",
+    "FOREX": "170",
+    "INCORNICIATO": "310",
+    "PROFONDITA CORNICE": "3.5 cm",
+    "PROFILO FRONTALE": "2 cm"
+  },
+  {
+    "ID FORMATO": "R-80x120",
+    "FORMA": "rettangolare",
+    "LARGHEZZA": "80",
+    "ALTEZZA": "120",
+    "PREZZO CARTA": "150",
+    "TELA ROTOLO": "210",
+    "TELA TELAIO": "310",
+    "FOREX": "230",
+    "INCORNICIATO": "420",
+    "PROFONDITA CORNICE": "4 cm",
+    "PROFILO FRONTALE": "2 cm"
+  },
+  {
+    "ID FORMATO": "P-40x100",
+    "FORMA": "panoramico",
+    "LARGHEZZA": "40",
+    "ALTEZZA": "100",
+    "PREZZO CARTA": "85",
+    "TELA ROTOLO": "125",
+    "TELA TELAIO": "180",
+    "FOREX": "135",
+    "INCORNICIATO": "240",
+    "PROFONDITA CORNICE": "3.5 cm",
+    "PROFILO FRONTALE": "2 cm"
+  },
+  {
+    "ID FORMATO": "P-50x120",
+    "FORMA": "panoramico",
+    "LARGHEZZA": "50",
+    "ALTEZZA": "120",
+    "PREZZO CARTA": "120",
+    "TELA ROTOLO": "170",
+    "TELA TELAIO": "250",
+    "FOREX": "185",
+    "INCORNICIATO": "330",
+    "PROFONDITA CORNICE": "4 cm",
+    "PROFILO FRONTALE": "2 cm"
+  }
+];
+export const supportSpecs: Record<string, string>[] = [
+  {
+    "ID SUPPORTO": "CARTA",
+    "NOME IT": "Poster Fine Art",
+    "NOME EN": "Fine Art Poster",
+    "DESCRIZIONE IT": "Stampa Fine Art ad altissima risoluzione su carta satinata d'arte 300g/m² (o 110g/m² su plotter a metraggio continuo per grandi formati). Resa cromatica profonda e satinatura anti-riflesso.",
+    "DESCRIZIONE EN": "Ultra high-definition Fine Art print on 300g/m² satin art paper (or 110g/m² continuous roll paper for large formats). Rich color depth and glare-free satin finish.",
+    "IMBALLAGGIO IT": "Arrotolato con velina protettiva e inserito in robusto tubo rigido da spedizione con tappi sigillati.",
+    "IMBALLAGGIO EN": "Rolled in protective glassine paper and shipped in a sturdy, sealed rigid shipping tube.",
+    "TEMPI CONSEGNA": "3-5 giorni lavorativi",
+    "PREZZO": ""
+  },
+  {
+    "ID SUPPORTO": "TELA-ROTOLO",
+    "NOME IT": "Canvas arrotolata",
+    "NOME EN": "Rolled Canvas",
+    "DESCRIZIONE IT": "Stampa d'arte su autentica tela pittorica Fine Art 380g cotone/poliestere ad alta densità. Senza telaio in legno, ideale per essere montata o incorniciata dal cliente.",
+    "DESCRIZIONE EN": "Fine art print on premium 380g cotton/poly artist canvas. Unmounted (without wooden stretcher bars), ideal for custom framing.",
+    "IMBALLAGGIO IT": "Tela arrotolata con pellicola anti-umidità e spedita in tubo rigido rinforzato da spedizione.",
+    "IMBALLAGGIO EN": "Canvas rolled with moisture-proof film and shipped in a reinforced rigid shipping tube.",
+    "TEMPI CONSEGNA": "4-6 giorni lavorativi",
+    "PREZZO": ""
+  },
+  {
+    "ID SUPPORTO": "TELA-TELAIO",
+    "NOME IT": "Canvas con telaio",
+    "NOME EN": "Stretched Canvas",
+    "DESCRIZIONE IT": "Tela pittorica 380g montata artigianalmente a mano su telaio in legno massello d'abete spessore 2 cm (o 4 cm su grandi formati). Bordo stampato a specchio, pronta da appendere.",
+    "DESCRIZIONE EN": "380g artist canvas hand-stretched on solid fir wood stretcher bars (2 cm or 4 cm profile). Mirrored edges, ready to hang with zero additional framing needed.",
+    "IMBALLAGGIO IT": "Cassa piatta su misura con protezioni paraspigoli rigidi e doppio strato di pluriball protettivo.",
+    "IMBALLAGGIO EN": "Custom-fit flat box with corner protectors and heavy-duty double bubble wrap.",
+    "TEMPI CONSEGNA": "5-7 giorni lavorativi",
+    "PREZZO": ""
+  },
+  {
+    "ID SUPPORTO": "FOREX",
+    "NOME IT": "Pannello Forex 5mm",
+    "NOME EN": "Forex Panel 5mm",
+    "DESCRIZIONE IT": "Stampa diretta UV ad alta definizione su pannello rigido Forex in PVC compatto da 5mm. Resistente, leggero, moderno e planare, perfetto senza cornice o con distanziatori.",
+    "DESCRIZIONE EN": "Direct high-resolution UV print on 5mm lightweight rigid compact PVC panel. Durable, modern, sleek flat finish, ready to display.",
+    "IMBALLAGGIO IT": "Imballo piano rigido sandwich in cartone tripla onda con angolari anti-schiacciamento.",
+    "IMBALLAGGIO EN": "Rigid triple-wall sandwich packaging with crush-proof heavy-duty corner guards.",
+    "TEMPI CONSEGNA": "4-6 giorni lavorativi",
+    "PREZZO": ""
+  },
+  {
+    "ID SUPPORTO": "INCORNICIATO",
+    "NOME IT": "Stampa incorniciata",
+    "NOME EN": "Framed Art Print",
+    "DESCRIZIONE IT": "Stampa Fine Art protetta da vetro/acrilico ottico anti-riflesso e anti-UV, passepartout museale a taglio smussato e cornice in vero legno massello (finiture: nero, bianco, rovere naturale, argento).",
+    "DESCRIZIONE EN": "Fine Art print protected by anti-reflective, UV-filtering optical acrylic, bevel-cut museum matboard, and solid wood frame (finishes: black, white, natural oak, silver).",
+    "IMBALLAGGIO IT": "Cassa rigida di sicurezza in cartone rinforzato con angolari sagomati e guscio ammortizzante anti-urto.",
+    "IMBALLAGGIO EN": "Reinforced security wooden/carton crate with shock-absorbing corner pads and full cushioning.",
+    "TEMPI CONSEGNA": "7-10 giorni lavorativi",
+    "PREZZO": ""
+  },
+  {
+    "ID SUPPORTO": "FILE-DIGITALE",
+    "NOME IT": "File Originale 1/1",
+    "NOME EN": "Original Master File 1/1",
+    "DESCRIZIONE IT": "File master originale a piena risoluzione nativa (TIFF/PNG non compresso a 300 DPI) con certificato di autenticità digitale e cessione esclusiva d'uso non riproducibile.",
+    "DESCRIZIONE EN": "Original master file at full native resolution (uncompressed TIFF/PNG at 300 DPI) with digital authenticity certificate and exclusive 1/1 single-edition ownership license.",
+    "IMBALLAGGIO IT": "Consegna digitale istantanea tramite link crittografato e sicuro inviato via email.",
+    "IMBALLAGGIO EN": "Instant secure digital delivery via encrypted download link sent directly to your email.",
+    "TEMPI CONSEGNA": "Immediato (24h)",
+    "PREZZO": "350 €"
+  }
+];

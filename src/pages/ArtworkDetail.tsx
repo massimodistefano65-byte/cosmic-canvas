@@ -414,6 +414,7 @@ const ArtworkDetail = () => {
         shape={artwork.shape}
         price={displayPrice}
         slug={artwork.id}
+        isConfigurable={artwork.isConfigurable}
       />
       {isArchived && (
         <CertificateDialog
