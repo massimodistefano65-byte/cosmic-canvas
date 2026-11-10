@@ -23,6 +23,7 @@ const ArtworkDetail = lazy(() => import("./pages/ArtworkDetail"));
 import NotFound from "./pages/NotFound";
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const TermsOfSale = lazy(() => import("./pages/TermsOfSale"));
 const Contact = lazy(() => import("./pages/Contact"));
 const AdminArtworksStatus = lazy(() => import("./pages/AdminArtworksStatus"));
 const AdminGestioneArchivio = lazy(() => import("./pages/AdminGestioneArchivio"));
@@ -76,6 +77,7 @@ const App = () => {
             <Route path="/t-shirt" element={<TShirt />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/condizioni-vendita" element={<TermsOfSale />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin/artworks-status" element={<AdminArtworksStatus />} />
             <Route path="/admin/gestione-archivio-md" element={<AdminGestioneArchivio />} />

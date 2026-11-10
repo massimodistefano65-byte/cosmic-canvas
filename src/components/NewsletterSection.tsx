@@ -1,3 +1,4 @@
+import { useSpamGuard } from "@/hooks/useSpamGuard";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
@@ -10,12 +11,14 @@ const FORMSPREE_NEWSLETTER_URL = "https://formspree.io/f/xpqyapgb";
 const NewsletterSection = () => {
   const { t } = useI18n();
   const [email, setEmail] = useState("");
+  const guard = useSpamGuard();
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (guard.isBot()) { setSent(true); return; }
     setSending(true);
     setError("");
     try {
@@ -56,6 +59,7 @@ const NewsletterSection = () => {
         <p className="text-accent text-sm" role="status">{t("newsletter.success")}</p>
       ) : (
         <form onSubmit={handleSubmit} className="flex gap-2" aria-label="Newsletter">
+<input {...guard.trapProps} />
           <Input
             type="email"
             placeholder={t("newsletter.placeholder")}

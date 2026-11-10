@@ -1,3 +1,4 @@
+import { useSpamGuard } from "@/hooks/useSpamGuard";
 import { useState, useEffect } from "react";
 import {
   Dialog,
@@ -23,6 +24,7 @@ const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModalProps) => {
   const { t } = useI18n();
   const [name, setName] = useState("");
+  const guard = useSpamGuard();
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -36,6 +38,7 @@ const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModa
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (guard.isBot()) { setSent(true); return; }
     setSending(true);
     setError("");
 
@@ -91,6 +94,7 @@ const EnquiryModal = ({ isOpen, onClose, artworkTitle, discipline }: EnquiryModa
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3 mt-2">
+<input {...guard.trapProps} />
             <Input
               placeholder={t("enquiry.name")}
               value={name}

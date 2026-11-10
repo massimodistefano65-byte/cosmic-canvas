@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PaymentIcons from "@/components/PaymentIcons";
+import { useSpamGuard } from "@/hooks/useSpamGuard";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Facebook, Instagram } from "lucide-react";
@@ -16,8 +18,10 @@ import { useI18n } from "@/lib/i18n";
 const FORMSPREE_URL = "https://formspree.io/f/xpqyapgb";
 
 const ContactSection = () => {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [name, setName] = useState("");
+  const guard = useSpamGuard();
+  const nlGuard = useSpamGuard();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [newsletterEmail, setNewsletterEmail] = useState("");
@@ -30,6 +34,7 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (guard.isBot()) { setSent(true); return; }
     setSending(true);
     setError("");
     try {
@@ -52,6 +57,7 @@ const ContactSection = () => {
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (nlGuard.isBot()) { setNlSent(true); return; }
     setNlSending(true);
     setNlError("");
     try {
@@ -111,6 +117,7 @@ const ContactSection = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+<input {...guard.trapProps} />
                 <Input
                   placeholder={t("contact.name")}
                   value={name}
@@ -174,6 +181,7 @@ const ContactSection = () => {
                 <p className="text-accent text-xs text-center py-2">{t("nl.thanks")}</p>
               ) : (
                 <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
+<input {...nlGuard.trapProps} />
                   <Input
                     type="email"
                     placeholder={t("nl.emailPh")}
@@ -213,7 +221,9 @@ const ContactSection = () => {
           <div className="mt-4 flex items-center justify-center gap-6 text-[10px] opacity-70">
             <Link to="/privacy-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Privacy Policy</Link>
             <Link to="/cookie-policy" className="hover:text-accent transition-colors uppercase tracking-widest">Cookie Policy</Link>
+            <Link to="/condizioni-vendita" className="hover:text-accent transition-colors uppercase tracking-widest">{lang === "en" ? "Terms of Sale & Returns" : "Condizioni di vendita e recesso"}</Link>
           </div>
+          <PaymentIcons className="mt-4 justify-center opacity-90" />
         </footer>
       </div>
     </section>

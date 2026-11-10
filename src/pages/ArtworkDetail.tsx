@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Lightbox from "@/components/Lightbox";
 import InfoRequestDialog from "@/components/InfoRequestDialog";
 import PurchaseOptionsDialog from "@/components/PurchaseOptionsDialog";
+import { minPriceForArtwork } from "@/lib/purchaseConfig";
 import MeaningDialog from "@/components/MeaningDialog";
 import CertificateDialog from "@/components/CertificateDialog";
 import ShareMenu from "@/components/ShareMenu";
@@ -292,7 +293,9 @@ const ArtworkDetail = () => {
     ? artwork.dimensionsEn.trim()
     : artwork.dimensions;
   const rawPrice = isEn && artwork.priceEn?.trim() ? artwork.priceEn.trim() : (artwork.price ?? "");
-  const displayPrice = isSold ? t("cert.privateCollection") : rawPrice;
+  const fromPrice = artwork.isConfigurable && (discipline === "photography" || discipline === "digital-art") ? minPriceForArtwork(artwork.shape) : 0;
+  const displayPrice = isSold ? t("cert.privateCollection") : fromPrice ? `${isEn ? "From" : "A partire da"} € ${String(fromPrice).replace(".", ",")}` : rawPrice;
+  const showPurchase = (hasPurchase || !!artwork.isConfigurable) && !isSold;
   const effectiveDedication = dedicationMd.trim() || artwork.dedication || "";
   const isArchived = isSold;
 
@@ -415,6 +418,8 @@ const ArtworkDetail = () => {
         price={displayPrice}
         slug={artwork.id}
         isConfigurable={artwork.isConfigurable}
+        preview={artwork.preview}
+        squareImage={artwork.square}
       />
       {isArchived && (
         <CertificateDialog
@@ -577,7 +582,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && !isSold && (
+              {showPurchase && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"
@@ -871,7 +876,7 @@ const ArtworkDetail = () => {
                   </button>
                 </div>
               )}
-              {hasPurchase && !isSold && (
+              {showPurchase && (
                 <div className="border-t border-border/30 pt-3">
                   <button
                     type="button"

@@ -1,3 +1,4 @@
+import { useSpamGuard } from "@/hooks/useSpamGuard";
 import { useState } from "react";
 import {
   Dialog,
@@ -31,6 +32,7 @@ const requestTypes = [
 export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, discipline }: Props) {
   const { t } = useI18n();
   const [name, setName] = useState("");
+  const guard = useSpamGuard();
   const [email, setEmail] = useState("");
   const [type, setType] = useState("purchase");
   const [message, setMessage] = useState("");
@@ -40,6 +42,7 @@ export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, disci
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (guard.isBot()) { setSent(true); return; }
     setSending(true);
     setError("");
 
@@ -103,6 +106,7 @@ export default function InfoRequestDialog({ isOpen, onClose, artworkTitle, disci
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3 mt-4">
+<input {...guard.trapProps} />
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}

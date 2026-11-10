@@ -202,7 +202,7 @@ export default function PurchaseOptionsDialog({ isOpen, onClose, artworkTitle, d
 
   const Lines = ({ lines }: { lines: Line[] }) => (
     <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-[12px]">
-      {lines.map((l) => (<><dt key={`${l.label}-k`} className="text-[#4a473e]/75">{l.label}</dt><dd key={`${l.label}-v`} className="text-[#2b2820]">{l.value}</dd></>))}
+      {lines.map((l) => (<div key={l.label} className="contents"><dt className="text-[#4a473e]/75">{l.label}</dt><dd className="text-[#2b2820]">{l.value}</dd></div>))}
     </dl>
   );
 
