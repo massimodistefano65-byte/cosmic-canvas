@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ReactFullpage from "@fullpage/react-fullpage";
+import FullpagePkg from "@fullpage/react-fullpage";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ReactFullpage = ((FullpagePkg as any)?.default?.default || (FullpagePkg as any)?.default || FullpagePkg) as any;
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import StackedSection from "@/components/StackedSection";
